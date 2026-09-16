@@ -38,22 +38,34 @@ if (!empty($child_pages)) {
   foreach ($child_pages as $cp) {
     $tpl = get_page_template_slug($cp->ID);
     if (strpos($tpl, 'hotel-sobre') !== false) {
-      $subpage_links['sobre'] = array('url' => get_permalink($cp->ID), 'title' => get_the_title($cp->ID) ?: 'O Hotel');
+      $subpage_links['sobre'] = array('url' => get_permalink($cp->ID), 'title' => get_the_title($cp->ID) ?: 'O Hotel', 'id' => $cp->ID);
     } elseif (strpos($tpl, 'hotel-rooms') !== false) {
-      $subpage_links['rooms'] = array('url' => get_permalink($cp->ID), 'title' => get_the_title($cp->ID) ?: 'Rooms & Suites');
+      $subpage_links['rooms'] = array('url' => get_permalink($cp->ID), 'title' => get_the_title($cp->ID) ?: 'Rooms & Suites', 'id' => $cp->ID);
     } elseif (strpos($tpl, 'hotel-atividades') !== false) {
-      $subpage_links['atividades'] = array('url' => get_permalink($cp->ID), 'title' => get_the_title($cp->ID) ?: 'Atividades');
+      $subpage_links['atividades'] = array('url' => get_permalink($cp->ID), 'title' => get_the_title($cp->ID) ?: 'Atividades', 'id' => $cp->ID);
     } elseif (strpos($tpl, 'hotel-restaurantes') !== false) {
-      $subpage_links['restaurantes'] = array('url' => get_permalink($cp->ID), 'title' => get_the_title($cp->ID) ?: 'Restaurantes');
+      $subpage_links['restaurantes'] = array('url' => get_permalink($cp->ID), 'title' => get_the_title($cp->ID) ?: 'Restaurantes', 'id' => $cp->ID);
     } elseif (strpos($tpl, 'hotel-regiao') !== false) {
-      $subpage_links['regiao'] = array('url' => get_permalink($cp->ID), 'title' => get_the_title($cp->ID) ?: 'Região');
+      $subpage_links['regiao'] = array('url' => get_permalink($cp->ID), 'title' => get_the_title($cp->ID) ?: 'Região', 'id' => $cp->ID);
     } elseif (strpos($tpl, 'hotel-eventos') !== false) {
-      $subpage_links['eventos'] = array('url' => get_permalink($cp->ID), 'title' => get_the_title($cp->ID) ?: 'Eventos & Salas');
+      $subpage_links['eventos'] = array('url' => get_permalink($cp->ID), 'title' => get_the_title($cp->ID) ?: 'Eventos & Salas', 'id' => $cp->ID);
     } elseif (strpos($tpl, 'hotel-contactos') !== false) {
-      $subpage_links['contactos'] = array('url' => get_permalink($cp->ID), 'title' => get_the_title($cp->ID) ?: 'Contactos');
+      $subpage_links['contactos'] = array('url' => get_permalink($cp->ID), 'title' => get_the_title($cp->ID) ?: 'Contactos', 'id' => $cp->ID);
     }
   }
 }
+
+// Active page state detection
+$current_page_id = get_the_ID();
+$current_template = (string) get_page_template_slug($current_page_id);
+
+$is_sobre_active        = (strpos($current_template, 'hotel-sobre') !== false) || (isset($subpage_links['sobre']['id']) && $current_page_id === $subpage_links['sobre']['id']);
+$is_rooms_active        = (strpos($current_template, 'hotel-rooms') !== false) || is_singular('vbl_quarto') || (isset($subpage_links['rooms']['id']) && $current_page_id === $subpage_links['rooms']['id']);
+$is_atividades_active   = (strpos($current_template, 'hotel-atividades') !== false) || (isset($subpage_links['atividades']['id']) && $current_page_id === $subpage_links['atividades']['id']);
+$is_restaurantes_active = (strpos($current_template, 'hotel-restaurantes') !== false) || (isset($subpage_links['restaurantes']['id']) && $current_page_id === $subpage_links['restaurantes']['id']);
+$is_regiao_active       = (strpos($current_template, 'hotel-regiao') !== false) || (isset($subpage_links['regiao']['id']) && $current_page_id === $subpage_links['regiao']['id']);
+$is_eventos_active      = (strpos($current_template, 'hotel-eventos') !== false) || (isset($subpage_links['eventos']['id']) && $current_page_id === $subpage_links['eventos']['id']);
+$is_contactos_active    = (strpos($current_template, 'hotel-contactos') !== false) || (isset($subpage_links['contactos']['id']) && $current_page_id === $subpage_links['contactos']['id']);
 ?>
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
@@ -99,14 +111,14 @@ if (!empty($child_pages)) {
       <nav class="hidden xl:flex items-center gap-5 2xl:gap-7">
         <?php if (!empty($subpage_links['sobre'])): ?>
           <a href="<?php echo esc_url($subpage_links['sobre']['url']); ?>"
-            class="vbl-hotel-nav-link text-[12px] 2xl:text-[13px] tracking-[1.2px] 2xl:tracking-[1.3px] uppercase text-white hover:text-dourado transition-colors whitespace-nowrap"><?php echo esc_html($subpage_links['sobre']['title']); ?></a>
+            class="vbl-hotel-nav-link <?php echo $is_sobre_active ? 'is-active ' : ''; ?>text-[12px] 2xl:text-[13px] tracking-[1.2px] 2xl:tracking-[1.3px] uppercase text-white transition-colors whitespace-nowrap"><?php echo esc_html($subpage_links['sobre']['title']); ?></a>
         <?php endif; ?>
 
         <?php if (!empty($subpage_links['rooms'])): ?>
           <!-- Dropdown Rooms & Suites (Mega Menu) -->
           <div class="group flex items-center h-[80px] xl:h-[96px]">
             <a href="<?php echo esc_url($subpage_links['rooms']['url']); ?>"
-              class="vbl-hotel-nav-link text-[12px] 2xl:text-[13px] tracking-[1.2px] 2xl:tracking-[1.3px] uppercase text-white transition-colors flex items-center gap-1.5 py-2 relative h-full whitespace-nowrap">
+              class="vbl-hotel-nav-link <?php echo $is_rooms_active ? 'is-active ' : ''; ?>text-[12px] 2xl:text-[13px] tracking-[1.2px] 2xl:tracking-[1.3px] uppercase text-white transition-colors flex items-center gap-1.5 py-2 relative h-full whitespace-nowrap">
               <span><?php echo esc_html($subpage_links['rooms']['title']); ?></span>
               <svg class="w-2.5 h-1.5 text-current group-hover:rotate-180 transition-transform duration-300"
                 viewBox="0 0 10 6" fill="none">
@@ -188,27 +200,27 @@ if (!empty($child_pages)) {
 
         <?php if (!empty($subpage_links['atividades'])): ?>
           <a href="<?php echo esc_url($subpage_links['atividades']['url']); ?>"
-            class="vbl-hotel-nav-link text-[12px] 2xl:text-[13px] tracking-[1.2px] 2xl:tracking-[1.3px] uppercase text-white hover:text-dourado transition-colors whitespace-nowrap"><?php echo esc_html($subpage_links['atividades']['title']); ?></a>
+            class="vbl-hotel-nav-link <?php echo $is_atividades_active ? 'is-active ' : ''; ?>text-[12px] 2xl:text-[13px] tracking-[1.2px] 2xl:tracking-[1.3px] uppercase text-white transition-colors whitespace-nowrap"><?php echo esc_html($subpage_links['atividades']['title']); ?></a>
         <?php endif; ?>
 
         <?php if (!empty($subpage_links['restaurantes'])): ?>
           <a href="<?php echo esc_url($subpage_links['restaurantes']['url']); ?>"
-            class="vbl-hotel-nav-link text-[12px] 2xl:text-[13px] tracking-[1.2px] 2xl:tracking-[1.3px] uppercase text-white hover:text-dourado transition-colors whitespace-nowrap"><?php echo esc_html($subpage_links['restaurantes']['title']); ?></a>
+            class="vbl-hotel-nav-link <?php echo $is_restaurantes_active ? 'is-active ' : ''; ?>text-[12px] 2xl:text-[13px] tracking-[1.2px] 2xl:tracking-[1.3px] uppercase text-white transition-colors whitespace-nowrap"><?php echo esc_html($subpage_links['restaurantes']['title']); ?></a>
         <?php endif; ?>
 
         <?php if (!empty($subpage_links['regiao'])): ?>
           <a href="<?php echo esc_url($subpage_links['regiao']['url']); ?>"
-            class="vbl-hotel-nav-link text-[12px] 2xl:text-[13px] tracking-[1.2px] 2xl:tracking-[1.3px] uppercase text-white hover:text-dourado transition-colors whitespace-nowrap"><?php echo esc_html($subpage_links['regiao']['title']); ?></a>
+            class="vbl-hotel-nav-link <?php echo $is_regiao_active ? 'is-active ' : ''; ?>text-[12px] 2xl:text-[13px] tracking-[1.2px] 2xl:tracking-[1.3px] uppercase text-white transition-colors whitespace-nowrap"><?php echo esc_html($subpage_links['regiao']['title']); ?></a>
         <?php endif; ?>
 
         <?php if (!empty($subpage_links['eventos'])): ?>
           <a href="<?php echo esc_url($subpage_links['eventos']['url']); ?>"
-            class="vbl-hotel-nav-link text-[12px] 2xl:text-[13px] tracking-[1.2px] 2xl:tracking-[1.3px] uppercase text-white hover:text-dourado transition-colors whitespace-nowrap"><?php echo esc_html($subpage_links['eventos']['title']); ?></a>
+            class="vbl-hotel-nav-link <?php echo $is_eventos_active ? 'is-active ' : ''; ?>text-[12px] 2xl:text-[13px] tracking-[1.2px] 2xl:tracking-[1.3px] uppercase text-white transition-colors whitespace-nowrap"><?php echo esc_html($subpage_links['eventos']['title']); ?></a>
         <?php endif; ?>
 
         <?php if (!empty($subpage_links['contactos'])): ?>
           <a href="<?php echo esc_url($subpage_links['contactos']['url']); ?>"
-            class="vbl-hotel-nav-link text-[12px] 2xl:text-[13px] tracking-[1.2px] 2xl:tracking-[1.3px] uppercase text-white hover:text-dourado transition-colors whitespace-nowrap"><?php echo esc_html($subpage_links['contactos']['title']); ?></a>
+            class="vbl-hotel-nav-link <?php echo $is_contactos_active ? 'is-active ' : ''; ?>text-[12px] 2xl:text-[13px] tracking-[1.2px] 2xl:tracking-[1.3px] uppercase text-white transition-colors whitespace-nowrap"><?php echo esc_html($subpage_links['contactos']['title']); ?></a>
         <?php endif; ?>
       </nav>
 
@@ -385,14 +397,14 @@ if (!empty($child_pages)) {
       </div>
       <?php if (!empty($subpage_links['sobre'])): ?>
         <a href="<?php echo esc_url($subpage_links['sobre']['url']); ?>"
-          class="text-[16px] tracking-[1.6px] uppercase text-[#0d5257] font-medium"><?php echo esc_html($subpage_links['sobre']['title']); ?></a>
+          class="text-[16px] tracking-[1.6px] uppercase <?php echo $is_sobre_active ? 'text-[#0da9a6] font-bold underline underline-offset-4' : 'text-[#0d5257] font-medium'; ?>"><?php echo esc_html($subpage_links['sobre']['title']); ?></a>
       <?php endif; ?>
       <?php if (!empty($subpage_links['rooms'])): ?>
         <!-- Rooms & Suites accordion trigger -->
         <button type="button" id="mobileRoomsToggle"
           class="flex items-center justify-between w-full text-left cursor-pointer">
           <span
-            class="text-[16px] tracking-[1.6px] uppercase text-[#0d5257] font-medium pointer-events-none"><?php echo esc_html($subpage_links['rooms']['title']); ?></span>
+            class="text-[16px] tracking-[1.6px] uppercase <?php echo $is_rooms_active ? 'text-[#0da9a6] font-bold underline underline-offset-4' : 'text-[#0d5257] font-medium'; ?> pointer-events-none"><?php echo esc_html($subpage_links['rooms']['title']); ?></span>
           <svg class="w-3 h-2 text-[#0d5257] transition-transform duration-300 pointer-events-none" id="mobileRoomsArrow"
             viewBox="0 0 12 8" fill="none">
             <path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" stroke-width="1.5" />
@@ -452,23 +464,23 @@ if (!empty($child_pages)) {
       <?php endif; ?>
       <?php if (!empty($subpage_links['atividades'])): ?>
         <a href="<?php echo esc_url($subpage_links['atividades']['url']); ?>"
-          class="text-[16px] tracking-[1.6px] uppercase text-[#0d5257] font-medium"><?php echo esc_html($subpage_links['atividades']['title']); ?></a>
+          class="text-[16px] tracking-[1.6px] uppercase <?php echo $is_atividades_active ? 'text-[#0da9a6] font-bold underline underline-offset-4' : 'text-[#0d5257] font-medium'; ?>"><?php echo esc_html($subpage_links['atividades']['title']); ?></a>
       <?php endif; ?>
       <?php if (!empty($subpage_links['restaurantes'])): ?>
         <a href="<?php echo esc_url($subpage_links['restaurantes']['url']); ?>"
-          class="text-[16px] tracking-[1.6px] uppercase text-[#0d5257] font-medium"><?php echo esc_html($subpage_links['restaurantes']['title']); ?></a>
+          class="text-[16px] tracking-[1.6px] uppercase <?php echo $is_restaurantes_active ? 'text-[#0da9a6] font-bold underline underline-offset-4' : 'text-[#0d5257] font-medium'; ?>"><?php echo esc_html($subpage_links['restaurantes']['title']); ?></a>
       <?php endif; ?>
       <?php if (!empty($subpage_links['regiao'])): ?>
         <a href="<?php echo esc_url($subpage_links['regiao']['url']); ?>"
-          class="text-[16px] tracking-[1.6px] uppercase text-[#0d5257] font-medium"><?php echo esc_html($subpage_links['regiao']['title']); ?></a>
+          class="text-[16px] tracking-[1.6px] uppercase <?php echo $is_regiao_active ? 'text-[#0da9a6] font-bold underline underline-offset-4' : 'text-[#0d5257] font-medium'; ?>"><?php echo esc_html($subpage_links['regiao']['title']); ?></a>
       <?php endif; ?>
       <?php if (!empty($subpage_links['eventos'])): ?>
         <a href="<?php echo esc_url($subpage_links['eventos']['url']); ?>"
-          class="text-[16px] tracking-[1.6px] uppercase text-[#0d5257] font-medium"><?php echo esc_html($subpage_links['eventos']['title']); ?></a>
+          class="text-[16px] tracking-[1.6px] uppercase <?php echo $is_eventos_active ? 'text-[#0da9a6] font-bold underline underline-offset-4' : 'text-[#0d5257] font-medium'; ?>"><?php echo esc_html($subpage_links['eventos']['title']); ?></a>
       <?php endif; ?>
       <?php if (!empty($subpage_links['contactos'])): ?>
         <a href="<?php echo esc_url($subpage_links['contactos']['url']); ?>"
-          class="text-[16px] tracking-[1.6px] uppercase text-[#0d5257] font-medium"><?php echo esc_html($subpage_links['contactos']['title']); ?></a>
+          class="text-[16px] tracking-[1.6px] uppercase <?php echo $is_contactos_active ? 'text-[#0da9a6] font-bold underline underline-offset-4' : 'text-[#0d5257] font-medium'; ?>"><?php echo esc_html($subpage_links['contactos']['title']); ?></a>
       <?php endif; ?>
       <div class="h-px bg-[#eee8e5] my-2"></div>
       <a href="<?php echo esc_url($hotel_booking_url); ?>"

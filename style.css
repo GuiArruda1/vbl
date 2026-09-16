@@ -209,9 +209,22 @@ body.admin-bar .header-fixo {
     }
     /* VBL Hover Interactions — Figma SMART_ANIMATE 400ms ease-in-out */
     .vbl-nav-link { transition: color 0.4s ease-in-out; }
-    .vbl-nav-link:hover { color: #bc945b; text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; }
+    .vbl-nav-link:hover, .vbl-nav-link.is-active, .vbl-nav-link.active { color: #bc945b; text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; }
     .vbl-nav-link-white { transition: color 0.4s ease-in-out; }
-    .vbl-nav-link-white:hover { text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; }
+    .vbl-nav-link-white:hover, .vbl-nav-link-white.is-active, .vbl-nav-link-white.active { text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; }
+
+    /* Hotel Microsite Nav Links: Underline on Hover & Active */
+    .vbl-hotel-nav-link { 
+      text-decoration: none; 
+      transition: color 0.3s ease-in-out, text-decoration-color 0.3s ease-in-out; 
+    }
+    .vbl-hotel-nav-link:hover, 
+    .vbl-hotel-nav-link.is-active, 
+    .vbl-hotel-nav-link.active { 
+      text-decoration: underline !important; 
+      text-underline-offset: 6px !important; 
+      text-decoration-thickness: 1px !important; 
+    }
     .vbl-btn { 
       border-left: none !important; 
       border-right: none !important; 
@@ -323,6 +336,14 @@ body.admin-bar .header-fixo {
 #headerHotel.is-scrolled .vbl-hotels-trigger,
 #headerHotel.is-scrolled .vbl-lang-trigger {
   color: #0d5257 !important;
+}
+
+#headerHotel.is-scrolled .vbl-hotel-nav-link.is-active,
+#headerHotel.is-scrolled .vbl-hotel-nav-link.active {
+  color: #0da9a6 !important;
+  text-decoration: underline !important;
+  text-underline-offset: 6px !important;
+  text-decoration-thickness: 1px !important;
 }
 
 #headerHotel.is-scrolled .vbl-hotel-nav-link:hover,
