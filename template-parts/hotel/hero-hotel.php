@@ -15,6 +15,7 @@ $hero_bg      = vbl_field( 'vbl_hotel_hero_img', false, vbl_img( 'sobre-fotograf
 if ( empty( $hero_bg ) ) {
     $hero_bg = vbl_img( 'sobre-fotografia.jpg' );
 }
+$accent_color = function_exists( 'vbl_get_hotel_accent_color' ) ? vbl_get_hotel_accent_color() : '#00B5B4';
 ?>
 
 <!-- ====== HERO DO HOTEL ====== -->
@@ -33,7 +34,7 @@ if ( empty( $hero_bg ) ) {
     
     <!-- Tagline com Linha Indicadora -->
     <div class="flex items-center gap-4">
-      <div class="w-10 h-px bg-[#bc945b] flex-shrink-0"></div>
+      <div class="w-10 h-px flex-shrink-0" style="background-color: <?php echo esc_attr( $accent_color ); ?>;"></div>
       <span class="font-body text-[12px] xl:text-[14px] tracking-[2px] uppercase text-white/90 font-medium">
         <?php echo esc_html( $tagline ); ?>
       </span>

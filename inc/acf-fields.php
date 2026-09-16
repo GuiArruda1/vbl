@@ -306,6 +306,14 @@ function vbl_register_acf_fields() {
                 'return_format'=> 'url',
                 'preview_size' => 'medium',
             ),
+            array(
+                'key'          => 'field_vbl_hotel_accent_color',
+                'label'        => 'Cor de Destaque do Hotel (Traço & Acentos)',
+                'name'         => 'vbl_hotel_accent_color',
+                'type'         => 'color_picker',
+                'instructions' => 'Cor de destaque usada nos traços decorativos, subtítulos e acentos deste hotel (ex: #00B5B4 para Porto Santo, #D7A584 para Suites, #658D72 para Village, #F0B85E para Funchal, #BC945B para Residence).',
+                'default_value'=> '#00B5B4',
+            ),
 
             /* Tab: Hero */
             array( 'key' => 'field_vbl_hhome_tab_hero', 'label' => 'Hero Banner', 'name' => '', 'type' => 'tab' ),

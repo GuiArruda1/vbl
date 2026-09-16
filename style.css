@@ -334,7 +334,8 @@ body.admin-bar .header-fixo {
 
 #headerHotel.is-scrolled .vbl-hotel-nav-link,
 #headerHotel.is-scrolled .vbl-hotels-trigger,
-#headerHotel.is-scrolled .vbl-lang-trigger {
+#headerHotel.is-scrolled .vbl-lang-trigger,
+#headerHotel.is-scrolled .vbl-hotel-lang-mobile {
   color: #0d5257 !important;
 }
 
@@ -348,13 +349,15 @@ body.admin-bar .header-fixo {
 
 #headerHotel.is-scrolled .vbl-hotel-nav-link:hover,
 #headerHotel.is-scrolled .vbl-hotels-trigger:hover,
-#headerHotel.is-scrolled .vbl-lang-trigger:hover {
+#headerHotel.is-scrolled .vbl-lang-trigger:hover,
+#headerHotel.is-scrolled .vbl-hotel-lang-mobile:hover {
   color: #0da9a6 !important;
 }
 
 #headerHotel.is-scrolled nav svg,
 #headerHotel.is-scrolled .vbl-hotels-trigger svg,
-#headerHotel.is-scrolled .vbl-lang-trigger svg {
+#headerHotel.is-scrolled .vbl-lang-trigger svg,
+#headerHotel.is-scrolled .vbl-hotel-lang-mobile svg {
   color: #0d5257 !important;
 }
 

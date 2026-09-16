@@ -21,8 +21,8 @@ if (is_singular('vbl_quarto')) {
 $hotel_name = vbl_field('vbl_hotel_name', $current_hotel_id, 'Porto Santo');
 $hotel_booking_url = vbl_field('vbl_hotel_booking_url', $current_hotel_id, '#');
 $hotel_permalink = $current_hotel_id ? get_permalink($current_hotel_id) : get_permalink();
-$hotel_header_logo = vbl_field('vbl_hotel_header_logo', $current_hotel_id);
-$hotel_header_logo_scrolled = vbl_field('vbl_hotel_header_logo_scrolled', $current_hotel_id);
+$hotel_header_logo = vbl_field('vbl_hotel_header_logo', get_the_ID()) ?: vbl_field('vbl_hotel_header_logo', $current_hotel_id);
+$hotel_header_logo_scrolled = vbl_field('vbl_hotel_header_logo_scrolled', get_the_ID()) ?: vbl_field('vbl_hotel_header_logo_scrolled', $current_hotel_id);
 $lang_data = function_exists('vbl_get_languages') ? vbl_get_languages() : array('current' => 'PT', 'languages' => array());
 
 // Subpáginas reais do hotel criadas no WordPress (sem fallback para forçar a criação das páginas no backoffice)
@@ -85,160 +85,164 @@ $is_contactos_active    = (strpos($current_template, 'hotel-contactos') !== fals
     <div
       class="max-w-[1920px] mx-auto h-20 xl:h-24 flex items-center justify-between px-6 xl:px-12 transition-all duration-300">
 
-      <!-- Logo do Hotel -->
-      <a href="<?php echo esc_url($hotel_permalink); ?>" class="flex items-center gap-3 group">
-        <?php if (!empty($hotel_header_logo)): ?>
-          <img src="<?php echo esc_url($hotel_header_logo); ?>" alt="<?php echo esc_attr($hotel_name); ?>"
-            class="h-8 xl:h-10 w-auto max-w-[220px] object-contain transition-all duration-300 <?php echo !empty($hotel_header_logo_scrolled) ? 'vbl-logo-transparent' : 'vbl-hotel-logo-img filter brightness-0 invert'; ?>">
-          <?php if (!empty($hotel_header_logo_scrolled)): ?>
-            <img src="<?php echo esc_url($hotel_header_logo_scrolled); ?>" alt="<?php echo esc_attr($hotel_name); ?>"
-              class="h-8 xl:h-10 w-auto max-w-[220px] object-contain transition-all duration-300 hidden vbl-logo-scrolled">
+      <!-- Grupo Esquerda: Logo + Menu Principal (Menu perto do logotipo) -->
+      <div class="flex items-center gap-8 2xl:gap-14 min-w-0">
+        <!-- Logo do Hotel -->
+        <a href="<?php echo esc_url($hotel_permalink); ?>" class="flex items-center gap-3 group flex-shrink-0">
+          <?php if (!empty($hotel_header_logo)): ?>
+            <img src="<?php echo esc_url($hotel_header_logo); ?>" alt="<?php echo esc_attr($hotel_name); ?>"
+              class="h-8 xl:h-10 w-auto max-w-[220px] object-contain transition-all duration-300 <?php echo !empty($hotel_header_logo_scrolled) ? 'vbl-logo-transparent' : 'vbl-hotel-logo-img filter brightness-0 invert'; ?>">
+            <?php if (!empty($hotel_header_logo_scrolled)): ?>
+              <img src="<?php echo esc_url($hotel_header_logo_scrolled); ?>" alt="<?php echo esc_attr($hotel_name); ?>"
+                class="h-8 xl:h-10 w-auto max-w-[220px] object-contain transition-all duration-300 hidden vbl-logo-scrolled">
+            <?php endif; ?>
+          <?php else: ?>
+            <img src="<?php echo vbl_img('logo-top.svg'); ?>" alt="Vila Baleira"
+              class="h-8 xl:h-9 w-auto vbl-hotel-logo-img filter brightness-0 invert transition-all duration-300">
+            <div class="flex flex-col border-l border-white/30 pl-3 vbl-hotel-logo-text transition-colors duration-300">
+              <span
+                class="font-display text-[16px] xl:text-[18px] tracking-[1.5px] uppercase leading-tight text-white transition-colors duration-300">VILA
+                BALEIRA</span>
+              <span
+                class="font-body text-[10px] xl:text-[11px] tracking-[2px] uppercase text-white/80 font-light transition-colors duration-300"><?php echo esc_html($hotel_name); ?></span>
+            </div>
           <?php endif; ?>
-        <?php else: ?>
-          <img src="<?php echo vbl_img('logo-top.svg'); ?>" alt="Vila Baleira"
-            class="h-8 xl:h-9 w-auto vbl-hotel-logo-img filter brightness-0 invert transition-all duration-300">
-          <div class="flex flex-col border-l border-white/30 pl-3 vbl-hotel-logo-text transition-colors duration-300">
-            <span
-              class="font-display text-[16px] xl:text-[18px] tracking-[1.5px] uppercase leading-tight text-white transition-colors duration-300">VILA
-              BALEIRA</span>
-            <span
-              class="font-body text-[10px] xl:text-[11px] tracking-[2px] uppercase text-white/80 font-light transition-colors duration-300"><?php echo esc_html($hotel_name); ?></span>
-          </div>
-        <?php endif; ?>
-      </a>
+        </a>
 
-      <!-- Menu Principal do Hotel (Desktop — renderiza apenas páginas reais criadas no WordPress) -->
-      <nav class="hidden xl:flex items-center gap-5 2xl:gap-7">
-        <?php if (!empty($subpage_links['sobre'])): ?>
-          <a href="<?php echo esc_url($subpage_links['sobre']['url']); ?>"
-            class="vbl-hotel-nav-link <?php echo $is_sobre_active ? 'is-active ' : ''; ?>text-[12px] 2xl:text-[13px] tracking-[1.2px] 2xl:tracking-[1.3px] uppercase text-white transition-colors whitespace-nowrap"><?php echo esc_html($subpage_links['sobre']['title']); ?></a>
-        <?php endif; ?>
+        <!-- Menu Principal do Hotel (Desktop — renderiza apenas páginas reais criadas no WordPress) -->
+        <nav class="hidden xl:flex items-center gap-5 2xl:gap-7">
+          <?php if (!empty($subpage_links['sobre'])): ?>
+            <a href="<?php echo esc_url($subpage_links['sobre']['url']); ?>"
+              class="vbl-hotel-nav-link <?php echo $is_sobre_active ? 'is-active ' : ''; ?>text-[12px] 2xl:text-[13px] tracking-[1.2px] 2xl:tracking-[1.3px] uppercase text-white transition-colors whitespace-nowrap"><?php echo esc_html($subpage_links['sobre']['title']); ?></a>
+          <?php endif; ?>
 
-        <?php if (!empty($subpage_links['rooms'])): ?>
-          <!-- Dropdown Rooms & Suites (Mega Menu) -->
-          <div class="group flex items-center h-[80px] xl:h-[96px]">
-            <a href="<?php echo esc_url($subpage_links['rooms']['url']); ?>"
-              class="vbl-hotel-nav-link <?php echo $is_rooms_active ? 'is-active ' : ''; ?>text-[12px] 2xl:text-[13px] tracking-[1.2px] 2xl:tracking-[1.3px] uppercase text-white transition-colors flex items-center gap-1.5 py-2 relative h-full whitespace-nowrap">
-              <span><?php echo esc_html($subpage_links['rooms']['title']); ?></span>
-              <svg class="w-2.5 h-1.5 text-current group-hover:rotate-180 transition-transform duration-300"
-                viewBox="0 0 10 6" fill="none">
-                <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" />
-              </svg>
-            </a>
+          <?php if (!empty($subpage_links['rooms'])): ?>
+            <!-- Dropdown Rooms & Suites (Mega Menu) -->
+            <div class="group flex items-center h-[80px] xl:h-[96px]">
+              <a href="<?php echo esc_url($subpage_links['rooms']['url']); ?>"
+                class="vbl-hotel-nav-link <?php echo $is_rooms_active ? 'is-active ' : ''; ?>text-[12px] 2xl:text-[13px] tracking-[1.2px] 2xl:tracking-[1.3px] uppercase text-white transition-colors flex items-center gap-1.5 py-2 relative h-full whitespace-nowrap">
+                <span><?php echo esc_html($subpage_links['rooms']['title']); ?></span>
+                <svg class="w-2.5 h-1.5 text-current group-hover:rotate-180 transition-transform duration-300"
+                  viewBox="0 0 10 6" fill="none">
+                  <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" />
+                </svg>
+              </a>
 
-            <!-- Mega Menu Container -->
-            <div
-              class="fixed top-[80px] xl:top-[96px] left-0 w-full bg-white shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 border-t border-black/10 z-40">
-              <div class="max-w-[1920px] mx-auto w-full px-6 xl:px-[8.33%] py-12 relative">
+              <!-- Mega Menu Container -->
+              <div
+                class="fixed top-[80px] xl:top-[96px] left-0 w-full bg-white shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 border-t border-black/10 z-40">
+                <div class="max-w-[1920px] mx-auto w-full px-6 xl:px-[8.33%] py-12 relative">
 
-                <!-- Slider Arrows -->
-                <button
-                  class="absolute left-6 xl:left-[4%] top-[40%] z-10 w-10 h-10 border border-[#00B5B4] text-[#00B5B4] bg-transparent flex items-center justify-center hover:bg-[#00B5B4] hover:text-white transition-colors cursor-pointer"
-                  aria-label="Anterior">
-                  <svg class="w-4 h-4 sm:w-5 sm:h-5" viewBox="0 0 30 30" fill="none" stroke="currentColor"
-                    stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M28 15H1M1 15L14 2M1 15L14 28" />
-                  </svg>
-                </button>
+                  <!-- Slider Arrows -->
+                  <button
+                    class="absolute left-6 xl:left-[4%] top-[40%] z-10 w-10 h-10 border border-[#00B5B4] text-[#00B5B4] bg-transparent flex items-center justify-center hover:bg-[#00B5B4] hover:text-white transition-colors cursor-pointer"
+                    aria-label="Anterior">
+                    <svg class="w-4 h-4 sm:w-5 sm:h-5" viewBox="0 0 30 30" fill="none" stroke="currentColor"
+                      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M28 15H1M1 15L14 2M1 15L14 28" />
+                    </svg>
+                  </button>
 
-                <button
-                  class="absolute right-6 xl:right-[4%] top-[40%] z-10 w-10 h-10 border border-[#00B5B4] text-[#00B5B4] bg-transparent flex items-center justify-center hover:bg-[#00B5B4] hover:text-white transition-colors cursor-pointer"
-                  aria-label="Seguinte">
-                  <svg class="w-4 h-4 sm:w-5 sm:h-5" viewBox="0 0 30 30" fill="none" stroke="currentColor"
-                    stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M1 15H28M28 15L15 2M28 15L15 28" />
-                  </svg>
-                </button>
+                  <button
+                    class="absolute right-6 xl:right-[4%] top-[40%] z-10 w-10 h-10 border border-[#00B5B4] text-[#00B5B4] bg-transparent flex items-center justify-center hover:bg-[#00B5B4] hover:text-white transition-colors cursor-pointer"
+                    aria-label="Seguinte">
+                    <svg class="w-4 h-4 sm:w-5 sm:h-5" viewBox="0 0 30 30" fill="none" stroke="currentColor"
+                      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M1 15H28M28 15L15 2M28 15L15 28" />
+                    </svg>
+                  </button>
 
-                <!-- Rooms Grid (Apenas quartos reais associados ao hotel) -->
-                <div class="grid grid-cols-5 gap-6">
-                  <?php
-                  $mega_rooms_posts = get_posts(array(
-                    'post_type' => 'vbl_quarto',
-                    'posts_per_page' => 5,
-                    'meta_query' => array(
-                      array(
-                        'key' => 'vbl_quarto_hotel',
-                        'value' => $current_hotel_id,
-                        'compare' => '=',
+                  <!-- Rooms Grid (Apenas quartos reais associados ao hotel) -->
+                  <div class="grid grid-cols-5 gap-6">
+                    <?php
+                    $mega_rooms_posts = get_posts(array(
+                      'post_type' => 'vbl_quarto',
+                      'posts_per_page' => 5,
+                      'meta_query' => array(
+                        array(
+                          'key' => 'vbl_quarto_hotel',
+                          'value' => $current_hotel_id,
+                          'compare' => '=',
+                        ),
                       ),
-                    ),
-                  ));
+                    ));
 
-                  if (!empty($mega_rooms_posts)):
-                    foreach ($mega_rooms_posts as $rpost):
-                      $rimg = get_the_post_thumbnail_url($rpost->ID, 'medium');
-                      if (empty($rimg)) {
-                        $rimg = vbl_img('hoteis/porto-santo-520x400.jpg');
-                      }
-                      ?>
-                      <a href="<?php echo esc_url(get_permalink($rpost->ID)); ?>" class="group/room flex flex-col gap-4">
-                        <div class="w-full aspect-[4/3] overflow-hidden bg-gray-100">
-                          <img src="<?php echo esc_url($rimg); ?>"
-                            alt="<?php echo esc_attr(get_the_title($rpost->ID)); ?>"
-                            class="w-full h-full object-cover group-hover/room:scale-105 transition-transform duration-500 opacity-90 group-hover/room:opacity-100">
-                        </div>
-                        <div class="flex flex-col gap-1.5 mt-2">
-                          <div class="flex items-center gap-3">
-                            <div class="w-6 h-px bg-[#0da9a6]"></div>
-                            <span class="font-body text-[8px] tracking-[1.5px] uppercase text-[#0da9a6]">QUARTO</span>
+                    if (!empty($mega_rooms_posts)):
+                      foreach ($mega_rooms_posts as $rpost):
+                        $rimg = get_the_post_thumbnail_url($rpost->ID, 'medium');
+                        if (empty($rimg)) {
+                          $rimg = vbl_img('hoteis/porto-santo-520x400.jpg');
+                        }
+                        ?>
+                        <a href="<?php echo esc_url(get_permalink($rpost->ID)); ?>" class="group/room flex flex-col gap-4">
+                          <div class="w-full aspect-[4/3] overflow-hidden bg-gray-100">
+                            <img src="<?php echo esc_url($rimg); ?>"
+                              alt="<?php echo esc_attr(get_the_title($rpost->ID)); ?>"
+                              class="w-full h-full object-cover group-hover/room:scale-105 transition-transform duration-500 opacity-90 group-hover/room:opacity-100">
                           </div>
-                          <h3
-                            class="font-display text-[15px] xl:text-[16px] text-[#0d5257] uppercase leading-tight group-hover/room:text-[#0da9a6] transition-colors">
-                            <?php echo esc_html(get_the_title($rpost->ID)); ?>
-                          </h3>
-                        </div>
-                      </a>
-                    <?php endforeach;
-                  endif; ?>
-                </div>
+                          <div class="flex flex-col gap-1.5 mt-2">
+                            <div class="flex items-center gap-3">
+                              <div class="w-6 h-px bg-[#0da9a6]"></div>
+                              <span class="font-body text-[8px] tracking-[1.5px] uppercase text-[#0da9a6]">QUARTO</span>
+                            </div>
+                            <h3
+                              class="font-display text-[15px] xl:text-[16px] text-[#0d5257] uppercase leading-tight group-hover/room:text-[#0da9a6] transition-colors">
+                              <?php echo esc_html(get_the_title($rpost->ID)); ?>
+                            </h3>
+                          </div>
+                        </a>
+                      <?php endforeach;
+                    endif; ?>
+                  </div>
 
+                </div>
               </div>
             </div>
-          </div>
-        <?php endif; ?>
+          <?php endif; ?>
 
-        <?php if (!empty($subpage_links['atividades'])): ?>
-          <a href="<?php echo esc_url($subpage_links['atividades']['url']); ?>"
-            class="vbl-hotel-nav-link <?php echo $is_atividades_active ? 'is-active ' : ''; ?>text-[12px] 2xl:text-[13px] tracking-[1.2px] 2xl:tracking-[1.3px] uppercase text-white transition-colors whitespace-nowrap"><?php echo esc_html($subpage_links['atividades']['title']); ?></a>
-        <?php endif; ?>
+          <?php if (!empty($subpage_links['atividades'])): ?>
+            <a href="<?php echo esc_url($subpage_links['atividades']['url']); ?>"
+              class="vbl-hotel-nav-link <?php echo $is_atividades_active ? 'is-active ' : ''; ?>text-[12px] 2xl:text-[13px] tracking-[1.2px] 2xl:tracking-[1.3px] uppercase text-white transition-colors whitespace-nowrap"><?php echo esc_html($subpage_links['atividades']['title']); ?></a>
+          <?php endif; ?>
 
-        <?php if (!empty($subpage_links['restaurantes'])): ?>
-          <a href="<?php echo esc_url($subpage_links['restaurantes']['url']); ?>"
-            class="vbl-hotel-nav-link <?php echo $is_restaurantes_active ? 'is-active ' : ''; ?>text-[12px] 2xl:text-[13px] tracking-[1.2px] 2xl:tracking-[1.3px] uppercase text-white transition-colors whitespace-nowrap"><?php echo esc_html($subpage_links['restaurantes']['title']); ?></a>
-        <?php endif; ?>
+          <?php if (!empty($subpage_links['restaurantes'])): ?>
+            <a href="<?php echo esc_url($subpage_links['restaurantes']['url']); ?>"
+              class="vbl-hotel-nav-link <?php echo $is_restaurantes_active ? 'is-active ' : ''; ?>text-[12px] 2xl:text-[13px] tracking-[1.2px] 2xl:tracking-[1.3px] uppercase text-white transition-colors whitespace-nowrap"><?php echo esc_html($subpage_links['restaurantes']['title']); ?></a>
+          <?php endif; ?>
 
-        <?php if (!empty($subpage_links['regiao'])): ?>
-          <a href="<?php echo esc_url($subpage_links['regiao']['url']); ?>"
-            class="vbl-hotel-nav-link <?php echo $is_regiao_active ? 'is-active ' : ''; ?>text-[12px] 2xl:text-[13px] tracking-[1.2px] 2xl:tracking-[1.3px] uppercase text-white transition-colors whitespace-nowrap"><?php echo esc_html($subpage_links['regiao']['title']); ?></a>
-        <?php endif; ?>
+          <?php if (!empty($subpage_links['regiao'])): ?>
+            <a href="<?php echo esc_url($subpage_links['regiao']['url']); ?>"
+              class="vbl-hotel-nav-link <?php echo $is_regiao_active ? 'is-active ' : ''; ?>text-[12px] 2xl:text-[13px] tracking-[1.2px] 2xl:tracking-[1.3px] uppercase text-white transition-colors whitespace-nowrap"><?php echo esc_html($subpage_links['regiao']['title']); ?></a>
+          <?php endif; ?>
 
-        <?php if (!empty($subpage_links['eventos'])): ?>
-          <a href="<?php echo esc_url($subpage_links['eventos']['url']); ?>"
-            class="vbl-hotel-nav-link <?php echo $is_eventos_active ? 'is-active ' : ''; ?>text-[12px] 2xl:text-[13px] tracking-[1.2px] 2xl:tracking-[1.3px] uppercase text-white transition-colors whitespace-nowrap"><?php echo esc_html($subpage_links['eventos']['title']); ?></a>
-        <?php endif; ?>
+          <?php if (!empty($subpage_links['eventos'])): ?>
+            <a href="<?php echo esc_url($subpage_links['eventos']['url']); ?>"
+              class="vbl-hotel-nav-link <?php echo $is_eventos_active ? 'is-active ' : ''; ?>text-[12px] 2xl:text-[13px] tracking-[1.2px] 2xl:tracking-[1.3px] uppercase text-white transition-colors whitespace-nowrap"><?php echo esc_html($subpage_links['eventos']['title']); ?></a>
+          <?php endif; ?>
 
-        <?php if (!empty($subpage_links['contactos'])): ?>
-          <a href="<?php echo esc_url($subpage_links['contactos']['url']); ?>"
-            class="vbl-hotel-nav-link <?php echo $is_contactos_active ? 'is-active ' : ''; ?>text-[12px] 2xl:text-[13px] tracking-[1.2px] 2xl:tracking-[1.3px] uppercase text-white transition-colors whitespace-nowrap"><?php echo esc_html($subpage_links['contactos']['title']); ?></a>
-        <?php endif; ?>
-      </nav>
+          <?php if (!empty($subpage_links['contactos'])): ?>
+            <a href="<?php echo esc_url($subpage_links['contactos']['url']); ?>"
+              class="vbl-hotel-nav-link <?php echo $is_contactos_active ? 'is-active ' : ''; ?>text-[12px] 2xl:text-[13px] tracking-[1.2px] 2xl:tracking-[1.3px] uppercase text-white transition-colors whitespace-nowrap"><?php echo esc_html($subpage_links['contactos']['title']); ?></a>
+          <?php endif; ?>
+        </nav>
+      </div>
 
       <!-- Ações à Direita (Hotéis, Idioma, Reservar) -->
-      <div class="hidden xl:flex items-center gap-4 2xl:gap-7 flex-shrink-0">
-        <!-- Hotéis dropdown trigger -->
+      <div class="hidden xl:flex items-center gap-6 2xl:gap-8 flex-shrink-0">
+        <!-- Hotéis dropdown trigger (Abre Megamenu igual ao institucional) -->
         <button type="button"
-          class="vbl-hotels-trigger text-[13px] tracking-[1.3px] uppercase text-white hover:text-dourado transition-colors flex items-center gap-1.5">
+          class="vbl-hotels-trigger text-[13px] tracking-[1.3px] uppercase text-white hover:text-white transition-colors flex items-center gap-1.5 cursor-pointer"
+          data-mega-trigger data-mega-top="80">
           <span>Hotéis</span>
-          <svg class="w-2.5 h-1.5 text-current" viewBox="0 0 10 6" fill="none">
+          <svg class="vbl-dropdown-arrow w-2.5 h-1.5 text-current transition-transform duration-300" viewBox="0 0 10 6" fill="none">
             <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" />
           </svg>
         </button>
 
-        <!-- Selector Idioma -->
-        <div class="relative group">
+        <!-- Selector Idioma Desktop -->
+        <div class="relative group h-full flex items-center">
           <button type="button"
-            class="vbl-lang-trigger text-[13px] tracking-[1.3px] uppercase text-white hover:text-dourado transition-colors flex items-center gap-1.5">
+            class="vbl-lang-trigger text-[13px] tracking-[1.3px] uppercase text-white hover:text-white transition-colors flex items-center gap-1.5 cursor-pointer py-2">
             <span><?php echo esc_html($lang_data['current']); ?></span>
             <svg class="w-2.5 h-1.5 text-current group-hover:rotate-180 transition-transform duration-300"
               viewBox="0 0 10 6" fill="none">
@@ -246,7 +250,7 @@ $is_contactos_active    = (strpos($current_template, 'hotel-contactos') !== fals
             </svg>
           </button>
           <div
-            class="absolute top-full right-0 hidden group-hover:flex flex-col bg-white border border-[#eee8e5] py-2 min-w-[80px] shadow-xl text-[#0d5257] z-50">
+            class="absolute top-full right-0 hidden group-hover:flex flex-col bg-white border border-[#eee8e5] py-2 min-w-[90px] shadow-xl text-[#0d5257] z-50">
             <?php foreach ($lang_data['languages'] as $lang_item): ?>
               <a href="<?php echo esc_url($lang_item['url']); ?>"
                 class="px-4 py-1.5 text-[12px] uppercase <?php echo !empty($lang_item['is_current']) ? 'font-bold text-[#0da9a6]' : 'text-[#0d5257] hover:text-[#0da9a6] hover:bg-[#f8f6f4]'; ?> transition-colors">
@@ -271,6 +275,21 @@ $is_contactos_active    = (strpos($current_template, 'hotel-contactos') !== fals
 
       <!-- Mobile & Tablet Controls -->
       <div class="xl:hidden flex items-center gap-3">
+        <!-- Language Switcher Mobile Header -->
+        <div class="relative group">
+          <button type="button" class="text-[12px] sm:text-[14px] tracking-[1.4px] uppercase text-white flex items-center gap-1.5 cursor-pointer vbl-hotel-lang-mobile">
+            <span><?php echo esc_html($lang_data['current']); ?></span>
+            <svg class="w-2 h-1 group-hover:rotate-180 transition-transform duration-300 text-white" viewBox="0 0 8 4" fill="none" aria-hidden="true"><path d="M1 0.5L4 3.5L7 0.5" stroke="currentColor" stroke-width="1.2"/></svg>
+          </button>
+          <div class="absolute top-full right-0 hidden group-hover:flex flex-col bg-white border border-[#eee8e5] py-2 min-w-[80px] shadow-xl text-[#0d5257] z-50">
+            <?php foreach ($lang_data['languages'] as $lang_item): ?>
+              <a href="<?php echo esc_url($lang_item['url']); ?>" class="px-4 py-1.5 text-[12px] uppercase <?php echo !empty($lang_item['is_current']) ? 'font-bold text-[#0da9a6]' : 'text-[#0d5257] hover:text-[#0da9a6] hover:bg-[#f8f6f4]'; ?> transition-colors">
+                <?php echo esc_html($lang_item['code']); ?>
+              </a>
+            <?php endforeach; ?>
+          </div>
+        </div>
+
         <a href="<?php echo esc_url($hotel_booking_url); ?>"
           class="vbl-hotel-btn-reservar group hidden [@media(min-width:426px)_and_(max-width:1279px)]:flex items-center gap-2 sm:gap-4 px-3 py-1.5 sm:px-4 sm:py-2 border border-white text-white text-[12px] sm:text-[14px] tracking-[1.2px] sm:tracking-[1.4px] uppercase transition-all duration-300">
           <span>Reservar</span>
@@ -294,7 +313,7 @@ $is_contactos_active    = (strpos($current_template, 'hotel-contactos') !== fals
 
   <!-- ====== MEGA MENU — Dropdown Hotéis ====== -->
   <div id="megaMenu"
-    class="vbl-mega-menu hidden xl:block border-b border-[#eee8e5] max-h-0 overflow-hidden opacity-0 transition-all duration-[400ms] ease-in-out"
+    class="vbl-mega-menu hidden xl:block fixed border-b border-[#eee8e5] max-h-0 overflow-hidden opacity-0 transition-all duration-[400ms] ease-in-out"
     style="background:#ffffff;z-index:45">
     <div
       class="max-w-[1920px] mx-auto px-[clamp(24px,3.33vw,64px)] py-[clamp(32px,2.92vw,56px)] flex items-start justify-between gap-[clamp(16px,1.25vw,24px)]">

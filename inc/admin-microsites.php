@@ -387,3 +387,54 @@ function vbl_get_mega_menu_hotels() {
 
     return $hotels;
 }
+
+/**
+ * Retorna a cor de destaque (accent color) do hotel atual ou especificado
+ * 
+ * @param int|null $post_id
+ * @return string Cor em formato HEX (#00B5B4, etc.)
+ */
+function vbl_get_hotel_accent_color( $post_id = null ) {
+    if ( ! $post_id ) {
+        $post_id = get_the_ID();
+    }
+    
+    // Se for quarto, busca o hotel pai associado
+    if ( is_singular( 'vbl_quarto' ) ) {
+        $parent = function_exists( 'vbl_field' ) ? vbl_field( 'vbl_quarto_hotel', $post_id ) : get_field( 'vbl_quarto_hotel', $post_id );
+        if ( $parent ) {
+            $post_id = is_object( $parent ) ? $parent->ID : (int) $parent;
+        }
+    } else {
+        $parent_id = wp_get_post_parent_id( $post_id );
+        if ( $parent_id ) {
+            $post_id = $parent_id;
+        }
+    }
+
+    // 1. Campo customizado ACF explícito se preenchido
+    $custom_color = function_exists( 'vbl_field' ) ? vbl_field( 'vbl_hotel_accent_color', $post_id ) : get_field( 'vbl_hotel_accent_color', $post_id );
+    if ( ! empty( $custom_color ) ) {
+        return $custom_color;
+    }
+
+    // 2. Mapeamento padrão pela slug do hotel
+    $post_obj = get_post( $post_id );
+    if ( $post_obj ) {
+        $slug = str_replace( array( 'vila-baleira-', '-novo' ), '', $post_obj->post_name );
+        $color_map = array(
+            'porto-santo' => '#00B5B4',
+            'suites'      => '#D7A584',
+            'village'     => '#658D72',
+            'funchal'     => '#F0B85E',
+            'madeira'     => '#F0B85E',
+            'residences'  => '#BC945B',
+            'residence'   => '#BC945B',
+        );
+        if ( isset( $color_map[ $slug ] ) ) {
+            return $color_map[ $slug ];
+        }
+    }
+
+    return '#00B5B4'; // Default Porto Santo Cyan
+}
