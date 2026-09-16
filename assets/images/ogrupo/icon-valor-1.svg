@@ -1,0 +1,6 @@
+<svg preserveAspectRatio="xMidYMid meet" overflow="visible" style="display: block;" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Icon">
+<rect x="0.5" y="0.5" width="63" height="63" stroke="var(--stroke-0, #BC945B)"/>
+<path id="Vector-Shape" d="M32 16V18.9091M32 45.0909V48M20.6836 20.6836L22.7491 22.7491M41.2509 41.2509L43.3164 43.3164M16 32H18.9091M45.0909 32H48M20.6836 43.3164L22.7491 41.2509M41.2509 22.7491L43.3164 20.6836M39.2727 32C39.2727 36.0166 36.0166 39.2727 32 39.2727C27.9834 39.2727 24.7273 36.0166 24.7273 32C24.7273 27.9834 27.9834 24.7273 32 24.7273C36.0166 24.7273 39.2727 27.9834 39.2727 32Z" stroke="var(--stroke-0, #BC945B)" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+</svg>

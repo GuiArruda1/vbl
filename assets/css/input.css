@@ -1,0 +1,127 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  @font-face {
+    font-family: 'OldStandardTT';
+    src: url('../fonts/OldStandardTT-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'OldStandardTT';
+    src: url('../fonts/OldStandardTT-Italic.ttf') format('truetype');
+    font-weight: 400;
+    font-style: italic;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'OldStandardTT';
+    src: url('../fonts/OldStandardTT-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Commissioner';
+    src: url('../fonts/Commissioner-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Commissioner';
+    src: url('../fonts/Commissioner-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Commissioner';
+    src: url('../fonts/Commissioner-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  body {
+    font-family: 'OldStandardTT', serif;
+    color: #000000;
+    background: #ffffff;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+@layer components {
+  /* Layout Containers */
+  .vbl-container {
+    @apply max-w-[1920px] mx-auto px-6 md:px-10 lg:px-[8.33%];
+  }
+
+  /* Subtitles */
+  .vbl-subtitle {
+    @apply font-body text-[12px] xl:text-[14px] tracking-[1.4px] uppercase text-verde flex items-center gap-4;
+  }
+  .vbl-subtitle::before {
+    content: '';
+    @apply w-10 h-px bg-dourado inline-block flex-shrink-0;
+  }
+
+  /* Buttons */
+  .vbl-btn-primary {
+    @apply font-body inline-flex items-center gap-4 px-4 py-2 border-t border-b border-dourado text-dourado text-[14px] tracking-[1.4px] uppercase transition-all duration-300 cursor-pointer;
+  }
+  .vbl-btn-white {
+    @apply font-body inline-flex items-center gap-4 px-4 py-2 border border-white text-white text-[14px] tracking-[1.4px] uppercase transition-all duration-300 cursor-pointer;
+  }
+  .vbl-btn-microsite {
+    @apply relative inline-flex items-center justify-between w-[200px] border-t border-b border-[#00B5B4] py-2.5 px-4 transition-all duration-300 cursor-pointer text-[#00B5B4] bg-transparent;
+    border-left: none !important;
+    border-right: none !important;
+  }
+  .vbl-btn-microsite:hover {
+    @apply bg-[#00B5B4] text-white border-[#00B5B4];
+  }
+  .vbl-btn-microsite span {
+    @apply font-body text-[11px] xl:text-[12px] tracking-[2px] uppercase font-medium text-[#00B5B4] transition-colors duration-300;
+  }
+  .vbl-btn-microsite:hover span {
+    @apply text-white;
+  }
+  .vbl-btn-microsite svg {
+    @apply w-3.5 h-3.5 text-[#00B5B4] transition-all duration-300;
+  }
+  .vbl-btn-microsite:hover svg {
+    @apply text-white rotate-45;
+  }
+
+  /* Form Inputs */
+  .vbl-form-input {
+    @apply font-body w-full px-4 py-4 border-b border-black/30 bg-transparent text-[14px] tracking-[1.4px] uppercase outline-none transition-colors;
+  }
+  .vbl-form-input:focus {
+    @apply border-verde;
+  }
+
+  /* Mobile Accordions */
+  #mobileHotelCards,
+  #mobileRoomsCards {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-out, opacity 0.3s ease-out;
+  }
+  #mobileHotelCards.is-open,
+  #mobileRoomsCards.is-open {
+    max-height: 2000px !important;
+    opacity: 1 !important;
+  }
+  #mobileHotelArrow.is-open,
+  #mobileRoomsArrow.is-open {
+    transform: rotate(180deg);
+  }
+}

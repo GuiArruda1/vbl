@@ -1,0 +1,6 @@
+<svg preserveAspectRatio="xMidYMid meet" overflow="visible" style="display: block;" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Phone">
+<rect x="0.5" y="0.5" width="63" height="63" stroke="var(--stroke-0, #BC945B)"/>
+<path id="Vector-Shape" d="M32.4916 16L42.0428 25.3754C43.9317 27.2283 45.2183 29.5894 45.7399 32.1602C46.2616 34.7309 45.9947 37.3958 44.9732 39.8177C43.9517 42.2396 42.2214 44.3097 40.0011 45.7661C37.7809 47.2226 35.1704 48 32.5 48C29.8296 48 27.2191 47.2226 24.9989 45.7661C22.7786 44.3097 21.0483 42.2396 20.0268 39.8177C19.0053 37.3958 18.7384 34.7309 19.2601 32.1602C19.7817 29.5894 21.0683 27.2283 22.9572 25.3754L32.4916 16Z" stroke="var(--stroke-0, #BC945B)" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+</svg>

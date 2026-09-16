@@ -1,0 +1,13 @@
+{
+  "name": "vila-baleira-theme",
+  "version": "1.5.2",
+  "private": true,
+  "scripts": {
+    "dev": "npx tailwindcss -i ./assets/css/input.css -o ./assets/css/main.min.css --watch",
+    "build": "npx tailwindcss -i ./assets/css/input.css -o ./assets/css/main.min.css --minify",
+    "deploy": "./scripts/deploy.sh"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.0"
+  }
+}

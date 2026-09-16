@@ -1,0 +1,373 @@
+/*
+Theme Name: Vila Baleira
+Theme URI: https://vilabaleira.com
+Author: Sanzza
+Author URI: https://sanzza.com
+Description: Custom WordPress theme for Vila Baleira Hotel Holding — responsive design with Tailwind CSS.
+Version: 1.0.0
+License: All Rights Reserved
+Text Domain: vila-baleira
+Tags: hotel, luxury, responsive, tailwind, custom-template
+*/
+
+/* ========================================
+   Vila Baleira — Design Tokens & Base
+   ======================================== */
+:root {
+  --verde: #0d5257;
+  --dourado: #bc945b;
+  --branco: #ffffff;
+  --bege: #eee8e5;
+  --preto: #000000;
+}
+
+/* ========================================
+   Base Resets
+   ======================================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+@font-face {
+    font-family: 'OldStandardTT';
+    src: url('assets/fonts/OldStandardTT-Regular.ttf') format('truetype'); 
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+  }
+	@font-face {
+    font-family: 'OldStandardTT';
+    src: url('assets/fonts/OldStandardTT-Italic.ttf') format('truetype'); 
+    font-weight: 400;
+    font-style: italic;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: 'OldStandardTT';
+    src: url('assets/fonts/OldStandardTT-Bold.ttf') format('truetype'); 
+    font-weight: 700; 
+    font-style: normal;
+    font-display: swap;
+  }
+
+/* -- NEW Font AddOn -- */
+  @font-face {
+    font-family: 'Commissioner';
+    src: url('assets/fonts/Commissioner-Bold.ttf') format('truetype'); 
+    font-weight: 700; 
+    font-style: normal;
+    font-display: swap;
+  }
+
+@font-face {
+    font-family: 'Commissioner';
+    src: url('assets/fonts/Commissioner-Light.ttf') format('truetype'); 
+    font-weight: 300; 
+    font-style: normal;
+    font-display: swap;
+  }
+
+@font-face {
+    font-family: 'Commissioner';
+    src: url('assets/fonts/Commissioner-Regular.ttf') format('truetype'); 
+    font-weight: normal; 
+    font-style: normal;
+    font-display: swap;
+  }
+
+body {
+  font-family: 'OldStandardTT', serif;
+  color: var(--preto);
+  background: var(--branco);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+  
+
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+button {
+  border-style: solid;
+  border-width: 0;
+  border-color: inherit;
+  background: none;
+  cursor: pointer;
+  font: inherit;
+}
+
+/* ========================================
+   WordPress-specific overrides
+   ======================================== */
+.wp-block-image img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Remove WordPress admin bar spacing when logged in */
+body.admin-bar .header-fixo {
+  top: 32px;
+}
+
+@media screen and (max-width: 782px) {
+  body.admin-bar .header-fixo {
+    top: 46px;
+  }
+}
+
+/* ========================================
+   Scrollbar hide utility
+   ======================================== */
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* ========================================
+   WordPress Menu Reset
+   ======================================== */
+.vbl-nav-menu,
+.vbl-nav-menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.vbl-nav-menu li {
+  display: inline-block;
+}
+
+.vbl-nav-menu a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Mobile nav menu */
+.vbl-mobile-menu,
+.vbl-mobile-menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.vbl-mobile-menu li {
+  display: block;
+}
+
+/* ========================================
+   Botões de Seta dos Carrosseis
+   Normal: transparente + borda dourada + seta dourada
+   Hover:  fundo dourado + seta branca
+   ======================================== */
+.vbl-arrow-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  background: transparent;
+  border: 1px solid #bc945b;
+  cursor: pointer;
+  transition: background 0.25s ease;
+  flex-shrink: 0;
+}
+
+.vbl-arrow-btn img {
+  width: 27px;
+  height: 27px;
+  transition: filter 0.25s ease;
+}
+
+.vbl-arrow-btn:hover {
+  background: #bc945b;
+}
+
+/* Inverte a cor do SVG para branco no hover */
+.vbl-arrow-btn:hover img {
+  filter: brightness(0) invert(1);
+}
+
+
+/* Fix: WordPress button reset kills Tailwind borders — restore border-style while keeping lateral borders zero */
+    button { 
+      border-width: 0; 
+      border-style: solid; 
+      background: transparent;
+    }
+    /* VBL Hover Interactions — Figma SMART_ANIMATE 400ms ease-in-out */
+    .vbl-nav-link { transition: color 0.4s ease-in-out; }
+    .vbl-nav-link:hover { color: #bc945b; text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; }
+    .vbl-nav-link-white { transition: color 0.4s ease-in-out; }
+    .vbl-nav-link-white:hover { text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; }
+    .vbl-btn { 
+      border-left: none !important; 
+      border-right: none !important; 
+      border-left-width: 0 !important;
+      border-right-width: 0 !important;
+      background: transparent;
+      cursor: pointer;
+      transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out, border-color 0.3s ease-in-out, transform 0.3s ease-in-out; 
+    }
+    .vbl-btn:hover { 
+      background-color: #bc945b; 
+      color: #ffffff !important; 
+      border-color: #bc945b; 
+    }
+    .vbl-btn.hover\:bg-\[\#0da9a6\]:hover,
+    .vbl-btn-teal:hover {
+      background-color: #0da9a6 !important;
+      border-color: #0da9a6 !important;
+    }
+    .vbl-btn:hover svg,
+    .vbl-btn:hover svg path {
+      stroke: #ffffff !important;
+      color: #ffffff !important;
+    }
+    .vbl-btn-reservar { transition: background-color 0.4s ease-in-out, color 0.4s ease-in-out, border-color 0.4s ease-in-out; }
+    .vbl-btn-reservar:hover { 
+		background-color: #bc945b; 
+		color: white; 
+		border-color: #bc945b;
+		border: 1px solid white;
+	}	
+    .vbl-btn-reservar:hover svg path { stroke: white; transition: stroke 0.4s ease-in-out; }
+    .vbl-arrow { transition: background-color 0.4s ease-in-out, border-color 0.4s ease-in-out; }
+    .vbl-back-top { transition: all 0.4s ease-in-out; }
+    #backTop {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 0.3s ease, visibility 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+      transform: translateY(8px);
+    }
+    #backTop.is-visible {
+      opacity: 1 !important;
+      visibility: visible !important;
+      pointer-events: auto !important;
+      transform: translateY(0) !important;
+    }
+    .vbl-footer-link { transition: color 0.4s ease-in-out; }
+    .vbl-footer-link:hover { color: #bc945b; text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+    .vbl-social { transition: filter 0.4s ease-in-out; }
+    .vbl-social:hover img { filter: brightness(0) saturate(100%) invert(63%) sepia(52%) saturate(405%) hue-rotate(6deg) brightness(92%) contrast(87%); transition: filter 0.4s ease-in-out; }
+    .vbl-social img { transition: filter 0.4s ease-in-out; }
+    /* Mega Menu */
+    .vbl-mega-menu { position: fixed; top: 81px; left: 0; width: 100%; z-index: 45; background: #ffffff; max-height: 0; opacity: 0; overflow: hidden; pointer-events: none; transition: max-height 0.4s ease-in-out, opacity 0.35s ease-in-out; }
+    .vbl-hotel-card img { transition: opacity 0.4s ease-in-out; }
+    .vbl-hotel-card:hover img { opacity: 1 !important; }
+    .vbl-dropdown-arrow { transition: transform 0.4s ease-in-out; }
+    .vbl-dropdown-arrow.is-rotated { transform: rotate(180deg); }
+    /* Mobile hotel accordion */
+    #mobileHotelCards { max-height: 0; opacity: 0; overflow: hidden; transition: max-height 0.4s ease-out, opacity 0.3s ease-out; }
+    #mobileHotelCards.is-open { max-height: 2000px !important; opacity: 1 !important; }
+    #mobileHotelArrow.is-open { transform: rotate(180deg); }
+    /* Mobile rooms accordion */
+    #mobileRoomsCards { max-height: 0; opacity: 0; overflow: hidden; transition: max-height 0.4s ease-out, opacity 0.3s ease-out; }
+    #mobileRoomsCards.is-open { max-height: 2000px !important; opacity: 1 !important; }
+    #mobileRoomsArrow.is-open { transform: rotate(180deg); }
+
+
+/* ========================================
+   Microsite Header on Scroll
+   ======================================== */
+#headerHotel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 50;
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+#headerHotel.is-scrolled {
+  background: #ffffff !important;
+  background-image: none !important;
+  border-bottom: 1px solid #eee8e5 !important;
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.04);
+}
+
+#headerHotel.is-scrolled .vbl-hotel-logo-img {
+  filter: none !important;
+}
+
+#headerHotel.is-scrolled .vbl-logo-transparent {
+  display: none !important;
+}
+
+#headerHotel.is-scrolled .vbl-logo-scrolled {
+  display: block !important;
+}
+
+#headerHotel.is-scrolled .vbl-hotel-logo-text {
+  border-left-color: rgba(13, 82, 87, 0.2) !important;
+}
+
+#headerHotel.is-scrolled .vbl-hotel-logo-text span {
+  color: #0d5257 !important;
+}
+
+#headerHotel.is-scrolled .vbl-hotel-nav-link,
+#headerHotel.is-scrolled .vbl-hotels-trigger,
+#headerHotel.is-scrolled .vbl-lang-trigger {
+  color: #0d5257 !important;
+}
+
+#headerHotel.is-scrolled .vbl-hotel-nav-link:hover,
+#headerHotel.is-scrolled .vbl-hotels-trigger:hover,
+#headerHotel.is-scrolled .vbl-lang-trigger:hover {
+  color: #0da9a6 !important;
+}
+
+#headerHotel.is-scrolled nav svg,
+#headerHotel.is-scrolled .vbl-hotels-trigger svg,
+#headerHotel.is-scrolled .vbl-lang-trigger svg {
+  color: #0d5257 !important;
+}
+
+#headerHotel.is-scrolled .vbl-hotel-btn-reservar {
+  border-color: #0da9a6 !important;
+  color: #0da9a6 !important;
+  background-color: transparent !important;
+}
+
+#headerHotel.is-scrolled .vbl-hotel-btn-reservar svg,
+#headerHotel.is-scrolled .vbl-hotel-btn-reservar svg path {
+  color: #0da9a6 !important;
+  fill: #0da9a6 !important;
+}
+
+#headerHotel.is-scrolled .vbl-hotel-btn-reservar:hover {
+  background-color: #0da9a6 !important;
+  border-color: #0da9a6 !important;
+  color: #ffffff !important;
+}
+
+#headerHotel.is-scrolled .vbl-hotel-btn-reservar:hover svg,
+#headerHotel.is-scrolled .vbl-hotel-btn-reservar:hover svg path {
+  color: #ffffff !important;
+  fill: #ffffff !important;
+  stroke: #ffffff !important;
+}
+
+#headerHotel.is-scrolled .menu-toggle span {
+  background-color: #0d5257 !important;
+}
+
+/* ========================================
+   MOBILE
+   ======================================== */
+
+
