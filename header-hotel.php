@@ -83,7 +83,7 @@ $is_contactos_active    = (strpos($current_template, 'hotel-contactos') !== fals
   <header id="headerHotel"
     class="font-body fixed top-0 left-0 w-full z-50 bg-gradient-to-b from-black/60 via-black/30 to-transparent transition-all duration-300">
     <div
-      class="max-w-[1920px] mx-auto h-20 xl:h-24 flex items-center justify-between px-6 xl:px-12 transition-all duration-300">
+      class="max-w-[1920px] mx-auto h-20 xl:h-24 flex items-center justify-between px-6 xl:px-[8.33%] transition-all duration-300">
 
       <!-- Grupo Esquerda: Logo + Menu Principal (Menu perto do logotipo) -->
       <div class="flex items-center gap-8 2xl:gap-14 min-w-0">
