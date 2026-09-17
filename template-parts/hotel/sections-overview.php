@@ -423,63 +423,104 @@ if ( empty( $exp_img_right ) ) {
 </section>
 
 <!-- ====== 3. ATIVIDADES & EXPERIÊNCIAS ====== -->
-<section id="atividades" class="w-full py-24 lg:py-40 bg-white text-black overflow-hidden">
-  <div class="max-w-[1920px] mx-auto px-6 xl:px-[8.33%]">
-    
-    <!-- Title -->
-    <h2 class="font-display text-[44px] md:text-[56px] lg:text-[72px] xl:text-[90px] leading-[1.05] text-[#0d5257] uppercase mb-12 lg:mb-16">
+<section id="atividades" class="w-full py-16 md:py-24 xl:py-32 bg-white text-black overflow-hidden">
+  
+  <!-- Title (Aligned to standard container grid) -->
+  <div class="max-w-[1920px] mx-auto px-6 xl:px-[8.33%] mb-8 md:mb-12 xl:mb-14">
+    <h2 class="font-display text-[40px] md:text-[56px] lg:text-[72px] xl:text-[90px] leading-[1.05] text-[#0d5257] uppercase">
       <?php echo wp_kses_post( $exp_title ); ?>
     </h2>
+  </div>
 
-    <!-- Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-10 xl:gap-12 relative">
+  <!-- Mobile / Tablet (< xl) -->
+  <div class="xl:hidden px-6 md:px-10 flex flex-col gap-10">
+    <div class="flex flex-col gap-6">
+      <p class="font-body font-light text-[15px] leading-relaxed text-black/70 max-w-[480px]">
+        <?php echo nl2br( esc_html( $exp_desc ) ); ?>
+      </p>
       
-      <!-- Left Column (Text + 2 small images) -->
-      <div class="md:col-span-4 lg:col-span-3 flex flex-col justify-between">
-        <div class="pt-2">
-          <p class="font-body font-light text-[14px] leading-relaxed text-black/70 mb-10 max-w-[320px]">
-            <?php echo nl2br( esc_html( $exp_desc ) ); ?>
-          </p>
-          
-          <a href="<?php echo esc_url( $exp_btn_url ); ?>" class="vbl-btn-microsite mb-12">
-            <span><?php echo esc_html( $exp_btn_label ); ?></span>
-            <svg viewBox="0 0 12 12" fill="none">
-               <path d="M1 11L11 1M11 1H3.5M11 1V8.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </a>
-        </div>
-
-        <!-- Stacked small images -->
-        <div class="flex flex-col gap-6 lg:gap-8 mt-12 md:mt-0">
-          <div class="w-full aspect-[4/3] bg-gray-100">
-            <img src="<?php echo esc_url( $exp_img_1 ); ?>" class="w-full h-full object-cover" alt="Atividade">
-          </div>
-          <div class="w-full aspect-[4/3] bg-gray-100">
-            <img src="<?php echo esc_url( $exp_img_2 ); ?>" class="w-full h-full object-cover" alt="Atividade">
-          </div>
-        </div>
-      </div>
-
-      <!-- Center Column (Large tall image) -->
-      <div class="md:col-span-5 lg:col-span-6">
-        <div class="w-full h-full min-h-[600px] lg:min-h-[760px] bg-gray-100 relative shadow-sm">
-          <img src="<?php echo esc_url( $exp_img_center ); ?>" class="w-full h-full object-cover" alt="Atividades">
-        </div>
-      </div>
-
-      <!-- Right Column (Seashell + Medium image) -->
-      <div class="md:col-span-3 lg:col-span-3 relative flex flex-col justify-end mt-16 md:mt-0">
-        
-        <!-- Seashell Illustration (Absolute) -->
-        <div class="absolute -top-16 lg:-top-32 -left-12 lg:-left-24 z-20 w-48 lg:w-72 pointer-events-none mix-blend-multiply">
-           <img src="<?php echo vbl_img('concha-cyan.svg'); ?>" alt="Shell Decoration" class="w-full h-auto drop-shadow-lg">
-        </div>
-        
-        <div class="w-full aspect-[3/4] bg-gray-100 relative z-10 mt-24 md:mt-0">
-          <img src="<?php echo esc_url( $exp_img_right ); ?>" class="w-full h-full object-cover" alt="Piscina interior">
-        </div>
-      </div>
-
+      <a href="<?php echo esc_url( $exp_btn_url ); ?>" class="vbl-btn-microsite self-start">
+        <span><?php echo esc_html( $exp_btn_label ); ?></span>
+        <svg viewBox="0 0 12 12" fill="none">
+          <path d="M1 11L11 1M11 1H3.5M11 1V8.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
     </div>
+
+    <!-- Center Big Image -->
+    <div class="w-full aspect-[4/5] bg-gray-100 overflow-hidden shadow-sm">
+      <img src="<?php echo esc_url( $exp_img_center ); ?>" class="w-full h-full object-cover" alt="Atividades">
+    </div>
+
+    <!-- Stacked Images + Right Image Grid -->
+    <div class="grid grid-cols-2 gap-4 items-end relative">
+      <div class="flex flex-col gap-4">
+        <div class="w-full aspect-[4/3] bg-gray-100 overflow-hidden shadow-sm">
+          <img src="<?php echo esc_url( $exp_img_1 ); ?>" class="w-full h-full object-cover" alt="Atividade">
+        </div>
+        <div class="w-full aspect-[4/3] bg-gray-100 overflow-hidden shadow-sm">
+          <img src="<?php echo esc_url( $exp_img_2 ); ?>" class="w-full h-full object-cover" alt="Atividade">
+        </div>
+      </div>
+      <div class="relative w-full aspect-[3/4] bg-gray-100 overflow-hidden shadow-sm">
+        <div class="absolute -top-12 -left-8 z-10 w-28 pointer-events-none mix-blend-multiply">
+          <img src="<?php echo vbl_img('concha-cyan.svg'); ?>" alt="Shell Decoration" class="w-full h-auto drop-shadow-md">
+        </div>
+        <img src="<?php echo esc_url( $exp_img_right ); ?>" class="w-full h-full object-cover" alt="Piscina interior">
+      </div>
+    </div>
+  </div>
+
+  <!-- Desktop (>= xl): Exato ao Design (como no Institucional) -->
+  <div class="hidden xl:flex max-w-[1920px] mx-auto pl-[8.33%] pr-0 relative items-end justify-between min-h-[640px] xl:min-h-[720px] 2xl:min-h-[780px]">
+    
+    <!-- 1. Coluna Esquerda: Texto + Botão + 2 Imagens Ligeiramente Indentadas -->
+    <div class="w-[28%] flex-shrink-0 flex flex-col justify-between self-stretch pr-4 2xl:pr-6 z-10">
+      <!-- Topo: Texto e Botão alinhados à esquerda -->
+      <div class="pt-2">
+        <p class="font-body font-light text-[15px] leading-[24px] text-black/70 mb-8 max-w-[340px]">
+          <?php echo nl2br( esc_html( $exp_desc ) ); ?>
+        </p>
+        
+        <a href="<?php echo esc_url( $exp_btn_url ); ?>" class="vbl-btn-microsite mb-10">
+          <span><?php echo esc_html( $exp_btn_label ); ?></span>
+          <svg viewBox="0 0 12 12" fill="none">
+            <path d="M1 11L11 1M11 1H3.5M11 1V8.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+
+      <!-- Fundo: 2 Imagens sobrepostas ligeiramente indentadas à direita -->
+      <div class="flex flex-col gap-5 2xl:gap-6 ml-[18%] w-[82%]">
+        <div class="w-full aspect-[4/3] bg-gray-100 overflow-hidden shadow-sm">
+          <img src="<?php echo esc_url( $exp_img_1 ); ?>" class="w-full h-full object-cover" alt="Atividade">
+        </div>
+        <div class="w-full aspect-[4/3] bg-gray-100 overflow-hidden shadow-sm">
+          <img src="<?php echo esc_url( $exp_img_2 ); ?>" class="w-full h-full object-cover" alt="Atividade">
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. Coluna Central: Imagem Grande Ajustada (Mais Larga e Alta) -->
+    <div class="w-[45%] flex-shrink-0 self-stretch flex items-end px-2 2xl:px-4">
+      <div class="w-full h-full min-h-[640px] xl:min-h-[720px] 2xl:min-h-[780px] bg-gray-100 overflow-hidden shadow-sm">
+        <img src="<?php echo esc_url( $exp_img_center ); ?>" class="w-full h-full object-cover" alt="Atividades">
+      </div>
+    </div>
+
+    <!-- 3. Coluna Direita: Imagem até ao Limite da Página (pr-0) + Concha Decorativa -->
+    <div class="w-[27%] flex-shrink-0 relative flex flex-col justify-end pl-2 2xl:pl-4">
+      
+      <!-- Concha Decorativa Sobreposta no canto superior esquerdo da foto -->
+      <div class="absolute -top-20 xl:-top-28 -left-14 xl:-left-20 2xl:-left-24 z-20 w-44 xl:w-56 2xl:w-64 pointer-events-none mix-blend-multiply">
+        <img src="<?php echo vbl_img('concha-cyan.svg'); ?>" alt="Shell Decoration" class="w-full h-auto drop-shadow-md">
+      </div>
+      
+      <!-- Imagem Direita (vai até ao limite da página) -->
+      <div class="w-full aspect-[3/4] 2xl:aspect-[416/480] bg-gray-100 overflow-hidden shadow-sm">
+        <img src="<?php echo esc_url( $exp_img_right ); ?>" class="w-full h-full object-cover" alt="Piscina interior">
+      </div>
+    </div>
+
   </div>
 </section>
