@@ -174,17 +174,24 @@ if ( empty( $exp_img_right ) ) {
 <section id="quartos" class="w-full py-20 lg:py-32 bg-white text-black overflow-hidden">
   <div class="max-w-[1426px] mx-auto px-4 sm:px-6 lg:px-8 relative">
     
+    <!-- Left Navigation Arrow (64x64, floating over left picture border, centered on horizontal midline) -->
+    <button class="absolute left-4 sm:left-6 lg:left-8 -translate-x-1/2 top-1/2 -translate-y-1/2 z-20 w-16 h-16 border border-[#00B5B4] text-[#00B5B4] bg-transparent flex items-center justify-center hover:bg-white hover:text-[#00B5B4] hover:border-[#00B5B4] transition-all duration-300 cursor-pointer shadow-sm" aria-label="Quarto Anterior">
+      <svg class="w-6 h-6 sm:w-7 sm:h-7" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M28 15H1M1 15L14 2M1 15L14 28" />
+      </svg>
+    </button>
+
+    <!-- Right Navigation Arrow (64x64, floating over preview picture border, on exact same horizontal midline) -->
+    <button class="absolute right-4 sm:right-6 lg:right-8 translate-x-1/2 top-1/2 -translate-y-1/2 z-20 w-16 h-16 border border-[#00B5B4] text-[#00B5B4] bg-transparent flex items-center justify-center hover:bg-white hover:text-[#00B5B4] hover:border-[#00B5B4] transition-all duration-300 cursor-pointer shadow-sm" aria-label="Próximo Quarto">
+      <svg class="w-6 h-6 sm:w-7 sm:h-7" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M1 15H28M28 15L15 2M28 15L15 28" />
+      </svg>
+    </button>
+    
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-14 items-center min-h-[560px] lg:min-h-[682px]">
       
       <!-- Left Side: Large Image -->
       <div class="relative w-full h-full flex items-center">
-        <!-- Left Arrow (Floating over left border at vertical center of the picture) -->
-        <button class="absolute -left-3 sm:-left-5 lg:-left-6 top-1/2 -translate-y-1/2 z-20 w-11 h-11 lg:w-12 lg:h-12 border border-[#00B5B4] text-[#00B5B4] bg-transparent flex items-center justify-center hover:bg-white hover:text-[#00B5B4] hover:border-[#00B5B4] transition-all duration-300 cursor-pointer" aria-label="Quarto Anterior">
-          <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M28 15H1M1 15L14 2M1 15L14 28" />
-          </svg>
-        </button>
-
         <div class="w-full aspect-[4/4.2] lg:aspect-auto lg:h-[682px] bg-gray-100 shadow-xl shadow-black/5 overflow-hidden">
           <img src="<?php echo esc_url( $rooms_img_main ); ?>" alt="<?php echo esc_attr( strip_tags( $rooms_title ) ); ?>" class="w-full h-full object-cover">
         </div>
@@ -206,24 +213,15 @@ if ( empty( $exp_img_right ) ) {
         </div>
 
         <!-- Indented Section: Text, Preview Image & Button all aligned to the exact same left guide -->
-        <div class="pl-4 sm:pl-8 md:pl-16 flex flex-col items-start">
+        <div class="pl-4 sm:pl-8 md:pl-16 flex flex-col items-start w-full">
           <!-- Description -->
           <p class="font-body font-light text-[14px] leading-relaxed text-black/70 max-w-[340px] mb-8">
             <?php echo esc_html( $rooms_desc ); ?>
           </p>
 
-          <!-- Next Slide Preview with Right Arrow floating on its border -->
-          <div class="relative w-full max-w-[480px] mb-8">
-            <div class="aspect-[16/10] w-full opacity-35 bg-gray-100 overflow-hidden">
-              <img src="<?php echo esc_url( $rooms_img_next ); ?>" alt="Preview next room" class="w-full h-full object-cover grayscale opacity-60">
-            </div>
-
-            <!-- Right Arrow (Floating over right border at vertical center of preview picture) -->
-            <button class="absolute -right-3 sm:-right-5 lg:-right-6 top-1/2 -translate-y-1/2 z-20 w-11 h-11 lg:w-12 lg:h-12 border border-[#00B5B4] text-[#00B5B4] bg-transparent flex items-center justify-center hover:bg-white hover:text-[#00B5B4] hover:border-[#00B5B4] transition-all duration-300 cursor-pointer" aria-label="Próximo Quarto">
-              <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M1 15H28M28 15L15 2M28 15L15 28" />
-              </svg>
-            </button>
+          <!-- Next Slide Preview (Extending to right border where the right arrow sits) -->
+          <div class="relative w-full aspect-[16/10] max-h-[300px] mb-8 bg-gray-100 overflow-hidden opacity-35">
+            <img src="<?php echo esc_url( $rooms_img_next ); ?>" alt="Preview next room" class="w-full h-full object-cover grayscale opacity-60">
           </div>
 
           <!-- Link -->
@@ -235,7 +233,6 @@ if ( empty( $exp_img_right ) ) {
           </a>
         </div>
       </div>
-      
     </div>
   </div>
 </section>
