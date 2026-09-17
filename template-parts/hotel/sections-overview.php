@@ -30,49 +30,86 @@ if ( empty( $frase_bg ) ) {
 }
 
 // 3. Quartos & Suites
-$rooms_subtitle = vbl_field( 'vbl_hhome_rooms_subtitle', false, 'ROOMS & SUITES' );
-$rooms_title    = vbl_field( 'vbl_hhome_rooms_title', false, 'TWIN DELUXE<br>VISTA MAR' );
-$rooms_desc     = vbl_field( 'vbl_hhome_rooms_desc', false, 'Quartos amplos, com varanda privada e uma decoração descontraída em cores vivas e muita luz.' );
-$rooms_btn_label = vbl_field( 'vbl_hhome_rooms_btn_label', false, 'DESCOBRIR' );
-$rooms_btn_url   = vbl_field( 'vbl_hhome_rooms_btn_url', false, '#' );
-$rooms_img_main  = vbl_field( 'vbl_hhome_rooms_img_main', false, vbl_img( 'hoteis/porto-santo-520x400.jpg' ) );
-$rooms_img_next  = vbl_field( 'vbl_hhome_rooms_img_next', false, vbl_img( 'hoteis/porto-santo-520x400.jpg' ) );
+$current_page_id = get_the_ID();
+$target_hotel_ids = array_values( array_unique( array_filter( array( $hotel_id, $current_page_id, $post->post_parent ) ) ) );
 
-// Procura quartos dinâmicos do CPT associados a este Hotel
-$dynamic_rooms = get_posts( array(
+$cpt_rooms = get_posts( array(
     'post_type'      => 'vbl_quarto',
-    'posts_per_page' => 5,
+    'posts_per_page' => 10,
     'meta_query'     => array(
         array(
             'key'     => 'vbl_quarto_hotel',
-            'value'   => $hotel_id,
-            'compare' => '=',
+            'value'   => $target_hotel_ids,
+            'compare' => 'IN',
         ),
     ),
+    'orderby'        => 'menu_order title',
+    'order'          => 'ASC',
 ) );
 
-if ( ! empty( $dynamic_rooms ) ) {
-    $first_room = $dynamic_rooms[0];
-    $rooms_title = get_the_title( $first_room->ID );
-    $rooms_btn_url = get_permalink( $first_room->ID );
-    $room_desc_dyn = vbl_field( 'vbl_quarto_capacidade', $first_room->ID );
-    if ( $room_desc_dyn ) {
-        $rooms_desc = $room_desc_dyn;
-    }
-    if ( has_post_thumbnail( $first_room->ID ) ) {
-        $rooms_img_main = get_the_post_thumbnail_url( $first_room->ID, 'large' );
-    }
-    if ( isset( $dynamic_rooms[1] ) && has_post_thumbnail( $dynamic_rooms[1]->ID ) ) {
-        $rooms_img_next = get_the_post_thumbnail_url( $dynamic_rooms[1]->ID, 'medium' );
+$rooms_slides = array();
+if ( ! empty( $cpt_rooms ) ) {
+    foreach ( $cpt_rooms as $r_post ) {
+        $q_id = $r_post->ID;
+        $q_thumb = get_the_post_thumbnail_url( $q_id, 'large' );
+        if ( empty( $q_thumb ) ) $q_thumb = vbl_img( 'hoteis/porto-santo-520x400.jpg' );
+        
+        $desc = vbl_field( 'vbl_quarto_capacidade', $q_id );
+        if ( empty( $desc ) ) {
+            $desc = get_the_excerpt( $q_id );
+        }
+        if ( empty( $desc ) ) {
+            $desc = 'Quartos amplos, com varanda privada e uma decoração descontraída em cores vivas e muita luz.';
+        }
+
+        $rooms_slides[] = array(
+            'title'       => get_the_title( $q_id ),
+            'subtitle'    => vbl_field( 'vbl_quarto_categoria', $q_id, 'ROOMS & SUITES' ) ?: 'ROOMS & SUITES',
+            'description' => wp_strip_all_tags( $desc ),
+            'image'       => $q_thumb,
+            'url'         => get_permalink( $q_id ),
+        );
     }
 }
 
-if ( empty( $rooms_img_main ) ) {
-    $rooms_img_main = vbl_img( 'hoteis/porto-santo-520x400.jpg' );
+// Fallbacks se não houver quartos suficientes
+if ( count( $rooms_slides ) < 2 ) {
+    $fallback_rooms = array(
+        array(
+            'title'       => 'TWIN DELUXE<br>VISTA MAR',
+            'subtitle'    => 'ROOMS & SUITES',
+            'description' => 'Quartos amplos, com varanda privada e uma decoração descontraída em cores vivas e muita luz.',
+            'image'       => vbl_img( 'hoteis/porto-santo-520x400.jpg' ),
+            'url'         => '#',
+        ),
+        array(
+            'title'       => 'T2 VISTA PARCIAL<br>DO MAR',
+            'subtitle'    => 'ROOMS & SUITES',
+            'description' => 'Recentemente renovados, garantem o espaço e conforto ideal para famílias grandes. Dois quartos, kitchenette e sala de estar com varanda.',
+            'image'       => vbl_img( 'hoteis/suites-680x400.jpg' ),
+            'url'         => '#',
+        ),
+        array(
+            'title'       => 'TWIN CLÁSSICO<br>VISTA JARDIM',
+            'subtitle'    => 'ROOMS & SUITES',
+            'description' => 'Ambiente acolhedor e funcional, ideal para momentos de descanso com todo o conforto que necessita na sua estadia.',
+            'image'       => vbl_img( 'hoteis/funchal-680x400.jpg' ),
+            'url'         => '#',
+        ),
+    );
+    if ( empty( $rooms_slides ) ) {
+        $rooms_slides = $fallback_rooms;
+    } else {
+        foreach ( $fallback_rooms as $fb ) {
+            $rooms_slides[] = $fb;
+        }
+    }
 }
-if ( empty( $rooms_img_next ) ) {
-    $rooms_img_next = vbl_img( 'hoteis/porto-santo-520x400.jpg' );
-}
+
+$rooms_btn_label = vbl_field( 'vbl_hhome_rooms_btn_label', false, 'DESCOBRIR' );
+$initial_room     = $rooms_slides[0];
+$next_room_idx    = count( $rooms_slides ) > 1 ? 1 : 0;
+$initial_next_room = $rooms_slides[$next_room_idx];
 
 // 4. Instalações & Experiências
 $exp_subtitle   = vbl_field( 'vbl_hhome_exp_subtitle', false, 'INSTALAÇÕES / EXPERIÊNCIAS' );
@@ -175,14 +212,14 @@ if ( empty( $exp_img_right ) ) {
   <div class="max-w-[1426px] mx-auto px-4 sm:px-6 lg:px-8 relative">
     
     <!-- Left Navigation Arrow (64x64, floating over left picture border, centered on horizontal midline) -->
-    <button class="absolute left-4 sm:left-6 lg:left-8 -translate-x-1/2 top-1/2 -translate-y-1/2 z-20 w-16 h-16 border border-[#00B5B4] text-[#00B5B4] bg-transparent flex items-center justify-center hover:bg-white hover:text-[#00B5B4] hover:border-[#00B5B4] transition-all duration-300 cursor-pointer shadow-sm" aria-label="Quarto Anterior">
+    <button id="vblOverviewRoomsPrev" class="absolute left-4 sm:left-6 lg:left-8 -translate-x-1/2 top-1/2 -translate-y-1/2 z-20 w-16 h-16 border border-[#00B5B4] text-[#00B5B4] bg-transparent flex items-center justify-center hover:bg-white hover:text-[#00B5B4] hover:border-[#00B5B4] transition-all duration-300 cursor-pointer shadow-sm" aria-label="Quarto Anterior">
       <svg class="w-6 h-6 sm:w-7 sm:h-7" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
         <path d="M28 15H1M1 15L14 2M1 15L14 28" />
       </svg>
     </button>
 
     <!-- Right Navigation Arrow (64x64, floating over preview picture border, on exact same horizontal midline) -->
-    <button class="absolute right-4 sm:right-6 lg:right-8 translate-x-1/2 top-1/2 -translate-y-1/2 z-20 w-16 h-16 border border-[#00B5B4] text-[#00B5B4] bg-transparent flex items-center justify-center hover:bg-white hover:text-[#00B5B4] hover:border-[#00B5B4] transition-all duration-300 cursor-pointer shadow-sm" aria-label="Próximo Quarto">
+    <button id="vblOverviewRoomsNext" class="absolute right-4 sm:right-6 lg:right-8 translate-x-1/2 top-1/2 -translate-y-1/2 z-20 w-16 h-16 border border-[#00B5B4] text-[#00B5B4] bg-transparent flex items-center justify-center hover:bg-white hover:text-[#00B5B4] hover:border-[#00B5B4] transition-all duration-300 cursor-pointer shadow-sm" aria-label="Próximo Quarto">
       <svg class="w-6 h-6 sm:w-7 sm:h-7" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
         <path d="M1 15H28M28 15L15 2M28 15L15 28" />
       </svg>
@@ -193,7 +230,7 @@ if ( empty( $exp_img_right ) ) {
       <!-- Left Side: Large Image -->
       <div class="relative w-full h-full flex items-center">
         <div class="w-full aspect-[4/4.2] lg:aspect-auto lg:h-[682px] bg-gray-100 shadow-xl shadow-black/5 overflow-hidden">
-          <img src="<?php echo esc_url( $rooms_img_main ); ?>" alt="<?php echo esc_attr( strip_tags( $rooms_title ) ); ?>" class="w-full h-full object-cover">
+          <img id="vblOverviewRoomImgMain" src="<?php echo esc_url( $initial_room['image'] ); ?>" alt="<?php echo esc_attr( strip_tags( $initial_room['title'] ) ); ?>" class="w-full h-full object-cover transition-opacity duration-300">
         </div>
       </div>
 
@@ -203,29 +240,29 @@ if ( empty( $exp_img_right ) ) {
           <!-- Top Tagline -->
           <div class="flex items-center gap-4 mb-4">
             <div class="w-8 h-px bg-[#0da9a6]"></div>
-            <span class="font-body text-[10px] tracking-[2px] uppercase text-[#0da9a6]">
-              <?php echo esc_html( $rooms_subtitle ); ?>
+            <span id="vblOverviewRoomSubtitle" class="font-body text-[10px] tracking-[2px] uppercase text-[#0da9a6]">
+              <?php echo esc_html( $initial_room['subtitle'] ); ?>
             </span>
           </div>
-          <h2 class="font-display text-[40px] md:text-[52px] lg:text-[64px] leading-[1.05] text-[#0d5257] uppercase mb-8">
-            <?php echo wp_kses_post( $rooms_title ); ?>
+          <h2 id="vblOverviewRoomTitle" class="font-display text-[40px] md:text-[52px] lg:text-[64px] leading-[1.05] text-[#0d5257] uppercase mb-8 transition-opacity duration-300">
+            <?php echo wp_kses_post( $initial_room['title'] ); ?>
           </h2>
         </div>
 
         <!-- Indented Section: Text, Preview Image & Button all aligned to the exact same left guide -->
         <div class="pl-4 sm:pl-8 md:pl-16 flex flex-col items-start w-full">
           <!-- Description -->
-          <p class="font-body font-light text-[14px] leading-relaxed text-black/70 max-w-[340px] mb-8">
-            <?php echo esc_html( $rooms_desc ); ?>
+          <p id="vblOverviewRoomDesc" class="font-body font-light text-[14px] leading-relaxed text-black/70 max-w-[340px] mb-8 transition-opacity duration-300">
+            <?php echo esc_html( $initial_room['description'] ); ?>
           </p>
 
           <!-- Next Slide Preview (Extending to right border where the right arrow sits) -->
-          <div class="relative w-full aspect-[16/10] max-h-[300px] mb-8 bg-gray-100 overflow-hidden opacity-35">
-            <img src="<?php echo esc_url( $rooms_img_next ); ?>" alt="Preview next room" class="w-full h-full object-cover grayscale opacity-60">
+          <div class="relative w-full aspect-[16/10] max-h-[300px] mb-8 bg-gray-100 overflow-hidden opacity-40 hover:opacity-75 transition-opacity duration-300 cursor-pointer" title="Ver próximo quarto">
+            <img id="vblOverviewRoomImgNext" src="<?php echo esc_url( $initial_next_room['image'] ); ?>" alt="<?php echo esc_attr( strip_tags( $initial_next_room['title'] ) ); ?>" class="w-full h-full object-cover grayscale transition-opacity duration-300">
           </div>
 
           <!-- Link -->
-          <a href="<?php echo esc_url( $rooms_btn_url ); ?>" class="vbl-btn-microsite">
+          <a id="vblOverviewRoomBtn" href="<?php echo esc_url( $initial_room['url'] ); ?>" class="vbl-btn-microsite">
             <span><?php echo esc_html( $rooms_btn_label ); ?></span>
             <svg viewBox="0 0 12 12" fill="none">
               <path d="M1 11L11 1H3.5M11 1V8.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
@@ -235,6 +272,115 @@ if ( empty( $exp_img_right ) ) {
       </div>
     </div>
   </div>
+
+  <!-- Rooms Data Payload -->
+  <script type="application/json" id="vblOverviewRoomsData">
+    <?php echo wp_json_encode( $rooms_slides ); ?>
+  </script>
+
+  <!-- Slider Controller -->
+  <script>
+  (function() {
+    function initOverviewRoomsSlider() {
+      var dataEl = document.getElementById('vblOverviewRoomsData');
+      var prevBtn = document.getElementById('vblOverviewRoomsPrev');
+      var nextBtn = document.getElementById('vblOverviewRoomsNext');
+      var imgMain = document.getElementById('vblOverviewRoomImgMain');
+      var imgNext = document.getElementById('vblOverviewRoomImgNext');
+      var titleEl = document.getElementById('vblOverviewRoomTitle');
+      var subtitleEl = document.getElementById('vblOverviewRoomSubtitle');
+      var descEl = document.getElementById('vblOverviewRoomDesc');
+      var btnEl = document.getElementById('vblOverviewRoomBtn');
+
+      if (!dataEl || !prevBtn || !nextBtn || !imgMain) return;
+
+      var slides = [];
+      try {
+        slides = JSON.parse(dataEl.textContent);
+      } catch(e) {
+        return;
+      }
+
+      if (!slides || !slides.length) return;
+
+      var currentIndex = 0;
+      var isBusy = false;
+
+      function renderSlide(index) {
+        if (isBusy) return;
+        isBusy = true;
+
+        var currentSlide = slides[index];
+        var nextIndex = (index + 1) % slides.length;
+        var nextSlide = slides[nextIndex];
+
+        // Fade out
+        if (imgMain) imgMain.style.opacity = '0.2';
+        if (titleEl) titleEl.style.opacity = '0';
+        if (descEl) descEl.style.opacity = '0';
+        if (imgNext) imgNext.style.opacity = '0';
+
+        setTimeout(function() {
+          if (imgMain) {
+            imgMain.src = currentSlide.image;
+            imgMain.alt = currentSlide.title.replace(/<[^>]*>?/gm, '');
+            imgMain.style.opacity = '1';
+          }
+          if (titleEl) {
+            titleEl.innerHTML = currentSlide.title;
+            titleEl.style.opacity = '1';
+          }
+          if (subtitleEl && currentSlide.subtitle) {
+            subtitleEl.textContent = currentSlide.subtitle;
+          }
+          if (descEl) {
+            descEl.textContent = currentSlide.description;
+            descEl.style.opacity = '1';
+          }
+          if (btnEl) {
+            btnEl.href = currentSlide.url;
+          }
+          if (imgNext) {
+            imgNext.src = nextSlide.image;
+            imgNext.alt = nextSlide.title.replace(/<[^>]*>?/gm, '');
+            imgNext.style.opacity = '1';
+          }
+
+          setTimeout(function() {
+            isBusy = false;
+          }, 200);
+        }, 200);
+      }
+
+      nextBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        currentIndex = (currentIndex + 1) % slides.length;
+        renderSlide(currentIndex);
+      });
+
+      prevBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+        renderSlide(currentIndex);
+      });
+
+      // Clicking preview card advances to next room
+      if (imgNext && imgNext.parentElement) {
+        imgNext.parentElement.addEventListener('click', function(e) {
+          e.preventDefault();
+          currentIndex = (currentIndex + 1) % slides.length;
+          renderSlide(currentIndex);
+        });
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initOverviewRoomsSlider);
+    } else {
+      initOverviewRoomsSlider();
+    }
+  })();
+  </script>
 </section>
 
 <!-- ====== 3. ATIVIDADES & EXPERIÊNCIAS ====== -->
