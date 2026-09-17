@@ -30,45 +30,69 @@ if ( empty( $frase_bg ) ) {
 }
 
 // 3. Quartos & Suites
-$current_page_id = get_the_ID();
-$target_hotel_ids = array_values( array_unique( array_filter( array( $hotel_id, $current_page_id, $post->post_parent ) ) ) );
-
-$cpt_rooms = get_posts( array(
-    'post_type'      => 'vbl_quarto',
-    'posts_per_page' => 10,
-    'meta_query'     => array(
-        array(
-            'key'     => 'vbl_quarto_hotel',
-            'value'   => $target_hotel_ids,
-            'compare' => 'IN',
-        ),
-    ),
-    'orderby'        => 'menu_order title',
-    'order'          => 'ASC',
-) );
-
 $rooms_slides = array();
-if ( ! empty( $cpt_rooms ) ) {
-    foreach ( $cpt_rooms as $r_post ) {
-        $q_id = $r_post->ID;
-        $q_thumb = get_the_post_thumbnail_url( $q_id, 'large' );
-        if ( empty( $q_thumb ) ) $q_thumb = vbl_img( 'hoteis/porto-santo-520x400.jpg' );
-        
-        $desc = vbl_field( 'vbl_quarto_capacidade', $q_id );
-        if ( empty( $desc ) ) {
-            $desc = get_the_excerpt( $q_id );
-        }
-        if ( empty( $desc ) ) {
-            $desc = 'Quartos amplos, com varanda privada e uma decoração descontraída em cores vivas e muita luz.';
-        }
 
-        $rooms_slides[] = array(
-            'title'       => get_the_title( $q_id ),
-            'subtitle'    => vbl_field( 'vbl_quarto_categoria', $q_id, 'ROOMS & SUITES' ) ?: 'ROOMS & SUITES',
-            'description' => wp_strip_all_tags( $desc ),
-            'image'       => $q_thumb,
-            'url'         => get_permalink( $q_id ),
-        );
+// 1. Tenta carregar do Repeater ACF da Página do Hotel (Backoffice)
+$acf_repeater = vbl_field( 'vbl_hhome_rooms_repeater', false, array() );
+if ( ! empty( $acf_repeater ) && is_array( $acf_repeater ) ) {
+    foreach ( $acf_repeater as $item ) {
+        if ( ! empty( $item['title'] ) ) {
+            $img = ! empty( $item['image'] ) ? $item['image'] : vbl_img( 'hoteis/porto-santo-520x400.jpg' );
+            if ( is_array( $img ) && isset( $img['url'] ) ) {
+                $img = $img['url'];
+            }
+            $rooms_slides[] = array(
+                'title'       => $item['title'],
+                'subtitle'    => ! empty( $item['subtitle'] ) ? $item['subtitle'] : 'ROOMS & SUITES',
+                'description' => ! empty( $item['description'] ) ? $item['description'] : '',
+                'image'       => $img,
+                'url'         => ! empty( $item['url'] ) ? $item['url'] : '#',
+            );
+        }
+    }
+}
+
+// 2. Se o repeater não estiver preenchido, carrega do CPT vbl_quarto
+if ( empty( $rooms_slides ) ) {
+    $current_page_id = get_the_ID();
+    $target_hotel_ids = array_values( array_unique( array_filter( array( $hotel_id, $current_page_id, $post->post_parent ) ) ) );
+
+    $cpt_rooms = get_posts( array(
+        'post_type'      => 'vbl_quarto',
+        'posts_per_page' => 10,
+        'meta_query'     => array(
+            array(
+                'key'     => 'vbl_quarto_hotel',
+                'value'   => $target_hotel_ids,
+                'compare' => 'IN',
+            ),
+        ),
+        'orderby'        => 'menu_order title',
+        'order'          => 'ASC',
+    ) );
+
+    if ( ! empty( $cpt_rooms ) ) {
+        foreach ( $cpt_rooms as $r_post ) {
+            $q_id = $r_post->ID;
+            $q_thumb = get_the_post_thumbnail_url( $q_id, 'large' );
+            if ( empty( $q_thumb ) ) $q_thumb = vbl_img( 'hoteis/porto-santo-520x400.jpg' );
+            
+            $desc = vbl_field( 'vbl_quarto_capacidade', $q_id );
+            if ( empty( $desc ) ) {
+                $desc = get_the_excerpt( $q_id );
+            }
+            if ( empty( $desc ) ) {
+                $desc = 'Quartos amplos, com varanda privada e uma decoração descontraída em cores vivas e muita luz.';
+            }
+
+            $rooms_slides[] = array(
+                'title'       => get_the_title( $q_id ),
+                'subtitle'    => vbl_field( 'vbl_quarto_categoria', $q_id, 'ROOMS & SUITES' ) ?: 'ROOMS & SUITES',
+                'description' => wp_strip_all_tags( $desc ),
+                'image'       => $q_thumb,
+                'url'         => get_permalink( $q_id ),
+            );
+        }
     }
 }
 
