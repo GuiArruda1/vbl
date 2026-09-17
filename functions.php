@@ -27,6 +27,7 @@ require_once VBL_DIR . '/inc/customizer.php';
 require_once VBL_DIR . '/inc/acf-fields.php';
 require_once VBL_DIR . '/inc/metabox-timeline.php';
 require_once VBL_DIR . '/inc/metabox-contactos-hoteis.php';
+require_once VBL_DIR . '/inc/metabox-hotel-rooms.php';
 require_once VBL_DIR . '/inc/polylang-helpers.php';
 require_once VBL_DIR . '/inc/admin-microsites.php';
 

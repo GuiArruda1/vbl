@@ -438,3 +438,47 @@ function vbl_get_hotel_accent_color( $post_id = null ) {
 
     return '#00B5B4'; // Default Porto Santo Cyan
 }
+
+/**
+ * Retorna a imagem padrão/fallback de quarto do hotel especificado
+ * 
+ * @param int|null $post_id
+ * @return string URL da imagem
+ */
+function vbl_get_hotel_fallback_image( $post_id = null ) {
+    if ( ! $post_id ) {
+        $post_id = get_the_ID();
+    }
+    
+    // Se for quarto, busca o hotel pai associado
+    if ( is_singular( 'vbl_quarto' ) ) {
+        $parent = function_exists( 'vbl_field' ) ? vbl_field( 'vbl_quarto_hotel', $post_id ) : get_field( 'vbl_quarto_hotel', $post_id );
+        if ( $parent ) {
+            $post_id = is_object( $parent ) ? $parent->ID : (int) $parent;
+        }
+    } else {
+        $parent_id = wp_get_post_parent_id( $post_id );
+        if ( $parent_id ) {
+            $post_id = $parent_id;
+        }
+    }
+
+    $post_obj = get_post( $post_id );
+    if ( $post_obj ) {
+        $slug = str_replace( array( 'vila-baleira-', '-novo' ), '', $post_obj->post_name );
+        $img_map = array(
+            'residences'  => 'hoteis/residence-680x400.jpg',
+            'residence'   => 'hoteis/residence-680x400.jpg',
+            'suites'      => 'hoteis/suites-680x400.jpg',
+            'village'     => 'hoteis/village-680x400.jpg',
+            'funchal'     => 'hoteis/funchal-680x400.jpg',
+            'madeira'     => 'hoteis/funchal-680x400.jpg',
+            'porto-santo' => 'hoteis/porto-santo-520x400.jpg',
+        );
+        if ( isset( $img_map[ $slug ] ) && function_exists( 'vbl_img' ) ) {
+            return vbl_img( $img_map[ $slug ] );
+        }
+    }
+
+    return function_exists( 'vbl_img' ) ? vbl_img( 'hoteis/porto-santo-520x400.jpg' ) : '';
+}

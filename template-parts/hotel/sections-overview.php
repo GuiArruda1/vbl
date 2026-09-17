@@ -31,39 +31,52 @@ if ( empty( $frase_bg ) ) {
 
 // 3. Quartos & Suites
 $rooms_slides = array();
+$hotel_default_img = function_exists( 'vbl_get_hotel_fallback_image' ) 
+    ? vbl_get_hotel_fallback_image( $hotel_id ) 
+    : ( function_exists( 'vbl_img' ) ? vbl_img( 'hoteis/porto-santo-520x400.jpg' ) : '' );
 
-// 1. Tenta carregar do Repeater ACF da Página do Hotel (Backoffice)
-$acf_repeater = vbl_field( 'vbl_hhome_rooms_repeater', false, array() );
-if ( ! empty( $acf_repeater ) && is_array( $acf_repeater ) ) {
-    foreach ( $acf_repeater as $item ) {
-        if ( ! empty( $item['title'] ) ) {
-            $img = ! empty( $item['image'] ) ? $item['image'] : vbl_img( 'hoteis/porto-santo-520x400.jpg' );
-            if ( is_array( $img ) && isset( $img['url'] ) ) {
-                $img = $img['url'];
+// 1. Tenta carregar do Meta Box nativo de Quartos do Hotel (WordPress Meta Box API)
+$saved_slider = get_post_meta( $hotel_id, '_vbl_hotel_rooms_slider', true );
+if ( ! empty( $saved_slider ) && is_array( $saved_slider ) ) {
+    foreach ( $saved_slider as $item ) {
+        if ( ! empty( $item['title'] ) || ! empty( $item['image'] ) || ! empty( $item['room_id'] ) ) {
+            $slide_img = ! empty( $item['image'] ) ? $item['image'] : '';
+            if ( empty( $slide_img ) && ! empty( $item['room_id'] ) ) {
+                $slide_img = get_the_post_thumbnail_url( (int) $item['room_id'], 'large' );
             }
+            if ( empty( $slide_img ) ) {
+                $slide_img = $hotel_default_img;
+            }
+
             $rooms_slides[] = array(
-                'title'       => $item['title'],
+                'title'       => ! empty( $item['title'] ) ? $item['title'] : ( ! empty( $item['room_id'] ) ? get_the_title( $item['room_id'] ) : 'ROOM' ),
                 'subtitle'    => ! empty( $item['subtitle'] ) ? $item['subtitle'] : 'ROOMS & SUITES',
                 'description' => ! empty( $item['description'] ) ? $item['description'] : '',
-                'image'       => $img,
-                'url'         => ! empty( $item['url'] ) ? $item['url'] : '#',
+                'image'       => $slide_img,
+                'url'         => ! empty( $item['url'] ) ? $item['url'] : ( ! empty( $item['room_id'] ) ? get_permalink( $item['room_id'] ) : '#' ),
             );
         }
     }
 }
 
-// 2. Se o repeater não estiver preenchido, carrega do CPT vbl_quarto
+// 2. Se o repeater não estiver preenchido, carrega diretamente do CPT vbl_quarto deste hotel
 if ( empty( $rooms_slides ) ) {
     $current_page_id = get_the_ID();
-    $target_hotel_ids = array_values( array_unique( array_filter( array( $hotel_id, $current_page_id, $post->post_parent ) ) ) );
+    $target_hotel_ids = array_values( array_unique( array_filter( array( $hotel_id, $current_page_id, ( isset( $post->post_parent ) ? $post->post_parent : 0 ) ) ) ) );
 
     $cpt_rooms = get_posts( array(
         'post_type'      => 'vbl_quarto',
         'posts_per_page' => 10,
         'meta_query'     => array(
+            'relation' => 'OR',
             array(
                 'key'     => 'vbl_quarto_hotel',
                 'value'   => $target_hotel_ids,
+                'compare' => 'IN',
+            ),
+            array(
+                'key'     => 'vbl_quarto_hotel',
+                'value'   => array_map( 'strval', $target_hotel_ids ),
                 'compare' => 'IN',
             ),
         ),
@@ -73,11 +86,13 @@ if ( empty( $rooms_slides ) ) {
 
     if ( ! empty( $cpt_rooms ) ) {
         foreach ( $cpt_rooms as $r_post ) {
-            $q_id = $r_post->ID;
+            $q_id    = $r_post->ID;
             $q_thumb = get_the_post_thumbnail_url( $q_id, 'large' );
-            if ( empty( $q_thumb ) ) $q_thumb = vbl_img( 'hoteis/porto-santo-520x400.jpg' );
+            if ( empty( $q_thumb ) ) {
+                $q_thumb = $hotel_default_img;
+            }
             
-            $desc = vbl_field( 'vbl_quarto_capacidade', $q_id );
+            $desc = function_exists( 'vbl_field' ) ? vbl_field( 'vbl_quarto_capacidade', $q_id ) : '';
             if ( empty( $desc ) ) {
                 $desc = get_the_excerpt( $q_id );
             }
@@ -87,7 +102,7 @@ if ( empty( $rooms_slides ) ) {
 
             $rooms_slides[] = array(
                 'title'       => get_the_title( $q_id ),
-                'subtitle'    => vbl_field( 'vbl_quarto_categoria', $q_id, 'ROOMS & SUITES' ) ?: 'ROOMS & SUITES',
+                'subtitle'    => ( function_exists( 'vbl_field' ) ? vbl_field( 'vbl_quarto_categoria', $q_id, 'ROOMS & SUITES' ) : 'ROOMS & SUITES' ) ?: 'ROOMS & SUITES',
                 'description' => wp_strip_all_tags( $desc ),
                 'image'       => $q_thumb,
                 'url'         => get_permalink( $q_id ),
@@ -103,21 +118,21 @@ if ( count( $rooms_slides ) < 2 ) {
             'title'       => 'TWIN DELUXE<br>VISTA MAR',
             'subtitle'    => 'ROOMS & SUITES',
             'description' => 'Quartos amplos, com varanda privada e uma decoração descontraída em cores vivas e muita luz.',
-            'image'       => vbl_img( 'hoteis/porto-santo-520x400.jpg' ),
+            'image'       => $hotel_default_img,
             'url'         => '#',
         ),
         array(
             'title'       => 'T2 VISTA PARCIAL<br>DO MAR',
             'subtitle'    => 'ROOMS & SUITES',
             'description' => 'Recentemente renovados, garantem o espaço e conforto ideal para famílias grandes. Dois quartos, kitchenette e sala de estar com varanda.',
-            'image'       => vbl_img( 'hoteis/suites-680x400.jpg' ),
+            'image'       => function_exists( 'vbl_img' ) ? vbl_img( 'hoteis/suites-680x400.jpg' ) : $hotel_default_img,
             'url'         => '#',
         ),
         array(
             'title'       => 'TWIN CLÁSSICO<br>VISTA JARDIM',
             'subtitle'    => 'ROOMS & SUITES',
             'description' => 'Ambiente acolhedor e funcional, ideal para momentos de descanso com todo o conforto que necessita na sua estadia.',
-            'image'       => vbl_img( 'hoteis/funchal-680x400.jpg' ),
+            'image'       => function_exists( 'vbl_img' ) ? vbl_img( 'hoteis/funchal-680x400.jpg' ) : $hotel_default_img,
             'url'         => '#',
         ),
     );

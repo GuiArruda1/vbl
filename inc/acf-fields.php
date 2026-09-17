@@ -342,22 +342,7 @@ function vbl_register_acf_fields() {
 
             /* Tab: Quartos & Suites */
             array( 'key' => 'field_vbl_hhome_tab_rooms', 'label' => 'Destaque Quartos', 'name' => '', 'type' => 'tab' ),
-            array(
-                'key'          => 'field_vbl_hhome_rooms_repeater',
-                'label'        => 'Lista de Quartos (Slider)',
-                'name'         => 'vbl_hhome_rooms_repeater',
-                'type'         => 'repeater',
-                'instructions' => 'Adicione os quartos para o slider dinâmico da homepage do hotel.',
-                'button_label' => 'Adicionar Quarto ao Slider',
-                'layout'       => 'block',
-                'sub_fields'   => array(
-                    array( 'key' => 'field_vbl_hhome_r_title', 'label' => 'Título do Quarto', 'name' => 'title', 'type' => 'text', 'required' => 1, 'default_value' => 'TWIN DELUXE<br>VISTA MAR' ),
-                    array( 'key' => 'field_vbl_hhome_r_subtitle', 'label' => 'Subtítulo / Categoria', 'name' => 'subtitle', 'type' => 'text', 'default_value' => 'ROOMS & SUITES' ),
-                    array( 'key' => 'field_vbl_hhome_r_desc', 'label' => 'Descrição do Quarto', 'name' => 'description', 'type' => 'textarea', 'rows' => 3, 'default_value' => 'Quartos amplos, com varanda privada e uma decoração descontraída em cores vivas e muita luz.' ),
-                    array( 'key' => 'field_vbl_hhome_r_img', 'label' => 'Imagem Principal', 'name' => 'image', 'type' => 'image', 'return_format' => 'url', 'preview_size' => 'large', 'required' => 1 ),
-                    array( 'key' => 'field_vbl_hhome_r_url', 'label' => 'Link do Botão "Descobrir"', 'name' => 'url', 'type' => 'text', 'default_value' => '#' ),
-                ),
-            ),
+            array( 'key' => 'field_vbl_hhome_rooms_notice', 'label' => 'Slider de Quartos & Suites', 'name' => '', 'type' => 'message', 'message' => 'A gestão dos quartos que surgem no slider é feita na caixa <strong>"⭐ Slider de Quartos & Suites (Microsite)"</strong> (Meta Box nativa do WordPress) abaixo nesta página, onde pode puxar automaticamente os quartos deste hotel, fotos e reordenar.' ),
             array( 'key' => 'field_vbl_hhome_rooms_btn_label', 'label' => 'Texto do Link (Padrão)', 'name' => 'vbl_hhome_rooms_btn_label', 'type' => 'text', 'default_value' => 'DESCOBRIR' ),
 
             /* Tab: Instalações & Experiências */
