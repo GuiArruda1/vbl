@@ -53,7 +53,7 @@ $youtube   = vbl_opt( 'youtube', 'https://www.youtube.com/@VilaBaleiraHotels' );
         
         <!-- Morada (Container aumentado para 2 linhas) -->
         <div class="flex flex-col gap-6 max-w-[360px]">
-          <p class="font-medium text-[14px] tracking-[1.4px] uppercase" style="color: <?php echo esc_attr( $hotel_color ); ?>;">MORADA</p>
+          <p class="font-medium text-[14px] tracking-[1.4px] uppercase text-[#0da9a6]">MORADA</p>
           <p class="font-light text-[15px] xl:text-[16px] leading-[24px] text-black/80">
             <a href="https://maps.google.com/?q=<?php echo urlencode( strip_tags( $address ) ); ?>" target="_blank" rel="noopener" class="vbl-footer-hotel-link hover:underline hover:underline-offset-4 decoration-1 transition-all inline-block">
               <?php echo nl2br( esc_html( $address ) ); ?>
@@ -63,7 +63,7 @@ $youtube   = vbl_opt( 'youtube', 'https://www.youtube.com/@VilaBaleiraHotels' );
 
         <!-- Contactos -->
         <div class="flex flex-col gap-6">
-          <p class="font-medium text-[14px] tracking-[1.4px] uppercase" style="color: <?php echo esc_attr( $hotel_color ); ?>;">CONTACTOS</p>
+          <p class="font-medium text-[14px] tracking-[1.4px] uppercase text-[#0da9a6]">CONTACTOS</p>
           <div class="font-light text-[15px] xl:text-[16px] leading-[24px] text-black/80 flex flex-col gap-1">
             <p><a href="tel:<?php echo esc_html( $phone ); ?>" class="vbl-footer-hotel-link hover:underline hover:underline-offset-4 decoration-1 transition-all whitespace-nowrap"><?php echo esc_html( $phone ); ?></a></p>
             <p><a href="mailto:<?php echo esc_html( $email ); ?>" class="vbl-footer-hotel-link hover:underline hover:underline-offset-4 decoration-1 transition-all"><?php echo esc_html( $email ); ?></a></p>
@@ -72,7 +72,7 @@ $youtube   = vbl_opt( 'youtube', 'https://www.youtube.com/@VilaBaleiraHotels' );
 
         <!-- Siga-nos -->
         <div class="flex flex-col gap-6">
-          <p class="font-medium text-[14px] tracking-[1.4px] uppercase" style="color: <?php echo esc_attr( $hotel_color ); ?>;">SIGA-NOS</p>
+          <p class="font-medium text-[14px] tracking-[1.4px] uppercase text-[#0da9a6]">SIGA-NOS</p>
           <div class="flex items-center gap-5 text-[#0d5257]">
             <a href="<?php echo esc_url( $facebook ); ?>" target="_blank" rel="noopener" class="vbl-footer-social">
               <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
@@ -94,7 +94,7 @@ $youtube   = vbl_opt( 'youtube', 'https://www.youtube.com/@VilaBaleiraHotels' );
         
         <!-- Logo Institucional com "UM HOTEL DO GRUPO" -->
         <div class="flex flex-col gap-6">
-          <p class="font-medium text-[14px] tracking-[1.4px] uppercase" style="color: <?php echo esc_attr( $hotel_color ); ?>;">UM HOTEL DO GRUPO</p>
+          <p class="font-medium text-[14px] tracking-[1.4px] uppercase text-[#0da9a6]">UM HOTEL DO GRUPO</p>
           
           <a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="Vila Baleira Hotels" class="flex items-center gap-4 lg:gap-5 flex-shrink-0 hover:opacity-80 transition-opacity">
             <img src="<?php echo vbl_img('footer-logo-icon.svg'); ?>" alt="" class="w-10 lg:w-[48px] h-auto">
