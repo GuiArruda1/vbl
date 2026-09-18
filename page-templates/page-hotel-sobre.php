@@ -79,39 +79,39 @@ if ( empty( $instalacoes ) || ! is_array( $instalacoes ) ) {
   <!-- ==========================================
        2. CONHEÇA O HOTEL (Apresentação da Unidade)
   =========================================== -->
-  <section id="conheca-o-hotel" class="w-full py-20 lg:py-32 bg-white">
-    <div class="max-w-[1920px] mx-auto px-6 xl:px-[8.33%] grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">
+  <section id="conheca-o-hotel" class="w-full py-20 lg:py-28 xl:py-32 bg-white">
+    <div class="max-w-[1920px] mx-auto px-6 xl:px-[8.33%] grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 xl:gap-24 items-start">
       
-      <!-- Coluna Esquerda: Imagem Vertical com Concha -->
+      <!-- Coluna Esquerda: Imagem com Concha Sobreposta -->
       <div class="lg:col-span-5 relative flex justify-start">
-        <div class="relative w-full max-w-[480px] aspect-[4/5] shadow-sm">
+        <div class="relative w-full max-w-[480px] aspect-[500/550] shadow-sm">
           <img src="<?php echo esc_url( $conheca_img ); ?>" alt="<?php echo esc_attr( strip_tags( $conheca_title ) ); ?>" class="w-full h-full object-cover">
           
-          <!-- Concha Decorativa em Outline Ciano Sobreposta -->
-          <div class="absolute -bottom-8 -right-8 lg:-bottom-12 lg:-right-12 z-10 w-40 h-40 lg:w-56 lg:h-56 pointer-events-none">
-            <img src="<?php echo vbl_img( 'concha-cyan.svg' ); ?>" alt="" class="w-full h-full object-contain">
+          <!-- Concha Decorativa em Outline Ciano Sobreposta (Canto inferior direito) -->
+          <div class="absolute bottom-2 lg:bottom-4 -right-10 sm:-right-14 lg:-right-16 xl:-right-20 z-10 w-36 sm:w-44 lg:w-48 xl:w-56 pointer-events-none">
+            <img src="<?php echo vbl_img( 'concha-cyan.svg' ); ?>" alt="" class="w-full h-auto object-contain">
           </div>
         </div>
       </div>
 
-      <!-- Coluna Direita: Textos -->
-      <div class="lg:col-span-7 flex flex-col items-start justify-center lg:pl-8">
+      <!-- Coluna Direita: Subtítulo, Título e Parágrafos Indentados -->
+      <div class="lg:col-span-7 flex flex-col items-start justify-start pt-2 lg:pt-4">
         
         <!-- Subtítulo -->
-        <div class="flex items-center gap-4 mb-4">
-          <div class="w-10 h-px bg-[#0da9a6] flex-shrink-0"></div>
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-8 h-px bg-[#0da9a6] flex-shrink-0"></div>
           <span class="font-body text-[11px] xl:text-[12px] tracking-[2px] uppercase text-[#0da9a6] font-medium">
             <?php echo esc_html( $conheca_subtitle ); ?>
           </span>
         </div>
 
         <!-- Título Display -->
-        <h2 class="font-display text-[46px] sm:text-[58px] lg:text-[72px] xl:text-[84px] leading-[1.02] tracking-[1.5px] uppercase text-[#0d5257] mb-8 lg:mb-10 font-normal">
+        <h2 class="font-display text-[38px] sm:text-[46px] lg:text-[54px] xl:text-[62px] leading-[1.04] tracking-[1.5px] uppercase text-[#0d5257] mb-8 lg:mb-10 font-normal">
           <?php echo wp_kses_post( $conheca_title ); ?>
         </h2>
 
-        <!-- Parágrafos de Apresentação -->
-        <div class="flex flex-col gap-6 max-w-[560px] font-body font-light text-[14px] lg:text-[15px] xl:text-[16px] leading-relaxed text-[#333333]">
+        <!-- Parágrafos de Apresentação Indentados à Direita (como no design) -->
+        <div class="flex flex-col gap-5 max-w-[460px] xl:max-w-[490px] lg:ml-12 xl:ml-16 font-body font-light text-[13px] sm:text-[14px] xl:text-[15px] leading-[22px] xl:leading-[24px] text-[#4a4a4a]">
           <p>
             <?php echo nl2br( esc_html( $conheca_p1 ) ); ?>
           </p>
