@@ -130,7 +130,7 @@ if ( empty( $instalacoes ) || ! is_array( $instalacoes ) ) {
   <!-- ==========================================
        3. BANNER DE VÍDEO (The Essence of Family)
   =========================================== -->
-  <section class="relative w-full h-[60vh] min-h-[480px] max-h-[720px] overflow-hidden bg-black flex items-center justify-center">
+  <section class="relative w-full h-[520px] md:h-[620px] lg:h-[720px] min-h-[520px] lg:min-h-[720px] overflow-hidden bg-black flex items-center justify-center">
     <!-- Imagem de Fundo -->
     <div class="absolute inset-0 z-0">
       <img src="<?php echo esc_url( $video_bg ); ?>" alt="Vila Baleira Porto Santo" class="w-full h-full object-cover object-center filter brightness-[0.75]">
@@ -138,28 +138,27 @@ if ( empty( $instalacoes ) || ! is_array( $instalacoes ) ) {
     </div>
 
     <!-- Conteúdo Centralizado / Layout com Play Button à Direita -->
-    <div class="relative z-10 max-w-[1920px] w-full mx-auto px-6 xl:px-[8.33%] flex flex-col md:flex-row items-center justify-between gap-10">
+    <div class="relative z-10 max-w-[1920px] w-full mx-auto px-6 xl:px-[8.33%] flex flex-col md:flex-row items-center justify-between gap-12">
       
-      <!-- Lado Esquerdo: Tagline e Título -->
-      <div class="flex flex-col items-start gap-4">
-        <div class="flex items-center gap-4">
-          <div class="w-8 h-px bg-[#0da9a6] flex-shrink-0"></div>
-          <span class="font-body text-[11px] xl:text-[12px] tracking-[2px] uppercase text-white/90 font-light">
+      <!-- Lado Esquerdo: Tagline e Título (Alinhados ao Centro) -->
+      <div class="flex flex-col items-center text-center gap-4">
+        <div class="flex items-center justify-center gap-4">
+          <div class="w-8 lg:w-10 h-px bg-[#0da9a6] flex-shrink-0"></div>
+          <span class="font-body text-[11px] xl:text-[13px] tracking-[2px] uppercase text-white/90 font-light text-center">
             <?php echo esc_html( $video_tagline ); ?>
           </span>
+          <div class="w-8 lg:w-10 h-px bg-[#0da9a6] flex-shrink-0"></div>
         </div>
-        <h2 class="font-display text-[40px] sm:text-[54px] md:text-[64px] lg:text-[76px] xl:text-[88px] uppercase tracking-[2px] text-white leading-[1.05] drop-shadow-md">
+        <h2 class="font-display text-[40px] sm:text-[54px] md:text-[64px] lg:text-[76px] xl:text-[88px] uppercase tracking-[2px] text-white leading-[1.05] drop-shadow-md text-center">
           <?php echo wp_kses_post( $video_title ); ?>
         </h2>
       </div>
 
-      <!-- Lado Direito: Botão Play de Vídeo -->
+      <!-- Lado Direito: Botão Play de Vídeo (Como no design e em O Grupo) -->
       <?php if ( ! empty( $video_url ) ) : ?>
-      <div class="flex items-center justify-center md:pr-12">
-        <button type="button" id="vblHotelVideoOpen" class="w-20 h-20 sm:w-24 sm:h-24 lg:w-28 lg:h-28 border border-white/80 bg-white/10 hover:bg-white/20 backdrop-blur-xs flex items-center justify-center transition-all duration-300 group cursor-pointer" aria-label="Reproduzir Vídeo">
-          <svg class="w-7 h-7 sm:w-8 sm:h-8 text-white ml-1 group-hover:scale-110 transition-transform duration-300" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M8 5v14l11-7z" />
-          </svg>
+      <div class="flex items-center justify-center md:pr-12 lg:pr-20 xl:pr-28">
+        <button type="button" id="vblHotelVideoOpen" class="cursor-pointer opacity-80 hover:opacity-100 hover:scale-105 active:scale-95 transition-all duration-300 focus:outline-none w-[110px] sm:w-[130px] lg:w-[150px] xl:w-[170px]" aria-label="Reproduzir Vídeo">
+          <img src="<?php echo vbl_img( 'ogrupo/play-icon.svg' ); ?>" alt="Reproduzir" class="w-full h-auto">
         </button>
       </div>
       <?php endif; ?>
