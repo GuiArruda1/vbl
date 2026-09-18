@@ -66,7 +66,7 @@ if ( empty( $restaurantes_list ) || ! is_array( $restaurantes_list ) ) {
   <!-- ==========================================
        1. HERO BANNER
   =========================================== -->
-  <section class="relative w-full h-[65vh] min-h-[500px] max-h-[750px] overflow-hidden bg-black flex items-end">
+  <section class="relative w-full h-[280px] sm:h-[360px] max-h-[360px] overflow-hidden bg-black flex items-end vbl-hotel-subpage-hero">
     <div class="absolute inset-0 z-0">
       <img src="<?php echo esc_url( $hero_bg ); ?>" alt="Restaurantes & Bares" class="w-full h-full object-cover object-center filter brightness-[0.85]">
       <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/50"></div>

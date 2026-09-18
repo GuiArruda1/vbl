@@ -124,4 +124,10 @@
   #mobileRoomsArrow.is-open {
     transform: rotate(180deg);
   }
+
+  /* Hotel Microsite Subpages Hero Banner */
+  .vbl-hotel-subpage-hero {
+    @apply h-[280px] sm:h-[360px] max-h-[360px];
+    min-height: 0 !important;
+  }
 }

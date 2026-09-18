@@ -225,6 +225,19 @@ body.admin-bar .header-fixo {
       text-underline-offset: 6px !important; 
       text-decoration-thickness: 1px !important; 
     }
+
+    /* Hotel Microsite Subpages: Hero Banner Height (max 360px) */
+    .vbl-hotel-subpage-hero {
+      height: 360px !important;
+      max-height: 360px !important;
+      min-height: 0 !important;
+    }
+    @media (max-width: 640px) {
+      .vbl-hotel-subpage-hero {
+        height: 280px !important;
+        max-height: 360px !important;
+      }
+    }
     .vbl-btn { 
       border-left: none !important; 
       border-right: none !important; 
