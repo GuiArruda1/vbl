@@ -398,9 +398,9 @@ $frase_line3 = vbl_field( 'vbl_quarto_frase_line3', $post_id, 'LACUS EGET UT SIT
             if ( empty( $o_thumb ) ) $o_thumb = vbl_img( 'hoteis/porto-santo-520x400.jpg' );
         ?>
         <div class="flex flex-col items-start bg-transparent group">
-          <div class="w-full aspect-[16/11] overflow-hidden bg-gray-100 mb-6">
+          <a href="<?php the_permalink(); ?>" class="block w-full aspect-[16/11] overflow-hidden bg-gray-100 mb-6 cursor-pointer" aria-label="<?php the_title_attribute(); ?>">
             <img src="<?php echo esc_url( $o_thumb ); ?>" alt="<?php the_title_attribute(); ?>" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-          </div>
+          </a>
           <div class="flex items-center gap-3 mb-2">
             <div class="w-6 h-px bg-[#0da9a6]"></div>
             <span class="font-body text-[10px] xl:text-[11px] tracking-[2px] uppercase text-[#0da9a6] font-medium">
@@ -408,7 +408,9 @@ $frase_line3 = vbl_field( 'vbl_quarto_frase_line3', $post_id, 'LACUS EGET UT SIT
             </span>
           </div>
           <h3 class="font-display text-[26px] sm:text-[30px] leading-tight uppercase text-[#0d5257] mb-3 group-hover:text-[#0da9a6] transition-colors">
-            <?php the_title(); ?>
+            <a href="<?php the_permalink(); ?>" class="hover:underline decoration-[#0da9a6] decoration-1 underline-offset-4">
+              <?php the_title(); ?>
+            </a>
           </h3>
           <p class="font-body font-light text-[13px] leading-relaxed text-[#333333] mb-6 max-w-[460px]">
             <?php echo wp_trim_words( get_the_excerpt(), 18, '...' ); ?>

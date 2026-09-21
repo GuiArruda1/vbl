@@ -268,9 +268,9 @@ if ( empty( $exp_img_right ) ) {
       
       <!-- Left Side: Large Image -->
       <div class="relative w-full h-full flex items-center">
-        <div class="w-full aspect-[4/4.2] lg:aspect-auto lg:h-[682px] bg-gray-100 shadow-xl shadow-black/5 overflow-hidden">
-          <img id="vblOverviewRoomImgMain" src="<?php echo esc_url( $initial_room['image'] ); ?>" alt="<?php echo esc_attr( strip_tags( $initial_room['title'] ) ); ?>" class="w-full h-full object-cover transition-opacity duration-300">
-        </div>
+        <a id="vblOverviewRoomImgLink" href="<?php echo esc_url( $initial_room['url'] ); ?>" class="block w-full aspect-[4/4.2] lg:aspect-auto lg:h-[682px] bg-gray-100 shadow-xl shadow-black/5 overflow-hidden group cursor-pointer" aria-label="Ver quarto">
+          <img id="vblOverviewRoomImgMain" src="<?php echo esc_url( $initial_room['image'] ); ?>" alt="<?php echo esc_attr( strip_tags( $initial_room['title'] ) ); ?>" class="w-full h-full object-cover group-hover:scale-105 transition-all duration-500">
+        </a>
       </div>
 
       <!-- Right Side: Content -->
@@ -284,7 +284,9 @@ if ( empty( $exp_img_right ) ) {
             </span>
           </div>
           <h2 id="vblOverviewRoomTitle" class="font-display text-[40px] md:text-[52px] lg:text-[64px] leading-[1.05] text-[#0d5257] uppercase mb-8 transition-opacity duration-300">
-            <?php echo wp_kses_post( $initial_room['title'] ); ?>
+            <a id="vblOverviewRoomTitleLink" href="<?php echo esc_url( $initial_room['url'] ); ?>">
+              <?php echo wp_kses_post( $initial_room['title'] ); ?>
+            </a>
           </h2>
         </div>
 
@@ -330,6 +332,8 @@ if ( empty( $exp_img_right ) ) {
       var subtitleEl = document.getElementById('vblOverviewRoomSubtitle');
       var descEl = document.getElementById('vblOverviewRoomDesc');
       var btnEl = document.getElementById('vblOverviewRoomBtn');
+      var imgLink = document.getElementById('vblOverviewRoomImgLink');
+      var titleLink = document.getElementById('vblOverviewRoomTitleLink');
 
       if (!dataEl || !prevBtn || !nextBtn || !imgMain) return;
 
@@ -366,7 +370,7 @@ if ( empty( $exp_img_right ) ) {
             imgMain.style.opacity = '1';
           }
           if (titleEl) {
-            titleEl.innerHTML = currentSlide.title;
+            titleEl.innerHTML = '<a id="vblOverviewRoomTitleLink" href="' + currentSlide.url + '">' + currentSlide.title + '</a>';
             titleEl.style.opacity = '1';
           }
           if (subtitleEl && currentSlide.subtitle) {
@@ -378,6 +382,9 @@ if ( empty( $exp_img_right ) ) {
           }
           if (btnEl) {
             btnEl.href = currentSlide.url;
+          }
+          if (imgLink) {
+            imgLink.href = currentSlide.url;
           }
           if (imgNext) {
             imgNext.src = nextSlide.image;

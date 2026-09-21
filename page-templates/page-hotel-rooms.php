@@ -172,10 +172,10 @@ if ( empty( $rooms_list ) ) {
           ?>
           <div class="vbl-room-card w-full md:w-[calc(50%-16px)] lg:w-[calc(50%-24px)] xl:w-[calc(50%-32px)] flex-shrink-0 flex flex-col items-start bg-transparent group">
             
-            <!-- Fotografia do Quarto -->
-            <div class="w-full aspect-[16/11] overflow-hidden bg-white shadow-sm mb-6">
+            <!-- Fotografia do Quarto Clicável para o Single -->
+            <a href="<?php echo esc_url( $link ); ?>" class="block w-full aspect-[16/11] overflow-hidden bg-white shadow-sm mb-6 cursor-pointer" aria-label="<?php echo esc_attr( $title ); ?>">
               <img src="<?php echo esc_url( $img ); ?>" alt="<?php echo esc_attr( $title ); ?>" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-            </div>
+            </a>
 
             <!-- Categoria com Traço Ciano -->
             <div class="flex items-center gap-3 mb-2">
@@ -185,9 +185,11 @@ if ( empty( $rooms_list ) ) {
               </span>
             </div>
 
-            <!-- Título do Quarto -->
+            <!-- Título do Quarto Clicável -->
             <h3 class="font-display text-[26px] sm:text-[30px] lg:text-[34px] leading-tight uppercase text-[#0d5257] mb-4 group-hover:text-[#0da9a6] transition-colors">
-              <?php echo esc_html( $title ); ?>
+              <a href="<?php echo esc_url( $link ); ?>" class="hover:underline decoration-[#0da9a6] decoration-1 underline-offset-4">
+                <?php echo esc_html( $title ); ?>
+              </a>
             </h3>
 
             <!-- Descrição -->
@@ -199,7 +201,7 @@ if ( empty( $rooms_list ) ) {
             <a href="<?php echo esc_url( $link ); ?>" class="vbl-btn-microsite group/btn">
               <span>VER QUARTO</span>
               <svg viewBox="0 0 12 12" fill="none">
-                <path d="M1 11L11 1M11 1H3.5M11 1V8.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M1 11L11 1H3.5M11 1V8.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </a>
 
