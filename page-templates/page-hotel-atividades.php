@@ -124,15 +124,15 @@ if ( empty( $tratamentos_list ) || ! is_array( $tratamentos_list ) ) {
   <section class="w-full py-20 lg:py-32 bg-white">
     <div class="max-w-[1920px] mx-auto px-6 xl:px-[8.33%] grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">
       
-      <!-- Coluna Esquerda: Fotografia Vertical (Crianças / Diversão) -->
+      <!-- Coluna Esquerda: Fotografia (Apresentação Atividades) -->
       <div class="lg:col-span-5 relative flex justify-start">
-        <div class="relative w-full max-w-[480px] aspect-[4/5] shadow-sm">
+        <div class="relative w-full max-w-[560px] xl:max-w-[620px] aspect-square shadow-sm">
           <img src="<?php echo esc_url( $apres_img ); ?>" alt="<?php echo esc_attr( strip_tags( $apres_title ) ); ?>" class="w-full h-full object-cover">
         </div>
       </div>
 
       <!-- Coluna Direita: Textos -->
-      <div class="lg:col-span-7 flex flex-col items-start justify-center lg:pl-8">
+      <div class="lg:col-span-7 flex flex-col items-start justify-center lg:pl-6 xl:pl-8">
         
         <!-- Subtítulo com Traço Ciano -->
         <div class="flex items-center gap-4 mb-4">
@@ -147,8 +147,8 @@ if ( empty( $tratamentos_list ) || ! is_array( $tratamentos_list ) ) {
           <?php echo wp_kses_post( $apres_title ); ?>
         </h1>
 
-        <!-- Parágrafos -->
-        <div class="flex flex-col gap-6 max-w-[560px] font-body font-light text-[14px] lg:text-[15px] xl:text-[16px] leading-relaxed text-[#333333]">
+        <!-- Parágrafos de Apresentação Indentados como no Design -->
+        <div class="flex flex-col gap-6 max-w-[480px] xl:max-w-[520px] lg:ml-12 xl:ml-16 font-body font-light text-[14px] lg:text-[15px] xl:text-[16px] leading-relaxed text-[#333333]">
           <p>
             <?php echo nl2br( esc_html( $apres_p1 ) ); ?>
           </p>
@@ -195,16 +195,16 @@ if ( empty( $tratamentos_list ) || ! is_array( $tratamentos_list ) ) {
       <div class="relative">
         
         <!-- Seta Esquerda -->
-        <button type="button" id="vblProgPrev" class="absolute -left-2 lg:-left-5 top-1/2 -translate-y-1/2 z-20 w-12 h-12 border border-[#00B5B4] text-[#00B5B4] hover:bg-[#00B5B4] hover:text-white flex items-center justify-center transition-colors cursor-pointer shadow-sm" aria-label="Atividade Anterior">
-          <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M28 15H1M1 15L14 2M1 15L14 28" />
+        <button type="button" id="vblProgPrev" class="absolute -left-2 sm:-left-4 lg:-left-6 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 bg-transparent border border-[#00B5B4] text-[#00B5B4] hover:bg-white hover:text-[#00B5B4] hover:border-[#00B5B4] flex items-center justify-center transition-all duration-300 cursor-pointer shadow-xs hover:shadow-sm" aria-label="Atividade Anterior">
+          <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7" />
           </svg>
         </button>
 
         <!-- Seta Direita -->
-        <button type="button" id="vblProgNext" class="absolute -right-2 lg:-right-5 top-1/2 -translate-y-1/2 z-20 w-12 h-12 border border-[#00B5B4] text-[#00B5B4] hover:bg-[#00B5B4] hover:text-white flex items-center justify-center transition-colors cursor-pointer shadow-sm" aria-label="Próxima Atividade">
-          <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M1 15H28M28 15L15 2M28 15L15 28" />
+        <button type="button" id="vblProgNext" class="absolute -right-2 sm:-right-4 lg:-right-6 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 bg-transparent border border-[#00B5B4] text-[#00B5B4] hover:bg-white hover:text-[#00B5B4] hover:border-[#00B5B4] flex items-center justify-center transition-all duration-300 cursor-pointer shadow-xs hover:shadow-sm" aria-label="Próxima Atividade">
+          <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14M12 5l7 7-7 7" />
           </svg>
         </button>
 
@@ -267,9 +267,9 @@ if ( empty( $tratamentos_list ) || ! is_array( $tratamentos_list ) ) {
             </div>
 
             <!-- Seta Esquerda -->
-            <button type="button" class="vbl-anim-prev w-12 h-12 border border-[#00B5B4] text-[#00B5B4] hover:bg-[#00B5B4] hover:text-white flex items-center justify-center transition-colors cursor-pointer" aria-label="Slide Anterior">
-              <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M28 15H1M1 15L14 2M1 15L14 28" />
+            <button type="button" class="vbl-anim-prev w-11 h-11 sm:w-12 sm:h-12 bg-transparent border border-[#00B5B4] text-[#00B5B4] hover:bg-white hover:text-[#00B5B4] hover:border-[#00B5B4] flex items-center justify-center transition-all duration-300 cursor-pointer shadow-xs hover:shadow-sm" aria-label="Slide Anterior">
+              <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M19 12H5M12 19l-7-7 7-7" />
               </svg>
             </button>
           </div>
@@ -281,9 +281,9 @@ if ( empty( $tratamentos_list ) || ! is_array( $tratamentos_list ) ) {
             </div>
 
             <!-- Seta Direita -->
-            <button type="button" class="vbl-anim-next absolute -right-3 sm:-right-5 top-1/2 -translate-y-1/2 z-10 w-12 h-12 border border-[#00B5B4] text-[#00B5B4] hover:bg-[#00B5B4] hover:text-white flex items-center justify-center transition-colors cursor-pointer shadow-sm" aria-label="Slide Seguinte">
-              <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M1 15H28M28 15L15 2M28 15L15 28" />
+            <button type="button" class="vbl-anim-next absolute -right-3 sm:-right-5 lg:-right-6 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 bg-transparent border border-[#00B5B4] text-[#00B5B4] hover:bg-white hover:text-[#00B5B4] hover:border-[#00B5B4] flex items-center justify-center transition-all duration-300 cursor-pointer shadow-xs hover:shadow-sm" aria-label="Slide Seguinte">
+              <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12h14M12 5l7 7-7 7" />
               </svg>
             </button>
           </div>
@@ -372,9 +372,9 @@ if ( empty( $tratamentos_list ) || ! is_array( $tratamentos_list ) ) {
           <!-- Lado Esquerdo: Fotografia + Seta Esquerda -->
           <div class="w-full lg:w-[48%] relative flex items-center justify-start">
             <!-- Seta Esquerda -->
-            <button type="button" class="vbl-trat-prev absolute -left-3 sm:-left-5 top-1/2 -translate-y-1/2 z-10 w-12 h-12 border border-[#00B5B4] text-[#00B5B4] hover:bg-[#00B5B4] hover:text-white flex items-center justify-center transition-colors cursor-pointer shadow-sm" aria-label="Tratamento Anterior">
-              <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M28 15H1M1 15L14 2M1 15L14 28" />
+            <button type="button" class="vbl-trat-prev absolute -left-3 sm:-left-5 lg:-left-6 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 bg-transparent border border-[#00B5B4] text-[#00B5B4] hover:bg-white hover:text-[#00B5B4] hover:border-[#00B5B4] flex items-center justify-center transition-all duration-300 cursor-pointer shadow-xs hover:shadow-sm" aria-label="Tratamento Anterior">
+              <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M19 12H5M12 19l-7-7 7-7" />
               </svg>
             </button>
 
@@ -396,9 +396,9 @@ if ( empty( $tratamentos_list ) || ! is_array( $tratamentos_list ) ) {
             </div>
 
             <!-- Seta Direita -->
-            <button type="button" class="vbl-trat-next absolute -right-3 sm:-right-5 top-1/2 -translate-y-1/2 z-10 w-12 h-12 border border-[#00B5B4] text-[#00B5B4] hover:bg-[#00B5B4] hover:text-white flex items-center justify-center transition-colors cursor-pointer shadow-sm" aria-label="Próximo Tratamento">
-              <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M1 15H28M28 15L15 2M28 15L15 28" />
+            <button type="button" class="vbl-trat-next absolute -right-3 sm:-right-5 lg:-right-6 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 bg-transparent border border-[#00B5B4] text-[#00B5B4] hover:bg-white hover:text-[#00B5B4] hover:border-[#00B5B4] flex items-center justify-center transition-all duration-300 cursor-pointer shadow-xs hover:shadow-sm" aria-label="Próximo Tratamento">
+              <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12h14M12 5l7 7-7 7" />
               </svg>
             </button>
           </div>
