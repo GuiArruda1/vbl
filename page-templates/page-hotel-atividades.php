@@ -34,23 +34,31 @@ $programa_list  = vbl_field( 'vbl_hativ_programa_list', false, array() );
 if ( empty( $programa_list ) || ! is_array( $programa_list ) ) {
     $programa_list = array(
         array(
-            'title'    => 'PASSEIOS & NATUREZA',
-            'schedule' => 'Segunda a Sexta · 10h00',
+            'title'    => "UM TÍTULO DE EXEMPLO<br>PARA ATIVIDADE OU<br>ENTRETENIMENTO",
+            'days'     => 'De terça-feira a domingo',
+            'hours'    => 'Das 12h00 às 16h00',
+            'location' => 'Porto Santo',
             'image'    => vbl_img( 'ilhas-432x240-1.jpg' ),
         ),
         array(
-            'title'    => 'MÚSICA AO VIVO & CONVÍVIO',
-            'schedule' => 'Todos os dias · 17h00',
+            'title'    => "UM TÍTULO DE EXEMPLO<br>PARA ATIVIDADE OU<br>ENTRETENIMENTO",
+            'days'     => 'Todas as sextas-feiras',
+            'hours'    => 'Das 15h00 às 19h00',
+            'location' => 'Bar de Praia',
             'image'    => vbl_img( 'sobre-fotografia.jpg' ),
         ),
         array(
-            'title'    => 'ATIVIDADES EQUITATIVAS',
-            'schedule' => 'Terças e Quintas · 11h00',
+            'title'    => "UM TÍTULO DE EXEMPLO<br>PARA ATIVIDADE OU<br>ENTRETENIMENTO",
+            'days'     => 'Todos os dias',
+            'hours'    => 'Das 07h00 às 11h00',
+            'location' => 'Porto Santo',
             'image'    => vbl_img( 'ilhas-432x240-2.jpg' ),
         ),
         array(
-            'title'    => 'AQUAGYM & FITNESS',
-            'schedule' => 'Segunda a Sábado · 09h30',
+            'title'    => "AQUAGYM & FITNESS<br>AULA ABERTA",
+            'days'     => 'Segunda a Sábado',
+            'hours'    => 'Das 09h30 às 10h30',
+            'location' => 'Piscina Exterior',
             'image'    => vbl_img( 'hoteis/porto-santo-760x760.jpg' ),
         ),
     );
@@ -165,71 +173,134 @@ if ( empty( $tratamentos_list ) || ! is_array( $tratamentos_list ) ) {
   </section>
 
   <!-- ==========================================
-       3. PROGRAMA SEMANAL (Carrossel 3 Colunas)
+       3. PROGRAMA SEMANAL (Carrossel Full-Width)
   =========================================== -->
   <section class="w-full py-20 lg:py-32 bg-[#E8F5F5] relative overflow-hidden">
-    <div class="max-w-[1920px] mx-auto px-6 xl:px-[8.33%] relative">
+    
+    <!-- Cabeçalho Alinhado à Esquerda (Como no Design) -->
+    <div class="max-w-[1920px] mx-auto px-6 xl:px-[8.33%]">
       
-      <!-- Cabeçalho Central -->
-      <div class="text-center mb-16 flex flex-col items-center">
-        <div class="flex items-center justify-center gap-4 mb-3">
-          <div class="w-10 h-px bg-[#0da9a6]"></div>
-          <span class="font-body text-[11px] xl:text-[12px] tracking-[2.5px] uppercase text-[#0da9a6] font-medium">
-            <?php echo esc_html( $prog_tagline ); ?>
-          </span>
-          <div class="w-10 h-px bg-[#0da9a6]"></div>
-        </div>
-
-        <h2 class="font-display text-[42px] sm:text-[56px] lg:text-[68px] leading-[1.02] uppercase text-[#0d5257] font-normal mb-5">
-          <?php echo esc_html( $prog_title ); ?>
-        </h2>
-
-        <?php if ( ! empty( $prog_text ) ) : ?>
-        <p class="font-body font-light text-[14px] lg:text-[15px] text-[#333333] max-w-[580px]">
-          <?php echo nl2br( esc_html( $prog_text ) ); ?>
-        </p>
-        <?php endif; ?>
+      <!-- Subtítulo com Traço Ciano à Esquerda -->
+      <div class="flex items-center gap-4 mb-4">
+        <div class="w-8 lg:w-10 h-px bg-[#0da9a6] flex-shrink-0"></div>
+        <span class="font-body text-[11px] xl:text-[12px] tracking-[2.5px] uppercase text-[#0da9a6] font-medium">
+          <?php echo esc_html( $prog_tagline ); ?>
+        </span>
       </div>
 
-      <!-- Slider Programa Semanal -->
-      <div class="relative">
-        
+      <!-- Título Principal Display à Esquerda -->
+      <h2 class="font-display text-[44px] sm:text-[58px] lg:text-[72px] xl:text-[84px] leading-[1.02] tracking-[1.5px] uppercase text-[#0d5257] font-normal mb-6">
+        <?php echo esc_html( $prog_title ); ?>
+      </h2>
+
+      <!-- Parágrafo Introdutório Indentado à Direita -->
+      <?php if ( ! empty( $prog_text ) ) : ?>
+      <div class="lg:ml-12 xl:ml-16 max-w-[540px] xl:max-w-[580px] font-body font-light text-[14px] lg:text-[15px] xl:text-[16px] leading-relaxed text-[#333333]">
+        <p><?php echo nl2br( esc_html( $prog_text ) ); ?></p>
+      </div>
+      <?php endif; ?>
+
+    </div>
+
+    <!-- Slider Programa Semanal (Full-Width / Ocupa Toda a Largura) -->
+    <div id="vblProgCarouselWrap" class="relative w-full overflow-hidden mt-12 lg:mt-16">
+      
+      <!-- Track do Carrossel -->
+      <div id="vblProgTrack" class="flex items-start transition-transform duration-500 ease-out will-change-transform gap-6 sm:gap-8 lg:gap-10">
+        <?php foreach ( $programa_list as $p_idx => $item ) : 
+            $p_title    = ! empty( $item['title'] ) ? $item['title'] : '';
+            $p_days     = ! empty( $item['days'] ) ? $item['days'] : '';
+            $p_hours    = ! empty( $item['hours'] ) ? $item['hours'] : '';
+            $p_location = ! empty( $item['location'] ) ? $item['location'] : '';
+            $p_img      = ! empty( $item['image'] ) ? $item['image'] : vbl_img( 'ilhas-432x240-1.jpg' );
+
+            // Fallback para schedule legado
+            if ( empty( $p_days ) && ! empty( $item['schedule'] ) ) {
+                $parts = explode( '·', $item['schedule'] );
+                $p_days = trim( $parts[0] );
+                if ( isset( $parts[1] ) ) {
+                    $p_hours = trim( $parts[1] );
+                }
+            }
+            if ( empty( $p_location ) ) {
+                $p_location = 'Porto Santo';
+            }
+        ?>
+        <div class="vbl-prog-card w-[82vw] sm:w-[480px] md:w-[540px] lg:w-[600px] xl:w-[650px] flex-shrink-0 flex flex-col items-start bg-transparent transition-opacity duration-500 cursor-pointer select-none" data-prog-idx="<?php echo esc_attr( $p_idx ); ?>">
+          
+          <!-- Fotografia da Atividade -->
+          <div class="vbl-prog-img-wrap w-full aspect-[16/10] overflow-hidden bg-white shadow-sm mb-5">
+            <img src="<?php echo esc_url( $p_img ); ?>" alt="<?php echo esc_attr( strip_tags( $p_title ) ); ?>" class="w-full h-full object-cover">
+          </div>
+
+          <!-- Linha Inferior: Título à Esquerda e Ícones à Direita -->
+          <div class="w-full grid grid-cols-1 sm:grid-cols-12 gap-4 lg:gap-6 items-start">
+            
+            <!-- Esquerda: Título -->
+            <div class="sm:col-span-7">
+              <h3 class="font-display text-[16px] sm:text-[18px] lg:text-[20px] xl:text-[21px] leading-[1.18] uppercase text-[#0d5257] font-normal">
+                <?php echo wp_kses_post( $p_title ); ?>
+              </h3>
+            </div>
+
+            <!-- Direita: Informações com Ícones Ciano -->
+            <div class="sm:col-span-5 flex flex-col gap-2 font-body font-light text-[11px] sm:text-[12px] xl:text-[12.5px] leading-snug text-[#0d5257]">
+              
+              <?php if ( ! empty( $p_days ) ) : ?>
+              <div class="flex items-center gap-2">
+                <svg class="w-3.5 h-3.5 text-[#00B5B4] flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                  <line x1="16" y1="2" x2="16" y2="6"></line>
+                  <line x1="8" y1="2" x2="8" y2="6"></line>
+                  <line x1="3" y1="10" x2="21" y2="10"></line>
+                </svg>
+                <span><?php echo esc_html( $p_days ); ?></span>
+              </div>
+              <?php endif; ?>
+
+              <?php if ( ! empty( $p_hours ) ) : ?>
+              <div class="flex items-center gap-2">
+                <svg class="w-3.5 h-3.5 text-[#00B5B4] flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+                <span><?php echo esc_html( $p_hours ); ?></span>
+              </div>
+              <?php endif; ?>
+
+              <?php if ( ! empty( $p_location ) ) : ?>
+              <div class="flex items-center gap-2">
+                <svg class="w-3.5 h-3.5 text-[#00B5B4] flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                  <circle cx="12" cy="10" r="3"></circle>
+                </svg>
+                <span><?php echo esc_html( $p_location ); ?></span>
+              </div>
+              <?php endif; ?>
+
+            </div>
+
+          </div>
+
+        </div>
+        <?php endforeach; ?>
+      </div>
+
+      <!-- Setas Sobrepostas às Bordas da Foto Central (Posição como no Design) -->
+      <div id="vblProgArrowsWrapper" class="pointer-events-none absolute left-1/2 -translate-x-1/2 z-20 flex items-center justify-between w-[82vw] sm:w-[480px] md:w-[540px] lg:w-[600px] xl:w-[650px]">
         <!-- Seta Esquerda -->
-        <button type="button" id="vblProgPrev" class="absolute -left-2 sm:-left-4 lg:-left-6 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 bg-transparent border border-[#00B5B4] text-[#00B5B4] hover:bg-white hover:text-[#00B5B4] hover:border-[#00B5B4] flex items-center justify-center transition-all duration-300 cursor-pointer shadow-xs hover:shadow-sm" aria-label="Atividade Anterior">
+        <button type="button" id="vblProgPrev" class="pointer-events-auto -translate-x-1/2 w-11 h-11 sm:w-12 sm:h-12 bg-transparent border border-[#00B5B4] text-[#00B5B4] hover:bg-white hover:text-[#00B5B4] hover:border-[#00B5B4] flex items-center justify-center transition-all duration-300 cursor-pointer shadow-xs hover:shadow-sm" aria-label="Atividade Anterior">
           <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M19 12H5M12 19l-7-7 7-7" />
           </svg>
         </button>
 
         <!-- Seta Direita -->
-        <button type="button" id="vblProgNext" class="absolute -right-2 sm:-right-4 lg:-right-6 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 bg-transparent border border-[#00B5B4] text-[#00B5B4] hover:bg-white hover:text-[#00B5B4] hover:border-[#00B5B4] flex items-center justify-center transition-all duration-300 cursor-pointer shadow-xs hover:shadow-sm" aria-label="Próxima Atividade">
+        <button type="button" id="vblProgNext" class="pointer-events-auto translate-x-1/2 w-11 h-11 sm:w-12 sm:h-12 bg-transparent border border-[#00B5B4] text-[#00B5B4] hover:bg-white hover:text-[#00B5B4] hover:border-[#00B5B4] flex items-center justify-center transition-all duration-300 cursor-pointer shadow-xs hover:shadow-sm" aria-label="Próxima Atividade">
           <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M5 12h14M12 5l7 7-7 7" />
           </svg>
         </button>
-
-        <div class="overflow-hidden px-2 sm:px-6">
-          <div id="vblProgTrack" class="flex transition-transform duration-500 ease-out gap-6 lg:gap-8">
-            <?php foreach ( $programa_list as $item ) : 
-                $p_title    = ! empty( $item['title'] ) ? $item['title'] : '';
-                $p_schedule = ! empty( $item['schedule'] ) ? $item['schedule'] : '';
-                $p_img      = ! empty( $item['image'] ) ? $item['image'] : vbl_img( 'ilhas-432x240-1.jpg' );
-            ?>
-            <div class="vbl-prog-card w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-22px)] flex-shrink-0 flex flex-col items-start bg-transparent group">
-              <div class="w-full aspect-[16/10] overflow-hidden bg-white shadow-sm mb-5">
-                <img src="<?php echo esc_url( $p_img ); ?>" alt="<?php echo esc_attr( $p_title ); ?>" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-              </div>
-              <h3 class="font-display text-[18px] xl:text-[20px] leading-snug uppercase text-[#0d5257] mb-2 group-hover:text-[#0da9a6] transition-colors">
-                <?php echo esc_html( $p_title ); ?>
-              </h3>
-              <p class="font-body font-light text-[12px] xl:text-[13px] tracking-wide text-[#333333]/80">
-                <?php echo esc_html( $p_schedule ); ?>
-              </p>
-            </div>
-            <?php endforeach; ?>
-          </div>
-        </div>
-
       </div>
 
     </div>
@@ -444,59 +515,105 @@ if ( empty( $tratamentos_list ) || ! is_array( $tratamentos_list ) ) {
 =========================================== -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  // 1. Slider Programa Semanal
+  // 1. Slider Programa Semanal (Full-Width Center Mode com Opacidade e Setas Alinhadas)
+  const progCarouselWrap = document.getElementById('vblProgCarouselWrap');
   const progTrack = document.getElementById('vblProgTrack');
   const progPrev = document.getElementById('vblProgPrev');
   const progNext = document.getElementById('vblProgNext');
+  const progArrowsWrapper = document.getElementById('vblProgArrowsWrapper');
   const progCards = document.querySelectorAll('.vbl-prog-card');
 
   if (progTrack && progCards.length) {
-    let currentProgIdx = 0;
+    let currentProgIdx = progCards.length > 1 ? 1 : 0; // Inicia no card 1 (centro como no Design)
 
-    function getProgPerView() {
-      if (window.innerWidth >= 1024) return 3;
-      if (window.innerWidth >= 640) return 2;
-      return 1;
-    }
+    function updateProgSlider(animate = true) {
+      if (!progCarouselWrap) return;
+      const wrapWidth = progCarouselWrap.offsetWidth;
+      const activeCard = progCards[currentProgIdx];
+      if (!activeCard) return;
 
-    function getMaxProgIdx() {
-      return Math.max(0, progCards.length - getProgPerView());
-    }
+      const cardWidth = activeCard.offsetWidth;
+      const cardCenter = activeCard.offsetLeft + cardWidth / 2;
+      const centerOffset = (wrapWidth / 2) - cardCenter;
 
-    function updateProgSlider() {
-      const cardWidth = progCards[0].getBoundingClientRect().width;
-      const gap = window.innerWidth >= 1024 ? 32 : 24;
-      progTrack.style.transform = `translateX(-${currentProgIdx * (cardWidth + gap)}px)`;
+      progTrack.style.transition = animate ? 'transform 500ms cubic-bezier(0.25, 1, 0.5, 1)' : 'none';
+      progTrack.style.transform = `translateX(${centerOffset}px)`;
+
+      // Atualiza opacidade das atividades (centro = 100%, laterais = 35%)
+      progCards.forEach((card, idx) => {
+        if (idx === currentProgIdx) {
+          card.classList.remove('opacity-35');
+          card.classList.add('opacity-100');
+        } else {
+          card.classList.remove('opacity-100');
+          card.classList.add('opacity-35');
+        }
+      });
+
+      // Posiciona o wrapper de setas exatamente sobre a foto do card central
+      if (progArrowsWrapper) {
+        progArrowsWrapper.style.width = `${cardWidth}px`;
+        const imgWrap = activeCard.querySelector('.vbl-prog-img-wrap');
+        if (imgWrap) {
+          progArrowsWrapper.style.top = `${imgWrap.offsetTop + imgWrap.offsetHeight / 2}px`;
+          progArrowsWrapper.style.transform = 'translate(-50%, -50%)';
+        }
+      }
     }
 
     if (progNext) {
-      progNext.addEventListener('click', function() {
-        if (currentProgIdx < getMaxProgIdx()) {
-          currentProgIdx++;
-        } else {
-          currentProgIdx = 0;
-        }
-        updateProgSlider();
+      progNext.addEventListener('click', function(e) {
+        e.stopPropagation();
+        currentProgIdx = (currentProgIdx + 1) % progCards.length;
+        updateProgSlider(true);
       });
     }
 
     if (progPrev) {
-      progPrev.addEventListener('click', function() {
-        if (currentProgIdx > 0) {
-          currentProgIdx--;
-        } else {
-          currentProgIdx = getMaxProgIdx();
-        }
-        updateProgSlider();
+      progPrev.addEventListener('click', function(e) {
+        e.stopPropagation();
+        currentProgIdx = (currentProgIdx - 1 + progCards.length) % progCards.length;
+        updateProgSlider(true);
       });
     }
 
-    window.addEventListener('resize', function() {
-      if (currentProgIdx > getMaxProgIdx()) {
-        currentProgIdx = getMaxProgIdx();
-      }
-      updateProgSlider();
+    // Clique direto em qualquer card para torná-lo ativo e centralizado
+    progCards.forEach((card, idx) => {
+      card.addEventListener('click', function() {
+        if (currentProgIdx !== idx) {
+          currentProgIdx = idx;
+          updateProgSlider(true);
+        }
+      });
     });
+
+    // Suporte a swipe no mobile / touch
+    let touchStartX = 0;
+    let touchEndX = 0;
+    progCarouselWrap.addEventListener('touchstart', function(e) {
+      touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    progCarouselWrap.addEventListener('touchend', function(e) {
+      touchEndX = e.changedTouches[0].screenX;
+      if (touchStartX - touchEndX > 40) {
+        currentProgIdx = (currentProgIdx + 1) % progCards.length;
+        updateProgSlider(true);
+      } else if (touchEndX - touchStartX > 40) {
+        currentProgIdx = (currentProgIdx - 1 + progCards.length) % progCards.length;
+        updateProgSlider(true);
+      }
+    }, { passive: true });
+
+    window.addEventListener('resize', function() {
+      updateProgSlider(false);
+    });
+
+    // Executa no load e após o carregamento das imagens para alinhamento vertical preciso
+    updateProgSlider(false);
+    setTimeout(function() {
+      updateProgSlider(false);
+    }, 100);
   }
 
   // 2. Slider Animação Noturna

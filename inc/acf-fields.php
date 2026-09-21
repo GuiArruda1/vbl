@@ -849,7 +849,10 @@ function vbl_register_acf_fields() {
                 'layout'       => 'row',
                 'sub_fields'   => array(
                     array( 'key' => 'field_vbl_hprog_title', 'label' => 'Nome da Atividade', 'name' => 'title', 'type' => 'text', 'required' => 1 ),
-                    array( 'key' => 'field_vbl_hprog_schedule', 'label' => 'Horário / Dias (Ex: Segunda a Sexta · 10h00)', 'name' => 'schedule', 'type' => 'text' ),
+                    array( 'key' => 'field_vbl_hprog_days', 'label' => 'Dias / Frequência (Ex: Todas as sextas-feiras)', 'name' => 'days', 'type' => 'text' ),
+                    array( 'key' => 'field_vbl_hprog_hours', 'label' => 'Horário (Ex: Das 15h00 às 19h00)', 'name' => 'hours', 'type' => 'text' ),
+                    array( 'key' => 'field_vbl_hprog_location', 'label' => 'Local (Ex: Bar de Praia / Porto Santo)', 'name' => 'location', 'type' => 'text' ),
+                    array( 'key' => 'field_vbl_hprog_schedule', 'label' => 'Horário / Dias (Legado)', 'name' => 'schedule', 'type' => 'text' ),
                     array( 'key' => 'field_vbl_hprog_image', 'label' => 'Fotografia', 'name' => 'image', 'type' => 'image', 'return_format' => 'url', 'preview_size' => 'medium' ),
                 ),
             ),
