@@ -514,15 +514,30 @@ if ( empty( $tratamentos_list ) || ! is_array( $tratamentos_list ) ) {
      MODAL DE VÍDEO DO SPA
 =========================================== -->
 <?php if ( ! empty( $spa_video_embed ) ) : ?>
-<div id="vblSpaVideoModal" class="fixed inset-0 z-[99999] bg-black/90 backdrop-blur-md hidden items-center justify-center p-4">
-  <div class="relative w-full max-w-5xl aspect-video bg-black shadow-2xl">
-    <button type="button" id="vblSpaVideoClose" class="absolute -top-12 right-0 text-white/80 hover:text-white text-sm uppercase tracking-widest flex items-center gap-2 transition-colors cursor-pointer">
-      <span>Fechar</span>
-      <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12" />
-      </svg>
-    </button>
-    <iframe id="vblSpaVideoIframe" class="w-full h-full" src="" data-src="<?php echo esc_url( $spa_video_embed ); ?>" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<div id="vblSpaVideoModal" class="fixed inset-0 z-[99999] hidden items-center justify-center p-4 transition-opacity duration-300" style="position: fixed; inset: 0; z-index: 99999;" role="dialog" aria-modal="true" aria-label="Vídeo do Spa">
+  <!-- Backdrop Blur (clicar fora fecha) -->
+  <div class="absolute inset-0 bg-black/85 backdrop-blur-md cursor-pointer" id="vblSpaVideoBackdrop"></div>
+
+  <!-- Content Box (Vídeo 16:9 Centralizado com botão fechar ancorado no topo do vídeo como em O Grupo) -->
+  <div class="relative z-20 w-[92%] max-w-[1000px] flex flex-col transition-all duration-300 ease-out" id="vblSpaVideoContent">
+    <!-- Barra superior com botão fechar X como na página O Grupo -->
+    <div class="flex justify-end w-full mb-3">
+      <button type="button"
+        id="vblSpaVideoClose"
+        class="w-11 h-11 flex items-center justify-center bg-transparent border-0 cursor-pointer p-0 opacity-80 hover:opacity-100 hover:scale-110 active:scale-95 transition-all duration-200 focus:outline-none"
+        aria-label="Fechar vídeo"
+        title="Fechar (Esc)">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Iframe Container 16:9 universal com padding-bottom 56.25% -->
+    <div class="relative w-full pb-[56.25%] h-0 overflow-hidden bg-black rounded shadow-2xl">
+      <iframe id="vblSpaVideoIframe" src="" data-src="<?php echo esc_url( $spa_video_embed ); ?>" class="absolute top-0 left-0 w-full h-full border-0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    </div>
   </div>
 </div>
 <?php endif; ?>
@@ -695,6 +710,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const spaModal = document.getElementById('vblSpaVideoModal');
   const spaOpenBtn = document.getElementById('vblSpaVideoOpen');
   const spaCloseBtn = document.getElementById('vblSpaVideoClose');
+  const spaBackdrop = document.getElementById('vblSpaVideoBackdrop');
   const spaIframe = document.getElementById('vblSpaVideoIframe');
 
   if (spaModal && spaOpenBtn && spaIframe) {
@@ -713,6 +729,7 @@ document.addEventListener('DOMContentLoaded', function() {
     };
 
     if (spaCloseBtn) spaCloseBtn.addEventListener('click', closeSpaModal);
+    if (spaBackdrop) spaBackdrop.addEventListener('click', closeSpaModal);
     spaModal.addEventListener('click', function(e) {
       if (e.target === spaModal) closeSpaModal();
     });
