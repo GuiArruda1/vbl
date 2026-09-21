@@ -377,35 +377,38 @@ if ( empty( $tratamentos_list ) || ! is_array( $tratamentos_list ) ) {
   <!-- ==========================================
        5. BANNER DE VÍDEO SPA
   =========================================== -->
-  <section class="relative w-full h-[520px] md:h-[620px] lg:h-[720px] min-h-[520px] lg:min-h-[720px] overflow-hidden bg-black flex items-center justify-center">
+  <section class="relative w-full h-[560px] md:h-[640px] lg:h-[720px] min-h-[560px] md:min-h-[640px] lg:min-h-[720px] overflow-hidden bg-black flex items-center justify-center">
     <!-- Imagem de Fundo -->
     <div class="absolute inset-0 z-0">
       <img src="<?php echo esc_url( $spa_bg ); ?>" alt="Spa & Bem-Estar" class="w-full h-full object-cover object-center filter brightness-[0.75]">
-      <div class="absolute inset-0 bg-black/25"></div>
+      <div class="absolute inset-0 bg-black/20"></div>
     </div>
 
     <!-- Conteúdo Centralizado / Layout com Play Button à Direita -->
-    <div class="relative z-10 max-w-[1920px] w-full mx-auto px-6 xl:px-[8.33%] flex flex-col md:flex-row items-center justify-between gap-12">
+    <div class="relative z-10 max-w-[1920px] w-full mx-auto px-6 lg:px-12 xl:px-[8.33%] flex flex-col md:flex-row items-center justify-between gap-12">
       
       <!-- Lado Esquerdo: Tagline e Título (Alinhados ao Centro) -->
-      <div class="flex flex-col items-center text-center gap-4">
+      <div class="flex flex-col items-center text-center gap-4 w-full md:w-1/2">
         <div class="flex items-center justify-center gap-4">
-          <div class="w-8 lg:w-10 h-px bg-[#0da9a6] flex-shrink-0"></div>
-          <span class="font-body text-[11px] xl:text-[13px] tracking-[2px] uppercase text-white/90 font-light text-center">
+          <div class="w-8 sm:w-10 h-px bg-white/80 flex-shrink-0"></div>
+          <span class="font-body text-[11px] sm:text-[12px] xl:text-[13px] tracking-[2px] uppercase text-white/90 font-light text-center">
             <?php echo esc_html( $spa_tagline ); ?>
           </span>
-          <div class="w-8 lg:w-10 h-px bg-[#0da9a6] flex-shrink-0"></div>
+          <div class="w-8 sm:w-10 h-px bg-white/80 flex-shrink-0"></div>
         </div>
-        <h2 class="font-display text-[40px] sm:text-[54px] md:text-[64px] lg:text-[76px] xl:text-[88px] uppercase tracking-[2px] text-white leading-[1.05] drop-shadow-md text-center">
+        <h2 class="font-display text-[42px] sm:text-[54px] md:text-[66px] lg:text-[78px] xl:text-[90px] uppercase tracking-[2px] text-white leading-[1.05] drop-shadow-md text-center [&_em]:italic [&_em]:font-normal">
           <?php echo wp_kses_post( $spa_title ); ?>
         </h2>
       </div>
 
-      <!-- Lado Direito: Botão Play de Vídeo -->
+      <!-- Lado Direito: Botão Play de Vídeo (Mesmo do design e página O Grupo) -->
       <?php if ( ! empty( $spa_video_url ) ) : ?>
-      <div class="flex items-center justify-center md:pr-12 lg:pr-20 xl:pr-28">
-        <button type="button" id="vblSpaVideoOpen" class="cursor-pointer opacity-80 hover:opacity-100 hover:scale-105 active:scale-95 transition-all duration-300 focus:outline-none w-[110px] sm:w-[130px] lg:w-[150px] xl:w-[170px]" aria-label="Reproduzir Vídeo do Spa">
-          <img src="<?php echo vbl_img( 'ogrupo/play-icon.svg' ); ?>" alt="Reproduzir" class="w-full h-auto">
+      <div class="flex items-center justify-center w-full md:w-1/2">
+        <button type="button" id="vblSpaVideoOpen" class="cursor-pointer opacity-85 hover:opacity-100 hover:scale-105 active:scale-95 transition-all duration-300 focus:outline-none w-[120px] sm:w-[150px] lg:w-[180px] xl:w-[200px]" aria-label="Reproduzir Vídeo do Spa">
+          <svg class="w-full h-auto block" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="1.5" y="1.5" width="197" height="197" stroke="white" stroke-width="3"/>
+            <path d="M69 60L131 100L69 140V60Z" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
         </button>
       </div>
       <?php endif; ?>
