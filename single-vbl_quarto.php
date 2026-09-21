@@ -191,40 +191,35 @@ $frase_line3 = vbl_field( 'vbl_quarto_frase_line3', $post_id, 'LACUS EGET UT SIT
   </section>
 
   <!-- ==========================================
-       3. SLIDER DE FOTOGRAFIAS DO QUARTO
+       3. SLIDER DE FOTOGRAFIAS DO QUARTO (Largura Total / Full-width)
   =========================================== -->
-  <section class="w-full relative overflow-hidden bg-gray-50 pb-16 lg:pb-24">
-    <div class="max-w-[1920px] mx-auto px-6 xl:px-[8.33%] relative">
+  <section class="w-full relative overflow-hidden bg-black">
+    <div class="relative w-full h-[460px] sm:h-[580px] md:h-[680px] lg:h-[780px] xl:h-[840px] overflow-hidden group/slider">
       
-      <!-- Slider Container -->
-      <div class="relative w-full aspect-[16/9] max-h-[780px] overflow-hidden shadow-sm group/slider">
-        
-        <div id="vblQuartoGaleriaTrack" class="flex h-full transition-transform duration-500 ease-out">
-          <?php foreach ( $galeria as $item ) : 
-              $gal_img = ! empty( $item['image'] ) ? $item['image'] : '';
-              if ( empty( $gal_img ) ) continue;
-          ?>
-          <div class="w-full h-full flex-shrink-0">
-            <img src="<?php echo esc_url( $gal_img ); ?>" alt="Fotografia do Quarto" class="w-full h-full object-cover">
-          </div>
-          <?php endforeach; ?>
+      <div id="vblQuartoGaleriaTrack" class="flex h-full transition-transform duration-500 ease-out">
+        <?php foreach ( $galeria as $item ) : 
+            $gal_img = ! empty( $item['image'] ) ? $item['image'] : '';
+            if ( empty( $gal_img ) ) continue;
+        ?>
+        <div class="w-full h-full flex-shrink-0">
+          <img src="<?php echo esc_url( $gal_img ); ?>" alt="Fotografia do Quarto" class="w-full h-full object-cover object-center">
         </div>
-
-        <!-- Seta Esquerda -->
-        <button type="button" id="vblGaleriaPrev" class="absolute left-4 lg:left-8 top-1/2 -translate-y-1/2 z-10 w-12 h-12 border border-[#00B5B4] bg-white text-[#00B5B4] hover:bg-[#00B5B4] hover:text-white flex items-center justify-center transition-colors cursor-pointer shadow-sm" aria-label="Foto Anterior">
-          <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M28 15H1M1 15L14 2M1 15L14 28" />
-          </svg>
-        </button>
-
-        <!-- Seta Direita -->
-        <button type="button" id="vblGaleriaNext" class="absolute right-4 lg:right-8 top-1/2 -translate-y-1/2 z-10 w-12 h-12 border border-[#00B5B4] bg-white text-[#00B5B4] hover:bg-[#00B5B4] hover:text-white flex items-center justify-center transition-colors cursor-pointer shadow-sm" aria-label="Próxima Foto">
-          <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M1 15H28M28 15L15 2M28 15L15 28" />
-          </svg>
-        </button>
-
+        <?php endforeach; ?>
       </div>
+
+      <!-- Seta Esquerda -->
+      <button type="button" id="vblGaleriaPrev" class="absolute left-4 sm:left-8 lg:left-12 xl:left-16 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 border border-white/70 text-white bg-black/15 hover:bg-white hover:text-[#0d5257] hover:border-white flex items-center justify-center transition-all duration-300 cursor-pointer backdrop-blur-[2px] shadow-sm" aria-label="Foto Anterior">
+        <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M19 12H5M12 19l-7-7 7-7" />
+        </svg>
+      </button>
+
+      <!-- Seta Direita -->
+      <button type="button" id="vblGaleriaNext" class="absolute right-4 sm:right-8 lg:right-12 xl:right-16 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 border border-white/70 text-white bg-black/15 hover:bg-white hover:text-[#0d5257] hover:border-white flex items-center justify-center transition-all duration-300 cursor-pointer backdrop-blur-[2px] shadow-sm" aria-label="Próxima Foto">
+        <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14M12 5l7 7-7 7" />
+        </svg>
+      </button>
 
     </div>
   </section>
