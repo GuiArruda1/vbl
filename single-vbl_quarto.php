@@ -47,7 +47,7 @@ if ( empty( $galeria ) || ! is_array( $galeria ) ) {
 }
 
 // Comodidades
-$comod_subtitle = vbl_field( 'vbl_quarto_comod_subtitle', $post_id, 'COMODIDADES DO QUARTO' );
+$comod_subtitle = vbl_field( 'vbl_quarto_comod_subtitle', $post_id, 'SERVIÇOS / COMODIDADES' );
 $comod_title    = vbl_field( 'vbl_quarto_comod_title', $post_id, 'NISI ORCI LEO SED IN' );
 $comod_text     = vbl_field( 'vbl_quarto_comod_text', $post_id, 'Diam elit faucibus enim pellentesque nisi orci neque leo, aliquet dignissim dui tortor massa. Mi malesuada quisque adipiscing sed in tortor. Lorem quis sollicitudin quisque pellentesque risus.' );
 
@@ -227,8 +227,8 @@ $frase_line3 = vbl_field( 'vbl_quarto_frase_line3', $post_id, 'LACUS EGET UT SIT
   <!-- ==========================================
        4. COMODIDADES DO QUARTO
   =========================================== -->
-  <section class="w-full py-20 lg:py-28 bg-white">
-    <div class="max-w-[1920px] mx-auto px-6 xl:px-[8.33%]">
+  <section class="w-full py-20 lg:py-28 xl:py-32 bg-white relative overflow-hidden">
+    <div class="max-w-[1920px] mx-auto px-6 xl:px-[8.33%] relative z-10">
       
       <!-- Subtítulo com Traço Ciano -->
       <div class="flex items-center gap-4 mb-3">
@@ -239,34 +239,44 @@ $frase_line3 = vbl_field( 'vbl_quarto_frase_line3', $post_id, 'LACUS EGET UT SIT
       </div>
 
       <!-- Título Display Serif -->
-      <h2 class="font-display text-[40px] sm:text-[52px] lg:text-[64px] leading-[1.02] tracking-[1.5px] uppercase text-[#0d5257] mb-8 font-normal">
+      <h2 class="font-display text-[40px] sm:text-[52px] lg:text-[64px] leading-[1.02] tracking-[1.5px] uppercase text-[#0d5257] mb-8 lg:mb-10 font-normal">
         <?php echo esc_html( $comod_title ); ?>
       </h2>
 
-      <!-- Texto Introdutório -->
-      <?php if ( ! empty( $comod_text ) ) : ?>
-      <p class="font-body font-light text-[14px] lg:text-[15px] leading-relaxed text-[#333333] max-w-[620px] mb-14">
-        <?php echo nl2br( esc_html( $comod_text ) ); ?>
-      </p>
-      <?php endif; ?>
+      <!-- Conteúdo Indentado à Direita: Descrição e Grelha de Comodidades (Alinhado à 2ª Coluna como no Figma) -->
+      <div class="pl-0 sm:pl-6 lg:pl-[8.33%]">
+        
+        <!-- Texto Introdutório Indentado -->
+        <?php if ( ! empty( $comod_text ) ) : ?>
+        <p class="font-body font-light text-[13px] sm:text-[14px] lg:text-[15px] leading-relaxed text-[#4a4a4a] max-w-[540px] mb-12 lg:mb-14">
+          <?php echo nl2br( esc_html( $comod_text ) ); ?>
+        </p>
+        <?php endif; ?>
 
-      <!-- Grid de Comodidades (4 colunas no desktop) -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-y-7 gap-x-6 lg:gap-x-10 pt-4">
-        <?php foreach ( $comodidades_list as $comod ) : 
-            $c_nome  = ! empty( $comod['nome'] ) ? $comod['nome'] : '';
-            $c_icone = ! empty( $comod['icone'] ) ? $comod['icone'] : 'auto';
-            if ( empty( $c_nome ) ) continue;
-            $c_icon_url = vbl_get_quarto_icon_url( $c_icone, $c_nome );
-        ?>
-        <div class="flex items-center gap-3.5">
-          <img src="<?php echo esc_url( $c_icon_url ); ?>" alt="<?php echo esc_attr( $c_nome ); ?>" class="w-8 h-8 flex-shrink-0 object-contain">
-          <span class="font-body text-[11px] xl:text-[12px] tracking-[1.2px] uppercase text-[#0d5257] font-medium leading-tight">
-            <?php echo esc_html( $c_nome ); ?>
-          </span>
+        <!-- Grid de Comodidades Indentado (4 colunas no desktop) -->
+        <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-y-7 gap-x-6 lg:gap-x-8 xl:gap-x-12 pt-2">
+          <?php foreach ( $comodidades_list as $comod ) : 
+              $c_nome  = ! empty( $comod['nome'] ) ? $comod['nome'] : '';
+              $c_icone = ! empty( $comod['icone'] ) ? $comod['icone'] : 'auto';
+              if ( empty( $c_nome ) ) continue;
+              $c_icon_url = vbl_get_quarto_icon_url( $c_icone, $c_nome );
+          ?>
+          <div class="flex items-center gap-3.5">
+            <img src="<?php echo esc_url( $c_icon_url ); ?>" alt="<?php echo esc_attr( $c_nome ); ?>" class="w-7 h-7 sm:w-8 sm:h-8 flex-shrink-0 object-contain">
+            <span class="font-body text-[11px] xl:text-[12px] tracking-[1.2px] uppercase text-[#0d5257] font-medium leading-tight">
+              <?php echo esc_html( $c_nome ); ?>
+            </span>
+          </div>
+          <?php endforeach; ?>
         </div>
-        <?php endforeach; ?>
+
       </div>
 
+    </div>
+
+    <!-- Concha Decorativa em Outline Ciano (Canto inferior direito como no design) -->
+    <div class="absolute -bottom-8 sm:-bottom-12 lg:-bottom-16 right-4 sm:right-8 lg:right-16 z-0 w-36 sm:w-48 lg:w-60 pointer-events-none opacity-25">
+      <img src="<?php echo vbl_img( 'concha-cyan.svg' ); ?>" alt="" class="w-full h-auto object-contain">
     </div>
   </section>
 
