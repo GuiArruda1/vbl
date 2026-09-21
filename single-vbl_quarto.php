@@ -464,14 +464,14 @@ $frase_line3 = vbl_field( 'vbl_quarto_frase_line3', $post_id, 'LACUS EGET UT SIT
       <div class="relative">
 
         <!-- Botão Seta Esquerda (Anterior) -->
-        <button type="button" id="vblOtherRoomsPrev" class="absolute left-0 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 border border-[#00B5B4] text-[#00B5B4] bg-white hover:bg-[#00B5B4] hover:text-white flex items-center justify-center transition-colors duration-300 cursor-pointer shadow-xs hover:shadow-sm" aria-label="Quarto Anterior">
+        <button type="button" id="vblOtherRoomsPrev" class="absolute left-0 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 border border-[#00B5B4] text-[#00B5B4] bg-transparent hover:bg-white hover:text-[#00B5B4] hover:border-[#00B5B4] flex items-center justify-center transition-all duration-300 cursor-pointer shadow-xs hover:shadow-sm" aria-label="Quarto Anterior">
           <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M19 12H5M12 19l-7-7 7-7" />
           </svg>
         </button>
 
         <!-- Botão Seta Direita (Seguinte) -->
-        <button type="button" id="vblOtherRoomsNext" class="absolute right-0 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 border border-[#00B5B4] text-[#00B5B4] bg-white hover:bg-[#00B5B4] hover:text-white flex items-center justify-center transition-colors duration-300 cursor-pointer shadow-xs hover:shadow-sm" aria-label="Próximo Quarto">
+        <button type="button" id="vblOtherRoomsNext" class="absolute right-0 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 border border-[#00B5B4] text-[#00B5B4] bg-transparent hover:bg-white hover:text-[#00B5B4] hover:border-[#00B5B4] flex items-center justify-center transition-all duration-300 cursor-pointer shadow-xs hover:shadow-sm" aria-label="Próximo Quarto">
           <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M5 12h14M12 5l7 7-7 7" />
           </svg>
