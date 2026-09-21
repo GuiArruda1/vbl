@@ -65,18 +65,18 @@ if ( empty( $programa_list ) || ! is_array( $programa_list ) ) {
 }
 
 // ACF Fields: Animação Noturna / Kids Club (Slider)
-$anim_subtitle = vbl_field( 'vbl_hativ_anim_subtitle', false, 'CLUBE INFANTIL / ANIMAÇÃO' );
+$anim_subtitle = vbl_field( 'vbl_hativ_anim_subtitle', false, 'CLUBES OU ESPAÇOS TEMÁTICOS' );
 $anim_slides   = vbl_field( 'vbl_hativ_anim_slides', false, array() );
 if ( empty( $anim_slides ) || ! is_array( $anim_slides ) ) {
     $anim_slides = array(
         array(
             'title'       => 'FELIS NAM',
-            'description' => 'Quam consectetur sodales mattis id commodo urna. In non vitae amet enim. Ipsum vitae felis at purus nam nibh tincidunt. Lorem ipsum dolor sit amet consectetur. Habitasse elementum quam ullamcorper id euismod amet.' . "\n\n" . 'Nisl ac ultricies augue ante tortor consequat quam porttitor. Lacus tempor venenatis hendrerit in.',
+            'description' => "Quis amet velit cursus etiam ipsum semper augue. Quam consectetur sodales mattis id commodo urna. In non vitae amet enim. Habitasse elementum quam ullamcorper id euismod amet. Ipsum vitae felis at purus nam nibh tincidunt. Lorem ipsum dolor sit amet consectetur.\n\nRhoncus faucibus eu purus quis vitae aliquam vitae. Nunc diam tempus accumsan nulla commodo sagittis.",
             'image'       => vbl_img( 'noticias/noticias-1.jpg' ),
         ),
         array(
             'title'       => 'ESPETÁCULOS NOTURNOS',
-            'description' => 'Momentos únicos de celebração com música, teatro e animação para toda a família num palco ao ar livre com vista para o mar.',
+            'description' => "Momentos únicos de celebração com música, teatro e animação para toda a família num palco ao ar livre com vista para o mar.\n\nNisl ac ultricies augue ante tortor consequat quam porttitor. Lacus tempor venenatis hendrerit in.",
             'image'       => vbl_img( 'noticias/noticias-2.jpg' ),
         ),
     );
@@ -307,60 +307,68 @@ if ( empty( $tratamentos_list ) || ! is_array( $tratamentos_list ) ) {
   </section>
 
   <!-- ==========================================
-       4. ANIMAÇÃO NOTURNA / KIDS CLUB (Slider Bipartido)
+       4. CLUBES OU ESPAÇOS TEMÁTICOS (Slider Bipartido)
   =========================================== -->
   <section class="w-full py-24 lg:py-36 bg-white overflow-hidden">
-    <div class="max-w-[1920px] mx-auto px-6 xl:px-[8.33%] relative">
+    <div class="max-w-[1920px] mx-auto px-4 sm:px-8 xl:px-[5%] 2xl:px-[8.33%] relative">
       
-      <div id="vblAnimSlider" class="relative">
-        <?php foreach ( $anim_slides as $idx => $slide ) : 
-            $is_act = ( $idx === 0 );
-        ?>
-        <div class="vbl-anim-slide <?php echo $is_act ? 'flex' : 'hidden'; ?> flex-col lg:flex-row items-center gap-12 lg:gap-16 xl:gap-24 transition-opacity duration-500" data-anim="<?php echo esc_attr( $idx ); ?>">
-          
-          <!-- Lado Esquerdo: Textos + Seta Anterior -->
-          <div class="w-full lg:w-[48%] flex flex-col justify-between">
-            <div>
-              <div class="flex items-center gap-4 mb-3">
+      <div id="vblAnimSlider" class="relative px-6 sm:px-12 md:px-16 lg:px-20 xl:px-24">
+        
+        <!-- Seta Esquerda (Alinhada à margem esquerda, centrada verticalmente como no Figma) -->
+        <button type="button" id="vblAnimPrev" class="vbl-anim-prev absolute left-0 sm:left-2 lg:left-4 xl:left-6 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 bg-transparent border border-[#00B5B4] text-[#00B5B4] hover:bg-white hover:text-[#00B5B4] hover:border-[#00B5B4] flex items-center justify-center transition-all duration-300 cursor-pointer shadow-xs hover:shadow-sm" aria-label="Slide Anterior">
+          <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7" />
+          </svg>
+        </button>
+
+        <!-- Seta Direita (Alinhada à margem direita, centrada verticalmente como no Figma) -->
+        <button type="button" id="vblAnimNext" class="vbl-anim-next absolute right-0 sm:right-2 lg:right-4 xl:right-6 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 bg-transparent border border-[#00B5B4] text-[#00B5B4] hover:bg-white hover:text-[#00B5B4] hover:border-[#00B5B4] flex items-center justify-center transition-all duration-300 cursor-pointer shadow-xs hover:shadow-sm" aria-label="Slide Seguinte">
+          <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14M12 5l7 7-7 7" />
+          </svg>
+        </button>
+
+        <!-- Slides Wrapper -->
+        <div class="relative w-full">
+          <?php foreach ( $anim_slides as $idx => $slide ) : 
+              $is_act = ( $idx === 0 );
+          ?>
+          <div class="vbl-anim-slide <?php echo $is_act ? 'flex' : 'hidden'; ?> flex-col lg:flex-row items-center justify-between gap-10 lg:gap-14 xl:gap-20 transition-opacity duration-500" data-anim="<?php echo esc_attr( $idx ); ?>">
+            
+            <!-- Lado Esquerdo: Subtítulo, Título e Parágrafos Indentados -->
+            <div class="w-full lg:w-[48%] xl:w-[46%] flex flex-col items-start justify-center">
+              
+              <!-- Subtítulo com Traço Ciano -->
+              <div class="flex items-center gap-3 mb-4">
                 <div class="w-8 h-px bg-[#0da9a6] flex-shrink-0"></div>
-                <span class="font-body text-[10px] xl:text-[11px] tracking-[2px] uppercase text-[#0da9a6] font-medium">
+                <span class="font-body text-[10px] sm:text-[11px] xl:text-[12px] tracking-[2px] uppercase text-[#0da9a6] font-medium">
                   <?php echo esc_html( $anim_subtitle ); ?>
                 </span>
               </div>
 
-              <h2 class="font-display text-[44px] sm:text-[56px] lg:text-[68px] xl:text-[78px] leading-[1.02] tracking-[1.5px] uppercase text-[#0d5257] mb-6">
+              <!-- Título Serif Display -->
+              <h2 class="font-display text-[44px] sm:text-[56px] lg:text-[68px] xl:text-[78px] leading-[1.02] tracking-[1.5px] uppercase text-[#0d5257] mb-8 lg:mb-10 font-normal">
                 <?php echo esc_html( $slide['title'] ); ?>
               </h2>
 
-              <div class="font-body font-light text-[14px] xl:text-[15px] leading-relaxed text-[#333333] mb-10 max-w-[480px]">
+              <!-- Parágrafos de Texto Indentados à Direita como no Figma -->
+              <div class="lg:ml-12 xl:ml-16 max-w-[460px] xl:max-w-[500px] flex flex-col gap-5 font-body font-light text-[13px] sm:text-[14px] xl:text-[15px] leading-relaxed text-[#4a4a4a]">
                 <?php echo nl2br( esc_html( $slide['description'] ) ); ?>
+              </div>
+
+            </div>
+
+            <!-- Lado Direito: Fotografia com Proporção do Design -->
+            <div class="w-full lg:w-[50%] xl:w-[52%] flex items-center justify-center lg:justify-end">
+              <div class="relative w-full max-w-[560px] lg:max-w-[620px] xl:max-w-[680px] aspect-[1.12/1] bg-gray-100 shadow-sm overflow-hidden">
+                <img src="<?php echo esc_url( $slide['image'] ); ?>" alt="<?php echo esc_attr( $slide['title'] ); ?>" class="w-full h-full object-cover">
               </div>
             </div>
 
-            <!-- Seta Esquerda -->
-            <button type="button" class="vbl-anim-prev w-11 h-11 sm:w-12 sm:h-12 bg-transparent border border-[#00B5B4] text-[#00B5B4] hover:bg-white hover:text-[#00B5B4] hover:border-[#00B5B4] flex items-center justify-center transition-all duration-300 cursor-pointer shadow-xs hover:shadow-sm" aria-label="Slide Anterior">
-              <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M19 12H5M12 19l-7-7 7-7" />
-              </svg>
-            </button>
           </div>
-
-          <!-- Lado Direito: Fotografia + Seta Seguinte -->
-          <div class="w-full lg:w-[52%] relative flex items-center justify-end">
-            <div class="w-full aspect-[4/3] max-w-[760px] bg-gray-100 shadow-sm relative overflow-hidden">
-              <img src="<?php echo esc_url( $slide['image'] ); ?>" alt="<?php echo esc_attr( $slide['title'] ); ?>" class="w-full h-full object-cover">
-            </div>
-
-            <!-- Seta Direita -->
-            <button type="button" class="vbl-anim-next absolute -right-3 sm:-right-5 lg:-right-6 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 bg-transparent border border-[#00B5B4] text-[#00B5B4] hover:bg-white hover:text-[#00B5B4] hover:border-[#00B5B4] flex items-center justify-center transition-all duration-300 cursor-pointer shadow-xs hover:shadow-sm" aria-label="Slide Seguinte">
-              <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M5 12h14M12 5l7 7-7 7" />
-              </svg>
-            </button>
-          </div>
-
+          <?php endforeach; ?>
         </div>
-        <?php endforeach; ?>
+
       </div>
 
     </div>
@@ -616,10 +624,10 @@ document.addEventListener('DOMContentLoaded', function() {
     }, 100);
   }
 
-  // 2. Slider Animação Noturna
+  // 2. Slider Clubes ou Espaços Temáticos
   const animSlides = document.querySelectorAll('.vbl-anim-slide');
-  const animPrevs = document.querySelectorAll('.vbl-anim-prev');
-  const animNexts = document.querySelectorAll('.vbl-anim-next');
+  const animPrev = document.getElementById('vblAnimPrev');
+  const animNext = document.getElementById('vblAnimNext');
   let currentAnim = 0;
 
   function showAnimSlide(idx) {
@@ -639,8 +647,14 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-  animPrevs.forEach(btn => btn.addEventListener('click', () => showAnimSlide(currentAnim - 1)));
-  animNexts.forEach(btn => btn.addEventListener('click', () => showAnimSlide(currentAnim + 1)));
+  if (animPrev) animPrev.addEventListener('click', () => showAnimSlide(currentAnim - 1));
+  if (animNext) animNext.addEventListener('click', () => showAnimSlide(currentAnim + 1));
+  document.querySelectorAll('.vbl-anim-prev').forEach(btn => {
+    if (btn !== animPrev) btn.addEventListener('click', () => showAnimSlide(currentAnim - 1));
+  });
+  document.querySelectorAll('.vbl-anim-next').forEach(btn => {
+    if (btn !== animNext) btn.addEventListener('click', () => showAnimSlide(currentAnim + 1));
+  });
 
   // 3. Slider Tratamentos de Spa
   const tratSlides = document.querySelectorAll('.vbl-trat-slide');

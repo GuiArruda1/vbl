@@ -859,7 +859,7 @@ function vbl_register_acf_fields() {
 
             /* Tab: Animação Noturna / Kids Club */
             array( 'key' => 'field_vbl_hativ_tab_anim', 'label' => 'Animação Noturna (Slider)', 'type' => 'tab' ),
-            array( 'key' => 'field_vbl_hativ_anim_subtitle', 'label' => 'Subtítulo', 'name' => 'vbl_hativ_anim_subtitle', 'type' => 'text', 'default_value' => 'CLUBE INFANTIL / ANIMAÇÃO' ),
+            array( 'key' => 'field_vbl_hativ_anim_subtitle', 'label' => 'Subtítulo', 'name' => 'vbl_hativ_anim_subtitle', 'type' => 'text', 'default_value' => 'CLUBES OU ESPAÇOS TEMÁTICOS' ),
             array(
                 'key'          => 'field_vbl_hativ_anim_slides',
                 'label'        => 'Slides de Animação',
