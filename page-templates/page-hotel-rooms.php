@@ -146,22 +146,22 @@ if ( empty( $rooms_list ) ) {
     <div class="max-w-[1920px] mx-auto px-6 xl:px-[8.33%] relative">
 
       <!-- Botão Seta Esquerda (Anterior) -->
-      <button type="button" id="vblRoomsPrev" class="absolute -left-2 lg:left-[2%] xl:left-[4%] top-[40%] -translate-y-1/2 z-20 w-12 h-12 border border-[#00B5B4] text-[#00B5B4] hover:bg-[#00B5B4] hover:text-white flex items-center justify-center transition-colors cursor-pointer shadow-sm" aria-label="Quarto Anterior">
-        <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M28 15H1M1 15L14 2M1 15L14 28" />
+      <button type="button" id="vblRoomsPrev" class="absolute left-0 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 border border-[#00B5B4] text-[#00B5B4] bg-white hover:bg-[#00B5B4] hover:text-white flex items-center justify-center transition-colors duration-300 cursor-pointer shadow-xs hover:shadow-sm" aria-label="Quarto Anterior">
+        <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M19 12H5M12 19l-7-7 7-7" />
         </svg>
       </button>
 
       <!-- Botão Seta Direita (Seguinte) -->
-      <button type="button" id="vblRoomsNext" class="absolute -right-2 lg:right-[2%] xl:right-[4%] top-[40%] -translate-y-1/2 z-20 w-12 h-12 border border-[#00B5B4] text-[#00B5B4] hover:bg-[#00B5B4] hover:text-white flex items-center justify-center transition-colors cursor-pointer shadow-sm" aria-label="Próximo Quarto">
-        <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M1 15H28M28 15L15 2M28 15L15 28" />
+      <button type="button" id="vblRoomsNext" class="absolute right-0 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 border border-[#00B5B4] text-[#00B5B4] bg-white hover:bg-[#00B5B4] hover:text-white flex items-center justify-center transition-colors duration-300 cursor-pointer shadow-xs hover:shadow-sm" aria-label="Próximo Quarto">
+        <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14M12 5l7 7-7 7" />
         </svg>
       </button>
 
       <!-- Track do Slider -->
-      <div class="overflow-hidden px-4 lg:px-12">
-        <div id="vblRoomsTrack" class="flex transition-transform duration-500 ease-out gap-8 lg:gap-12 xl:gap-16">
+      <div class="overflow-hidden mx-4 sm:mx-6 lg:mx-8">
+        <div id="vblRoomsTrack" class="flex transition-transform duration-500 ease-out gap-6 sm:gap-8 lg:gap-10 xl:gap-12">
           
           <?php foreach ( $rooms_list as $index => $room ) : 
               $cat   = ! empty( $room['category'] ) ? $room['category'] : 'QUARTO';
@@ -170,10 +170,10 @@ if ( empty( $rooms_list ) ) {
               $img   = ! empty( $room['image'] ) ? $room['image'] : vbl_img( 'hoteis/porto-santo-520x400.jpg' );
               $link  = ! empty( $room['link'] ) ? $room['link'] : '#';
           ?>
-          <div class="vbl-room-card w-full md:w-[calc(50%-16px)] lg:w-[calc(50%-24px)] xl:w-[calc(50%-32px)] flex-shrink-0 flex flex-col items-start bg-transparent group">
+          <div class="vbl-room-card w-full md:w-[calc(50%-16px)] lg:w-[calc(50%-20px)] xl:w-[calc(50%-24px)] flex-shrink-0 flex flex-col items-start bg-transparent group">
             
             <!-- Fotografia do Quarto Clicável para o Single -->
-            <a href="<?php echo esc_url( $link ); ?>" class="block w-full aspect-[16/11] overflow-hidden bg-white shadow-sm mb-6 cursor-pointer" aria-label="<?php echo esc_attr( $title ); ?>">
+            <a href="<?php echo esc_url( $link ); ?>" class="block w-full aspect-[16/10] overflow-hidden bg-white shadow-sm mb-6 cursor-pointer" aria-label="<?php echo esc_attr( $title ); ?>">
               <img src="<?php echo esc_url( $img ); ?>" alt="<?php echo esc_attr( $title ); ?>" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
             </a>
 
@@ -240,11 +240,14 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function updateSlider() {
-    const card = cards[0];
-    const cardWidth = card.getBoundingClientRect().width;
-    // Calcula o gap real baseado na janela
-    const gap = window.innerWidth >= 1280 ? 64 : (window.innerWidth >= 1024 ? 48 : 32);
-    const offset = currentIndex * (cardWidth + gap);
+    if (!cards.length) return;
+    let step = cards[0].offsetWidth;
+    if (cards.length > 1) {
+      const rect0 = cards[0].getBoundingClientRect();
+      const rect1 = cards[1].getBoundingClientRect();
+      step = rect1.left - rect0.left;
+    }
+    const offset = currentIndex * step;
     track.style.transform = `translateX(-${offset}px)`;
   }
 

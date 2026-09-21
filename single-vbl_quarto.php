@@ -414,23 +414,23 @@ $frase_line3 = vbl_field( 'vbl_quarto_frase_line3', $post_id, 'LACUS EGET UT SIT
   if ( count( $other_rooms_list ) < 2 ) {
       $other_rooms_list = array(
           array(
-              'cat'   => 'APARTAMENTO',
-              'title' => 'APARTAMENTO VISTA MAR',
-              'desc'  => 'Espaços que combinam independência e vistas panorâmicas, perfeitos para quem procura autonomia junto ao mar.',
+              'cat'   => 'QUARTO',
+              'title' => 'TWIN DELUXE VISTA MAR',
+              'desc'  => 'Quartos amplos, com varanda privada e uma decoração descontraída em cores vivas e mobília.',
               'thumb' => vbl_img( 'hoteis/porto-santo-520x400.jpg' ),
+              'link'  => '#',
+          ),
+          array(
+              'cat'   => 'APARTAMENTO',
+              'title' => 'T2 VISTA PARCIAL DO MAR',
+              'desc'  => 'Recentemente renovados, garantem o espaço e o conforto ideais para famílias grandes. Dois quartos, kitchenette, sala de estar e varanda com vista parcial para o mar.',
+              'thumb' => vbl_img( 'hoteis/suites-680x400.jpg' ),
               'link'  => '#',
           ),
           array(
               'cat'   => 'QUARTO SUPERIOR',
               'title' => 'DELUXE VISTA MAR',
               'desc'  => 'Acomodações superiores desenhadas para proporcionar uma estadia sofisticada com o oceano como pano de fundo constante.',
-              'thumb' => vbl_img( 'hoteis/suites-680x400.jpg' ),
-              'link'  => '#',
-          ),
-          array(
-              'cat'   => 'QUARTO',
-              'title' => 'CLÁSSICO TWIN',
-              'desc'  => 'Quartos confortáveis, ideais para relaxar após explorar as dunas e praias da ilha.',
               'thumb' => vbl_img( 'hoteis/funchal-680x400.jpg' ),
               'link'  => '#',
           ),
@@ -448,15 +448,15 @@ $frase_line3 = vbl_field( 'vbl_quarto_frase_line3', $post_id, 'LACUS EGET UT SIT
     <div class="max-w-[1920px] mx-auto px-6 xl:px-[8.33%] relative">
       
       <!-- Cabeçalho Outros Quartos -->
-      <div class="text-center mb-14 lg:mb-16 flex flex-col items-center">
+      <div class="text-center mb-12 lg:mb-16 flex flex-col items-center">
         <span class="font-body text-[11px] xl:text-[12px] tracking-[2.5px] uppercase text-[#0da9a6] font-medium mb-3">
           ROOMS & SUITES
         </span>
         <h2 class="font-display text-[40px] sm:text-[52px] lg:text-[64px] leading-[1.05] uppercase text-[#0d5257] font-normal mb-4">
           AMET ET LEO NEQUE<br>LOREM IPSUM SIT
         </h2>
-        <p class="font-body font-light text-[14px] text-black/70 max-w-[560px]">
-          Descubra as restantes opções de alojamento e escolha o refúgio perfeito para a sua estadia.
+        <p class="font-body font-light text-[14px] text-black/70 max-w-[620px]">
+          Gravida turpis posuere in mauris. Eget placerat pretium tempus pellentesque amet venenatis est viverra. Sed id condimentum eget amet augue pretium et leo integer. Neque eu ut vulputate nisi sed. Lorem ipsum dolor sit amet consectetur.
         </p>
       </div>
 
@@ -464,28 +464,28 @@ $frase_line3 = vbl_field( 'vbl_quarto_frase_line3', $post_id, 'LACUS EGET UT SIT
       <div class="relative">
 
         <!-- Botão Seta Esquerda (Anterior) -->
-        <button type="button" id="vblOtherRoomsPrev" class="absolute -left-2 lg:left-[2%] xl:left-[4%] top-[40%] -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 border border-[#00B5B4] text-[#00B5B4] bg-transparent hover:bg-white hover:text-[#00B5B4] hover:border-[#00B5B4] flex items-center justify-center transition-all duration-300 cursor-pointer shadow-xs hover:shadow-sm" aria-label="Quarto Anterior">
+        <button type="button" id="vblOtherRoomsPrev" class="absolute left-0 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 border border-[#00B5B4] text-[#00B5B4] bg-white hover:bg-[#00B5B4] hover:text-white flex items-center justify-center transition-colors duration-300 cursor-pointer shadow-xs hover:shadow-sm" aria-label="Quarto Anterior">
           <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M19 12H5M12 19l-7-7 7-7" />
           </svg>
         </button>
 
         <!-- Botão Seta Direita (Seguinte) -->
-        <button type="button" id="vblOtherRoomsNext" class="absolute -right-2 lg:right-[2%] xl:right-[4%] top-[40%] -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 border border-[#00B5B4] text-[#00B5B4] bg-transparent hover:bg-white hover:text-[#00B5B4] hover:border-[#00B5B4] flex items-center justify-center transition-all duration-300 cursor-pointer shadow-xs hover:shadow-sm" aria-label="Próximo Quarto">
+        <button type="button" id="vblOtherRoomsNext" class="absolute right-0 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 border border-[#00B5B4] text-[#00B5B4] bg-white hover:bg-[#00B5B4] hover:text-white flex items-center justify-center transition-colors duration-300 cursor-pointer shadow-xs hover:shadow-sm" aria-label="Próximo Quarto">
           <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M5 12h14M12 5l7 7-7 7" />
           </svg>
         </button>
 
         <!-- Track Container com overflow-hidden -->
-        <div class="overflow-hidden px-4 lg:px-12">
-          <div id="vblOtherRoomsTrack" class="flex transition-transform duration-500 ease-out gap-8 lg:gap-12 xl:gap-16">
+        <div class="overflow-hidden mx-4 sm:mx-6 lg:mx-8">
+          <div id="vblOtherRoomsTrack" class="flex transition-transform duration-500 ease-out gap-6 sm:gap-8 lg:gap-10 xl:gap-12">
             
             <?php foreach ( $other_rooms_list as $o_room ) : ?>
-            <div class="vbl-other-room-card w-full md:w-[calc(50%-16px)] lg:w-[calc(50%-24px)] xl:w-[calc(50%-32px)] flex-shrink-0 flex flex-col items-start bg-transparent group">
+            <div class="vbl-other-room-card w-full md:w-[calc(50%-16px)] lg:w-[calc(50%-20px)] xl:w-[calc(50%-24px)] flex-shrink-0 flex flex-col items-start bg-transparent group">
               
               <!-- Fotografia Clicável -->
-              <a href="<?php echo esc_url( $o_room['link'] ); ?>" class="block w-full aspect-[16/11] overflow-hidden bg-gray-100 shadow-xs mb-6 cursor-pointer" aria-label="<?php echo esc_attr( $o_room['title'] ); ?>">
+              <a href="<?php echo esc_url( $o_room['link'] ); ?>" class="block w-full aspect-[16/10] overflow-hidden bg-gray-100 shadow-xs mb-6 cursor-pointer" aria-label="<?php echo esc_attr( $o_room['title'] ); ?>">
                 <img src="<?php echo esc_url( $o_room['thumb'] ); ?>" alt="<?php echo esc_attr( $o_room['title'] ); ?>" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
               </a>
 
@@ -604,10 +604,14 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function updateOtherSlider() {
-      const card = otherCards[0];
-      const cardWidth = card.getBoundingClientRect().width;
-      const gap = window.innerWidth >= 1280 ? 64 : (window.innerWidth >= 1024 ? 48 : 32);
-      const offset = otherIndex * (cardWidth + gap);
+      if (!otherCards.length) return;
+      let step = otherCards[0].offsetWidth;
+      if (otherCards.length > 1) {
+        const rect0 = otherCards[0].getBoundingClientRect();
+        const rect1 = otherCards[1].getBoundingClientRect();
+        step = rect1.left - rect0.left;
+      }
+      const offset = otherIndex * step;
       otherTrack.style.transform = `translateX(-${offset}px)`;
     }
 
