@@ -175,16 +175,9 @@ if ( empty( $instalacoes ) || ! is_array( $instalacoes ) ) {
       <div id="vblHotelInstalacoesSlider" class="relative px-8 sm:px-12 md:px-16 lg:px-20 xl:px-24">
 
         <!-- Seta Esquerda (Anterior) Centralizada Verticalmente -->
-        <button type="button" class="vbl-slider-prev absolute left-0 sm:left-2 lg:left-4 xl:left-6 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 border border-[#00B5B4] text-[#00B5B4] hover:bg-[#00B5B4] hover:text-white flex items-center justify-center transition-colors cursor-pointer shadow-xs" aria-label="Instalação Anterior">
+        <button type="button" class="vbl-slider-prev absolute left-0 sm:left-2 lg:left-4 xl:left-6 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 bg-white border border-[#00B5B4] text-[#00B5B4] hover:bg-[#00B5B4] hover:text-white flex items-center justify-center transition-colors cursor-pointer shadow-sm" aria-label="Instalação Anterior">
           <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M19 12H5M12 19l-7-7 7-7" />
-          </svg>
-        </button>
-
-        <!-- Seta Direita (Seguinte) Centralizada Verticalmente -->
-        <button type="button" class="vbl-slider-next absolute right-0 sm:right-2 lg:right-4 xl:right-6 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 border border-[#00B5B4] text-[#00B5B4] hover:bg-[#00B5B4] hover:text-white flex items-center justify-center transition-colors cursor-pointer shadow-xs" aria-label="Instalação Seguinte">
-          <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M5 12h14M12 5l7 7-7 7" />
           </svg>
         </button>
 
@@ -230,10 +223,22 @@ if ( empty( $instalacoes ) || ! is_array( $instalacoes ) ) {
 
             </div>
 
-            <!-- Lado Direito: Fotografia Principal -->
+            <!-- Lado Direito: Fotografia Principal com Seta Sobreposta na Borda -->
             <div class="w-full lg:w-[52%] xl:w-[53%] flex items-center justify-center lg:justify-end">
-              <div class="w-full max-w-[480px] sm:max-w-[520px] lg:max-w-[560px] xl:max-w-[620px] aspect-[1.05/1] bg-gray-100 shadow-sm relative overflow-hidden">
-                <img src="<?php echo esc_url( $item['image'] ); ?>" alt="<?php echo esc_attr( $item['title'] ); ?>" class="w-full h-full object-cover">
+              <div class="relative w-full max-w-[480px] sm:max-w-[520px] lg:max-w-[560px] xl:max-w-[620px] aspect-[1.05/1]">
+                
+                <!-- Foto Principal com cantos nítidos -->
+                <div class="w-full h-full overflow-hidden bg-gray-100 shadow-sm">
+                  <img src="<?php echo esc_url( $item['image'] ); ?>" alt="<?php echo esc_attr( $item['title'] ); ?>" class="w-full h-full object-cover">
+                </div>
+
+                <!-- Seta Direita (Seguinte) Sobreposta à lateral direita da foto (como no Figma) -->
+                <button type="button" class="vbl-slider-next absolute -right-4 sm:-right-6 lg:-right-7 xl:-right-8 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 bg-white border border-[#00B5B4] text-[#00B5B4] hover:bg-[#00B5B4] hover:text-white flex items-center justify-center transition-colors cursor-pointer shadow-sm" aria-label="Instalação Seguinte">
+                  <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+                </button>
+
               </div>
             </div>
 
