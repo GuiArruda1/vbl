@@ -169,76 +169,77 @@ if ( empty( $instalacoes ) || ! is_array( $instalacoes ) ) {
   <!-- ==========================================
        4. INSTALAÇÕES & ÁREAS COMUNS (Carrossel / Receção)
   =========================================== -->
-  <section id="instalacoes" class="w-full py-24 lg:py-36 bg-white overflow-hidden">
-    <div class="max-w-[1920px] mx-auto px-6 xl:px-[8.33%] relative">
+  <section id="instalacoes" class="w-full py-20 lg:py-28 xl:py-36 bg-white overflow-hidden">
+    <div class="max-w-[1920px] mx-auto px-4 sm:px-8 xl:px-[5%] 2xl:px-[8.33%] relative">
       
-      <div id="vblHotelInstalacoesSlider" class="relative">
-        
-        <?php foreach ( $instalacoes as $index => $item ) : 
-            $is_active = ( $index === 0 );
-        ?>
-        <div class="vbl-instalacao-slide <?php echo $is_active ? 'flex' : 'hidden'; ?> flex-col lg:flex-row items-center gap-12 lg:gap-16 xl:gap-24 transition-opacity duration-500" data-slide="<?php echo esc_attr( $index ); ?>">
-          
-          <!-- Lado Esquerdo: Info da Instalação + Miniatura Próxima -->
-          <div class="w-full lg:w-[48%] flex flex-col justify-between">
+      <div id="vblHotelInstalacoesSlider" class="relative px-8 sm:px-12 md:px-16 lg:px-20 xl:px-24">
+
+        <!-- Seta Esquerda (Anterior) Centralizada Verticalmente -->
+        <button type="button" class="vbl-slider-prev absolute left-0 sm:left-2 lg:left-4 xl:left-6 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 border border-[#00B5B4] text-[#00B5B4] hover:bg-[#00B5B4] hover:text-white flex items-center justify-center transition-colors cursor-pointer shadow-xs" aria-label="Instalação Anterior">
+          <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7" />
+          </svg>
+        </button>
+
+        <!-- Seta Direita (Seguinte) Centralizada Verticalmente -->
+        <button type="button" class="vbl-slider-next absolute right-0 sm:right-2 lg:right-4 xl:right-6 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 border border-[#00B5B4] text-[#00B5B4] hover:bg-[#00B5B4] hover:text-white flex items-center justify-center transition-colors cursor-pointer shadow-xs" aria-label="Instalação Seguinte">
+          <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14M12 5l7 7-7 7" />
+          </svg>
+        </button>
+
+        <!-- Slides Wrapper -->
+        <div class="relative w-full">
+          <?php foreach ( $instalacoes as $index => $item ) : 
+              $is_active  = ( $index === 0 );
+              $next_idx   = ( $index + 1 ) % count( $instalacoes );
+              $thumb_img  = ! empty( $item['thumb'] ) ? $item['thumb'] : ( isset( $instalacoes[ $next_idx ]['image'] ) ? $instalacoes[ $next_idx ]['image'] : '' );
+          ?>
+          <div class="vbl-instalacao-slide <?php echo $is_active ? 'flex' : 'hidden'; ?> flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12 xl:gap-16 transition-opacity duration-500" data-slide="<?php echo esc_attr( $index ); ?>">
             
-            <div>
-              <!-- Subtítulo -->
-              <div class="flex items-center gap-4 mb-3">
-                <div class="w-8 h-px bg-[#0da9a6] flex-shrink-0"></div>
-                <span class="font-body text-[10px] xl:text-[11px] tracking-[2px] uppercase text-[#0da9a6] font-medium">
-                  <?php echo esc_html( $inst_subtitle ); ?>
-                </span>
+            <!-- Lado Esquerdo: Info da Instalação + Miniatura Próxima -->
+            <div class="w-full lg:w-[46%] xl:w-[45%] flex flex-col justify-between">
+              
+              <div>
+                <!-- Subtítulo -->
+                <div class="flex items-center gap-3 mb-3">
+                  <div class="w-8 h-px bg-[#0da9a6] flex-shrink-0"></div>
+                  <span class="font-body text-[10px] xl:text-[11px] tracking-[2px] uppercase text-[#0da9a6] font-medium">
+                    <?php echo esc_html( $inst_subtitle ); ?>
+                  </span>
+                </div>
+
+                <!-- Título da Instalação -->
+                <h2 class="font-display text-[34px] sm:text-[42px] lg:text-[48px] xl:text-[54px] leading-[1.05] tracking-[1.5px] uppercase text-[#0d5257] mb-4 lg:mb-5 font-normal">
+                  <?php echo esc_html( $item['title'] ); ?>
+                </h2>
+
+                <!-- Descrição -->
+                <p class="font-body font-light text-[13px] sm:text-[14px] xl:text-[15px] leading-relaxed text-[#555555] mb-6 sm:mb-8 max-w-[440px]">
+                  <?php echo nl2br( esc_html( $item['description'] ) ); ?>
+                </p>
               </div>
 
-              <!-- Título da Instalação -->
-              <h2 class="font-display text-[44px] sm:text-[56px] lg:text-[68px] xl:text-[78px] leading-[1.02] tracking-[1.5px] uppercase text-[#0d5257] mb-6">
-                <?php echo esc_html( $item['title'] ); ?>
-              </h2>
-
-              <!-- Descrição -->
-              <p class="font-body font-light text-[14px] xl:text-[15px] leading-relaxed text-[#333333] mb-10 max-w-[460px]">
-                <?php echo nl2br( esc_html( $item['description'] ) ); ?>
-              </p>
-            </div>
-
-            <!-- Miniatura da Próxima Área / Instalação com Seta Esquerda -->
-            <div class="flex items-center gap-6 mt-4">
-              <!-- Seta Esquerda (Anterior) -->
-              <button type="button" class="vbl-slider-prev w-12 h-12 border border-[#00B5B4] text-[#00B5B4] hover:bg-[#00B5B4] hover:text-white flex items-center justify-center transition-colors cursor-pointer flex-shrink-0" aria-label="Instalação Anterior">
-                <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M28 15H1M1 15L14 2M1 15L14 28" />
-                </svg>
-              </button>
-
-              <!-- Miniatura -->
-              <?php if ( ! empty( $item['thumb'] ) ) : ?>
-              <div class="w-48 sm:w-56 aspect-[4/3] bg-gray-100 overflow-hidden shadow-sm">
-                <img src="<?php echo esc_url( $item['thumb'] ); ?>" alt="Área adjacente" class="w-full h-full object-cover opacity-85">
+              <!-- Miniatura da Próxima Área / Instalação Alinhada à Esquerda -->
+              <?php if ( ! empty( $thumb_img ) ) : ?>
+              <div class="vbl-slider-next-thumb w-full max-w-[300px] sm:max-w-[340px] xl:max-w-[380px] aspect-[4/3] bg-gray-100 overflow-hidden shadow-xs cursor-pointer group relative" title="Ver próxima instalação">
+                <img src="<?php echo esc_url( $thumb_img ); ?>" alt="Área adjacente" class="w-full h-full object-cover opacity-75 group-hover:opacity-100 transition-all duration-300">
+                <div class="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors"></div>
               </div>
               <?php endif; ?>
+
+            </div>
+
+            <!-- Lado Direito: Fotografia Principal -->
+            <div class="w-full lg:w-[52%] xl:w-[53%] flex items-center justify-center lg:justify-end">
+              <div class="w-full max-w-[480px] sm:max-w-[520px] lg:max-w-[560px] xl:max-w-[620px] aspect-[1.05/1] bg-gray-100 shadow-sm relative overflow-hidden">
+                <img src="<?php echo esc_url( $item['image'] ); ?>" alt="<?php echo esc_attr( $item['title'] ); ?>" class="w-full h-full object-cover">
+              </div>
             </div>
 
           </div>
-
-          <!-- Lado Direito: Fotografia Principal + Seta Direita -->
-          <div class="w-full lg:w-[52%] relative flex items-center justify-end">
-            
-            <div class="w-full aspect-[4/3] max-w-[760px] bg-gray-100 shadow-sm relative overflow-hidden">
-              <img src="<?php echo esc_url( $item['image'] ); ?>" alt="<?php echo esc_attr( $item['title'] ); ?>" class="w-full h-full object-cover">
-            </div>
-
-            <!-- Seta Direita (Seguinte) posicionada na lateral -->
-            <button type="button" class="vbl-slider-next absolute -right-3 sm:-right-5 top-1/2 -translate-y-1/2 z-10 w-12 h-12 border border-[#00B5B4] text-[#00B5B4] hover:bg-[#00B5B4] hover:text-white flex items-center justify-center transition-colors cursor-pointer shadow-sm" aria-label="Instalação Seguinte">
-              <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M1 15H28M28 15L15 2M28 15L15 28" />
-              </svg>
-            </button>
-
-          </div>
-
+          <?php endforeach; ?>
         </div>
-        <?php endforeach; ?>
 
       </div>
 
@@ -307,6 +308,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
   nextBtns.forEach(btn => {
     btn.addEventListener('click', () => showSlide(currentSlide + 1));
+  });
+
+  const thumbBtns = document.querySelectorAll('.vbl-slider-next-thumb');
+  thumbBtns.forEach(thumb => {
+    thumb.addEventListener('click', () => showSlide(currentSlide + 1));
   });
 
   // 2. Modal de Vídeo
