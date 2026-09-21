@@ -478,8 +478,17 @@ if ( empty( $tratamentos_list ) || ! is_array( $tratamentos_list ) ) {
                 <?php echo wp_kses_post( $trat['title'] ); ?>
               </h3>
 
-              <div class="font-body font-light text-[14px] lg:text-[15px] leading-relaxed text-[#333333] max-w-[500px]">
-                <?php echo nl2br( esc_html( $trat['description'] ) ); ?>
+              <div class="flex flex-col gap-5 font-body font-light text-[14px] lg:text-[15px] xl:text-[16px] leading-relaxed text-[#333333] max-w-[480px] xl:max-w-[520px] lg:ml-12 xl:ml-16">
+                <?php 
+                $paragraphs = explode( "\n\n", str_replace( "\r", '', $trat['description'] ) );
+                foreach ( $paragraphs as $p ) :
+                    if ( trim( $p ) ) :
+                ?>
+                  <p><?php echo nl2br( esc_html( trim( $p ) ) ); ?></p>
+                <?php 
+                    endif;
+                endforeach; 
+                ?>
               </div>
             </div>
 
