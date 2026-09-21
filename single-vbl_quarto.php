@@ -351,13 +351,13 @@ $frase_line3 = vbl_field( 'vbl_quarto_frase_line3', $post_id, 'LACUS EGET UT SIT
   </section>
 
   <!-- ==========================================
-       6. OUTROS QUARTOS RELACIONADOS (Do Mesmo Hotel)
+       6. OUTROS QUARTOS RELACIONADOS (Carrossel)
   =========================================== -->
   <?php
   // Query aos restantes quartos do mesmo hotel pai
   $args_other = array(
       'post_type'      => 'vbl_quarto',
-      'posts_per_page' => 4,
+      'posts_per_page' => 8,
       'post__not_in'   => array( $post_id ),
       'orderby'        => 'menu_order title',
       'order'          => 'ASC',
@@ -375,14 +375,80 @@ $frase_line3 = vbl_field( 'vbl_quarto_frase_line3', $post_id, 'LACUS EGET UT SIT
 
   $other_rooms_query = new WP_Query( $args_other );
 
-  // Se houver quartos do mesmo hotel ou gerais
-  if ( $other_rooms_query->have_posts() ) :
+  // Se não houver pelo menos 2 quartos deste hotel, busca quartos gerais
+  if ( ! $other_rooms_query->have_posts() || $other_rooms_query->found_posts < 2 ) {
+      $fallback_args = array(
+          'post_type'      => 'vbl_quarto',
+          'posts_per_page' => 8,
+          'post__not_in'   => array( $post_id ),
+          'orderby'        => 'menu_order title',
+          'order'          => 'ASC',
+      );
+      $fallback_query = new WP_Query( $fallback_args );
+      if ( $fallback_query->have_posts() && $fallback_query->found_posts >= 2 ) {
+          $other_rooms_query = $fallback_query;
+      }
+  }
+
+  $other_rooms_list = array();
+  if ( $other_rooms_query->have_posts() ) {
+      while ( $other_rooms_query->have_posts() ) {
+          $other_rooms_query->the_post();
+          $o_id    = get_the_ID();
+          $o_cat   = vbl_field( 'vbl_quarto_categoria', $o_id, 'QUARTO' );
+          $o_thumb = get_the_post_thumbnail_url( $o_id, 'medium_large' );
+          if ( empty( $o_thumb ) ) $o_thumb = vbl_img( 'hoteis/porto-santo-520x400.jpg' );
+
+          $other_rooms_list[] = array(
+              'cat'   => $o_cat,
+              'title' => get_the_title( $o_id ),
+              'desc'  => wp_trim_words( get_the_excerpt( $o_id ), 18, '...' ),
+              'thumb' => $o_thumb,
+              'link'  => get_permalink( $o_id ),
+          );
+      }
+      wp_reset_postdata();
+  }
+
+  // Fallback garantido se não houver dados no banco
+  if ( count( $other_rooms_list ) < 2 ) {
+      $other_rooms_list = array(
+          array(
+              'cat'   => 'APARTAMENTO',
+              'title' => 'APARTAMENTO VISTA MAR',
+              'desc'  => 'Espaços que combinam independência e vistas panorâmicas, perfeitos para quem procura autonomia junto ao mar.',
+              'thumb' => vbl_img( 'hoteis/porto-santo-520x400.jpg' ),
+              'link'  => '#',
+          ),
+          array(
+              'cat'   => 'QUARTO SUPERIOR',
+              'title' => 'DELUXE VISTA MAR',
+              'desc'  => 'Acomodações superiores desenhadas para proporcionar uma estadia sofisticada com o oceano como pano de fundo constante.',
+              'thumb' => vbl_img( 'hoteis/suites-680x400.jpg' ),
+              'link'  => '#',
+          ),
+          array(
+              'cat'   => 'QUARTO',
+              'title' => 'CLÁSSICO TWIN',
+              'desc'  => 'Quartos confortáveis, ideais para relaxar após explorar as dunas e praias da ilha.',
+              'thumb' => vbl_img( 'hoteis/funchal-680x400.jpg' ),
+              'link'  => '#',
+          ),
+          array(
+              'cat'   => 'SUITE',
+              'title' => 'SUITE FAMILIAR VISTA MAR',
+              'desc'  => 'Espaço privilegiado com vista panorâmica sobre o oceano, varanda privada e sala integrada.',
+              'thumb' => vbl_img( 'hoteis/residence-680x400.jpg' ),
+              'link'  => '#',
+          ),
+      );
+  }
   ?>
   <section class="w-full py-20 lg:py-32 bg-white relative overflow-hidden">
-    <div class="max-w-[1920px] mx-auto px-6 xl:px-[8.33%]">
+    <div class="max-w-[1920px] mx-auto px-6 xl:px-[8.33%] relative">
       
       <!-- Cabeçalho Outros Quartos -->
-      <div class="text-center mb-16 flex flex-col items-center">
+      <div class="text-center mb-14 lg:mb-16 flex flex-col items-center">
         <span class="font-body text-[11px] xl:text-[12px] tracking-[2.5px] uppercase text-[#0da9a6] font-medium mb-3">
           ROOMS & SUITES
         </span>
@@ -394,45 +460,73 @@ $frase_line3 = vbl_field( 'vbl_quarto_frase_line3', $post_id, 'LACUS EGET UT SIT
         </p>
       </div>
 
-      <!-- Grid / Slider de Quartos Relacionados -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 xl:gap-16">
-        <?php while ( $other_rooms_query->have_posts() ) : $other_rooms_query->the_post(); 
-            $o_id    = get_the_ID();
-            $o_cat   = vbl_field( 'vbl_quarto_categoria', $o_id, 'QUARTO' );
-            $o_thumb = get_the_post_thumbnail_url( $o_id, 'medium_large' );
-            if ( empty( $o_thumb ) ) $o_thumb = vbl_img( 'hoteis/porto-santo-520x400.jpg' );
-        ?>
-        <div class="flex flex-col items-start bg-transparent group">
-          <a href="<?php the_permalink(); ?>" class="block w-full aspect-[16/11] overflow-hidden bg-gray-100 mb-6 cursor-pointer" aria-label="<?php the_title_attribute(); ?>">
-            <img src="<?php echo esc_url( $o_thumb ); ?>" alt="<?php the_title_attribute(); ?>" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-          </a>
-          <div class="flex items-center gap-3 mb-2">
-            <div class="w-6 h-px bg-[#0da9a6]"></div>
-            <span class="font-body text-[10px] xl:text-[11px] tracking-[2px] uppercase text-[#0da9a6] font-medium">
-              <?php echo esc_html( $o_cat ); ?>
-            </span>
+      <!-- Carrossel de Quartos Relacionados -->
+      <div class="relative">
+
+        <!-- Botão Seta Esquerda (Anterior) -->
+        <button type="button" id="vblOtherRoomsPrev" class="absolute -left-2 lg:left-[2%] xl:left-[4%] top-[40%] -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 border border-[#00B5B4] text-[#00B5B4] bg-transparent hover:bg-white hover:text-[#00B5B4] hover:border-[#00B5B4] flex items-center justify-center transition-all duration-300 cursor-pointer shadow-xs hover:shadow-sm" aria-label="Quarto Anterior">
+          <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7" />
+          </svg>
+        </button>
+
+        <!-- Botão Seta Direita (Seguinte) -->
+        <button type="button" id="vblOtherRoomsNext" class="absolute -right-2 lg:right-[2%] xl:right-[4%] top-[40%] -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 border border-[#00B5B4] text-[#00B5B4] bg-transparent hover:bg-white hover:text-[#00B5B4] hover:border-[#00B5B4] flex items-center justify-center transition-all duration-300 cursor-pointer shadow-xs hover:shadow-sm" aria-label="Próximo Quarto">
+          <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14M12 5l7 7-7 7" />
+          </svg>
+        </button>
+
+        <!-- Track Container com overflow-hidden -->
+        <div class="overflow-hidden px-4 lg:px-12">
+          <div id="vblOtherRoomsTrack" class="flex transition-transform duration-500 ease-out gap-8 lg:gap-12 xl:gap-16">
+            
+            <?php foreach ( $other_rooms_list as $o_room ) : ?>
+            <div class="vbl-other-room-card w-full md:w-[calc(50%-16px)] lg:w-[calc(50%-24px)] xl:w-[calc(50%-32px)] flex-shrink-0 flex flex-col items-start bg-transparent group">
+              
+              <!-- Fotografia Clicável -->
+              <a href="<?php echo esc_url( $o_room['link'] ); ?>" class="block w-full aspect-[16/11] overflow-hidden bg-gray-100 shadow-xs mb-6 cursor-pointer" aria-label="<?php echo esc_attr( $o_room['title'] ); ?>">
+                <img src="<?php echo esc_url( $o_room['thumb'] ); ?>" alt="<?php echo esc_attr( $o_room['title'] ); ?>" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+              </a>
+
+              <!-- Categoria -->
+              <div class="flex items-center gap-3 mb-2">
+                <div class="w-6 h-px bg-[#0da9a6]"></div>
+                <span class="font-body text-[10px] xl:text-[11px] tracking-[2px] uppercase text-[#0da9a6] font-medium">
+                  <?php echo esc_html( $o_room['cat'] ); ?>
+                </span>
+              </div>
+
+              <!-- Título Clicável -->
+              <h3 class="font-display text-[26px] sm:text-[30px] leading-tight uppercase text-[#0d5257] mb-3 group-hover:text-[#0da9a6] transition-colors">
+                <a href="<?php echo esc_url( $o_room['link'] ); ?>" class="hover:underline decoration-[#0da9a6] decoration-1 underline-offset-4">
+                  <?php echo esc_html( $o_room['title'] ); ?>
+                </a>
+              </h3>
+
+              <!-- Descrição -->
+              <p class="font-body font-light text-[13px] leading-relaxed text-[#333333] mb-6 max-w-[460px]">
+                <?php echo esc_html( $o_room['desc'] ); ?>
+              </p>
+
+              <!-- Botão Ver Quarto -->
+              <a href="<?php echo esc_url( $o_room['link'] ); ?>" class="vbl-btn-microsite group/btn">
+                <span>VER QUARTO</span>
+                <svg viewBox="0 0 12 12" fill="none">
+                  <path d="M1 11L11 1H3.5M11 1V8.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+
+            </div>
+            <?php endforeach; ?>
+
           </div>
-          <h3 class="font-display text-[26px] sm:text-[30px] leading-tight uppercase text-[#0d5257] mb-3 group-hover:text-[#0da9a6] transition-colors">
-            <a href="<?php the_permalink(); ?>" class="hover:underline decoration-[#0da9a6] decoration-1 underline-offset-4">
-              <?php the_title(); ?>
-            </a>
-          </h3>
-          <p class="font-body font-light text-[13px] leading-relaxed text-[#333333] mb-6 max-w-[460px]">
-            <?php echo wp_trim_words( get_the_excerpt(), 18, '...' ); ?>
-          </p>
-          <a href="<?php the_permalink(); ?>" class="vbl-btn-microsite group/btn">
-            <span>VER QUARTO</span>
-            <svg viewBox="0 0 12 12" fill="none">
-              <path d="M1 11L11 1H3.5M11 1V8.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </a>
         </div>
-        <?php endwhile; wp_reset_postdata(); ?>
+
       </div>
 
     </div>
   </section>
-  <?php endif; ?>
 
   <!-- ==========================================
        7. BANNER DE FRASE FINAL
@@ -455,40 +549,100 @@ $frase_line3 = vbl_field( 'vbl_quarto_frase_line3', $post_id, 'LACUS EGET UT SIT
 </main>
 
 <!-- ==========================================
-     SCRIPTS DO SLIDER DA GALERIA
+     SCRIPTS DO TEMPLATE
 =========================================== -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+  // 1. Slider da Galeria Principal
   const track = document.getElementById('vblQuartoGaleriaTrack');
   const prevBtn = document.getElementById('vblGaleriaPrev');
   const nextBtn = document.getElementById('vblGaleriaNext');
 
-  if (!track || !prevBtn || !nextBtn) return;
+  if (track && prevBtn && nextBtn) {
+    const slides = track.children;
+    let currentIdx = 0;
 
-  const slides = track.children;
-  let currentIdx = 0;
+    function updateGaleria() {
+      track.style.transform = `translateX(-${currentIdx * 100}%)`;
+    }
 
-  function updateGaleria() {
-    track.style.transform = `translateX(-${currentIdx * 100}%)`;
+    nextBtn.addEventListener('click', function() {
+      if (currentIdx < slides.length - 1) {
+        currentIdx++;
+      } else {
+        currentIdx = 0;
+      }
+      updateGaleria();
+    });
+
+    prevBtn.addEventListener('click', function() {
+      if (currentIdx > 0) {
+        currentIdx--;
+      } else {
+        currentIdx = slides.length - 1;
+      }
+      updateGaleria();
+    });
   }
 
-  nextBtn.addEventListener('click', function() {
-    if (currentIdx < slides.length - 1) {
-      currentIdx++;
-    } else {
-      currentIdx = 0;
-    }
-    updateGaleria();
-  });
+  // 2. Slider de Outros Quartos Relacionados
+  const otherTrack = document.getElementById('vblOtherRoomsTrack');
+  const otherPrevBtn = document.getElementById('vblOtherRoomsPrev');
+  const otherNextBtn = document.getElementById('vblOtherRoomsNext');
+  const otherCards = document.querySelectorAll('.vbl-other-room-card');
 
-  prevBtn.addEventListener('click', function() {
-    if (currentIdx > 0) {
-      currentIdx--;
-    } else {
-      currentIdx = slides.length - 1;
+  if (otherTrack && otherCards.length) {
+    let otherIndex = 0;
+
+    function getOtherCardsPerView() {
+      return window.innerWidth >= 768 ? 2 : 1;
     }
-    updateGaleria();
-  });
+
+    function getOtherMaxIndex() {
+      const perView = getOtherCardsPerView();
+      return Math.max(0, otherCards.length - perView);
+    }
+
+    function updateOtherSlider() {
+      const card = otherCards[0];
+      const cardWidth = card.getBoundingClientRect().width;
+      const gap = window.innerWidth >= 1280 ? 64 : (window.innerWidth >= 1024 ? 48 : 32);
+      const offset = otherIndex * (cardWidth + gap);
+      otherTrack.style.transform = `translateX(-${offset}px)`;
+    }
+
+    if (otherNextBtn) {
+      otherNextBtn.addEventListener('click', function() {
+        const max = getOtherMaxIndex();
+        if (otherIndex < max) {
+          otherIndex++;
+        } else {
+          otherIndex = 0;
+        }
+        updateOtherSlider();
+      });
+    }
+
+    if (otherPrevBtn) {
+      otherPrevBtn.addEventListener('click', function() {
+        const max = getOtherMaxIndex();
+        if (otherIndex > 0) {
+          otherIndex--;
+        } else {
+          otherIndex = max;
+        }
+        updateOtherSlider();
+      });
+    }
+
+    window.addEventListener('resize', function() {
+      const max = getOtherMaxIndex();
+      if (otherIndex > max) {
+        otherIndex = max;
+      }
+      updateOtherSlider();
+    });
+  }
 });
 </script>
 
