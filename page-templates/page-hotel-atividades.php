@@ -85,6 +85,12 @@ if ( empty( $anim_slides ) || ! is_array( $anim_slides ) ) {
 // ACF Fields: Banner Vídeo Spa
 $spa_tagline = vbl_field( 'vbl_hativ_spa_tagline', false, 'BEM-ESTAR & SPA' );
 $spa_title   = vbl_field( 'vbl_hativ_spa_title', false, 'UM TÍTULO<br><em>SOBRE O SPA</em>' );
+if ( strpos( $spa_title, '<em' ) === false && strpos( $spa_title, '<br' ) !== false ) {
+    $parts = preg_split( '/<br\s*\/?>/i', $spa_title, 2 );
+    if ( count( $parts ) === 2 ) {
+        $spa_title = $parts[0] . '<br><em>' . $parts[1] . '</em>';
+    }
+}
 $spa_bg      = vbl_field( 'vbl_hativ_spa_bg', false, vbl_img( 'hoteis/village-680x400.jpg' ) );
 if ( empty( $spa_bg ) ) {
     $spa_bg = vbl_img( 'hoteis/village-680x400.jpg' );
@@ -377,26 +383,26 @@ if ( empty( $tratamentos_list ) || ! is_array( $tratamentos_list ) ) {
   <!-- ==========================================
        5. BANNER DE VÍDEO SPA
   =========================================== -->
-  <section class="relative w-full h-[560px] md:h-[640px] lg:h-[720px] min-h-[560px] md:min-h-[640px] lg:min-h-[720px] overflow-hidden bg-black flex items-center justify-center">
+  <section id="vblSpaBanner" class="relative w-full h-[560px] md:h-[640px] lg:h-[720px] min-h-[560px] md:min-h-[640px] lg:min-h-[720px] overflow-hidden bg-black flex items-center justify-center">
     <!-- Imagem de Fundo -->
     <div class="absolute inset-0 z-0">
-      <img src="<?php echo esc_url( $spa_bg ); ?>" alt="Spa & Bem-Estar" class="w-full h-full object-cover object-center filter brightness-[0.75]">
-      <div class="absolute inset-0 bg-black/20"></div>
+      <img src="<?php echo esc_url( $spa_bg ); ?>" alt="Spa & Bem-Estar" class="w-full h-full object-cover object-center filter brightness-[0.88]">
+      <div class="absolute inset-0 bg-black/15"></div>
     </div>
 
     <!-- Conteúdo Centralizado / Layout com Play Button à Direita -->
-    <div class="relative z-10 max-w-[1920px] w-full mx-auto px-6 lg:px-12 xl:px-[8.33%] flex flex-col md:flex-row items-center justify-between gap-12">
+    <div class="relative z-10 max-w-[1920px] w-full mx-auto px-6 lg:px-12 xl:px-[8.33%] flex flex-col md:flex-row items-center justify-between gap-10 md:gap-0">
       
       <!-- Lado Esquerdo: Tagline e Título (Alinhados ao Centro) -->
-      <div class="flex flex-col items-center text-center gap-4 w-full md:w-1/2">
+      <div class="flex flex-col items-center text-center gap-2.5 sm:gap-3 w-full md:w-1/2">
         <div class="flex items-center justify-center gap-4">
-          <div class="w-8 sm:w-10 h-px bg-white/80 flex-shrink-0"></div>
-          <span class="font-body text-[11px] sm:text-[12px] xl:text-[13px] tracking-[2px] uppercase text-white/90 font-light text-center">
+          <div class="w-8 sm:w-10 h-px bg-[#0da9a6] flex-shrink-0"></div>
+          <span class="font-body text-[11px] sm:text-[12px] xl:text-[13px] tracking-[2px] uppercase text-white/95 font-light text-center drop-shadow-sm">
             <?php echo esc_html( $spa_tagline ); ?>
           </span>
-          <div class="w-8 sm:w-10 h-px bg-white/80 flex-shrink-0"></div>
+          <div class="w-8 sm:w-10 h-px bg-[#0da9a6] flex-shrink-0"></div>
         </div>
-        <h2 class="font-display text-[42px] sm:text-[54px] md:text-[66px] lg:text-[78px] xl:text-[90px] uppercase tracking-[2px] text-white leading-[1.05] drop-shadow-md text-center [&_em]:italic [&_em]:font-normal">
+        <h2 class="font-display text-[44px] sm:text-[56px] md:text-[68px] lg:text-[80px] xl:text-[92px] uppercase tracking-[2px] text-white leading-[1.04] text-center [&_em]:italic [&_em]:font-normal" style="text-shadow: 0 2px 24px rgba(0,0,0,0.35);">
           <?php echo wp_kses_post( $spa_title ); ?>
         </h2>
       </div>
@@ -404,7 +410,7 @@ if ( empty( $tratamentos_list ) || ! is_array( $tratamentos_list ) ) {
       <!-- Lado Direito: Botão Play de Vídeo (Mesmo do design e página O Grupo) -->
       <?php if ( ! empty( $spa_video_url ) ) : ?>
       <div class="flex items-center justify-center w-full md:w-1/2">
-        <button type="button" id="vblSpaVideoOpen" class="cursor-pointer opacity-85 hover:opacity-100 hover:scale-105 active:scale-95 transition-all duration-300 focus:outline-none w-[120px] sm:w-[150px] lg:w-[180px] xl:w-[200px]" aria-label="Reproduzir Vídeo do Spa">
+        <button type="button" id="vblSpaVideoOpen" class="cursor-pointer opacity-90 hover:opacity-100 hover:scale-105 active:scale-95 transition-all duration-300 focus:outline-none w-[130px] sm:w-[150px] md:w-[170px] lg:w-[190px] xl:w-[200px] drop-shadow-[0_2px_16px_rgba(0,0,0,0.3)]" aria-label="Reproduzir Vídeo do Spa">
           <svg class="w-full h-auto block" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect x="1.5" y="1.5" width="197" height="197" stroke="white" stroke-width="3"/>
             <path d="M69 60L131 100L69 140V60Z" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
