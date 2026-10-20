@@ -1108,6 +1108,117 @@ function vbl_register_acf_fields() {
         'style'      => 'default',
         'active'     => true,
     ) );
+
+    /* ---- Carreiras Page Fields ---- */
+    acf_add_local_field_group( array(
+        'key'      => 'group_vbl_carreiras',
+        'title'    => 'Página Carreiras — Configurações',
+        'fields'   => array(
+            /* Tab: Banner Principal */
+            array( 'key' => 'field_vbl_carreiras_tab_banner', 'label' => 'Banner Principal', 'type' => 'tab' ),
+            array(
+                'key'           => 'field_vbl_carreiras_banner_img',
+                'label'         => 'Imagem de Fundo do Banner',
+                'name'          => 'vbl_carreiras_banner_img',
+                'type'          => 'image',
+                'return_format' => 'url',
+                'preview_size'  => 'medium',
+                'instructions'  => 'Recomendado: 1920x440 px. Se vazio, utiliza a imagem padrão carreiras_banner.png da pasta de imagens.',
+            ),
+            array(
+                'key'           => 'field_vbl_carreiras_banner_title',
+                'label'         => 'Título do Banner',
+                'name'          => 'vbl_carreiras_banner_title',
+                'type'          => 'text',
+                'default_value' => 'CARREIRAS',
+            ),
+            array(
+                'key'           => 'field_vbl_carreiras_banner_desc',
+                'label'         => 'Texto / Descrição do Banner',
+                'name'          => 'vbl_carreiras_banner_desc',
+                'type'          => 'textarea',
+                'rows'          => 3,
+                'default_value' => "No Vila Baleira, valorizamos a inovação, colaboração, compromisso e crescimento.\nJunta-te à equipa e aproveita as melhores oportunidades de carreira connosco!",
+            ),
+
+            /* Tab: Formulário de Candidatura */
+            array( 'key' => 'field_vbl_carreiras_tab_form', 'label' => 'Formulário de Candidatura', 'type' => 'tab' ),
+            array(
+                'key'           => 'field_vbl_carreiras_email_dest',
+                'label'         => 'Email de Destino das Candidaturas',
+                'name'          => 'vbl_carreiras_email_dest',
+                'type'          => 'email',
+                'default_value' => 'rh@vilabaleira.com',
+                'instructions'  => 'Endereço de email que receberá os formulários e ficheiros de currículo submetidos pelos candidatos.',
+            ),
+            array(
+                'key'           => 'field_vbl_carreiras_positions',
+                'label'         => 'Posições / Vagas Disponíveis',
+                'name'          => 'vbl_carreiras_positions',
+                'type'          => 'textarea',
+                'rows'          => 7,
+                'default_value' => "Receção / Front Office\nF&B / Restaurante & Bar\nCozinha & Pastelaria\nHousekeeping / Andares\nManutenção & Serviços Técnicos\nComercial, Vendas & Marketing\nAdministrativo / Recursos Humanos\nSpa & Bem-Estar\nCandidatura Espontânea",
+                'instructions'  => 'Insira uma posição por linha. Estas opções irão preencher a seleção "Posição a que me candidato" no formulário.',
+            ),
+            array(
+                'key'           => 'field_vbl_carreiras_btn_text',
+                'label'         => 'Texto do Botão de Envio',
+                'name'          => 'vbl_carreiras_btn_text',
+                'type'          => 'text',
+                'default_value' => 'ENVIAR CANDIDATURA',
+            ),
+            array(
+                'key'           => 'field_vbl_carreiras_email_info_text',
+                'label'         => 'Texto Alternativo para Envio de CV',
+                'name'          => 'vbl_carreiras_email_info_text',
+                'type'          => 'text',
+                'default_value' => 'Podes também enviar o teu currículo para o seguinte endereço de e-mail:',
+            ),
+            array(
+                'key'           => 'field_vbl_carreiras_email_display',
+                'label'         => 'Email Alternativo Exibido',
+                'name'          => 'vbl_carreiras_email_display',
+                'type'          => 'email',
+                'default_value' => 'rh@vilabaleira.com',
+            ),
+            array(
+                'key'           => 'field_vbl_carreiras_privacy_text',
+                'label'         => 'Texto de Aceitação da Privacidade',
+                'name'          => 'vbl_carreiras_privacy_text',
+                'type'          => 'text',
+                'default_value' => 'Li e aceito a',
+            ),
+            array(
+                'key'           => 'field_vbl_carreiras_privacy_link_text',
+                'label'         => 'Texto do Link de Privacidade',
+                'name'          => 'vbl_carreiras_privacy_link_text',
+                'type'          => 'text',
+                'default_value' => 'Política de Privacidade.',
+            ),
+            array(
+                'key'           => 'field_vbl_carreiras_privacy_url',
+                'label'         => 'URL da Política de Privacidade',
+                'name'          => 'vbl_carreiras_privacy_url',
+                'type'          => 'text',
+                'default_value' => '/politica-de-privacidade',
+            ),
+            array(
+                'key'           => 'field_vbl_carreiras_success_msg',
+                'label'         => 'Mensagem de Sucesso',
+                'name'          => 'vbl_carreiras_success_msg',
+                'type'          => 'textarea',
+                'rows'          => 2,
+                'default_value' => 'Candidatura enviada com sucesso! Obrigado pelo teu interesse em fazer parte da equipa Vila Baleira.',
+            ),
+        ),
+        'location' => array(
+            array( array( 'param' => 'page_template', 'operator' => '==', 'value' => 'page-templates/page-carreiras.php' ) ),
+        ),
+        'menu_order' => 0,
+        'position'   => 'normal',
+        'style'      => 'default',
+        'active'     => true,
+    ) );
 }
 add_action( 'acf/init', 'vbl_register_acf_fields' );
 

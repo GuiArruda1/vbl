@@ -22,7 +22,7 @@
  * - Homepage (front_page) + Gift Card: header starts HIDDEN, appears on scroll
  * - ALL other pages: header is VISIBLE from the start
  */
-$is_banner_page = is_front_page() || is_page_template( 'page-templates/page-giftcard.php' );
+$is_banner_page = is_front_page() || is_page_template( 'page-templates/page-giftcard.php' ) || is_page_template( 'page-templates/page-carreiras.php' );
 $header_initial = $is_banner_page ? 'opacity-0 pointer-events-none' : 'opacity-100';
 $lang_data      = function_exists( 'vbl_get_languages' ) ? vbl_get_languages() : array( 'current' => 'PT', 'languages' => array() );
 ?>

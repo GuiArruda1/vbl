@@ -106,6 +106,15 @@
   .vbl-form-input:focus {
     @apply border-verde;
   }
+  .vbl-form-input-clean {
+    @apply font-body w-full px-0 py-3.5 border-b border-black/30 bg-transparent text-[13px] md:text-[14px] tracking-[1.4px] uppercase outline-none transition-colors;
+  }
+  .vbl-form-input-clean:focus {
+    @apply border-verde;
+  }
+  .vbl-form-input-clean::placeholder {
+    @apply text-black/60 font-light;
+  }
 
   /* Mobile Accordions */
   #mobileHotelCards,

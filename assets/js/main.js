@@ -92,7 +92,8 @@
 
     /* Only toggle header visibility on banner pages */
     if (hf && isBannerPage) {
-      if (sy > 760) {
+      var threshold = document.body.classList.contains('home') ? 760 : 320;
+      if (sy > threshold) {
         hf.classList.remove('opacity-0', 'pointer-events-none');
         hf.classList.add('opacity-100');
       } else {
@@ -509,6 +510,127 @@
         });
     });
   }
+
+  /* ========================================
+     Carreiras Form AJAX & CV Upload Handler
+     ======================================== */
+  (function () {
+    var form = document.getElementById('vblCarreirasForm');
+    var fileInput = document.getElementById('carreira_cv');
+    var filenameEl = document.getElementById('carreira_cv_filename');
+    var actionEl = document.getElementById('carreira_cv_action');
+    if (!form) return;
+
+    var defaultUploadText = filenameEl ? filenameEl.textContent : 'UPLOAD CV';
+
+    function resetCvUpload() {
+      if (fileInput) fileInput.value = '';
+      if (filenameEl) {
+        filenameEl.textContent = defaultUploadText;
+        filenameEl.classList.remove('text-black', 'font-medium');
+        filenameEl.classList.add('text-black/60');
+      }
+      if (actionEl) {
+        actionEl.textContent = '+';
+        actionEl.title = 'Selecionar ficheiro';
+        actionEl.classList.remove('text-red-500');
+      }
+    }
+
+    if (actionEl && fileInput) {
+      actionEl.addEventListener('click', function (e) {
+        if (fileInput.files && fileInput.files.length > 0) {
+          e.preventDefault();
+          e.stopPropagation();
+          resetCvUpload();
+        }
+      });
+    }
+
+    if (fileInput) {
+      fileInput.addEventListener('change', function () {
+        if (fileInput.files && fileInput.files.length > 0) {
+          var file = fileInput.files[0];
+          if (file.size > 10 * 1024 * 1024) {
+            alert('O ficheiro selecionado excede o limite máximo de 10MB.');
+            resetCvUpload();
+            return;
+          }
+          if (filenameEl) {
+            filenameEl.textContent = file.name;
+            filenameEl.classList.remove('text-black/60');
+            filenameEl.classList.add('text-black', 'font-medium');
+          }
+          if (actionEl) {
+            actionEl.textContent = '✕';
+            actionEl.title = 'Remover ficheiro';
+            actionEl.classList.add('text-red-500');
+          }
+        } else {
+          resetCvUpload();
+        }
+      });
+    }
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      var submitBtn = document.getElementById('carreiraSubmitBtn');
+      var btnSpan = document.getElementById('carreiraSubmitText');
+      var originalBtnText = btnSpan ? btnSpan.textContent : 'ENVIAR CANDIDATURA';
+      var feedbackEl = document.getElementById('carreiraFeedback');
+
+      if (!feedbackEl) {
+        feedbackEl = document.createElement('div');
+        feedbackEl.id = 'carreiraFeedback';
+        form.appendChild(feedbackEl);
+      }
+
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        if (btnSpan) btnSpan.textContent = 'A ENVIAR...';
+      }
+
+      feedbackEl.className = 'text-[14px] font-medium py-3 px-4 text-[#0d5257] bg-[#0d5257]/10 border border-[#0d5257]/20 rounded-sm';
+      feedbackEl.textContent = 'A submeter a tua candidatura...';
+      feedbackEl.classList.remove('hidden');
+
+      var formData = new FormData(form);
+      formData.append('action', 'vbl_carreira_submit');
+      if (typeof vblData !== 'undefined' && vblData.nonce) {
+        formData.append('nonce', vblData.nonce);
+      }
+
+      var ajaxUrl = (typeof vblData !== 'undefined' && vblData.ajaxUrl) ? vblData.ajaxUrl : '/wp-admin/admin-ajax.php';
+
+      fetch(ajaxUrl, {
+        method: 'POST',
+        body: formData,
+      })
+        .then(function (res) { return res.json(); })
+        .then(function (data) {
+          if (data && data.success) {
+            feedbackEl.className = 'text-[14px] font-medium py-3 px-4 text-emerald-800 bg-emerald-50 border border-emerald-200 rounded-sm';
+            feedbackEl.textContent = (data.data && data.data.message) ? data.data.message : 'Candidatura enviada com sucesso! Obrigado.';
+            form.reset();
+            resetCvUpload();
+          } else {
+            feedbackEl.className = 'text-[14px] font-medium py-3 px-4 text-red-800 bg-red-50 border border-red-200 rounded-sm';
+            feedbackEl.textContent = (data && data.data && data.data.message) ? data.data.message : 'Ocorreu um erro ao enviar. Por favor tenta novamente.';
+          }
+        })
+        .catch(function () {
+          feedbackEl.className = 'text-[14px] font-medium py-3 px-4 text-red-800 bg-red-50 border border-red-200 rounded-sm';
+          feedbackEl.textContent = 'Ocorreu um erro de ligação ao servidor. Por favor tenta novamente.';
+        })
+        .finally(function () {
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            if (btnSpan) btnSpan.textContent = originalBtnText;
+          }
+        });
+    });
+  })();
 
   /* ========================================
      Mega Menu — Hover on Hotéis

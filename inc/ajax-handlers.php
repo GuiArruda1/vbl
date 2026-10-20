@@ -164,3 +164,115 @@ function vbl_eventos_form_submit() {
 }
 add_action( 'wp_ajax_vbl_eventos_submit', 'vbl_eventos_form_submit' );
 add_action( 'wp_ajax_nopriv_vbl_eventos_submit', 'vbl_eventos_form_submit' );
+
+/**
+ * 4. AJAX: Formulário de Candidatura a Carreiras (com upload de CV)
+ */
+function vbl_carreiras_form_submit() {
+    check_ajax_referer( 'vbl_nonce', 'nonce' );
+
+    $nome     = sanitize_text_field( $_POST['nome'] ?? '' );
+    $email    = sanitize_email( $_POST['email'] ?? '' );
+    $telefone = sanitize_text_field( $_POST['telefone'] ?? '' );
+    $posicao  = sanitize_text_field( $_POST['posicao'] ?? '' );
+
+    if ( empty( $nome ) || ! is_email( $email ) || empty( $posicao ) ) {
+        wp_send_json_error( array( 'message' => __( 'Por favor preencha todos os campos obrigatórios (Nome, Email e Posição).', 'vila-baleira' ) ) );
+    }
+
+    // Destination email: check ACF field from Carreiras page or theme options or fallback to rh@vilabaleira.com
+    $to = 'rh@vilabaleira.com';
+    $carreiras_page = get_pages( array(
+        'meta_key'   => '_wp_page_template',
+        'meta_value' => 'page-templates/page-carreiras.php',
+        'number'     => 1,
+    ) );
+    if ( ! empty( $carreiras_page ) && function_exists( 'get_field' ) ) {
+        $custom_dest = get_field( 'vbl_carreiras_email_dest', $carreiras_page[0]->ID );
+        if ( ! empty( $custom_dest ) && is_email( $custom_dest ) ) {
+            $to = $custom_dest;
+        }
+    }
+
+    $attachments = array();
+
+    // Handle CV file upload if present
+    if ( ! empty( $_FILES['cv_file'] ) && $_FILES['cv_file']['error'] !== UPLOAD_ERR_NO_FILE ) {
+        $file = $_FILES['cv_file'];
+
+        // Size limit: 10MB
+        $max_size = 10 * 1024 * 1024;
+        if ( $file['size'] > $max_size ) {
+            wp_send_json_error( array( 'message' => __( 'O ficheiro de currículo excede o limite máximo permitido de 10MB.', 'vila-baleira' ) ) );
+        }
+
+        // Check file extension
+        $file_ext = strtolower( pathinfo( $file['name'], PATHINFO_EXTENSION ) );
+        $allowed_exts = array( 'pdf', 'doc', 'docx', 'rtf', 'odt' );
+        if ( ! in_array( $file_ext, $allowed_exts, true ) ) {
+            wp_send_json_error( array( 'message' => __( 'Formato de ficheiro não suportado. Por favor anexe um ficheiro PDF, DOC ou DOCX.', 'vila-baleira' ) ) );
+        }
+
+        if ( ! function_exists( 'wp_handle_upload' ) ) {
+            require_once ABSPATH . 'wp-admin/includes/file.php';
+        }
+
+        $upload_overrides = array(
+            'test_form' => false,
+            'mimes'     => array(
+                'pdf'  => 'application/pdf',
+                'doc'  => 'application/msword',
+                'docx' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                'rtf'  => 'application/rtf',
+                'odt'  => 'application/vnd.oasis.opendocument.text',
+            ),
+        );
+
+        $moved_file = wp_handle_upload( $file, $upload_overrides );
+
+        if ( $moved_file && ! isset( $moved_file['error'] ) ) {
+            $attachments[] = $moved_file['file'];
+        } else {
+            $error_msg = $moved_file['error'] ?? __( 'Erro ao processar o upload do currículo.', 'vila-baleira' );
+            wp_send_json_error( array( 'message' => $error_msg ) );
+        }
+    }
+
+    $subject = "[Candidatura Carreiras] {$posicao} — {$nome}";
+
+    $body_lines = array(
+        "Nova candidatura recebida através do website Vila Baleira:",
+        "--------------------------------------------------",
+        "Nome Completo: " . $nome,
+        "Email: " . $email,
+        "Contacto Telefónico: " . ( $telefone ?: 'Não informado' ),
+        "Posição a que se candidata: " . $posicao,
+        "Data/Hora: " . date_i18n( 'd/m/Y H:i:s', current_time( 'timestamp' ) ),
+        "Currículo / CV: " . ( ! empty( $attachments ) ? basename( $attachments[0] ) . ' (em anexo)' : 'Nenhum ficheiro anexado' ),
+        "--------------------------------------------------",
+        "— Notificação automática enviada pelo website oficial Vila Baleira"
+    );
+
+    $body = implode( "\n\n", $body_lines );
+    $headers = array(
+        'Content-Type: text/plain; charset=UTF-8',
+        'Reply-To: ' . $nome . ' <' . $email . '>',
+        'From: Vila Baleira Carreiras <no-reply@' . wp_parse_url( home_url(), PHP_URL_HOST ) . '>',
+    );
+
+    $sent = wp_mail( $to, $subject, $body, $headers, $attachments );
+
+    // Get custom success message if configured
+    $success_msg = __( 'Candidatura enviada com sucesso! Obrigado pelo teu interesse em fazer parte da equipa Vila Baleira.', 'vila-baleira' );
+    if ( ! empty( $carreiras_page ) && function_exists( 'get_field' ) ) {
+        $custom_success = get_field( 'vbl_carreiras_success_msg', $carreiras_page[0]->ID );
+        if ( ! empty( $custom_success ) ) {
+            $success_msg = $custom_success;
+        }
+    }
+
+    wp_send_json_success( array( 'message' => $success_msg ) );
+}
+add_action( 'wp_ajax_vbl_carreira_submit', 'vbl_carreiras_form_submit' );
+add_action( 'wp_ajax_nopriv_vbl_carreira_submit', 'vbl_carreiras_form_submit' );
+
