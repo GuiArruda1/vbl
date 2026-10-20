@@ -16,8 +16,21 @@ $banner_title = vbl_field( 'vbl_carreiras_banner_title', false, 'CARREIRAS' );
 $banner_desc  = vbl_field( 'vbl_carreiras_banner_desc', false, "No Vila Baleira, valorizamos a inovação, colaboração, compromisso e crescimento.\nJunta-te à equipa e aproveita as melhores oportunidades de carreira connosco!" );
 
 // ── FORMULÁRIO CONFIGURAÇÃO ──
-$positions_raw = vbl_field( 'vbl_carreiras_positions', false, "Receção / Front Office\nF&B / Restaurante & Bar\nCozinha & Pastelaria\nHousekeeping / Andares\nManutenção & Serviços Técnicos\nComercial, Vendas & Marketing\nAdministrativo / Recursos Humanos\nSpa & Bem-Estar\nCandidatura Espontânea" );
-$positions_list = array_filter( array_map( 'trim', explode( "\n", str_replace( "\r", "", (string) $positions_raw ) ) ) );
+$positions_default = "Animador(a)\nAssistente de Comidas e Bebidas\nAssistente de Direção\nAssistente de Marketing\nAssistente de Vendas\nBanheiro(a) / Nadador(a)-Salvador(a)\nBarman/Barmaid\nChefe de Bar\nChefe de Copa\nChefe de Cozinha\nChefe de Manutenção\nChefe de Mesa\nChefe de Receção\nChefe de Serviços\nContabilista\nCopeiro(a)\nCozinheiro(a)\nDiretor(a)\nEcónomo\nEmpregado(a) de Andares/Quartos\nEmpregado(a) de Economato\nEmpregado(a) de Limpeza\nEmpregado(a) de Mesa\nEmpregado(a) de Refeitório\nEstagiário(a) Bar\nEstagiário(a) Cozinha\nEstagiário(a) Receção\nEstagiário(a) Restaurante\nEsteticista\nGovernante(a)\nJardineiro(a)\nLavador(a)\nMassagista\nMotorista\nPasteleiro(a)\nPorteiro(a)\nRececionista\nRelações Públicas\nSubchefe de Bar\nSubchefe de Cozinha\nSubchefe de Mesa\nSubchefe de Receção\nTécnico(a) de Manutenção\nTécnico(a) Administrativo(a)\nTécnico(a) de Recursos Humanos\nTécnico(a) Informática\nTerapeuta de Bem-Estar\nOutra";
+$positions_raw = vbl_field( 'vbl_carreiras_positions', false, $positions_default );
+$positions_list = array();
+foreach ( explode( "\n", str_replace( "\r", "", (string) $positions_raw ) ) as $pos_line ) {
+    $pos_line = trim( $pos_line );
+    if ( $pos_line === '' ) {
+        continue;
+    }
+    if ( strpos( $pos_line, ':' ) !== false ) {
+        list( $pval, $plbl ) = array_map( 'trim', explode( ':', $pos_line, 2 ) );
+        $positions_list[] = array( 'value' => $pval, 'label' => ( $plbl !== '' ? $plbl : $pval ) );
+    } else {
+        $positions_list[] = array( 'value' => $pos_line, 'label' => $pos_line );
+    }
+}
 
 $btn_text          = vbl_field( 'vbl_carreiras_btn_text', false, 'ENVIAR CANDIDATURA' );
 $email_info_text   = vbl_field( 'vbl_carreiras_email_info_text', false, 'Podes também enviar o teu currículo para o seguinte endereço de e-mail:' );
@@ -188,7 +201,7 @@ $lang_data = function_exists( 'vbl_get_languages' ) ? vbl_get_languages() : arra
               class="vbl-form-input-clean appearance-none bg-transparent cursor-pointer pr-8 text-black/60 focus:text-black valid:text-black">
               <option value="" disabled selected hidden>POSIÇÃO A QUE ME CANDIDATO</option>
               <?php foreach ( $positions_list as $pos ) : ?>
-                <option value="<?php echo esc_attr( $pos ); ?>" class="text-black bg-white normal-case"><?php echo esc_html( $pos ); ?></option>
+                <option value="<?php echo esc_attr( $pos['value'] ); ?>" class="text-black bg-white normal-case"><?php echo esc_html( $pos['label'] ); ?></option>
               <?php endforeach; ?>
             </select>
             <div class="pointer-events-none absolute right-1 top-1/2 -translate-y-1/2 text-black/60">

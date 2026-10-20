@@ -1156,8 +1156,8 @@ function vbl_register_acf_fields() {
                 'label'         => 'Posições / Vagas Disponíveis',
                 'name'          => 'vbl_carreiras_positions',
                 'type'          => 'textarea',
-                'rows'          => 7,
-                'default_value' => "Receção / Front Office\nF&B / Restaurante & Bar\nCozinha & Pastelaria\nHousekeeping / Andares\nManutenção & Serviços Técnicos\nComercial, Vendas & Marketing\nAdministrativo / Recursos Humanos\nSpa & Bem-Estar\nCandidatura Espontânea",
+                'rows'          => 12,
+                'default_value' => "Animador(a)\nAssistente de Comidas e Bebidas\nAssistente de Direção\nAssistente de Marketing\nAssistente de Vendas\nBanheiro(a) / Nadador(a)-Salvador(a)\nBarman/Barmaid\nChefe de Bar\nChefe de Copa\nChefe de Cozinha\nChefe de Manutenção\nChefe de Mesa\nChefe de Receção\nChefe de Serviços\nContabilista\nCopeiro(a)\nCozinheiro(a)\nDiretor(a)\nEcónomo\nEmpregado(a) de Andares/Quartos\nEmpregado(a) de Economato\nEmpregado(a) de Limpeza\nEmpregado(a) de Mesa\nEmpregado(a) de Refeitório\nEstagiário(a) Bar\nEstagiário(a) Cozinha\nEstagiário(a) Receção\nEstagiário(a) Restaurante\nEsteticista\nGovernante(a)\nJardineiro(a)\nLavador(a)\nMassagista\nMotorista\nPasteleiro(a)\nPorteiro(a)\nRececionista\nRelações Públicas\nSubchefe de Bar\nSubchefe de Cozinha\nSubchefe de Mesa\nSubchefe de Receção\nTécnico(a) de Manutenção\nTécnico(a) Administrativo(a)\nTécnico(a) de Recursos Humanos\nTécnico(a) Informática\nTerapeuta de Bem-Estar\nOutra",
                 'instructions'  => 'Insira uma posição por linha. Estas opções irão preencher a seleção "Posição a que me candidato" no formulário.',
             ),
             array(
