@@ -256,7 +256,6 @@ function vbl_carreiras_form_submit() {
             $error_msg = $moved_file['error'] ?? __( 'Erro ao processar o upload do currículo.', 'vila-baleira' );
             wp_send_json_error( array( 'message' => $error_msg ) );
         }
-    }
 
     $subject = "[Candidatura Carreiras] {$posicao} — {$nome}";
 
