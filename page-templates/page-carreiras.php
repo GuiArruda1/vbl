@@ -254,10 +254,10 @@ $lang_data = function_exists( 'vbl_get_languages' ) ? vbl_get_languages() : arra
           <button
             type="submit"
             id="carreiraSubmitBtn"
-            class="group vbl-btn-primary inline-flex items-center gap-4 px-6 py-2.5 border-t border-b border-dourado text-dourado text-[14px] tracking-[1.4px] uppercase transition-all duration-300 hover:bg-dourado/10 cursor-pointer">
-            <span id="carreiraSubmitText"><?php echo esc_html( $btn_text ); ?></span>
-            <svg class="w-[10px] h-[10px] transition-transform duration-300 group-hover:rotate-45" viewBox="0 0 11 11" fill="none" aria-hidden="true">
-              <path d="M10.8535 10.5H9.85352V1.70703L0.707031 10.8535L0 10.1465L9.14648 1H0.353516V0H10.3535C10.6297 0 10.8535 0.223858 10.8535 0.5V10.5Z" fill="currentColor"/>
+            class="group inline-flex items-center justify-between gap-8 px-8 py-3.5 border border-dourado bg-transparent text-dourado hover:bg-dourado hover:text-white transition-all duration-300 text-[13px] md:text-[14px] tracking-[1.6px] uppercase cursor-pointer">
+            <span id="carreiraSubmitText" class="transition-colors duration-300"><?php echo esc_html( $btn_text ); ?></span>
+            <svg class="w-6 h-3 text-dourado group-hover:text-white transition-all duration-300 group-hover:translate-x-1 flex-shrink-0" viewBox="0 0 24 14" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M0 7h22M16 1l6 6-6 6" />
             </svg>
           </button>
         </div>
