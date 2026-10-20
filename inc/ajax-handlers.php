@@ -175,9 +175,30 @@ function vbl_carreiras_form_submit() {
     $email    = sanitize_email( $_POST['email'] ?? '' );
     $telefone = sanitize_text_field( $_POST['telefone'] ?? '' );
     $posicao  = sanitize_text_field( $_POST['posicao'] ?? '' );
+    $privacy  = ! empty( $_POST['privacy'] );
 
-    if ( empty( $nome ) || ! is_email( $email ) || empty( $posicao ) ) {
-        wp_send_json_error( array( 'message' => __( 'Por favor preencha todos os campos obrigatórios (Nome, Email e Posição).', 'vila-baleira' ) ) );
+    if ( empty( $nome ) ) {
+        wp_send_json_error( array( 'message' => __( 'Por favor preencha o seu Nome Completo.', 'vila-baleira' ) ) );
+    }
+
+    if ( empty( $telefone ) ) {
+        wp_send_json_error( array( 'message' => __( 'Por favor preencha o seu Contacto Telefónico.', 'vila-baleira' ) ) );
+    }
+
+    if ( empty( $email ) || ! is_email( $email ) ) {
+        wp_send_json_error( array( 'message' => __( 'Por favor insira um endereço de Email válido.', 'vila-baleira' ) ) );
+    }
+
+    if ( empty( $posicao ) ) {
+        wp_send_json_error( array( 'message' => __( 'Por favor selecione a posição a que se candidata.', 'vila-baleira' ) ) );
+    }
+
+    if ( empty( $_FILES['cv_file'] ) || $_FILES['cv_file']['error'] === UPLOAD_ERR_NO_FILE ) {
+        wp_send_json_error( array( 'message' => __( 'Por favor anexe o seu currículo (CV) em formato PDF, DOC ou DOCX.', 'vila-baleira' ) ) );
+    }
+
+    if ( ! $privacy ) {
+        wp_send_json_error( array( 'message' => __( 'Por favor aceite a Política de Privacidade para prosseguir.', 'vila-baleira' ) ) );
     }
 
     // Destination email: check ACF field from Carreiras page or theme options or fallback to rh@vilabaleira.com
@@ -196,15 +217,14 @@ function vbl_carreiras_form_submit() {
 
     $attachments = array();
 
-    // Handle CV file upload if present
-    if ( ! empty( $_FILES['cv_file'] ) && $_FILES['cv_file']['error'] !== UPLOAD_ERR_NO_FILE ) {
-        $file = $_FILES['cv_file'];
+    // Handle CV file upload (obrigatório)
+    $file = $_FILES['cv_file'];
 
-        // Size limit: 10MB
-        $max_size = 10 * 1024 * 1024;
-        if ( $file['size'] > $max_size ) {
-            wp_send_json_error( array( 'message' => __( 'O ficheiro de currículo excede o limite máximo permitido de 10MB.', 'vila-baleira' ) ) );
-        }
+    // Size limit: 10MB
+    $max_size = 10 * 1024 * 1024;
+    if ( $file['size'] > $max_size ) {
+        wp_send_json_error( array( 'message' => __( 'O ficheiro de currículo excede o limite máximo permitido de 10MB.', 'vila-baleira' ) ) );
+    }
 
         // Check file extension
         $file_ext = strtolower( pathinfo( $file['name'], PATHINFO_EXTENSION ) );

@@ -174,6 +174,7 @@ $lang_data = function_exists( 'vbl_get_languages' ) ? vbl_get_languages() : arra
               id="carreira_telefone"
               name="telefone"
               placeholder="CONTACTO TELEFÓNICO"
+              required
               class="vbl-form-input-clean text-black">
           </div>
           <div>
@@ -218,6 +219,7 @@ $lang_data = function_exists( 'vbl_get_languages' ) ? vbl_get_languages() : arra
               id="carreira_cv"
               name="cv_file"
               accept=".pdf,.doc,.docx,.rtf,.odt"
+              required
               class="sr-only">
             <label
               for="carreira_cv"

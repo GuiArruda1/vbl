@@ -586,6 +586,18 @@
         form.appendChild(feedbackEl);
       }
 
+      if (!fileInput || !fileInput.files || fileInput.files.length === 0) {
+        feedbackEl.className = 'text-[14px] font-medium py-3 px-4 text-red-800 bg-red-50 border border-red-200 rounded-sm';
+        feedbackEl.textContent = 'Por favor anexe o seu currículo (CV).';
+        feedbackEl.classList.remove('hidden');
+        var cvLabel = document.getElementById('carreira_cv_label');
+        if (cvLabel) {
+          cvLabel.classList.add('border-red-500');
+          setTimeout(function () { cvLabel.classList.remove('border-red-500'); }, 3000);
+        }
+        return;
+      }
+
       if (submitBtn) {
         submitBtn.disabled = true;
         if (btnSpan) btnSpan.textContent = 'A ENVIAR...';
