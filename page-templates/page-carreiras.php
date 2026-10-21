@@ -18,6 +18,11 @@ $banner_desc  = vbl_field( 'vbl_carreiras_banner_desc', false, "No Vila Baleira,
 // ── FORMULÁRIO CONFIGURAÇÃO ──
 $positions_default = "Animador(a)\nAssistente de Comidas e Bebidas\nAssistente de Direção\nAssistente de Marketing\nAssistente de Vendas\nBanheiro(a) / Nadador(a)-Salvador(a)\nBarman/Barmaid\nChefe de Bar\nChefe de Copa\nChefe de Cozinha\nChefe de Manutenção\nChefe de Mesa\nChefe de Receção\nChefe de Serviços\nContabilista\nCopeiro(a)\nCozinheiro(a)\nDiretor(a)\nEcónomo\nEmpregado(a) de Andares/Quartos\nEmpregado(a) de Economato\nEmpregado(a) de Limpeza\nEmpregado(a) de Mesa\nEmpregado(a) de Refeitório\nEstagiário(a) Bar\nEstagiário(a) Cozinha\nEstagiário(a) Receção\nEstagiário(a) Restaurante\nEsteticista\nGovernante(a)\nJardineiro(a)\nLavador(a)\nMassagista\nMotorista\nPasteleiro(a)\nPorteiro(a)\nRececionista\nRelações Públicas\nSubchefe de Bar\nSubchefe de Cozinha\nSubchefe de Mesa\nSubchefe de Receção\nTécnico(a) de Manutenção\nTécnico(a) Administrativo(a)\nTécnico(a) de Recursos Humanos\nTécnico(a) Informática\nTerapeuta de Bem-Estar\nOutra";
 $positions_raw = vbl_field( 'vbl_carreiras_positions', false, $positions_default );
+
+// Se o valor gravado na base de dados ainda for a lista inicial de 9 opções antigas, atualizar automaticamente para a lista oficial
+if ( ! empty( $positions_raw ) && strpos( $positions_raw, 'Animador(a)' ) === false && strpos( $positions_raw, 'Candidatura Espontânea' ) !== false ) {
+    $positions_raw = $positions_default;
+}
 $positions_list = array();
 foreach ( explode( "\n", str_replace( "\r", "", (string) $positions_raw ) ) as $pos_line ) {
     $pos_line = trim( $pos_line );
