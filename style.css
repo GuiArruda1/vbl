@@ -257,10 +257,20 @@ body.admin-bar .header-fixo {
       background-color: #0da9a6 !important;
       border-color: #0da9a6 !important;
     }
+    .vbl-btn svg,
+    #carreiraSubmitBtn svg {
+      transition: transform 0.3s ease-in-out, stroke 0.3s ease-in-out, color 0.3s ease-in-out;
+    }
     .vbl-btn:hover svg,
-    .vbl-btn:hover svg path {
+    .vbl-btn:hover svg path,
+    #carreiraSubmitBtn:hover svg,
+    #carreiraSubmitBtn:hover svg path {
       stroke: #ffffff !important;
       color: #ffffff !important;
+    }
+    .vbl-btn:hover svg,
+    #carreiraSubmitBtn:hover svg {
+      transform: rotate(45deg);
     }
     #carreiraSubmitBtn {
       transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
@@ -269,10 +279,6 @@ body.admin-bar .header-fixo {
       background-color: #bc945b !important;
       color: #ffffff !important;
       border-color: #bc945b !important;
-    }
-    #carreiraSubmitBtn:hover * {
-      color: #ffffff !important;
-      stroke: #ffffff !important;
     }
     .vbl-btn-reservar { transition: background-color 0.4s ease-in-out, color 0.4s ease-in-out, border-color 0.4s ease-in-out; }
     .vbl-btn-reservar:hover { 
