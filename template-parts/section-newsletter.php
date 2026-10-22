@@ -36,13 +36,45 @@ $tree_mobile_class   = $is_microsite ? '-right-[20%]' : '-left-[20%]';
 $tree_desktop_class  = $is_microsite ? 'right-0 xl:right-[2%]' : 'left-0 xl:left-[1%]';
 $tree_mobile_opacity = $is_microsite ? '0.20' : '0.45';
 
-// ACF Fields globais
-$nl_subtitle    = vbl_field('vbl_newsletter_subtitle', false, 'Subscreva a nossa');
-$nl_title       = vbl_field('vbl_newsletter_title', false, 'Newsletter');
-$nl_text        = vbl_field('vbl_newsletter_text', false, 'Seja o primeiro a receber as novidades sobre os nossos hotéis.');
-$nl_privacy     = vbl_field('vbl_newsletter_privacy', false, 'Política de Privacidade.');
-$nl_privacy_url = vbl_field('vbl_newsletter_privacy_url', false, '#');
-$nl_btn         = vbl_field('vbl_newsletter_btn', false, 'Subscrever');
+// Resolve o ID do hotel associado se estivermos num microsite
+$target_hotel_id = get_the_ID();
+if ( $is_microsite ) {
+    if ( is_singular( 'vbl_quarto' ) ) {
+        $parent = function_exists( 'vbl_field' ) ? vbl_field( 'vbl_quarto_hotel', $target_hotel_id ) : get_field( 'vbl_quarto_hotel', $target_hotel_id );
+        if ( $parent ) {
+            $target_hotel_id = is_object( $parent ) ? $parent->ID : (int) $parent;
+        }
+    } else {
+        $parent_id = wp_get_post_parent_id( $target_hotel_id );
+        if ( $parent_id ) {
+            $target_hotel_id = $parent_id;
+        }
+    }
+}
+
+// 1. Campos do Hotel / Página Atual
+$nl_subtitle    = vbl_field( 'vbl_newsletter_subtitle', $target_hotel_id, '' );
+$nl_title       = vbl_field( 'vbl_newsletter_title', $target_hotel_id, '' );
+$nl_text        = vbl_field( 'vbl_newsletter_text', $target_hotel_id, '' );
+$nl_privacy     = vbl_field( 'vbl_newsletter_privacy', $target_hotel_id, '' );
+$nl_privacy_url = vbl_field( 'vbl_newsletter_privacy_url', $target_hotel_id, '' );
+$nl_btn         = vbl_field( 'vbl_newsletter_btn', $target_hotel_id, '' );
+
+// 2. Fallback para as Definições Globais (vbl-global-settings)
+if ( empty( $nl_subtitle ) )    $nl_subtitle    = vbl_option( 'vbl_newsletter_subtitle', '' );
+if ( empty( $nl_title ) )       $nl_title       = vbl_option( 'vbl_newsletter_title', '' );
+if ( empty( $nl_text ) )        $nl_text        = vbl_option( 'vbl_newsletter_text', '' );
+if ( empty( $nl_privacy ) )     $nl_privacy     = vbl_option( 'vbl_newsletter_privacy', '' );
+if ( empty( $nl_privacy_url ) ) $nl_privacy_url = vbl_option( 'vbl_newsletter_privacy_url', '' );
+if ( empty( $nl_btn ) )         $nl_btn         = vbl_option( 'vbl_newsletter_btn', '' );
+
+// 3. Fallbacks finais padrão
+if ( empty( $nl_subtitle ) )    $nl_subtitle    = 'Subscreva a nossa';
+if ( empty( $nl_title ) )       $nl_title       = 'Newsletter';
+if ( empty( $nl_text ) )        $nl_text        = 'Seja o primeiro a receber as novidades sobre os nossos hotéis.';
+if ( empty( $nl_privacy ) )     $nl_privacy     = 'Política de Privacidade.';
+if ( empty( $nl_privacy_url ) ) $nl_privacy_url = function_exists( 'vbl_resolve_url' ) ? vbl_resolve_url( '/politica-de-privacidade' ) : home_url( '/politica-de-privacidade' );
+if ( empty( $nl_btn ) )         $nl_btn         = 'Subscrever';
 ?>
 
 <!-- ====== NEWSLETTER COMPACTA ====== -->

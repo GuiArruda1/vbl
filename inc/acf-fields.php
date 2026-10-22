@@ -198,6 +198,13 @@ function vbl_register_acf_fields() {
             array( 'key' => 'field_vbl_facebook', 'label' => 'Facebook', 'name' => 'vbl_facebook', 'type' => 'text', 'default_value' => '#' ),
             array( 'key' => 'field_vbl_instagram', 'label' => 'Instagram', 'name' => 'vbl_instagram', 'type' => 'text', 'default_value' => '#' ),
             array( 'key' => 'field_vbl_youtube', 'label' => 'YouTube', 'name' => 'vbl_youtube', 'type' => 'text', 'default_value' => '#' ),
+            array( 'key' => 'field_vbl_tab_global_newsletter', 'label' => 'Newsletter', 'name' => '', 'type' => 'tab' ),
+            array( 'key' => 'field_vbl_opt_newsletter_subtitle', 'label' => 'Subtítulo Newsletter', 'name' => 'vbl_newsletter_subtitle', 'type' => 'text', 'default_value' => 'Subscreva a nossa' ),
+            array( 'key' => 'field_vbl_opt_newsletter_title', 'label' => 'Título Newsletter', 'name' => 'vbl_newsletter_title', 'type' => 'text', 'default_value' => 'Newsletter' ),
+            array( 'key' => 'field_vbl_opt_newsletter_text', 'label' => 'Texto Newsletter', 'name' => 'vbl_newsletter_text', 'type' => 'textarea', 'rows' => 2, 'default_value' => 'Seja o primeiro a receber as novidades sobre os nossos hotéis.' ),
+            array( 'key' => 'field_vbl_opt_newsletter_btn', 'label' => 'Texto do Botão', 'name' => 'vbl_newsletter_btn', 'type' => 'text', 'default_value' => 'Subscrever' ),
+            array( 'key' => 'field_vbl_opt_newsletter_privacy', 'label' => 'Texto Política de Privacidade', 'name' => 'vbl_newsletter_privacy', 'type' => 'text', 'default_value' => 'Política de Privacidade.' ),
+            array( 'key' => 'field_vbl_opt_newsletter_privacy_url', 'label' => 'Link Política de Privacidade', 'name' => 'vbl_newsletter_privacy_url', 'type' => 'text', 'default_value' => '/politica-de-privacidade' ),
         ),
         'location' => array(
             array( array( 'param' => 'options_page', 'operator' => '==', 'value' => 'vbl-global-settings' ) ),
@@ -356,6 +363,15 @@ function vbl_register_acf_fields() {
             array( 'key' => 'field_vbl_hhome_exp_img_2', 'label' => 'Foto Esquerda 2 (Inferior)', 'name' => 'vbl_hhome_exp_img_2', 'type' => 'image', 'return_format' => 'url', 'preview_size' => 'medium' ),
             array( 'key' => 'field_vbl_hhome_exp_img_center', 'label' => 'Foto Central Grande (Alta)', 'name' => 'vbl_hhome_exp_img_center', 'type' => 'image', 'return_format' => 'url', 'preview_size' => 'large' ),
             array( 'key' => 'field_vbl_hhome_exp_img_right', 'label' => 'Foto Direita (Spa / Interior)', 'name' => 'vbl_hhome_exp_img_right', 'type' => 'image', 'return_format' => 'url', 'preview_size' => 'medium' ),
+
+            /* Tab: Newsletter */
+            array( 'key' => 'field_vbl_hhome_tab_newsletter', 'label' => 'Newsletter', 'name' => '', 'type' => 'tab' ),
+            array( 'key' => 'field_vbl_hhome_nl_subtitle', 'label' => 'Subtítulo Newsletter', 'name' => 'vbl_newsletter_subtitle', 'type' => 'text', 'default_value' => 'Subscreva a nossa' ),
+            array( 'key' => 'field_vbl_hhome_nl_title', 'label' => 'Título Newsletter', 'name' => 'vbl_newsletter_title', 'type' => 'text', 'default_value' => 'Newsletter' ),
+            array( 'key' => 'field_vbl_hhome_nl_text', 'label' => 'Texto Newsletter', 'name' => 'vbl_newsletter_text', 'type' => 'textarea', 'rows' => 2, 'default_value' => 'Seja o primeiro a receber as novidades sobre os nossos hotéis.' ),
+            array( 'key' => 'field_vbl_hhome_nl_btn', 'label' => 'Texto do Botão', 'name' => 'vbl_newsletter_btn', 'type' => 'text', 'default_value' => 'Subscrever' ),
+            array( 'key' => 'field_vbl_hhome_nl_privacy', 'label' => 'Texto Política de Privacidade', 'name' => 'vbl_newsletter_privacy', 'type' => 'text', 'default_value' => 'Política de Privacidade.' ),
+            array( 'key' => 'field_vbl_hhome_nl_privacy_url', 'label' => 'Link Política de Privacidade', 'name' => 'vbl_newsletter_privacy_url', 'type' => 'text', 'default_value' => '/politica-de-privacidade' ),
         ),
         'location' => array(
             array( array( 'param' => 'page_template', 'operator' => '==', 'value' => 'page-templates/page-hotel-home.php' ) ),
