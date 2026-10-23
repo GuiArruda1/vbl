@@ -833,4 +833,42 @@
     if (nextBtnMob) nextBtnMob.addEventListener('click', function (e) { e.preventDefault(); updateExp(currentIndex + 1); });
   })();
 
+  /* ========================================
+     Mirai Finder / Reservar Smooth Scroll
+     ======================================== */
+  (function () {
+    var reservasLinks = document.querySelectorAll('a[href*="#reservas"], .vbl-btn-reservar');
+    reservasLinks.forEach(function (link) {
+      link.addEventListener('click', function (e) {
+        var reservasEl = document.getElementById('reservas');
+        if (reservasEl) {
+          e.preventDefault();
+          if (typeof closeMenu === 'function') {
+            closeMenu();
+          }
+
+          var offset = 100;
+          var bodyRect = document.body.getBoundingClientRect().top;
+          var elementRect = reservasEl.getBoundingClientRect().top;
+          var elementPosition = elementRect - bodyRect;
+          var offsetPosition = elementPosition - offset;
+
+          window.scrollTo({
+            top: offsetPosition > 0 ? offsetPosition : 0,
+            behavior: 'smooth'
+          });
+
+          // Focus first interactive element inside the finder if available
+          setTimeout(function () {
+            var input = reservasEl.querySelector('input, [role="button"], button');
+            if (input) {
+              input.focus();
+            }
+          }, 600);
+        }
+      });
+    });
+  })();
+
 })();
+

@@ -55,7 +55,7 @@ $lang_data      = function_exists( 'vbl_get_languages' ) ? vbl_get_languages() :
           </div>
         </div>
 
-        <a href="#" class="group vbl-btn-reservar flex items-center gap-16 px-4 py-2 border border-[#0d5257] text-[#0d5257] text-[14px] tracking-[1.4px] uppercase transition-all duration-500 ease-in-out">
+        <a href="<?php echo esc_url( home_url( '/#reservas' ) ); ?>" class="group vbl-btn-reservar flex items-center gap-16 px-4 py-2 border border-[#0d5257] text-[#0d5257] text-[14px] tracking-[1.4px] uppercase transition-all duration-500 ease-in-out">
 			<span>Reservar</span>
 			<svg class="w-[10px] h-[10px] transition-transform duration-300 group-hover:rotate-45 fill-none" viewBox="0 0 11 11" fill="none">
 				<path d="M10.8535 10.5H9.85352V1.70703L0.707031 10.8535L0 10.1465L9.14648 1H0.353516V0H10.3535C10.6297 0 10.8535 0.223858 10.8535 0.5V10.5Z" fill="currentColor"/>
@@ -84,7 +84,7 @@ $lang_data      = function_exists( 'vbl_get_languages' ) ? vbl_get_languages() :
             <?php endforeach; ?>
           </div>
         </div>
-        <a href="#" class="vbl-btn-reservar group hidden [@media(min-width:426px)_and_(max-width:1279px)]:flex items-center gap-2 sm:gap-4 px-3 py-1.5 sm:px-4 sm:py-2 border border-[#0d5257] text-[#0d5257] text-[12px] sm:text-[14px] tracking-[1.2px] sm:tracking-[1.4px] uppercase transition-all duration-300">
+        <a href="<?php echo esc_url( home_url( '/#reservas' ) ); ?>" class="vbl-btn-reservar group hidden [@media(min-width:426px)_and_(max-width:1279px)]:flex items-center gap-2 sm:gap-4 px-3 py-1.5 sm:px-4 sm:py-2 border border-[#0d5257] text-[#0d5257] text-[12px] sm:text-[14px] tracking-[1.2px] sm:tracking-[1.4px] uppercase transition-all duration-300">
           <span>Reservar</span>
           <svg class="w-[9px] h-[9px] sm:w-[10px] sm:h-[10px] transition-transform duration-300 group-hover:rotate-45" viewBox="0 0 11 11" fill="none" aria-hidden="true">
             <path d="M10.8535 10.5H9.85352V1.70703L0.707031 10.8535L0 10.1465L9.14648 1H0.353516V0H10.3535C10.6297 0 10.8535 0.223858 10.8535 0.5V10.5Z" fill="currentColor"/>
@@ -184,7 +184,7 @@ $lang_data      = function_exists( 'vbl_get_languages' ) ? vbl_get_languages() :
         <a href="<?php echo esc_url( home_url( '/contactos' ) ); ?>" class="text-[16px] tracking-[1.6px] uppercase text-[#0d5257] font-medium">Contactos</a>
       <?php endif; ?>
       <div class="h-px bg-[#eee8e5] my-2"></div>
-		<a href="#" class="vbl-btn-reservar flex items-center justify-between w-full px-6 py-4 border border-[#0d5257] text-[#0d5257] text-[14px] tracking-[1.4px] uppercase my-2">
+		<a href="<?php echo esc_url( home_url( '/#reservas' ) ); ?>" class="vbl-btn-reservar flex items-center justify-between w-full px-6 py-4 border border-[#0d5257] text-[#0d5257] text-[14px] tracking-[1.4px] uppercase my-2">
 		  <span>Reservar</span>
 		  <svg class="w-[10px] h-[10px]" viewBox="0 0 11 11" fill="none"><path d="M1 10L10 1M10 1H3M10 1V8" stroke="currentColor" stroke-width="1.2"/></svg>
 		</a>

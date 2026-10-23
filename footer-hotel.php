@@ -165,6 +165,9 @@ $youtube   = vbl_opt( 'youtube', 'https://www.youtube.com/@VilaBaleiraHotels' );
 	  </div>
 	</div>
 
+	<!-- Mirai Booking Engine Core Setup -->
+	<div data-mirai-id="501671" data-type="chain"></div>
+
 <?php wp_footer(); ?>
 </body>
 </html>

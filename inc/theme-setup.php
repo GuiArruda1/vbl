@@ -113,8 +113,22 @@ function vbl_enqueue_assets() {
         'themeUrl' => VBL_URI,
         'nonce'    => wp_create_nonce( 'vbl_nonce' ),
     ) );
+
+    // Mirai Booking Engine Core (Option 3 Integration)
+    wp_enqueue_style( 'vbl-mirai-core-css', 'https://static.mirai.com/core/index.css', array(), '7.1.3' );
+    wp_enqueue_script( 'vbl-mirai-core-js', 'https://static.mirai.com/core/index.js', array(), '7.1.3', true );
 }
 add_action( 'wp_enqueue_scripts', 'vbl_enqueue_assets' );
+
+/**
+ * Filter script tag to ensure Mirai core script loads with type="module"
+ */
+add_filter( 'script_loader_tag', function( $tag, $handle, $src ) {
+    if ( 'vbl-mirai-core-js' === $handle ) {
+        return '<script type="module" src="' . esc_url( $src ) . '" id="micore_core_js-js" async defer></script>' . "\n";
+    }
+    return $tag;
+}, 10, 3 );
 
 /* ========================================
    Helper: Get theme image URL

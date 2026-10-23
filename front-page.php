@@ -81,7 +81,7 @@ $frase2_desc  = vbl_field( 'vbl_frase2_desc', false, 'Deixe-se envolver pela bel
 ?>
 
   <!-- ====== BANNER ====== -->
-  <section class="relative w-full h-[75vh] xl:h-screen xl:max-h-[990px] overflow-hidden">
+  <section class="relative w-full h-[75vh] min-h-[660px] sm:min-h-[720px] xl:h-screen xl:max-h-[990px] overflow-hidden">
     <!-- Header transparente sobre banner -->
     <div class="absolute top-0 left-0 w-full h-20 xl:h-[144px] z-20">
       <div class="max-w-[1920px] mx-auto h-full flex items-center justify-between px-6 xl:px-10">
@@ -103,7 +103,7 @@ $frase2_desc  = vbl_field( 'vbl_frase2_desc', false, 'Deixe-se envolver pela bel
         <div class="font-body hidden xl:flex items-center gap-6 xl:gap-10">
           <a href="<?php echo esc_url( home_url( '/contactos' ) ); ?>" class="vbl-nav-link-white text-[14px] tracking-[1.4px] uppercase text-white">Contactos</a>
           <span class="vbl-nav-link-white text-[14px] tracking-[1.4px] uppercase text-white flex items-center gap-2 cursor-pointer">PT <img src="<?php echo vbl_img( 'vector-dropdown-white.svg' ); ?>" alt="" class="w-2 h-1"></span>
-          	<a href="#" class="group vbl-btn-reservar flex items-center gap-16 px-4 py-2 border border-white text-white text-[14px] tracking-[1.4px] uppercase transition-all duration-500 ease-in-out">
+          	<a href="#reservas" class="group vbl-btn-reservar flex items-center gap-16 px-4 py-2 border border-white text-white text-[14px] tracking-[1.4px] uppercase transition-all duration-500 ease-in-out">
 				<span>Reservar</span>
 				<img src="<?php echo vbl_img( 'seta-branca.svg' ); ?>" alt="" class="w-[10px] h-[10px] transition-transform duration-300 group-hover:rotate-45">
 			</a>			
@@ -112,7 +112,7 @@ $frase2_desc  = vbl_field( 'vbl_frase2_desc', false, 'Deixe-se envolver pela bel
           <span class="w-6 h-px bg-white"></span><span class="w-6 h-px bg-white"></span><span class="w-4 h-px bg-white self-end"></span>
         </button>
 		<!-- reservar semi mobile -->
-		<a href="#" class="hidden [@media(min-width:426px)_and_(max-width:1279px)]:flex font-body group items-center gap-16 px-4 py-2 border border-white text-white text-[14px] tracking-[1.4px] uppercase transition-all duration-500 ease-in-out">
+		<a href="#reservas" class="hidden [@media(min-width:426px)_and_(max-width:1279px)]:flex font-body group items-center gap-16 px-4 py-2 border border-white text-white text-[14px] tracking-[1.4px] uppercase transition-all duration-500 ease-in-out">
 			<span>Reservar</span>
 			<img src="<?php echo vbl_img( 'seta-branca.svg' ); ?>" alt="" class="w-[10px] h-[10px] transition-transform duration-300 group-hover:rotate-45">
 		</a>
@@ -127,59 +127,17 @@ $frase2_desc  = vbl_field( 'vbl_frase2_desc', false, 'Deixe-se envolver pela bel
     <div class="absolute inset-0 mix-blend-multiply" style="background:linear-gradient(to top,rgba(0,0,0,0) 50%,rgba(0,0,0,0.5) 100%)"></div>
     <div class="absolute inset-0 mix-blend-overlay" style="background:linear-gradient(to bottom,rgba(255,255,255,0),#bc945b)"></div>
     <!-- Título -->
-    <div class="absolute inset-0 z-10 flex flex-col items-center justify-center px-6 -mt-[5%]">
-      <div class="flex items-center gap-4 mb-8 xl:mb-10" style="text-shadow:0 2px 12px rgba(0,0,0,0.4)">
+    <div class="absolute inset-0 z-10 flex flex-col items-center justify-center px-6 -mt-[110px] sm:-mt-[90px] xl:-mt-[60px]">
+      <div class="flex items-center gap-4 mb-6 xl:mb-10" style="text-shadow:0 2px 12px rgba(0,0,0,0.4)">
         <div class="w-10 h-px bg-[#eee8e5] hidden lg:block"></div>
         <span class="font-body text-[12px] xl:text-[14px] tracking-[1.4px] uppercase text-[#eee8e5] font-normal"><?php echo esc_html( $banner_subtitle ); ?></span>
         <div class="w-10 h-px bg-[#eee8e5] hidden lg:block"></div>
       </div>
 		<h1 class="font-display text-white text-[28px] leading-[34px] md:text-[48px] md:leading-[54px] lg:text-[64px] lg:leading-[70px] xl:text-[clamp(72px,5.42vw,104px)] xl:leading-[clamp(72px,5.42vw,104px)] uppercase text-center" style="text-shadow:0 4px 20px rgba(0,0,0,0.45),0 1px 6px rgba(0,0,0,0.3)"><span class="text-[#EEE8E5]"><?php echo esc_html( $banner_line1 ); ?></span><br><span><?php echo esc_html( $banner_line2 ); ?></span></h1>
     </div>
-    <!-- Barra pesquisa (mobile/tablet) -->
-    <div class="font-body absolute bottom-4 left-4 right-4 z-10 flex flex-col border border-white xl:hidden">
-      <div class="grid grid-cols-2">
-        <div class="flex flex-col justify-center gap-1 px-4 py-3">
-          <span class="text-[9px] tracking-[1px] uppercase text-white">Onde</span>
-          <span class="text-[12px] tracking-[1.2px] uppercase text-white flex items-center gap-2">todos os hotéis <img src="<?php echo vbl_img( 'vector-dropdown-white.svg' ); ?>" alt="" class="w-2 h-1"></span>
-        </div>
-        <div class="flex flex-col justify-center gap-1 px-4 py-3 border-l border-white">
-          <span class="text-[9px] tracking-[1px] uppercase text-white">Quando</span>
-          <span class="text-[12px] tracking-[1.2px] uppercase text-white flex items-center gap-2">Entrada · Saída <img src="<?php echo vbl_img( 'vector-dropdown-white.svg' ); ?>" alt="" class="w-2 h-1"></span>
-        </div>
-      </div>
-      <div class="h-px bg-white"></div>
-      <div class="grid grid-cols-2">
-        <div class="flex flex-col justify-center gap-1 px-4 py-3">
-          <span class="text-[9px] tracking-[1px] uppercase text-white">Quem</span>
-          <span class="text-[12px] tracking-[1.2px] uppercase text-white flex items-center gap-2">2 adultos · 1 quarto <img src="<?php echo vbl_img( 'vector-dropdown-white.svg' ); ?>" alt="" class="w-2 h-1"></span>
-        </div>
-        <div class="flex items-center justify-center gap-6 px-4 py-3 border-l border-white cursor-pointer">
-          <span class="text-[12px] tracking-[1.2px] uppercase text-white">Pesquisar</span>
-          <img src="<?php echo vbl_img( 'seta-branca.svg' ); ?>" alt="" class="w-[10px] h-[10px]">
-        </div>
-      </div>
-    </div>
-    <!-- Barra pesquisa (desktop) -->
-    <div class="font-body  absolute bottom-[60px] xl:bottom-[80px] left-1/2 -translate-x-1/2 z-10 hidden xl:flex items-stretch border border-white h-[66px]">
-      <div class="flex flex-col justify-center gap-[10px] px-10 xl:px-20 min-w-[240px] xl:min-w-[322px]">
-        <span class="text-[10px] tracking-[1px] uppercase text-white">Onde</span>
-        <span class="text-[14px] tracking-[1.4px] uppercase text-white flex items-center gap-2 whitespace-nowrap">todos os hotéis <img src="<?php echo vbl_img( 'vector-dropdown-white.svg' ); ?>" alt="" class="w-2 h-1"></span>
-      </div>
-      <div class="w-px h-8 bg-white self-center"></div>
-      <div class="flex flex-col justify-center gap-[10px] px-10 xl:px-20 min-w-[240px] xl:min-w-[322px]">
-        <span class="text-[10px] tracking-[1px] uppercase text-white">Quando</span>
-        <span class="text-[14px] tracking-[1.4px] uppercase text-white flex items-center gap-2 whitespace-nowrap">Entrada · Saída <img src="<?php echo vbl_img( 'vector-dropdown-white.svg' ); ?>" alt="" class="w-2 h-1"></span>
-      </div>
-      <div class="w-px h-8 bg-white self-center"></div>
-      <div class="flex flex-col justify-center gap-[10px] px-10 xl:px-20 min-w-[240px] xl:min-w-[322px]">
-        <span class="text-[10px] tracking-[1px] uppercase text-white">Quem</span>
-        <span class="text-[14px] tracking-[1.4px] uppercase text-white flex items-center gap-2 whitespace-nowrap">2 adultos · 1 quarto <img src="<?php echo vbl_img( 'vector-dropdown-white.svg' ); ?>" alt="" class="w-2 h-1"></span>
-      </div>
-      <div class="w-px h-8 bg-white self-center"></div>
-      <div class="flex items-center gap-14 px-10 xl:px-20 min-w-[240px] xl:min-w-[322px] justify-center cursor-pointer">
-        <span class="text-[14px] tracking-[1.4px] uppercase text-white whitespace-nowrap">Pesquisar</span>
-        <img src="<?php echo vbl_img( 'seta-branca.svg' ); ?>" alt="" class="w-[10px] h-[10px]">
-      </div>
+    <!-- ====== BARRA PESQUISA / MOTOR DE RESERVAS (MIRAI FINDER) ====== -->
+    <div id="reservas" class="vbl-mirai-booking-bar absolute bottom-4 sm:bottom-6 xl:bottom-[70px] left-3 right-3 sm:left-6 sm:right-6 xl:left-1/2 xl:-translate-x-1/2 z-20 w-auto xl:w-[1300px] max-w-[96vw]">
+      <div data-mirai-component="finder"></div>
     </div>
   </section>
 
