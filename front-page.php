@@ -234,15 +234,15 @@ $frase2_desc  = vbl_field( 'vbl_frase2_desc', false, 'Deixe-se envolver pela bel
             <span>Vila Baleira Porto Santo</span>
             <span class="text-[10px] text-white/60">Porto Santo</span>
           </button>
-          <button type="button" class="vbl-hotel-opt text-left px-3 py-2.5 text-[13px] tracking-[1.2px] uppercase hover:bg-white/10 transition-colors text-white font-normal flex items-center justify-between cursor-pointer" data-hotel-name="Vila Baleira Funchal" data-chain-id="501671" data-chain-selector="" data-hotel-id="">
+          <button type="button" class="vbl-hotel-opt text-left px-3 py-2.5 text-[13px] tracking-[1.2px] uppercase hover:bg-white/10 transition-colors text-white font-normal flex items-center justify-between cursor-pointer" data-hotel-name="Vila Baleira Funchal" data-chain-id="501671" data-chain-selector="23741" data-hotel-id="100377468">
             <span>Vila Baleira Funchal</span>
             <span class="text-[10px] text-white/60">Funchal</span>
           </button>
-          <button type="button" class="vbl-hotel-opt text-left px-3 py-2.5 text-[13px] tracking-[1.2px] uppercase hover:bg-white/10 transition-colors text-white font-normal flex items-center justify-between cursor-pointer" data-hotel-name="Vila Baleira Suites" data-chain-id="501671" data-chain-selector="" data-hotel-id="">
+          <button type="button" class="vbl-hotel-opt text-left px-3 py-2.5 text-[13px] tracking-[1.2px] uppercase hover:bg-white/10 transition-colors text-white font-normal flex items-center justify-between cursor-pointer" data-hotel-name="Vila Baleira Suites" data-chain-id="501671" data-chain-selector="23742" data-hotel-id="">
             <span>Vila Baleira Suites</span>
             <span class="text-[10px] text-white/60">Porto Santo</span>
           </button>
-          <button type="button" class="vbl-hotel-opt text-left px-3 py-2.5 text-[13px] tracking-[1.2px] uppercase hover:bg-white/10 transition-colors text-white font-normal flex items-center justify-between cursor-pointer" data-hotel-name="Vila Baleira Village" data-chain-id="501671" data-chain-selector="" data-hotel-id="">
+          <button type="button" class="vbl-hotel-opt text-left px-3 py-2.5 text-[13px] tracking-[1.2px] uppercase hover:bg-white/10 transition-colors text-white font-normal flex items-center justify-between cursor-pointer" data-hotel-name="Vila Baleira Village" data-chain-id="501671" data-chain-selector="23743" data-hotel-id="">
             <span>Vila Baleira Village</span>
             <span class="text-[10px] text-white/60">Porto Santo</span>
           </button>
