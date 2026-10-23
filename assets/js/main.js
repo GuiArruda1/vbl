@@ -896,8 +896,8 @@
     var state = {
       hotelName: 'todos os hotéis',
       chainId: '501671',
-      chainSelector: '',
-      hotelId: '',
+      chainSelector: '23740',
+      hotelId: '100377467',
       checkin: null,
       checkout: null,
       adults: 2,
@@ -1133,9 +1133,28 @@
 
         var checkinStr = formatDateMirai(state.checkin);
         var nights = calcNights();
-        var parties = state.children > 0
-          ? state.rooms + '-' + state.adults + '-' + state.children
-          : state.rooms + '-' + state.adults;
+
+        // Build Base64 JSON array expected by Mirai rates: [{"adults":2,"children":[]}]
+        var roomsArr = [];
+        var adultsPerRoom = Math.max(1, Math.floor(state.adults / state.rooms));
+        var extraAdults = state.adults % state.rooms;
+        for (var r = 0; r < state.rooms; r++) {
+          var roomAdults = adultsPerRoom + (r < extraAdults ? 1 : 0);
+          var roomChildren = [];
+          if (r === 0 && state.children > 0) {
+            for (var c = 0; c < state.children; c++) {
+              roomChildren.push(10);
+            }
+          }
+          roomsArr.push({
+            adults: roomAdults,
+            children: roomChildren
+          });
+        }
+        var partiesB64 = btoa(JSON.stringify(roomsArr));
+
+        var selector = state.chainSelector || '23740';
+        var hotelId = state.hotelId || (selector === '23740' ? '100377467' : '');
 
         var htmlLang = document.documentElement.lang || 'pt';
         var lang = htmlLang.substring(0, 2).toLowerCase();
@@ -1145,16 +1164,14 @@
 
         var url = 'https://reservation.mirai.com/XMAS/reservation/miraiFrontDispatcher.htm'
           + '?idchain=' + encodeURIComponent(state.chainId)
+          + '&chainSelectorValue=' + encodeURIComponent(selector)
           + '&checkin=' + encodeURIComponent(checkinStr)
           + '&nights=' + encodeURIComponent(nights)
-          + '&parties=' + encodeURIComponent(parties)
+          + '&parties=' + encodeURIComponent(partiesB64)
           + '&lang=' + encodeURIComponent(lang);
 
-        if (state.chainSelector) {
-          url += '&chainSelectorValue=' + encodeURIComponent(state.chainSelector);
-        }
-        if (state.hotelId) {
-          url += '&idhotel=' + encodeURIComponent(state.hotelId);
+        if (hotelId) {
+          url += '&idtokenprovider=' + encodeURIComponent(hotelId);
         }
 
         window.location.href = url;

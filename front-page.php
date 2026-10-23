@@ -226,7 +226,7 @@ $frase2_desc  = vbl_field( 'vbl_frase2_desc', false, 'Deixe-se envolver pela bel
           <button type="button" class="vbl-close-popup text-white/60 hover:text-white text-lg leading-none cursor-pointer" aria-label="Fechar">&times;</button>
         </div>
         <div class="flex flex-col gap-1 max-h-[260px] overflow-y-auto">
-          <button type="button" class="vbl-hotel-opt text-left px-3 py-2.5 text-[13px] tracking-[1.2px] uppercase hover:bg-white/10 transition-colors text-white font-normal flex items-center justify-between cursor-pointer" data-hotel-name="todos os hotéis" data-chain-id="501671" data-chain-selector="" data-hotel-id="">
+          <button type="button" class="vbl-hotel-opt text-left px-3 py-2.5 text-[13px] tracking-[1.2px] uppercase hover:bg-white/10 transition-colors text-white font-normal flex items-center justify-between cursor-pointer" data-hotel-name="todos os hotéis" data-chain-id="501671" data-chain-selector="23740" data-hotel-id="100377467">
             <span>Todos os Hotéis</span>
             <span class="text-[10px] text-[#bc945b]">Porto Santo & Madeira</span>
           </button>
