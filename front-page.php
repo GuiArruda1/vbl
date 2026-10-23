@@ -135,9 +135,191 @@ $frase2_desc  = vbl_field( 'vbl_frase2_desc', false, 'Deixe-se envolver pela bel
       </div>
 		<h1 class="font-display text-white text-[28px] leading-[34px] md:text-[48px] md:leading-[54px] lg:text-[64px] lg:leading-[70px] xl:text-[clamp(72px,5.42vw,104px)] xl:leading-[clamp(72px,5.42vw,104px)] uppercase text-center" style="text-shadow:0 4px 20px rgba(0,0,0,0.45),0 1px 6px rgba(0,0,0,0.3)"><span class="text-[#EEE8E5]"><?php echo esc_html( $banner_line1 ); ?></span><br><span><?php echo esc_html( $banner_line2 ); ?></span></h1>
     </div>
-    <!-- ====== BARRA PESQUISA / MOTOR DE RESERVAS (MIRAI FINDER) ====== -->
-    <div id="reservas" class="vbl-mirai-booking-bar absolute bottom-4 sm:bottom-6 xl:bottom-[80px] left-3 right-3 sm:left-6 sm:right-6 xl:left-1/2 xl:-translate-x-1/2 z-20 w-auto xl:w-[1320px] max-w-[96vw]">
-      <div data-mirai-component="finder"></div>
+    <!-- ====== BARRA PESQUISA / MOTOR DE RESERVAS ====== -->
+    <div id="reservas" class="vbl-booking-engine absolute bottom-4 sm:bottom-6 xl:bottom-[80px] left-3 right-3 sm:left-6 sm:right-6 xl:left-1/2 xl:-translate-x-1/2 z-30 w-auto xl:w-[1320px] max-w-[96vw]">
+      
+      <!-- Barra pesquisa (mobile/tablet) -->
+      <div class="font-body flex flex-col border border-white/60 bg-black/40 backdrop-blur-md xl:hidden">
+        <div class="grid grid-cols-2">
+          <!-- Onde Mobile -->
+          <div class="vbl-field-trigger relative flex flex-col justify-center gap-1 px-4 py-3 cursor-pointer" data-target="dropdownWhere">
+            <span class="text-[9px] tracking-[1px] uppercase text-white/70">Onde</span>
+            <span class="text-[12px] tracking-[1.2px] uppercase text-white flex items-center justify-between gap-2">
+              <span class="vbl-selected-hotel truncate">todos os hotéis</span>
+              <img src="<?php echo vbl_img( 'vector-dropdown-white.svg' ); ?>" alt="" class="w-2 h-1 flex-shrink-0">
+            </span>
+          </div>
+          <!-- Quando Mobile -->
+          <div class="vbl-field-trigger relative flex flex-col justify-center gap-1 px-4 py-3 border-l border-white/40 cursor-pointer" data-target="dropdownWhen">
+            <span class="text-[9px] tracking-[1px] uppercase text-white/70">Quando</span>
+            <span class="text-[12px] tracking-[1.2px] uppercase text-white flex items-center justify-between gap-2">
+              <span class="vbl-selected-dates truncate">Entrada · Saída</span>
+              <img src="<?php echo vbl_img( 'vector-dropdown-white.svg' ); ?>" alt="" class="w-2 h-1 flex-shrink-0">
+            </span>
+          </div>
+        </div>
+        <div class="h-px bg-white/40"></div>
+        <div class="grid grid-cols-2">
+          <!-- Quem Mobile -->
+          <div class="vbl-field-trigger relative flex flex-col justify-center gap-1 px-4 py-3 cursor-pointer" data-target="dropdownWho">
+            <span class="text-[9px] tracking-[1px] uppercase text-white/70">Quem</span>
+            <span class="text-[12px] tracking-[1.2px] uppercase text-white flex items-center justify-between gap-2">
+              <span class="vbl-selected-guests truncate">2 adultos · 1 quarto</span>
+              <img src="<?php echo vbl_img( 'vector-dropdown-white.svg' ); ?>" alt="" class="w-2 h-1 flex-shrink-0">
+            </span>
+          </div>
+          <!-- Pesquisar Mobile -->
+          <button type="button" class="vbl-search-submit flex items-center justify-center gap-4 px-4 py-3 border-l border-white/40 cursor-pointer bg-transparent hover:bg-white/10 transition-colors">
+            <span class="text-[12px] tracking-[1.2px] uppercase text-white font-medium">Pesquisar</span>
+            <img src="<?php echo vbl_img( 'seta-branca.svg' ); ?>" alt="" class="w-[10px] h-[10px]">
+          </button>
+        </div>
+      </div>
+
+      <!-- Barra pesquisa (desktop) — Idêntica à Imagem de Referência -->
+      <div class="font-body hidden xl:flex items-stretch border border-white/60 h-[66px] bg-transparent backdrop-blur-[2px]">
+        <!-- Onde Desktop -->
+        <div class="vbl-field-trigger flex-1 flex flex-col justify-center gap-1.5 px-8 xl:px-12 cursor-pointer hover:bg-white/5 transition-colors relative" data-target="dropdownWhere">
+          <span class="text-[10px] tracking-[1px] uppercase text-white/70">Onde</span>
+          <span class="text-[14px] tracking-[1.4px] uppercase text-white flex items-center justify-between gap-3 whitespace-nowrap">
+            <span class="vbl-selected-hotel truncate">todos os hotéis</span>
+            <img src="<?php echo vbl_img( 'vector-dropdown-white.svg' ); ?>" alt="" class="w-2 h-1 flex-shrink-0">
+          </span>
+        </div>
+        
+        <div class="w-px h-8 bg-white/40 self-center flex-shrink-0"></div>
+        
+        <!-- Quando Desktop -->
+        <div class="vbl-field-trigger flex-1 flex flex-col justify-center gap-1.5 px-8 xl:px-12 cursor-pointer hover:bg-white/5 transition-colors relative" data-target="dropdownWhen">
+          <span class="text-[10px] tracking-[1px] uppercase text-white/70">Quando</span>
+          <span class="text-[14px] tracking-[1.4px] uppercase text-white flex items-center justify-between gap-3 whitespace-nowrap">
+            <span class="vbl-selected-dates truncate">Entrada · Saída</span>
+            <img src="<?php echo vbl_img( 'vector-dropdown-white.svg' ); ?>" alt="" class="w-2 h-1 flex-shrink-0">
+          </span>
+        </div>
+        
+        <div class="w-px h-8 bg-white/40 self-center flex-shrink-0"></div>
+        
+        <!-- Quem Desktop -->
+        <div class="vbl-field-trigger flex-1 flex flex-col justify-center gap-1.5 px-8 xl:px-12 cursor-pointer hover:bg-white/5 transition-colors relative" data-target="dropdownWho">
+          <span class="text-[10px] tracking-[1px] uppercase text-white/70">Quem</span>
+          <span class="text-[14px] tracking-[1.4px] uppercase text-white flex items-center justify-between gap-3 whitespace-nowrap">
+            <span class="vbl-selected-guests truncate">2 adultos · 1 quarto</span>
+            <img src="<?php echo vbl_img( 'vector-dropdown-white.svg' ); ?>" alt="" class="w-2 h-1 flex-shrink-0">
+          </span>
+        </div>
+        
+        <div class="w-px h-8 bg-white/40 self-center flex-shrink-0"></div>
+        
+        <!-- Pesquisar Desktop -->
+        <button type="button" class="vbl-search-submit group flex-1 max-w-[280px] flex items-center justify-between px-8 xl:px-12 cursor-pointer bg-transparent hover:bg-white/10 transition-all duration-300">
+          <span class="text-[14px] tracking-[1.4px] uppercase text-white font-medium whitespace-nowrap">Pesquisar</span>
+          <img src="<?php echo vbl_img( 'seta-branca.svg' ); ?>" alt="" class="w-[10px] h-[10px] transition-transform duration-300 group-hover:rotate-45">
+        </button>
+      </div>
+
+      <!-- ====== DROPDOWNS POPUPS ====== -->
+      <!-- 1. Dropdown Onde -->
+      <div id="vblDropdownWhere" class="vbl-booking-popup hidden absolute bottom-[calc(100%+12px)] left-0 w-full sm:w-[380px] bg-[#0d5257]/95 backdrop-blur-md border border-[#bc945b]/60 shadow-[0_20px_50px_rgba(0,0,0,0.5)] p-5 text-white z-50 rounded-none">
+        <div class="flex items-center justify-between mb-3 pb-2 border-b border-white/20">
+          <span class="text-[11px] uppercase tracking-[1px] text-[#bc945b] font-medium">Selecione o Hotel / Destino</span>
+          <button type="button" class="vbl-close-popup text-white/60 hover:text-white text-lg leading-none cursor-pointer" aria-label="Fechar">&times;</button>
+        </div>
+        <div class="flex flex-col gap-1 max-h-[260px] overflow-y-auto">
+          <button type="button" class="vbl-hotel-opt text-left px-3 py-2.5 text-[13px] tracking-[1.2px] uppercase hover:bg-white/10 transition-colors text-white font-normal flex items-center justify-between cursor-pointer" data-hotel-name="todos os hotéis" data-chain-id="501671" data-chain-selector="" data-hotel-id="">
+            <span>Todos os Hotéis</span>
+            <span class="text-[10px] text-[#bc945b]">Porto Santo & Madeira</span>
+          </button>
+          <button type="button" class="vbl-hotel-opt text-left px-3 py-2.5 text-[13px] tracking-[1.2px] uppercase hover:bg-white/10 transition-colors text-white font-normal flex items-center justify-between cursor-pointer" data-hotel-name="Vila Baleira Porto Santo" data-chain-id="501671" data-chain-selector="23740" data-hotel-id="100377467">
+            <span>Vila Baleira Porto Santo</span>
+            <span class="text-[10px] text-white/60">Porto Santo</span>
+          </button>
+          <button type="button" class="vbl-hotel-opt text-left px-3 py-2.5 text-[13px] tracking-[1.2px] uppercase hover:bg-white/10 transition-colors text-white font-normal flex items-center justify-between cursor-pointer" data-hotel-name="Vila Baleira Funchal" data-chain-id="501671" data-chain-selector="" data-hotel-id="">
+            <span>Vila Baleira Funchal</span>
+            <span class="text-[10px] text-white/60">Funchal</span>
+          </button>
+          <button type="button" class="vbl-hotel-opt text-left px-3 py-2.5 text-[13px] tracking-[1.2px] uppercase hover:bg-white/10 transition-colors text-white font-normal flex items-center justify-between cursor-pointer" data-hotel-name="Vila Baleira Suites" data-chain-id="501671" data-chain-selector="" data-hotel-id="">
+            <span>Vila Baleira Suites</span>
+            <span class="text-[10px] text-white/60">Porto Santo</span>
+          </button>
+          <button type="button" class="vbl-hotel-opt text-left px-3 py-2.5 text-[13px] tracking-[1.2px] uppercase hover:bg-white/10 transition-colors text-white font-normal flex items-center justify-between cursor-pointer" data-hotel-name="Vila Baleira Village" data-chain-id="501671" data-chain-selector="" data-hotel-id="">
+            <span>Vila Baleira Village</span>
+            <span class="text-[10px] text-white/60">Porto Santo</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 2. Dropdown Quando (Datas) -->
+      <div id="vblDropdownWhen" class="vbl-booking-popup hidden absolute bottom-[calc(100%+12px)] left-0 xl:left-[24%] w-full sm:w-[400px] bg-[#0d5257]/95 backdrop-blur-md border border-[#bc945b]/60 shadow-[0_20px_50px_rgba(0,0,0,0.5)] p-5 text-white z-50 rounded-none">
+        <div class="flex items-center justify-between mb-4 pb-2 border-b border-white/20">
+          <span class="text-[11px] uppercase tracking-[1px] text-[#bc945b] font-medium">Selecione as Datas da Estadia</span>
+          <button type="button" class="vbl-close-popup text-white/60 hover:text-white text-lg leading-none cursor-pointer" aria-label="Fechar">&times;</button>
+        </div>
+        <div class="grid grid-cols-2 gap-3 mb-4">
+          <div class="flex flex-col gap-1.5">
+            <label for="vblCheckinInput" class="text-[10px] uppercase tracking-[1px] text-white/80">Check-in (Entrada)</label>
+            <input type="date" id="vblCheckinInput" class="bg-white/10 border border-white/30 text-white text-[13px] px-3 py-2 rounded-none outline-none focus:border-[#bc945b] transition-colors w-full cursor-pointer">
+          </div>
+          <div class="flex flex-col gap-1.5">
+            <label for="vblCheckoutInput" class="text-[10px] uppercase tracking-[1px] text-white/80">Check-out (Saída)</label>
+            <input type="date" id="vblCheckoutInput" class="bg-white/10 border border-white/30 text-white text-[13px] px-3 py-2 rounded-none outline-none focus:border-[#bc945b] transition-colors w-full cursor-pointer">
+          </div>
+        </div>
+        <div class="flex items-center justify-between pt-3 border-t border-white/20">
+          <span id="vblNightsCount" class="text-[11px] uppercase tracking-[1px] text-[#bc945b] font-medium">2 Noites</span>
+          <button type="button" id="vblConfirmDates" class="px-5 py-2 bg-[#bc945b] hover:bg-[#a67f47] text-white text-[11px] uppercase tracking-[1.2px] font-medium transition-colors cursor-pointer">Confirmar</button>
+        </div>
+      </div>
+
+      <!-- 3. Dropdown Quem (Hóspedes & Quartos) -->
+      <div id="vblDropdownWho" class="vbl-booking-popup hidden absolute bottom-[calc(100%+12px)] left-0 xl:left-[48%] w-full sm:w-[360px] bg-[#0d5257]/95 backdrop-blur-md border border-[#bc945b]/60 shadow-[0_20px_50px_rgba(0,0,0,0.5)] p-5 text-white z-50 rounded-none">
+        <div class="flex items-center justify-between mb-4 pb-2 border-b border-white/20">
+          <span class="text-[11px] uppercase tracking-[1px] text-[#bc945b] font-medium">Hóspedes e Quartos</span>
+          <button type="button" class="vbl-close-popup text-white/60 hover:text-white text-lg leading-none cursor-pointer" aria-label="Fechar">&times;</button>
+        </div>
+        <div class="flex flex-col gap-4 mb-5">
+          <!-- Adultos -->
+          <div class="flex items-center justify-between">
+            <div>
+              <div class="text-[13px] uppercase tracking-[1px] font-medium">Adultos</div>
+              <div class="text-[10px] text-white/60">Idade 12+ anos</div>
+            </div>
+            <div class="flex items-center gap-3">
+              <button type="button" class="vbl-counter-btn w-8 h-8 rounded-none border border-white/30 hover:border-[#bc945b] flex items-center justify-center text-white text-base transition-colors cursor-pointer select-none" data-action="dec" data-target="adults">−</button>
+              <span id="vblCountAdults" class="w-6 text-center text-[15px] font-medium">2</span>
+              <button type="button" class="vbl-counter-btn w-8 h-8 rounded-none border border-white/30 hover:border-[#bc945b] flex items-center justify-center text-white text-base transition-colors cursor-pointer select-none" data-action="inc" data-target="adults">+</button>
+            </div>
+          </div>
+          <!-- Crianças -->
+          <div class="flex items-center justify-between">
+            <div>
+              <div class="text-[13px] uppercase tracking-[1px] font-medium">Crianças</div>
+              <div class="text-[10px] text-white/60">0 aos 11 anos</div>
+            </div>
+            <div class="flex items-center gap-3">
+              <button type="button" class="vbl-counter-btn w-8 h-8 rounded-none border border-white/30 hover:border-[#bc945b] flex items-center justify-center text-white text-base transition-colors cursor-pointer select-none" data-action="dec" data-target="children">−</button>
+              <span id="vblCountChildren" class="w-6 text-center text-[15px] font-medium">0</span>
+              <button type="button" class="vbl-counter-btn w-8 h-8 rounded-none border border-white/30 hover:border-[#bc945b] flex items-center justify-center text-white text-base transition-colors cursor-pointer select-none" data-action="inc" data-target="children">+</button>
+            </div>
+          </div>
+          <!-- Quartos -->
+          <div class="flex items-center justify-between">
+            <div>
+              <div class="text-[13px] uppercase tracking-[1px] font-medium">Quartos</div>
+              <div class="text-[10px] text-white/60">Quantidade</div>
+            </div>
+            <div class="flex items-center gap-3">
+              <button type="button" class="vbl-counter-btn w-8 h-8 rounded-none border border-white/30 hover:border-[#bc945b] flex items-center justify-center text-white text-base transition-colors cursor-pointer select-none" data-action="dec" data-target="rooms">−</button>
+              <span id="vblCountRooms" class="w-6 text-center text-[15px] font-medium">1</span>
+              <button type="button" class="vbl-counter-btn w-8 h-8 rounded-none border border-white/30 hover:border-[#bc945b] flex items-center justify-center text-white text-base transition-colors cursor-pointer select-none" data-action="inc" data-target="rooms">+</button>
+            </div>
+          </div>
+        </div>
+        <div class="flex justify-end pt-3 border-t border-white/20">
+          <button type="button" id="vblConfirmWho" class="px-5 py-2 bg-[#bc945b] hover:bg-[#a67f47] text-white text-[11px] uppercase tracking-[1.2px] font-medium transition-colors cursor-pointer">Confirmar</button>
+        </div>
+      </div>
+
     </div>
   </section>
 
