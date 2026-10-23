@@ -24,6 +24,7 @@ Tags: hotel, luxury, responsive, tailwind, custom-template
   --corporative-color: #0d5257;
   --mirai-ui-accent: #0d5257;
   --mirai-ui-accent-dark: #08373b;
+  --mirai-ui-base: #ffffff;
   --mirai-ui-content: #000000;
   --mirai-ui-content-dark: #000000;
   --mirai-ui-font: 'Commissioner', sans-serif;
@@ -34,36 +35,257 @@ Tags: hotel, luxury, responsive, tailwind, custom-template
   --mirai-ui-button-color: #ffffff;
   --mirai-ui-button-radius: 0px;
   
-  --mirai-finder-background: #ffffff;
-  --mirai-finder-border: 1px solid rgba(255, 255, 255, 0.85);
+  --mirai-finder-background: transparent;
+  --mirai-finder-border: 1px solid rgba(255, 255, 255, 0.45);
   --mirai-finder-border-radius: 0px;
-  --mirai-finder-button-background: #0d5257;
-  --mirai-finder-button-background-active: #08373b;
+  --mirai-finder-gap: 0px;
+  --mirai-finder-padding: 0px;
+  --mirai-finder-field-height: 66px;
+  --mirai-finder-field-separator-color: rgba(255, 255, 255, 0.45);
+  
+  --mirai-field-background: transparent;
+  --mirai-field-background-active: rgba(255, 255, 255, 0.08);
+  --mirai-field-border: none;
+  --mirai-field-border-radius: 0px;
+  --mirai-field-content-color: #ffffff;
+  --mirai-field-label-color: rgba(255, 255, 255, 0.85);
+  --mirai-field-icon-color: #ffffff;
+  
+  --mirai-finder-button-background: transparent;
+  --mirai-finder-button-background-active: rgba(255, 255, 255, 0.15);
   --mirai-finder-button-color: #ffffff;
+  --mirai-finder-button-color-active: #ffffff;
   --mirai-finder-button-border-radius: 0px;
   --mirai-finder-button-font-family: 'Commissioner', sans-serif;
-  --mirai-finder-field-icon-color: #0d5257;
-  --mirai-field-icon-color: #0d5257;
+  --mirai-finder-button-font-size: 14px;
+  --mirai-finder-button-font-weight: 400;
   --mirai-deals-modal-z-index: 99999;
 }
 
+/* ==========================================================================
+   Mirai Finder Component — New Transparent Theme Layout
+   ========================================================================== */
 .vbl-mirai-booking-bar {
   margin: 0 auto;
+  box-sizing: border-box;
 }
 
 [data-mirai-component="finder"] {
   width: 100%;
-  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.28);
+  background: transparent !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
 }
 
-[data-role="finder:field:promocode"]::placeholder {
-  color: #555555 !important;
+/* Main Container: Transparent with white border and 66px height */
+[data-mirai-component="finder"] ui-finder,
+[data-mirai-component="finder"] .YRq8BG_finder {
+  background-color: transparent !important;
+  border: 1px solid rgba(255, 255, 255, 0.45) !important;
+  border-radius: 0px !important;
+  box-shadow: none !important;
+  min-height: 66px !important;
+  height: 66px !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: stretch !important;
+  justify-content: stretch !important;
+  box-sizing: border-box !important;
+  padding: 0 !important;
+  gap: 0 !important;
 }
 
-[data-mirai-component="finder"] input,
-[data-mirai-component="finder"] button,
-[data-mirai-component="finder"] select {
+/* Columns: 3 equal input columns taking full space */
+[data-mirai-component="finder"] ui-layer,
+[data-mirai-component="finder"] .jgiT-G_container {
+  flex: 1 1 0% !important;
+  min-width: 0 !important;
+  height: 100% !important;
+  background: transparent !important;
+  border: none !important;
+}
+
+/* Hide the 4th layer (promocode) and 3rd separator to match the 4-column design */
+[data-mirai-component="finder"] ui-layer:nth-of-type(4),
+[data-mirai-component="finder"] .YRq8BG_promocode,
+[data-mirai-component="finder"] ui-view.YRq8BG_separator:nth-of-type(3) {
+  display: none !important;
+}
+
+/* Field Container inside ui-layer */
+[data-mirai-component="finder"] ui-layer ui-pressable,
+[data-mirai-component="finder"] ui-layer .nC5E9W_pressable,
+[data-mirai-component="finder"] ui-layer [class*="pressable"],
+[data-mirai-component="finder"] [class*="HH83Qq_field"] {
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 66px !important;
+  background: transparent !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: flex-start !important;
+  padding: 0 clamp(16px, 2.5vw, 40px) !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-sizing: border-box !important;
+  transition: background-color 0.25s ease;
+  cursor: pointer !important;
+}
+
+[data-mirai-component="finder"] ui-layer ui-pressable:hover,
+[data-mirai-component="finder"] [class*="HH83Qq_field"]:hover {
+  background-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Upper Label (ONDE, QUANDO, QUEM) */
+[data-mirai-component="finder"] [class*="HH83Qq_label"],
+[data-mirai-component="finder"] [class*="label"],
+[data-mirai-component="finder"] span[class*="label"] {
   font-family: 'Commissioner', sans-serif !important;
+  font-size: 10px !important;
+  line-height: 12px !important;
+  letter-spacing: 1px !important;
+  text-transform: uppercase !important;
+  color: rgba(255, 255, 255, 0.8) !important;
+  font-weight: 400 !important;
+  margin-bottom: 4px !important;
+  display: block !important;
+}
+
+/* Main Caption / Value Text (PORTO SANTO, ENTRADA - SAÍDA, 2 ADULTOS · 1 QUARTO) */
+[data-mirai-component="finder"] [class*="HH83Qq_caption"],
+[data-mirai-component="finder"] [class*="caption"],
+[data-mirai-component="finder"] [class*="HH83Qq_input"],
+[data-mirai-component="finder"] input[class*="input"],
+[data-mirai-component="finder"] [class*="text"] {
+  font-family: 'Commissioner', sans-serif !important;
+  font-size: 14px !important;
+  line-height: 18px !important;
+  letter-spacing: 1.4px !important;
+  text-transform: uppercase !important;
+  color: #ffffff !important;
+  font-weight: 400 !important;
+  white-space: nowrap !important;
+  background: transparent !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+
+/* Chevron / Dropdown Arrow */
+[data-mirai-component="finder"] [class*="HH83Qq_context"],
+[data-mirai-component="finder"] [class*="HH83Qq_icon"],
+[data-mirai-component="finder"] ui-layer svg {
+  color: #ffffff !important;
+  fill: #ffffff !important;
+  stroke: #ffffff !important;
+}
+
+/* Vertical Divider Lines */
+[data-mirai-component="finder"] ui-view.YRq8BG_separator,
+[data-mirai-component="finder"] [class*="YRq8BG_separator"] {
+  width: 1px !important;
+  height: 32px !important;
+  min-height: 32px !important;
+  max-height: 32px !important;
+  background-color: rgba(255, 255, 255, 0.45) !important;
+  align-self: center !important;
+  flex-shrink: 0 !important;
+  border: none !important;
+  margin: 0 !important;
+}
+
+/* Search Button (PESQUISAR) */
+[data-mirai-component="finder"] ui-button[data-role="finder-button"],
+[data-mirai-component="finder"] [class*="YRq8BG_button"] {
+  flex: 1 1 0% !important;
+  min-width: 220px !important;
+  max-width: 320px !important;
+  height: 100% !important;
+  min-height: 66px !important;
+  max-height: 66px !important;
+  background-color: transparent !important;
+  border: none !important;
+  border-radius: 0px !important;
+  font-family: 'Commissioner', sans-serif !important;
+  font-size: 14px !important;
+  letter-spacing: 1.4px !important;
+  text-transform: uppercase !important;
+  font-weight: 400 !important;
+  color: #ffffff !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 32px !important;
+  margin: 0 !important;
+  cursor: pointer !important;
+  box-shadow: none !important;
+  transition: background-color 0.3s ease, color 0.3s ease !important;
+}
+
+[data-mirai-component="finder"] ui-button[data-role="finder-button"]:hover,
+[data-mirai-component="finder"] [class*="YRq8BG_button"]:hover {
+  background-color: rgba(255, 255, 255, 0.12) !important;
+  color: #ffffff !important;
+}
+
+/* Diagonal Arrow on PESQUISAR (↗) */
+[data-mirai-component="finder"] ui-button[data-role="finder-button"]::after,
+[data-mirai-component="finder"] [class*="YRq8BG_button"]::after {
+  content: '';
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-left: 14px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 11 11' fill='none'%3E%3Cpath d='M10.8535 10.5H9.85352V1.70703L0.707031 10.8535L0 10.1465L9.14648 1H0.353516V0H10.3535C10.6297 0 10.8535 0.223858 10.8535 0.5V10.5Z' fill='white'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: contain;
+  transition: transform 0.3s ease;
+  flex-shrink: 0;
+}
+
+[data-mirai-component="finder"] ui-button[data-role="finder-button"]:hover::after,
+[data-mirai-component="finder"] [class*="YRq8BG_button"]:hover::after {
+  transform: rotate(45deg);
+}
+
+[data-mirai-component="finder"] ui-button svg {
+  display: none !important;
+}
+
+/* Popups / Dropdowns / Modal Calendar: solid readable backgrounds */
+ui-layer-content,
+[data-role="layer-content"],
+.jgiT-G_layer,
+[data-mirai-modal],
+ui-modal,
+.z3V4JG_modal,
+.woFimq_menu {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2) !important;
+}
+
+ui-layer-content *,
+[data-role="layer-content"] *,
+.jgiT-G_layer *,
+[data-mirai-modal] *,
+ui-modal *,
+.z3V4JG_modal *,
+.woFimq_menu * {
+  color: #000000;
+}
+
+.NtOAYa_daySelected,
+[class*="NtOAYa_daySelected"] {
+  background-color: #0d5257 !important;
+  color: #ffffff !important;
+}
+.NtOAYa_daySelected * {
+  color: #ffffff !important;
 }
 
 /* ========================================

@@ -136,7 +136,7 @@ $frase2_desc  = vbl_field( 'vbl_frase2_desc', false, 'Deixe-se envolver pela bel
 		<h1 class="font-display text-white text-[28px] leading-[34px] md:text-[48px] md:leading-[54px] lg:text-[64px] lg:leading-[70px] xl:text-[clamp(72px,5.42vw,104px)] xl:leading-[clamp(72px,5.42vw,104px)] uppercase text-center" style="text-shadow:0 4px 20px rgba(0,0,0,0.45),0 1px 6px rgba(0,0,0,0.3)"><span class="text-[#EEE8E5]"><?php echo esc_html( $banner_line1 ); ?></span><br><span><?php echo esc_html( $banner_line2 ); ?></span></h1>
     </div>
     <!-- ====== BARRA PESQUISA / MOTOR DE RESERVAS (MIRAI FINDER) ====== -->
-    <div id="reservas" class="vbl-mirai-booking-bar absolute bottom-4 sm:bottom-6 xl:bottom-[70px] left-3 right-3 sm:left-6 sm:right-6 xl:left-1/2 xl:-translate-x-1/2 z-20 w-auto xl:w-[1300px] max-w-[96vw]">
+    <div id="reservas" class="vbl-mirai-booking-bar absolute bottom-4 sm:bottom-6 xl:bottom-[80px] left-3 right-3 sm:left-6 sm:right-6 xl:left-1/2 xl:-translate-x-1/2 z-20 w-auto xl:w-[1320px] max-w-[96vw]">
       <div data-mirai-component="finder"></div>
     </div>
   </section>

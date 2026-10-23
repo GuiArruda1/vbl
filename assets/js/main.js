@@ -868,6 +868,24 @@
         }
       });
     });
+
+    // Ensure Mirai button says "PESQUISAR" in Portuguese
+    function checkMiraiButtonText() {
+      var btn = document.querySelector('[data-role="finder-button"]');
+      if (btn) {
+        for (var i = 0; i < btn.childNodes.length; i++) {
+          var node = btn.childNodes[i];
+          if (node.nodeType === Node.TEXT_NODE && node.textContent.trim().toLowerCase() === 'search') {
+            node.textContent = 'PESQUISAR';
+          }
+        }
+      }
+    }
+    var finderEl = document.querySelector('[data-mirai-component="finder"]');
+    if (finderEl && window.MutationObserver) {
+      var obs = new MutationObserver(checkMiraiButtonText);
+      obs.observe(finderEl, { childList: true, subtree: true });
+    }
   })();
 
 })();
