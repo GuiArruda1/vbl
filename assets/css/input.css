@@ -55,6 +55,14 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
+  .vbl-booking-engine,
+  .vbl-booking-popup,
+  .vbl-booking-popup button,
+  .vbl-booking-popup input,
+  .vbl-booking-popup select {
+    font-family: 'Commissioner', sans-serif !important;
+  }
+
   :root {
     --corporative-color: #0d5257;
     --mirai-ui-accent: #0d5257;

@@ -896,8 +896,9 @@
     var state = {
       hotelName: 'todos os hotéis',
       chainId: '501671',
-      chainSelector: '23740',
-      hotelId: '100377467',
+      chainSelector: '27540',
+      hotelId: '',
+      hotelIds: '100377468,100379257,100380388,100377467,100377609',
       checkin: null,
       checkout: null,
       adults: 2,
@@ -1026,6 +1027,19 @@
 
     // Hotel Selection
     var hotelButtons = engine.querySelectorAll('.vbl-hotel-opt');
+
+    function updateHotelActiveOption() {
+      hotelButtons.forEach(function (btn) {
+        var hName = btn.getAttribute('data-hotel-name') || '';
+        if (hName.toLowerCase() === state.hotelName.toLowerCase()) {
+          btn.classList.add('bg-white/15');
+        } else {
+          btn.classList.remove('bg-white/15');
+        }
+      });
+    }
+    updateHotelActiveOption();
+
     hotelButtons.forEach(function (btn) {
       btn.addEventListener('click', function (e) {
         e.preventDefault();
@@ -1033,11 +1047,13 @@
         state.chainId       = this.getAttribute('data-chain-id') || '501671';
         state.chainSelector = this.getAttribute('data-chain-selector') || '';
         state.hotelId       = this.getAttribute('data-hotel-id') || '';
+        state.hotelIds      = this.getAttribute('data-hotel-ids') || '';
 
         hotelDisplayEls.forEach(function (el) {
           el.textContent = state.hotelName;
         });
 
+        updateHotelActiveOption();
         closeAllDropdowns();
       });
     });
@@ -1124,6 +1140,23 @@
       }
     });
 
+    // Promo code: keep desktop/mobile inputs in sync
+    var promoInputs = engine.querySelectorAll('.vbl-promo-input');
+    promoInputs.forEach(function (inp) {
+      inp.addEventListener('input', function () {
+        promoInputs.forEach(function (other) {
+          if (other !== inp) other.value = inp.value;
+        });
+      });
+      inp.addEventListener('keydown', function (ev) {
+        if (ev.key === 'Enter') {
+          ev.preventDefault();
+          var b = engine.querySelector('.vbl-search-submit');
+          if (b) b.click();
+        }
+      });
+    });
+
     // Submit / Pesquisar Redirect to Mirai Dispatcher
     var submitBtns = engine.querySelectorAll('.vbl-search-submit');
     submitBtns.forEach(function (btn) {
@@ -1153,8 +1186,9 @@
         }
         var partiesB64 = btoa(JSON.stringify(roomsArr));
 
-        var selector = state.chainSelector || '23740';
-        var hotelId = state.hotelId || (selector === '23740' ? '100377467' : '');
+        var selector = state.chainSelector || '27540';
+        var hotelId = state.hotelId || '';
+        var hotelIds = state.hotelId ? '' : (state.hotelIds || '');
 
         var htmlLang = document.documentElement.lang || 'pt';
         var lang = htmlLang.substring(0, 2).toLowerCase();
@@ -1172,6 +1206,17 @@
 
         if (hotelId) {
           url += '&idtokenprovider=' + encodeURIComponent(hotelId);
+        } else if (hotelIds) {
+          url += '&hotelIds=' + encodeURIComponent(hotelIds);
+        }
+        url += '&type=chain';
+
+        var promoCode = '';
+        promoInputs.forEach(function (inp) {
+          if (!promoCode && inp.value.trim()) promoCode = inp.value.trim();
+        });
+        if (promoCode) {
+          url += '&clientCode=' + encodeURIComponent(promoCode);
         }
 
         window.location.href = url;
