@@ -29,6 +29,22 @@ $mirai_hotel = function_exists( 'vbl_resolve_hotel_mirai' ) ? vbl_resolve_hotel_
     'short_name'     => $hotel_name,
 );
 
+// CTA de Reservas (Configurado na Página Mãe do Hotel / Microsite)
+$cta_subtitle = $hotel_id ? vbl_field( 'vbl_hhotel_cta_subtitle', $hotel_id, 'RESERVAR ESTADIA' ) : 'RESERVAR ESTADIA';
+if ( empty( $cta_subtitle ) || ! is_string( $cta_subtitle ) ) {
+    $cta_subtitle = 'RESERVAR ESTADIA';
+}
+
+$cta_title = $hotel_id ? vbl_field( 'vbl_hhotel_cta_title', $hotel_id, 'FAÇA JÁ A SUA RESERVA' ) : 'FAÇA JÁ A SUA RESERVA';
+if ( empty( $cta_title ) || ! is_string( $cta_title ) ) {
+    $cta_title = 'FAÇA JÁ A SUA RESERVA';
+}
+
+$cta_desc = $hotel_id ? vbl_field( 'vbl_hhotel_cta_desc', $hotel_id, 'Garanta a sua estadia com as melhores condições e tarifas exclusivas no site oficial.' ) : 'Garanta a sua estadia com as melhores condições e tarifas exclusivas no site oficial.';
+if ( empty( $cta_desc ) || ! is_string( $cta_desc ) ) {
+    $cta_desc = 'Garanta a sua estadia com as melhores condições e tarifas exclusivas no site oficial.';
+}
+
 // Categoria & Detalhes
 $categoria = vbl_field( 'vbl_quarto_categoria', $post_id, 'SUITE' );
 $intro_desc = get_the_excerpt( $post_id );
@@ -303,13 +319,13 @@ $frase_line3 = vbl_field( 'vbl_quarto_frase_line3', $post_id, 'LACUS EGET UT SIT
       <div class="mb-10">
         <div class="flex items-center gap-4 mb-2">
           <div class="w-8 h-px bg-[#0da9a6] flex-shrink-0"></div>
-          <span class="font-body text-[10px] xl:text-[11px] tracking-[2px] uppercase text-[#0da9a6] font-medium">RESERVAR ESTADIA</span>
+          <span class="font-body text-[10px] xl:text-[11px] tracking-[2px] uppercase text-[#0da9a6] font-medium"><?php echo esc_html( $cta_subtitle ); ?></span>
         </div>
         <h2 class="font-display text-[36px] sm:text-[46px] lg:text-[56px] leading-tight uppercase text-[#0d5257] font-normal mb-3">
-          FAÇA JÁ A SUA RESERVA
+          <?php echo wp_kses_post( $cta_title ); ?>
         </h2>
         <p class="font-body font-light text-[13px] lg:text-[14px] text-black/70 max-w-[480px]">
-          Garanta a sua estadia com as melhores condições e tarifas exclusivas no site oficial.
+          <?php echo nl2br( esc_html( $cta_desc ) ); ?>
         </p>
       </div>
 

@@ -407,6 +407,34 @@ function vbl_register_acf_fields() {
             array( 'key' => 'field_vbl_hhome_nl_btn', 'label' => 'Texto do Botão', 'name' => 'vbl_newsletter_btn', 'type' => 'text', 'default_value' => 'Subscrever' ),
             array( 'key' => 'field_vbl_hhome_nl_privacy', 'label' => 'Texto Política de Privacidade', 'name' => 'vbl_newsletter_privacy', 'type' => 'text', 'default_value' => 'Política de Privacidade.' ),
             array( 'key' => 'field_vbl_hhome_nl_privacy_url', 'label' => 'Link Política de Privacidade', 'name' => 'vbl_newsletter_privacy_url', 'type' => 'text', 'default_value' => '/politica-de-privacidade' ),
+
+            /* Tab: CTA Reservas (Quartos do Microsite) */
+            array( 'key' => 'field_vbl_hhome_tab_cta_reservas', 'label' => 'CTA Reservas (Quartos)', 'name' => '', 'type' => 'tab' ),
+            array(
+                'key'           => 'field_vbl_hhotel_cta_subtitle',
+                'label'         => '01. Subtítulo (2 a 4 palavras)',
+                'name'          => 'vbl_hhotel_cta_subtitle',
+                'type'          => 'text',
+                'instructions'  => 'Ex: RESERVAR ESTADIA ou CALL TO ACTION.',
+                'default_value' => 'RESERVAR ESTADIA',
+            ),
+            array(
+                'key'           => 'field_vbl_hhotel_cta_title',
+                'label'         => '02. Título Principal',
+                'name'          => 'vbl_hhotel_cta_title',
+                'type'          => 'text',
+                'instructions'  => 'Ex: FAÇA JÁ A SUA RESERVA (suporta HTML simples como &lt;br&gt; ou &lt;em&gt;).',
+                'default_value' => 'FAÇA JÁ A SUA RESERVA',
+            ),
+            array(
+                'key'           => 'field_vbl_hhotel_cta_desc',
+                'label'         => '03. Descrição / Texto',
+                'name'          => 'vbl_hhotel_cta_desc',
+                'type'          => 'textarea',
+                'rows'          => 3,
+                'instructions'  => 'Texto explicativo do banner de reserva exibido nos quartos deste hotel.',
+                'default_value' => 'Garanta a sua estadia com as melhores condições e tarifas exclusivas no site oficial.',
+            ),
         ),
         'location' => array(
             array( array( 'param' => 'page_template', 'operator' => '==', 'value' => 'page-templates/page-hotel-home.php' ) ),
