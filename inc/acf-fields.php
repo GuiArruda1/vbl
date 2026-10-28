@@ -937,6 +937,15 @@ function vbl_register_acf_fields() {
 
             /* Tab: Programa Semanal */
             array( 'key' => 'field_vbl_hativ_tab_prog', 'label' => 'Programa Semanal', 'type' => 'tab' ),
+            array(
+                'key'           => 'field_vbl_hativ_show_programa',
+                'label'         => 'Exibir Secção no Site',
+                'name'          => 'vbl_hativ_show_programa',
+                'type'          => 'true_false',
+                'instructions'  => 'Ative para exibir a secção do Programa Semanal no site (atualmente oculta por padrão).',
+                'default_value' => 0,
+                'ui'            => 1,
+            ),
             array( 'key' => 'field_vbl_hativ_prog_tagline', 'label' => 'Tagline', 'name' => 'vbl_hativ_prog_tagline', 'type' => 'text', 'default_value' => 'ANIMAÇÃO & ATIVIDADES' ),
             array( 'key' => 'field_vbl_hativ_prog_title', 'label' => 'Título', 'name' => 'vbl_hativ_prog_title', 'type' => 'text', 'default_value' => 'PROGRAMA SEMANAL' ),
             array( 'key' => 'field_vbl_hativ_prog_text', 'label' => 'Texto Introdutório', 'name' => 'vbl_hativ_prog_text', 'type' => 'textarea', 'rows' => 3, 'default_value' => 'Gravida turpis posuere in mauris. Eget placerat pretium tempus pellentesque amet venenatis enim est. Sed id condimentum eget amet augue pretium et leo integer.' ),

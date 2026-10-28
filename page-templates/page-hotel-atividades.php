@@ -180,7 +180,12 @@ if ( empty( $tratamentos_list ) || ! is_array( $tratamentos_list ) ) {
 
   <!-- ==========================================
        3. PROGRAMA SEMANAL (Carrossel Full-Width)
+       Ocultado temporariamente ("Hide microsites programas semanal section for now")
   =========================================== -->
+  <?php 
+  $show_prog_semanal = vbl_field( 'vbl_hativ_show_programa', false, false );
+  if ( ! empty( $show_prog_semanal ) ) : 
+  ?>
   <section class="w-full py-20 lg:py-32 bg-[#E8F5F5] relative overflow-hidden">
     
     <!-- Cabeçalho Alinhado à Esquerda (Como no Design) -->
@@ -311,6 +316,7 @@ if ( empty( $tratamentos_list ) || ! is_array( $tratamentos_list ) ) {
 
     </div>
   </section>
+  <?php endif; ?>
 
   <!-- ==========================================
        4. CLUBES OU ESPAÇOS TEMÁTICOS (Slider Bipartido)
