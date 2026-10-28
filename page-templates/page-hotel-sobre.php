@@ -10,37 +10,96 @@
 require_once VBL_DIR . '/header-hotel.php';
 
 // ACF Fields: Hero
-$hero_bg    = vbl_field( 'vbl_hhotel_hero_bg', false, vbl_img( 'hoteis/hero-foto.jpg' ) );
-if ( empty( $hero_bg ) ) {
+$hero_bg = vbl_field( 'vbl_hhotel_hero_bg', false, vbl_img( 'hoteis/hero-foto.jpg' ) );
+if ( is_array( $hero_bg ) ) {
+    $hero_bg = isset( $hero_bg['url'] ) ? $hero_bg['url'] : '';
+}
+if ( empty( $hero_bg ) || ! is_string( $hero_bg ) ) {
     $hero_bg = vbl_img( 'hoteis/hero-foto.jpg' );
 }
 
 // ACF Fields: Apresentação da Unidade ("Conheça o Hotel")
 $conheca_subtitle = vbl_field( 'vbl_hhotel_conheca_subtitle', false, 'APRESENTAÇÃO DA UNIDADE' );
+if ( ! is_string( $conheca_subtitle ) ) $conheca_subtitle = 'APRESENTAÇÃO DA UNIDADE';
+
 $conheca_title    = vbl_field( 'vbl_hhotel_conheca_title', false, 'CONHEÇA<br>O HOTEL' );
+if ( ! is_string( $conheca_title ) ) $conheca_title = 'CONHEÇA<br>O HOTEL';
+
 $conheca_p1       = vbl_field( 'vbl_hhotel_conheca_p1', false, 'Lorem ipsum dolor sit amet consectetur. Mi malesuada quisque adipiscing sed in tortor. Lorem quis sollicitudin quisque pellentesque risus. Diam elit faucibus enim pellentesque nisi orci neque leo. Aliquet dignissim dui tortor massa morbi scelerisque mi tincidunt. Quam id morbi tincidunt turpis ut eget amet metus. Lacinia enim sem vitae turpis ornare convallis cras.' );
+if ( ! is_string( $conheca_p1 ) ) $conheca_p1 = '';
+
 $conheca_p2       = vbl_field( 'vbl_hhotel_conheca_p2', false, 'Elementum mauris dolor vitae at porttitor. Consequat sapien facilisi platea viverra. Facilisi a viverra sollicitudin euismod. Nisl ac ultricies augue ante tortor consequat quam porttitor. Lacus tempor venenatis hendrerit in.' );
+if ( ! is_string( $conheca_p2 ) ) $conheca_p2 = '';
+
 $conheca_img      = vbl_field( 'vbl_hhotel_conheca_img', false, vbl_img( 'hoteis/porto-santo-520x400.jpg' ) );
-if ( empty( $conheca_img ) ) {
+if ( is_array( $conheca_img ) ) {
+    $conheca_img = isset( $conheca_img['url'] ) ? $conheca_img['url'] : '';
+}
+if ( empty( $conheca_img ) || ! is_string( $conheca_img ) ) {
     $conheca_img = vbl_img( 'hoteis/porto-santo-520x400.jpg' );
 }
 
 // ACF Fields: Vídeo
 $video_tagline = vbl_field( 'vbl_hhotel_video_tagline', false, 'THE ESSENCE OF FAMILY' );
+if ( ! is_string( $video_tagline ) ) $video_tagline = 'THE ESSENCE OF FAMILY';
+
 $video_title   = vbl_field( 'vbl_hhotel_video_title', false, 'VILA BALEIRA<br><em>PORTO SANTO</em>' );
+if ( ! is_string( $video_title ) ) $video_title = 'VILA BALEIRA<br><em>PORTO SANTO</em>';
+
 $video_bg      = vbl_field( 'vbl_hhotel_video_bg', false, vbl_img( 'sobre-fotografia.jpg' ) );
-if ( empty( $video_bg ) ) {
+if ( is_array( $video_bg ) ) {
+    $video_bg = isset( $video_bg['url'] ) ? $video_bg['url'] : '';
+}
+if ( empty( $video_bg ) || ! is_string( $video_bg ) ) {
     $video_bg = vbl_img( 'sobre-fotografia.jpg' );
 }
+
 $video_url     = vbl_field( 'vbl_hhotel_video_url', false, 'https://www.youtube.com/watch?v=WN8c9XwUx9s' );
-$video_embed   = vbl_get_youtube_embed_url( $video_url );
+if ( ! is_string( $video_url ) ) $video_url = '';
+$video_embed   = function_exists( 'vbl_get_youtube_embed_url' ) ? vbl_get_youtube_embed_url( $video_url ) : '';
 
 // ACF Fields: Instalações & Áreas Comuns
 $inst_subtitle = vbl_field( 'vbl_hhotel_inst_subtitle', false, 'INSTALAÇÕES & ÁREAS COMUNS' );
+if ( ! is_string( $inst_subtitle ) ) $inst_subtitle = 'INSTALAÇÕES & ÁREAS COMUNS';
 
-// Repeater de Instalações ou Fallback padrão
-$instalacoes = vbl_field( 'vbl_hhotel_instalacoes', false, array() );
-if ( empty( $instalacoes ) || ! is_array( $instalacoes ) ) {
+// Repeater de Instalações ou Fallback padrão com sanitização rigorosa
+$raw_instalacoes = vbl_field( 'vbl_hhotel_instalacoes', false, array() );
+$instalacoes = array();
+
+if ( is_array( $raw_instalacoes ) && ! empty( $raw_instalacoes ) ) {
+    foreach ( $raw_instalacoes as $raw_item ) {
+        if ( ! is_array( $raw_item ) ) {
+            continue;
+        }
+        $it_title = isset( $raw_item['title'] ) && is_scalar( $raw_item['title'] ) ? (string) $raw_item['title'] : '';
+        $it_desc  = isset( $raw_item['description'] ) && is_scalar( $raw_item['description'] ) ? (string) $raw_item['description'] : '';
+
+        $it_img = isset( $raw_item['image'] ) ? $raw_item['image'] : '';
+        if ( is_array( $it_img ) ) {
+            $it_img = isset( $it_img['url'] ) ? $it_img['url'] : '';
+        } elseif ( is_numeric( $it_img ) ) {
+            $it_img = wp_get_attachment_image_url( (int) $it_img, 'large' ) ?: '';
+        }
+
+        $it_thumb = isset( $raw_item['thumb'] ) ? $raw_item['thumb'] : '';
+        if ( is_array( $it_thumb ) ) {
+            $it_thumb = isset( $it_thumb['url'] ) ? $it_thumb['url'] : '';
+        } elseif ( is_numeric( $it_thumb ) ) {
+            $it_thumb = wp_get_attachment_image_url( (int) $it_thumb, 'medium' ) ?: '';
+        }
+
+        if ( ! empty( $it_title ) || ! empty( $it_img ) ) {
+            $instalacoes[] = array(
+                'title'       => $it_title,
+                'description' => $it_desc,
+                'image'       => $it_img ?: vbl_img( 'sobre-fotografia.jpg' ),
+                'thumb'       => $it_thumb,
+            );
+        }
+    }
+}
+
+if ( empty( $instalacoes ) ) {
     $instalacoes = array(
         array(
             'title'       => 'RECEÇÃO',
@@ -183,10 +242,18 @@ if ( empty( $instalacoes ) || ! is_array( $instalacoes ) ) {
 
         <!-- Slides Wrapper -->
         <div class="relative w-full">
-          <?php foreach ( $instalacoes as $index => $item ) : 
+          <?php 
+          $total_inst = max( 1, count( $instalacoes ) );
+          foreach ( $instalacoes as $index => $item ) : 
               $is_active  = ( $index === 0 );
-              $next_idx   = ( $index + 1 ) % count( $instalacoes );
+              $next_idx   = ( $index + 1 ) % $total_inst;
               $thumb_img  = ! empty( $item['thumb'] ) ? $item['thumb'] : ( isset( $instalacoes[ $next_idx ]['image'] ) ? $instalacoes[ $next_idx ]['image'] : '' );
+              if ( is_array( $thumb_img ) ) {
+                  $thumb_img = isset( $thumb_img['url'] ) ? $thumb_img['url'] : '';
+              }
+              $main_img   = ! empty( $item['image'] ) ? ( is_array( $item['image'] ) ? ( $item['image']['url'] ?? '' ) : (string) $item['image'] ) : vbl_img( 'sobre-fotografia.jpg' );
+              $item_title = isset( $item['title'] ) && is_scalar( $item['title'] ) ? (string) $item['title'] : '';
+              $item_desc  = isset( $item['description'] ) && is_scalar( $item['description'] ) ? (string) $item['description'] : '';
           ?>
           <div class="vbl-instalacao-slide <?php echo $is_active ? 'flex' : 'hidden'; ?> flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12 xl:gap-16 transition-opacity duration-500" data-slide="<?php echo esc_attr( $index ); ?>">
             
@@ -204,12 +271,12 @@ if ( empty( $instalacoes ) || ! is_array( $instalacoes ) ) {
 
                 <!-- Título da Instalação -->
                 <h2 class="font-display text-[34px] sm:text-[42px] lg:text-[48px] xl:text-[54px] leading-[1.05] tracking-[1.5px] uppercase text-[#0d5257] mb-4 lg:mb-5 font-normal">
-                  <?php echo esc_html( $item['title'] ); ?>
+                  <?php echo esc_html( $item_title ); ?>
                 </h2>
 
                 <!-- Descrição -->
                 <p class="font-body font-light text-[13px] sm:text-[14px] xl:text-[15px] leading-relaxed text-[#555555] mb-6 sm:mb-8 max-w-[440px]">
-                  <?php echo nl2br( esc_html( $item['description'] ) ); ?>
+                  <?php echo nl2br( esc_html( $item_desc ) ); ?>
                 </p>
               </div>
 
@@ -229,7 +296,7 @@ if ( empty( $instalacoes ) || ! is_array( $instalacoes ) ) {
                 
                 <!-- Foto Principal com cantos nítidos -->
                 <div class="w-full h-full overflow-hidden bg-gray-100 shadow-sm">
-                  <img src="<?php echo esc_url( $item['image'] ); ?>" alt="<?php echo esc_attr( $item['title'] ); ?>" class="w-full h-full object-cover">
+                  <img src="<?php echo esc_url( $main_img ); ?>" alt="<?php echo esc_attr( $item_title ); ?>" class="w-full h-full object-cover">
                 </div>
 
                 <!-- Seta Direita (Seguinte) Sobreposta à lateral direita da foto (como no Figma) -->

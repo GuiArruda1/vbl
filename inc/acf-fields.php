@@ -13,24 +13,48 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Helper: Get ACF field with fallback to Customizer, then default.
  */
 function vbl_field( $field_name, $post_id = false, $default = '' ) {
+    $value = null;
     if ( function_exists( 'get_field' ) ) {
         $value = get_field( $field_name, $post_id );
-        if ( $value !== null && $value !== false && $value !== '' ) {
-            return $value;
+    }
+
+    if ( $value === null || $value === false || $value === '' ) {
+        $target_id = $post_id ? $post_id : get_the_ID();
+        if ( $target_id ) {
+            $meta_val = get_post_meta( $target_id, $field_name, true );
+            if ( $meta_val !== '' && $meta_val !== false && $meta_val !== null ) {
+                $value = $meta_val;
+            }
         }
     }
-    $target_id = $post_id ? $post_id : get_the_ID();
-    if ( $target_id ) {
-        $meta_val = get_post_meta( $target_id, $field_name, true );
-        if ( $meta_val !== '' && $meta_val !== false && $meta_val !== null ) {
-            return $meta_val;
+
+    if ( $value === null || $value === false || $value === '' ) {
+        $customizer_value = get_theme_mod( $field_name, '' );
+        if ( $customizer_value !== '' && $customizer_value !== false ) {
+            $value = $customizer_value;
         }
     }
-    $customizer_value = get_theme_mod( $field_name, '' );
-    if ( $customizer_value !== '' && $customizer_value !== false ) {
-        return $customizer_value;
+
+    if ( $value === null || $value === false || $value === '' ) {
+        return $default;
     }
-    return $default;
+
+    // Se o template espera string/URL e o ACF devolve array de imagem
+    if ( is_array( $value ) && ! is_array( $default ) ) {
+        if ( isset( $value['url'] ) ) {
+            return $value['url'];
+        }
+    }
+
+    // Se for ID de anexo numérico e o padrão for string
+    if ( is_numeric( $value ) && is_string( $default ) && ! empty( $default ) ) {
+        $img_url = wp_get_attachment_image_url( (int) $value, 'full' );
+        if ( $img_url ) {
+            return $img_url;
+        }
+    }
+
+    return $value;
 }
 
 /**
