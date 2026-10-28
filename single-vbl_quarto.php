@@ -358,7 +358,7 @@ $frase_line3 = vbl_field( 'vbl_quarto_frase_line3', $post_id, 'LACUS EGET UT SIT
 
         <!-- ====== DROPDOWNS POPUPS ====== -->
         <!-- Popups Quando (Datas) -->
-        <div class="vbl-popup-when vbl-booking-popup font-body hidden absolute bottom-[calc(100%+12px)] left-0 md:left-[15%] w-full sm:w-[400px] bg-white/95 backdrop-blur-md border border-[#0da9a6]/40 shadow-2xl p-5 text-[#0d5257] z-50 rounded-none">
+        <div class="vbl-popup-when vbl-booking-popup vbl-popup-light font-body hidden absolute bottom-[calc(100%+12px)] left-0 md:left-[15%] w-full sm:w-[400px] bg-white/95 backdrop-blur-md border border-[#0da9a6]/40 shadow-2xl p-5 text-[#0d5257] z-50 rounded-none">
           <div class="flex items-center justify-between mb-4 pb-2 border-b border-[#0d5257]/20">
             <span class="text-[11px] uppercase tracking-[1px] text-[#0d5257] font-medium">Selecione as Datas da Estadia</span>
             <button type="button" class="vbl-close-popup text-[#0d5257]/60 hover:text-[#0d5257] text-lg leading-none cursor-pointer" aria-label="Fechar">&times;</button>
@@ -380,7 +380,7 @@ $frase_line3 = vbl_field( 'vbl_quarto_frase_line3', $post_id, 'LACUS EGET UT SIT
         </div>
 
         <!-- Popups Quem (Hóspedes & Quartos) -->
-        <div class="vbl-popup-who vbl-booking-popup font-body hidden absolute bottom-[calc(100%+12px)] left-0 md:left-[35%] w-full sm:w-[360px] bg-white/95 backdrop-blur-md border border-[#0da9a6]/40 shadow-2xl p-5 text-[#0d5257] z-50 rounded-none">
+        <div class="vbl-popup-who vbl-booking-popup vbl-popup-light font-body hidden absolute bottom-[calc(100%+12px)] left-0 md:left-[35%] w-full sm:w-[360px] bg-white/95 backdrop-blur-md border border-[#0da9a6]/40 shadow-2xl p-5 text-[#0d5257] z-50 rounded-none">
           <div class="flex items-center justify-between mb-4 pb-2 border-b border-[#0d5257]/20">
             <span class="text-[11px] uppercase tracking-[1px] text-[#0d5257] font-medium">Hóspedes e Quartos</span>
             <button type="button" class="vbl-close-popup text-[#0d5257]/60 hover:text-[#0d5257] text-lg leading-none cursor-pointer" aria-label="Fechar">&times;</button>
