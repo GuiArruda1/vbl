@@ -605,7 +605,20 @@ function vbl_save_hotel_instalacoes_metabox( $post_id ) {
         }
 
         update_post_meta( $post_id, 'vbl_hhotel_instalacoes', $clean_instalacoes );
-        update_post_meta( $post_id, '_vbl_hhotel_instalacoes', $clean_instalacoes );
+        // IMPORTANTE: Nunca gravar array com prefixo underscore '_' porque o ACF reserva '_nomedocampo'
+        // para armazenar a chave da string 'field_xxxx'. Gravar um array aí faz o ACF disparar fatal error no PHP 8.
+        delete_post_meta( $post_id, '_vbl_hhotel_instalacoes' );
     }
 }
 add_action( 'save_post', 'vbl_save_hotel_instalacoes_metabox' );
+
+/**
+ * 5. Limpeza de compatibilidade: remove meta '_vbl_hhotel_instalacoes' corrompida se existir
+ */
+add_action( 'init', function() {
+    global $wpdb;
+    if ( isset( $wpdb->postmeta ) ) {
+        // Remove meta chaves com underscore que contenham dados serializados (arrays) que quebram o ACF
+        $wpdb->query( "DELETE FROM {$wpdb->postmeta} WHERE meta_key = '_vbl_hhotel_instalacoes' AND meta_value LIKE 'a:%'" );
+    }
+} );

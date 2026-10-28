@@ -15,7 +15,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 function vbl_field( $field_name, $post_id = false, $default = '' ) {
     $value = null;
     if ( function_exists( 'get_field' ) ) {
-        $value = get_field( $field_name, $post_id );
+        try {
+            $value = get_field( $field_name, $post_id );
+        } catch ( \Throwable $e ) {
+            $value = null;
+        }
     }
 
     if ( $value === null || $value === false || $value === '' ) {

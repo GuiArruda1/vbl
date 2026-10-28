@@ -9,8 +9,6 @@
 // Inclui o Header Transparente com branding do Hotel
 require_once VBL_DIR . '/header-hotel.php';
 
-try {
-
 // ACF Fields: Hero
 $hero_bg = vbl_field( 'vbl_hhotel_hero_bg', false, vbl_img( 'hoteis/hero-foto.jpg' ) );
 if ( is_array( $hero_bg ) ) {
@@ -64,8 +62,11 @@ $video_embed   = function_exists( 'vbl_get_youtube_embed_url' ) ? vbl_get_youtub
 $inst_subtitle = vbl_field( 'vbl_hhotel_inst_subtitle', false, 'INSTALAÇÕES & ÁREAS COMUNS' );
 if ( ! is_string( $inst_subtitle ) ) $inst_subtitle = 'INSTALAÇÕES & ÁREAS COMUNS';
 
-// Repeater de Instalações ou Fallback padrão com sanitização rigorosa
-$raw_instalacoes = vbl_field( 'vbl_hhotel_instalacoes', false, array() );
+// Repeater de Instalações (Meta Box Nativa do WordPress com fallback)
+$raw_instalacoes = get_post_meta( get_the_ID(), 'vbl_hhotel_instalacoes', true );
+if ( empty( $raw_instalacoes ) || ! is_array( $raw_instalacoes ) ) {
+    $raw_instalacoes = vbl_field( 'vbl_hhotel_instalacoes', false, array() );
+}
 $instalacoes = array();
 
 if ( is_array( $raw_instalacoes ) && ! empty( $raw_instalacoes ) ) {
@@ -451,13 +452,3 @@ document.addEventListener('DOMContentLoaded', function() {
 <?php 
 // Inclui o Footer independente do Hotel
 get_footer('hotel');
-
-} catch ( \Throwable $e ) {
-    echo '<div style="background:#fee2e2; border:2px solid #ef4444; color:#991b1b; padding:24px; margin:40px; font-family:monospace; z-index:999999; position:relative;">';
-    echo '<h2 style="font-size:20px; font-weight:bold; margin-bottom:12px;">DEBUG ERROR ENCOUNTERED:</h2>';
-    echo '<p style="font-size:16px;"><strong>Message:</strong> ' . esc_html( $e->getMessage() ) . '</p>';
-    echo '<p style="font-size:14px;"><strong>Location:</strong> ' . esc_html( $e->getFile() . ':' . $e->getLine() ) . '</p>';
-    echo '<pre style="background:#fff; padding:12px; margin-top:12px; overflow:auto;">' . esc_html( $e->getTraceAsString() ) . '</pre>';
-    echo '</div>';
-    get_footer('hotel');
-}
