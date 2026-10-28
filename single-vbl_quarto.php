@@ -289,10 +289,12 @@ $frase_line3 = vbl_field( 'vbl_quarto_frase_line3', $post_id, 'LACUS EGET UT SIT
   <!-- ==========================================
        5. WIDGET DE RESERVA (Faça já a sua reserva)
   =========================================== -->
-  <section id="reservas" class="w-full py-16 lg:py-20 bg-[#E8F5F5] relative overflow-hidden">
-    <!-- Estrela do mar decorativa em outline -->
-    <div class="absolute right-0 top-1/2 -translate-y-1/2 w-64 lg:w-96 pointer-events-none opacity-20 text-[#0da9a6]">
-      <img src="<?php echo vbl_img( 'estrela.svg' ); ?>" alt="" class="w-full h-auto">
+  <section id="reservas" class="w-full py-16 lg:py-20 bg-[#E8F5F5] relative z-20">
+    <!-- Estrela do mar decorativa em outline (com overflow isolado para não cortar popups da barra de reservas) -->
+    <div class="absolute inset-0 pointer-events-none overflow-hidden z-0">
+      <div class="absolute right-0 top-1/2 -translate-y-1/2 w-64 lg:w-96 opacity-20 text-[#0da9a6]">
+        <img src="<?php echo vbl_img( 'estrela.svg' ); ?>" alt="" class="w-full h-auto">
+      </div>
     </div>
 
     <div class="max-w-[1920px] mx-auto px-6 xl:px-[8.33%] relative z-10">
@@ -358,7 +360,7 @@ $frase_line3 = vbl_field( 'vbl_quarto_frase_line3', $post_id, 'LACUS EGET UT SIT
 
         <!-- ====== DROPDOWNS POPUPS ====== -->
         <!-- Popups Quando (Datas) -->
-        <div class="vbl-popup-when vbl-booking-popup vbl-popup-light font-body hidden absolute bottom-[calc(100%+12px)] left-0 md:left-[15%] w-full sm:w-[400px] bg-white/95 backdrop-blur-md border border-[#0da9a6]/40 shadow-2xl p-5 text-[#0d5257] z-50 rounded-none">
+        <div class="vbl-popup-when vbl-booking-popup vbl-popup-light font-body hidden absolute top-[calc(100%+8px)] left-0 md:left-[15%] w-full sm:w-[400px] bg-white/95 backdrop-blur-md border border-[#0da9a6]/40 shadow-2xl p-5 text-[#0d5257] z-50 rounded-none">
           <div class="flex items-center justify-between mb-4 pb-2 border-b border-[#0d5257]/20">
             <span class="text-[11px] uppercase tracking-[1px] text-[#0d5257] font-medium">Selecione as Datas da Estadia</span>
             <button type="button" class="vbl-close-popup text-[#0d5257]/60 hover:text-[#0d5257] text-lg leading-none cursor-pointer" aria-label="Fechar">&times;</button>
@@ -380,7 +382,7 @@ $frase_line3 = vbl_field( 'vbl_quarto_frase_line3', $post_id, 'LACUS EGET UT SIT
         </div>
 
         <!-- Popups Quem (Hóspedes & Quartos) -->
-        <div class="vbl-popup-who vbl-booking-popup vbl-popup-light font-body hidden absolute bottom-[calc(100%+12px)] left-0 md:left-[35%] w-full sm:w-[360px] bg-white/95 backdrop-blur-md border border-[#0da9a6]/40 shadow-2xl p-5 text-[#0d5257] z-50 rounded-none">
+        <div class="vbl-popup-who vbl-booking-popup vbl-popup-light font-body hidden absolute top-[calc(100%+8px)] left-0 md:left-[35%] w-full sm:w-[360px] bg-white/95 backdrop-blur-md border border-[#0da9a6]/40 shadow-2xl p-5 text-[#0d5257] z-50 rounded-none">
           <div class="flex items-center justify-between mb-4 pb-2 border-b border-[#0d5257]/20">
             <span class="text-[11px] uppercase tracking-[1px] text-[#0d5257] font-medium">Hóspedes e Quartos</span>
             <button type="button" class="vbl-close-popup text-[#0d5257]/60 hover:text-[#0d5257] text-lg leading-none cursor-pointer" aria-label="Fechar">&times;</button>
