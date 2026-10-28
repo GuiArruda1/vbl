@@ -129,7 +129,7 @@
     }
   }
 
-  /* Date inputs styling for dark theme popups */
+  /* Date inputs styling for dark theme popups (Home Hero) */
   .vbl-booking-popup input[type="date"] {
     color-scheme: dark;
   }
@@ -142,6 +142,22 @@
   }
 
   .vbl-booking-popup input[type="date"]::-webkit-calendar-picker-indicator:hover {
+    opacity: 1;
+  }
+
+  /* Date inputs styling for light theme popups (Single Room Pages) */
+  .vbl-booking-engine[data-fixed-hotel="true"] .vbl-booking-popup input[type="date"] {
+    color-scheme: light;
+  }
+
+  .vbl-booking-engine[data-fixed-hotel="true"] .vbl-booking-popup input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: none;
+    opacity: 0.7;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+  }
+
+  .vbl-booking-engine[data-fixed-hotel="true"] .vbl-booking-popup input[type="date"]::-webkit-calendar-picker-indicator:hover {
     opacity: 1;
   }
 

@@ -859,369 +859,391 @@
             behavior: 'smooth'
           });
 
-          // Open the Where popup on clicking top Reservar button
+          // Open relevant popup on clicking top Reservar button (Where if available, else When)
           setTimeout(function () {
-            openDropdown('dropdownWhere');
+            var whereTrig = reservasEl.querySelector('.vbl-field-trigger[data-target="dropdownWhere"]');
+            if (whereTrig) {
+              whereTrig.click();
+            } else {
+              var whenTrig = reservasEl.querySelector('.vbl-field-trigger[data-target="dropdownWhen"]');
+              if (whenTrig) whenTrig.click();
+            }
           }, 450);
         }
       });
     });
 
-    var engine = document.querySelector('.vbl-booking-engine');
-    if (!engine) return;
+    var engines = document.querySelectorAll('.vbl-booking-engine');
+    if (!engines.length) return;
 
-    var popups = {
-      dropdownWhere: document.getElementById('vblDropdownWhere'),
-      dropdownWhen:  document.getElementById('vblDropdownWhen'),
-      dropdownWho:   document.getElementById('vblDropdownWho')
-    };
+    engines.forEach(function (engine) {
+      initSingleBookingEngine(engine);
+    });
 
-    var hotelDisplayEls  = engine.querySelectorAll('.vbl-selected-hotel');
-    var datesDisplayEls  = engine.querySelectorAll('.vbl-selected-dates');
-    var guestsDisplayEls = engine.querySelectorAll('.vbl-selected-guests');
+    function initSingleBookingEngine(engine) {
+      var isFixed = engine.getAttribute('data-fixed-hotel') === 'true';
 
-    var checkinInput  = document.getElementById('vblCheckinInput');
-    var checkoutInput = document.getElementById('vblCheckoutInput');
-    var nightsCountEl = document.getElementById('vblNightsCount');
-    var confirmDates  = document.getElementById('vblConfirmDates');
-    var confirmWho    = document.getElementById('vblConfirmWho');
+      var popups = {
+        dropdownWhere: engine.querySelector('.vbl-popup-where'),
+        dropdownWhen:  engine.querySelector('.vbl-popup-when'),
+        dropdownWho:   engine.querySelector('.vbl-popup-who')
+      };
 
-    var countAdultsEl   = document.getElementById('vblCountAdults');
-    var countChildrenEl = document.getElementById('vblCountChildren');
-    var countRoomsEl    = document.getElementById('vblCountRooms');
+      var hotelDisplayEls  = engine.querySelectorAll('.vbl-selected-hotel');
+      var datesDisplayEls  = engine.querySelectorAll('.vbl-selected-dates');
+      var guestsDisplayEls = engine.querySelectorAll('.vbl-selected-guests');
 
-    var monthsPT = ['JAN', 'FEV', 'MAR', 'ABR', 'MAI', 'JUN', 'JUL', 'AGO', 'SET', 'OUT', 'NOV', 'DEZ'];
+      var checkinInput  = engine.querySelector('.vbl-checkin-input');
+      var checkoutInput = engine.querySelector('.vbl-checkout-input');
+      var nightsCountEl = engine.querySelector('.vbl-nights-count');
+      var confirmDates  = engine.querySelector('.vbl-confirm-dates');
+      var confirmWho    = engine.querySelector('.vbl-confirm-who');
 
-    // State
-    var state = {
-      hotelName: 'todos os hotéis',
-      chainId: '501671',
-      chainSelector: '27540',
-      hotelId: '',
-      hotelIds: '100377468,100379257,100380388,100377467,100377609',
-      checkin: null,
-      checkout: null,
-      adults: 2,
-      children: 0,
-      rooms: 1
-    };
+      var countAdultsEl   = engine.querySelector('.vbl-count-adults');
+      var countChildrenEl = engine.querySelector('.vbl-count-children');
+      var countRoomsEl    = engine.querySelector('.vbl-count-rooms');
 
-    function formatDateISO(d) {
-      var year = d.getFullYear();
-      var month = String(d.getMonth() + 1).padStart(2, '0');
-      var day = String(d.getDate()).padStart(2, '0');
-      return year + '-' + month + '-' + day;
-    }
+      var monthsPT = ['JAN', 'FEV', 'MAR', 'ABR', 'MAI', 'JUN', 'JUL', 'AGO', 'SET', 'OUT', 'NOV', 'DEZ'];
 
-    function formatDateDisplay(d) {
-      var day = String(d.getDate()).padStart(2, '0');
-      var month = monthsPT[d.getMonth()];
-      return day + ' ' + month;
-    }
+      // Initial State
+      var initialHotelName = engine.getAttribute('data-hotel-name') || 'todos os hotéis';
+      var initialChainId   = engine.getAttribute('data-chain-id') || '501671';
+      var initialSelector  = engine.getAttribute('data-chain-selector') || (isFixed ? '' : '27540');
+      var initialHotelId   = engine.getAttribute('data-hotel-id') || '';
+      var initialHotelIds  = isFixed ? '' : (engine.getAttribute('data-hotel-ids') || '100377468,100379257,100380388,100377467,100377609');
 
-    function formatDateMirai(d) {
-      var day = String(d.getDate()).padStart(2, '0');
-      var month = String(d.getMonth() + 1).padStart(2, '0');
-      var year = d.getFullYear();
-      return day + '/' + month + '/' + year;
-    }
+      var state = {
+        hotelName: initialHotelName,
+        chainId: initialChainId,
+        chainSelector: initialSelector,
+        hotelId: initialHotelId,
+        hotelIds: initialHotelIds,
+        checkin: null,
+        checkout: null,
+        adults: 2,
+        children: 0,
+        rooms: 1
+      };
 
-    function calcNights() {
-      if (!state.checkin || !state.checkout) return 1;
-      var diff = Math.round((state.checkout - state.checkin) / (1000 * 60 * 60 * 24));
-      return diff > 0 ? diff : 1;
-    }
-
-    function updateNightsDisplay() {
-      if (!nightsCountEl) return;
-      var n = calcNights();
-      nightsCountEl.textContent = n === 1 ? '1 Noite' : n + ' Noites';
-    }
-
-    function updateDatesSummary() {
-      if (!state.checkin || !state.checkout) return;
-      var text = formatDateDisplay(state.checkin) + ' — ' + formatDateDisplay(state.checkout);
-      datesDisplayEls.forEach(function (el) {
-        el.textContent = text;
-      });
-    }
-
-    function updateGuestsSummary() {
-      var parts = [];
-      parts.push(state.adults === 1 ? '1 adulto' : state.adults + ' adultos');
-      if (state.children > 0) {
-        parts.push(state.children === 1 ? '1 criança' : state.children + ' crianças');
+      function formatDateISO(d) {
+        var year = d.getFullYear();
+        var month = String(d.getMonth() + 1).padStart(2, '0');
+        var day = String(d.getDate()).padStart(2, '0');
+        return year + '-' + month + '-' + day;
       }
-      var guestsStr = parts.join(', ');
-      var roomsStr = state.rooms === 1 ? '1 quarto' : state.rooms + ' quartos';
-      var text = guestsStr + ' · ' + roomsStr;
-      guestsDisplayEls.forEach(function (el) {
-        el.textContent = text;
-      });
-    }
 
-    // Initialize Dates (Check-in = today + 7 days, Check-out = checkin + 2 nights)
-    var today = new Date();
-    var defaultIn = new Date(today);
-    defaultIn.setDate(today.getDate() + 7);
-    defaultIn.setHours(0, 0, 0, 0);
-
-    var defaultOut = new Date(defaultIn);
-    defaultOut.setDate(defaultIn.getDate() + 2);
-    defaultOut.setHours(0, 0, 0, 0);
-
-    state.checkin = defaultIn;
-    state.checkout = defaultOut;
-
-    if (checkinInput && checkoutInput) {
-      var minDateStr = formatDateISO(today);
-      checkinInput.min = minDateStr;
-      checkinInput.value = formatDateISO(defaultIn);
-
-      var minOut = new Date(defaultIn);
-      minOut.setDate(defaultIn.getDate() + 1);
-      checkoutInput.min = formatDateISO(minOut);
-      checkoutInput.value = formatDateISO(defaultOut);
-
-      updateNightsDisplay();
-      updateDatesSummary();
-
-      checkinInput.addEventListener('change', function () {
-        var parts = this.value.split('-');
-        if (parts.length === 3) {
-          state.checkin = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10));
-          var nextDay = new Date(state.checkin);
-          nextDay.setDate(state.checkin.getDate() + 1);
-          checkoutInput.min = formatDateISO(nextDay);
-
-          if (!state.checkout || state.checkout <= state.checkin) {
-            state.checkout = new Date(state.checkin);
-            state.checkout.setDate(state.checkin.getDate() + 2);
-            checkoutInput.value = formatDateISO(state.checkout);
-          }
-          updateNightsDisplay();
-        }
-      });
-
-      checkoutInput.addEventListener('change', function () {
-        var parts = this.value.split('-');
-        if (parts.length === 3) {
-          state.checkout = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10));
-          if (state.checkin && state.checkout <= state.checkin) {
-            state.checkout = new Date(state.checkin);
-            state.checkout.setDate(state.checkin.getDate() + 1);
-            this.value = formatDateISO(state.checkout);
-          }
-          updateNightsDisplay();
-        }
-      });
-    }
-
-    if (confirmDates) {
-      confirmDates.addEventListener('click', function (e) {
-        e.preventDefault();
-        updateDatesSummary();
-        closeAllDropdowns();
-      });
-    }
-
-    // Hotel Selection
-    var hotelButtons = engine.querySelectorAll('.vbl-hotel-opt');
-
-    function updateHotelActiveOption() {
-      hotelButtons.forEach(function (btn) {
-        var hName = btn.getAttribute('data-hotel-name') || '';
-        if (hName.toLowerCase() === state.hotelName.toLowerCase()) {
-          btn.classList.add('bg-white/15');
-        } else {
-          btn.classList.remove('bg-white/15');
-        }
-      });
-    }
-    updateHotelActiveOption();
-
-    hotelButtons.forEach(function (btn) {
-      btn.addEventListener('click', function (e) {
-        e.preventDefault();
-        state.hotelName     = this.getAttribute('data-hotel-name') || 'todos os hotéis';
-        state.chainId       = this.getAttribute('data-chain-id') || '501671';
-        state.chainSelector = this.getAttribute('data-chain-selector') || '';
-        state.hotelId       = this.getAttribute('data-hotel-id') || '';
-        state.hotelIds      = this.getAttribute('data-hotel-ids') || '';
-
-        hotelDisplayEls.forEach(function (el) {
-          el.textContent = state.hotelName;
-        });
-
-        updateHotelActiveOption();
-        closeAllDropdowns();
-      });
-    });
-
-    // Guest Steppers
-    var counterBtns = engine.querySelectorAll('.vbl-counter-btn');
-    counterBtns.forEach(function (btn) {
-      btn.addEventListener('click', function (e) {
-        e.preventDefault();
-        var action = this.getAttribute('data-action');
-        var target = this.getAttribute('data-target');
-
-        if (target === 'adults') {
-          if (action === 'inc' && state.adults < 10) state.adults++;
-          if (action === 'dec' && state.adults > 1)  state.adults--;
-          if (countAdultsEl) countAdultsEl.textContent = state.adults;
-        } else if (target === 'children') {
-          if (action === 'inc' && state.children < 8) state.children++;
-          if (action === 'dec' && state.children > 0) state.children--;
-          if (countChildrenEl) countChildrenEl.textContent = state.children;
-        } else if (target === 'rooms') {
-          if (action === 'inc' && state.rooms < 5) state.rooms++;
-          if (action === 'dec' && state.rooms > 1) state.rooms--;
-          if (countRoomsEl) countRoomsEl.textContent = state.rooms;
-        }
-      });
-    });
-
-    if (confirmWho) {
-      confirmWho.addEventListener('click', function (e) {
-        e.preventDefault();
-        updateGuestsSummary();
-        closeAllDropdowns();
-      });
-    }
-
-    // Dropdown Open/Close
-    function closeAllDropdowns() {
-      Object.keys(popups).forEach(function (k) {
-        if (popups[k]) popups[k].classList.add('hidden');
-      });
-    }
-
-    function openDropdown(targetKey) {
-      var targetPopup = popups[targetKey];
-      if (!targetPopup) return;
-      var isHidden = targetPopup.classList.contains('hidden');
-      closeAllDropdowns();
-      if (isHidden) {
-        targetPopup.classList.remove('hidden');
+      function formatDateDisplay(d) {
+        var day = String(d.getDate()).padStart(2, '0');
+        var month = monthsPT[d.getMonth()];
+        return day + ' ' + month;
       }
-    }
 
-    var triggers = engine.querySelectorAll('.vbl-field-trigger');
-    triggers.forEach(function (trig) {
-      trig.addEventListener('click', function (e) {
-        e.stopPropagation();
-        var targetKey = this.getAttribute('data-target');
-        openDropdown(targetKey);
-      });
-    });
-
-    var closeButtons = engine.querySelectorAll('.vbl-close-popup');
-    closeButtons.forEach(function (btn) {
-      btn.addEventListener('click', function (e) {
-        e.stopPropagation();
-        closeAllDropdowns();
-      });
-    });
-
-    // Close when clicking outside
-    document.addEventListener('click', function (e) {
-      if (!engine.contains(e.target)) {
-        closeAllDropdowns();
+      function formatDateMirai(d) {
+        var day = String(d.getDate()).padStart(2, '0');
+        var month = String(d.getMonth() + 1).padStart(2, '0');
+        var year = d.getFullYear();
+        return day + '/' + month + '/' + year;
       }
-    });
 
-    // Stop propagation inside popups
-    Object.keys(popups).forEach(function (k) {
-      if (popups[k]) {
-        popups[k].addEventListener('click', function (e) {
-          e.stopPropagation();
-        });
+      function calcNights() {
+        if (!state.checkin || !state.checkout) return 1;
+        var diff = Math.round((state.checkout - state.checkin) / (1000 * 60 * 60 * 24));
+        return diff > 0 ? diff : 1;
       }
-    });
 
-    // Promo code: keep desktop/mobile inputs in sync
-    var promoInputs = engine.querySelectorAll('.vbl-promo-input');
-    promoInputs.forEach(function (inp) {
-      inp.addEventListener('input', function () {
-        promoInputs.forEach(function (other) {
-          if (other !== inp) other.value = inp.value;
-        });
-      });
-      inp.addEventListener('keydown', function (ev) {
-        if (ev.key === 'Enter') {
-          ev.preventDefault();
-          var b = engine.querySelector('.vbl-search-submit');
-          if (b) b.click();
-        }
-      });
-    });
+      function updateNightsDisplay() {
+        if (!nightsCountEl) return;
+        var n = calcNights();
+        nightsCountEl.textContent = n === 1 ? '1 Noite' : n + ' Noites';
+      }
 
-    // Submit / Pesquisar Redirect to Mirai Dispatcher
-    var submitBtns = engine.querySelectorAll('.vbl-search-submit');
-    submitBtns.forEach(function (btn) {
-      btn.addEventListener('click', function (e) {
-        e.preventDefault();
+      function updateDatesSummary() {
         if (!state.checkin || !state.checkout) return;
+        var text = formatDateDisplay(state.checkin) + ' — ' + formatDateDisplay(state.checkout);
+        datesDisplayEls.forEach(function (el) {
+          el.textContent = text;
+        });
+      }
 
-        var checkinStr = formatDateMirai(state.checkin);
-        var nights = calcNights();
+      function updateGuestsSummary() {
+        var parts = [];
+        parts.push(state.adults === 1 ? '1 adulto' : state.adults + ' adultos');
+        if (state.children > 0) {
+          parts.push(state.children === 1 ? '1 criança' : state.children + ' crianças');
+        }
+        var guestsStr = parts.join(', ');
+        var roomsStr = state.rooms === 1 ? '1 quarto' : state.rooms + ' quartos';
+        var text = guestsStr + ' · ' + roomsStr;
+        guestsDisplayEls.forEach(function (el) {
+          el.textContent = text;
+        });
+      }
 
-        // Build Base64 JSON array expected by Mirai rates: [{"adults":2,"children":[]}]
-        var roomsArr = [];
-        var adultsPerRoom = Math.max(1, Math.floor(state.adults / state.rooms));
-        var extraAdults = state.adults % state.rooms;
-        for (var r = 0; r < state.rooms; r++) {
-          var roomAdults = adultsPerRoom + (r < extraAdults ? 1 : 0);
-          var roomChildren = [];
-          if (r === 0 && state.children > 0) {
-            for (var c = 0; c < state.children; c++) {
-              roomChildren.push(10);
+      // Initialize Dates (Check-in = today + 7 days, Check-out = checkin + 2 nights)
+      var today = new Date();
+      var defaultIn = new Date(today);
+      defaultIn.setDate(today.getDate() + 7);
+      defaultIn.setHours(0, 0, 0, 0);
+
+      var defaultOut = new Date(defaultIn);
+      defaultOut.setDate(defaultIn.getDate() + 2);
+      defaultOut.setHours(0, 0, 0, 0);
+
+      state.checkin = defaultIn;
+      state.checkout = defaultOut;
+
+      if (checkinInput && checkoutInput) {
+        var minDateStr = formatDateISO(today);
+        checkinInput.min = minDateStr;
+        checkinInput.value = formatDateISO(defaultIn);
+
+        var minOut = new Date(defaultIn);
+        minOut.setDate(defaultIn.getDate() + 1);
+        checkoutInput.min = formatDateISO(minOut);
+        checkoutInput.value = formatDateISO(defaultOut);
+
+        updateNightsDisplay();
+        updateDatesSummary();
+
+        checkinInput.addEventListener('change', function () {
+          var parts = this.value.split('-');
+          if (parts.length === 3) {
+            state.checkin = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10));
+            var nextDay = new Date(state.checkin);
+            nextDay.setDate(state.checkin.getDate() + 1);
+            checkoutInput.min = formatDateISO(nextDay);
+
+            if (!state.checkout || state.checkout <= state.checkin) {
+              state.checkout = new Date(state.checkin);
+              state.checkout.setDate(state.checkin.getDate() + 2);
+              checkoutInput.value = formatDateISO(state.checkout);
             }
+            updateNightsDisplay();
           }
-          roomsArr.push({
-            adults: roomAdults,
-            children: roomChildren
+        });
+
+        checkoutInput.addEventListener('change', function () {
+          var parts = this.value.split('-');
+          if (parts.length === 3) {
+            state.checkout = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10));
+            if (state.checkin && state.checkout <= state.checkin) {
+              state.checkout = new Date(state.checkin);
+              state.checkout.setDate(state.checkin.getDate() + 1);
+              this.value = formatDateISO(state.checkout);
+            }
+            updateNightsDisplay();
+          }
+        });
+      }
+
+      if (confirmDates) {
+        confirmDates.addEventListener('click', function (e) {
+          e.preventDefault();
+          updateDatesSummary();
+          closeAllDropdowns();
+        });
+      }
+
+      // Hotel Selection (Only if hotel options exist in this engine)
+      var hotelButtons = engine.querySelectorAll('.vbl-hotel-opt');
+
+      function updateHotelActiveOption() {
+        hotelButtons.forEach(function (btn) {
+          var hName = btn.getAttribute('data-hotel-name') || '';
+          if (hName.toLowerCase() === state.hotelName.toLowerCase()) {
+            btn.classList.add('bg-white/15');
+          } else {
+            btn.classList.remove('bg-white/15');
+          }
+        });
+      }
+      if (hotelButtons.length) {
+        updateHotelActiveOption();
+      }
+
+      hotelButtons.forEach(function (btn) {
+        btn.addEventListener('click', function (e) {
+          e.preventDefault();
+          state.hotelName     = this.getAttribute('data-hotel-name') || 'todos os hotéis';
+          state.chainId       = this.getAttribute('data-chain-id') || '501671';
+          state.chainSelector = this.getAttribute('data-chain-selector') || '';
+          state.hotelId       = this.getAttribute('data-hotel-id') || '';
+          state.hotelIds      = this.getAttribute('data-hotel-ids') || '';
+
+          hotelDisplayEls.forEach(function (el) {
+            el.textContent = state.hotelName;
+          });
+
+          updateHotelActiveOption();
+          closeAllDropdowns();
+        });
+      });
+
+      // Guest Steppers
+      var counterBtns = engine.querySelectorAll('.vbl-counter-btn');
+      counterBtns.forEach(function (btn) {
+        btn.addEventListener('click', function (e) {
+          e.preventDefault();
+          var action = this.getAttribute('data-action');
+          var target = this.getAttribute('data-target');
+
+          if (target === 'adults') {
+            if (action === 'inc' && state.adults < 10) state.adults++;
+            if (action === 'dec' && state.adults > 1)  state.adults--;
+            if (countAdultsEl) countAdultsEl.textContent = state.adults;
+          } else if (target === 'children') {
+            if (action === 'inc' && state.children < 8) state.children++;
+            if (action === 'dec' && state.children > 0) state.children--;
+            if (countChildrenEl) countChildrenEl.textContent = state.children;
+          } else if (target === 'rooms') {
+            if (action === 'inc' && state.rooms < 5) state.rooms++;
+            if (action === 'dec' && state.rooms > 1) state.rooms--;
+            if (countRoomsEl) countRoomsEl.textContent = state.rooms;
+          }
+        });
+      });
+
+      if (confirmWho) {
+        confirmWho.addEventListener('click', function (e) {
+          e.preventDefault();
+          updateGuestsSummary();
+          closeAllDropdowns();
+        });
+      }
+
+      // Dropdown Open/Close
+      function closeAllDropdowns() {
+        Object.keys(popups).forEach(function (k) {
+          if (popups[k]) popups[k].classList.add('hidden');
+        });
+      }
+
+      function openDropdown(targetKey) {
+        var targetPopup = popups[targetKey];
+        if (!targetPopup) return;
+        var isHidden = targetPopup.classList.contains('hidden');
+        closeAllDropdowns();
+        if (isHidden) {
+          targetPopup.classList.remove('hidden');
+        }
+      }
+
+      var triggers = engine.querySelectorAll('.vbl-field-trigger');
+      triggers.forEach(function (trig) {
+        trig.addEventListener('click', function (e) {
+          e.stopPropagation();
+          var targetKey = this.getAttribute('data-target');
+          openDropdown(targetKey);
+        });
+      });
+
+      var closeButtons = engine.querySelectorAll('.vbl-close-popup');
+      closeButtons.forEach(function (btn) {
+        btn.addEventListener('click', function (e) {
+          e.stopPropagation();
+          closeAllDropdowns();
+        });
+      });
+
+      // Close when clicking outside this engine
+      document.addEventListener('click', function (e) {
+        if (!engine.contains(e.target)) {
+          closeAllDropdowns();
+        }
+      });
+
+      // Stop propagation inside popups
+      Object.keys(popups).forEach(function (k) {
+        if (popups[k]) {
+          popups[k].addEventListener('click', function (e) {
+            e.stopPropagation();
           });
         }
-        var partiesB64 = btoa(JSON.stringify(roomsArr));
-
-        var selector = state.chainSelector || '27540';
-        var hotelId = state.hotelId || '';
-        var hotelIds = state.hotelId ? '' : (state.hotelIds || '');
-
-        var htmlLang = document.documentElement.lang || 'pt';
-        var lang = htmlLang.substring(0, 2).toLowerCase();
-        if (lang !== 'pt' && lang !== 'en' && lang !== 'de' && lang !== 'es') {
-          lang = 'pt';
-        }
-
-        var url = 'https://reservation.mirai.com/XMAS/reservation/miraiFrontDispatcher.htm'
-          + '?idchain=' + encodeURIComponent(state.chainId)
-          + '&chainSelectorValue=' + encodeURIComponent(selector)
-          + '&checkin=' + encodeURIComponent(checkinStr)
-          + '&nights=' + encodeURIComponent(nights)
-          + '&parties=' + encodeURIComponent(partiesB64)
-          + '&lang=' + encodeURIComponent(lang);
-
-        if (hotelId) {
-          url += '&idtokenprovider=' + encodeURIComponent(hotelId);
-        } else if (hotelIds) {
-          url += '&hotelIds=' + encodeURIComponent(hotelIds);
-        }
-        url += '&type=chain';
-
-        var promoCode = '';
-        promoInputs.forEach(function (inp) {
-          if (!promoCode && inp.value.trim()) promoCode = inp.value.trim();
-        });
-        if (promoCode) {
-          url += '&clientCode=' + encodeURIComponent(promoCode);
-        }
-
-        window.location.href = url;
       });
-    });
+
+      // Promo code: keep inputs synchronized in this engine
+      var promoInputs = engine.querySelectorAll('.vbl-promo-input');
+      promoInputs.forEach(function (inp) {
+        inp.addEventListener('input', function () {
+          promoInputs.forEach(function (other) {
+            if (other !== inp) other.value = inp.value;
+          });
+        });
+        inp.addEventListener('keydown', function (ev) {
+          if (ev.key === 'Enter') {
+            ev.preventDefault();
+            var b = engine.querySelector('.vbl-search-submit');
+            if (b) b.click();
+          }
+        });
+      });
+
+      // Submit / Pesquisar Redirect to Mirai Dispatcher
+      var submitBtns = engine.querySelectorAll('.vbl-search-submit');
+      submitBtns.forEach(function (btn) {
+        btn.addEventListener('click', function (e) {
+          e.preventDefault();
+          if (!state.checkin || !state.checkout) return;
+
+          var checkinStr = formatDateMirai(state.checkin);
+          var nights = calcNights();
+
+          // Build Base64 JSON array expected by Mirai rates: [{"adults":2,"children":[]}]
+          var roomsArr = [];
+          var adultsPerRoom = Math.max(1, Math.floor(state.adults / state.rooms));
+          var extraAdults = state.adults % state.rooms;
+          for (var r = 0; r < state.rooms; r++) {
+            var roomAdults = adultsPerRoom + (r < extraAdults ? 1 : 0);
+            var roomChildren = [];
+            if (r === 0 && state.children > 0) {
+              for (var c = 0; c < state.children; c++) {
+                roomChildren.push(10);
+              }
+            }
+            roomsArr.push({
+              adults: roomAdults,
+              children: roomChildren
+            });
+          }
+          var partiesB64 = btoa(JSON.stringify(roomsArr));
+
+          var selector = state.chainSelector || '27540';
+          var hotelId = state.hotelId || '';
+          var hotelIds = state.hotelId ? '' : (state.hotelIds || '');
+
+          var htmlLang = document.documentElement.lang || 'pt';
+          var lang = htmlLang.substring(0, 2).toLowerCase();
+          if (lang !== 'pt' && lang !== 'en' && lang !== 'de' && lang !== 'es') {
+            lang = 'pt';
+          }
+
+          var url = 'https://reservation.mirai.com/XMAS/reservation/miraiFrontDispatcher.htm'
+            + '?idchain=' + encodeURIComponent(state.chainId)
+            + '&chainSelectorValue=' + encodeURIComponent(selector)
+            + '&checkin=' + encodeURIComponent(checkinStr)
+            + '&nights=' + encodeURIComponent(nights)
+            + '&parties=' + encodeURIComponent(partiesB64)
+            + '&lang=' + encodeURIComponent(lang);
+
+          if (hotelId) {
+            url += '&idtokenprovider=' + encodeURIComponent(hotelId);
+          } else if (hotelIds) {
+            url += '&hotelIds=' + encodeURIComponent(hotelIds);
+          }
+          url += '&type=chain';
+
+          var promoCode = '';
+          promoInputs.forEach(function (inp) {
+            if (!promoCode && inp.value.trim()) promoCode = inp.value.trim();
+          });
+          if (promoCode) {
+            url += '&clientCode=' + encodeURIComponent(promoCode);
+          }
+
+          window.location.href = url;
+        });
+      });
+    }
   })();
 
 })();

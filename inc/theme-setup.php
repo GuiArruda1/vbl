@@ -250,6 +250,102 @@ function vbl_footer_nav() {
     }
 }
 
+/* ========================================
+   Mirai Booking Helpers & Mappings
+   ======================================== */
+/**
+ * Retorna os dados oficiais da Mirai para cada hotel da rede
+ */
+function vbl_get_mirai_hotels() {
+    return array(
+        'funchal' => array(
+            'slug'           => 'funchal',
+            'name'           => 'Vila Baleira Funchal',
+            'short_name'     => 'Funchal',
+            'chain_selector' => '23741',
+            'hotel_id'       => '100377468',
+            'location'       => 'Funchal',
+        ),
+        'residence' => array(
+            'slug'           => 'residence',
+            'name'           => 'Vila Baleira Residence',
+            'short_name'     => 'Residence',
+            'chain_selector' => '65914',
+            'hotel_id'       => '100380388',
+            'location'       => '',
+        ),
+        'porto-santo' => array(
+            'slug'           => 'porto-santo',
+            'name'           => 'Vila Baleira Porto Santo All Inclusive',
+            'short_name'     => 'Porto Santo',
+            'chain_selector' => '23740',
+            'hotel_id'       => '100377467',
+            'location'       => 'Porto Santo',
+        ),
+        'village' => array(
+            'slug'           => 'village',
+            'name'           => 'Vila Baleira Village',
+            'short_name'     => 'Village',
+            'chain_selector' => '51045',
+            'hotel_id'       => '100379257',
+            'location'       => 'Porto Santo',
+        ),
+        'suites' => array(
+            'slug'           => 'suites',
+            'name'           => 'Vila Baleira Suites',
+            'short_name'     => 'Suites',
+            'chain_selector' => '27567',
+            'hotel_id'       => '100377609',
+            'location'       => 'Porto Santo',
+        ),
+    );
+}
+
+/**
+ * Resolve a configuração Mirai para um hotel específico por Post ID, Objeto ou Nome
+ */
+function vbl_resolve_hotel_mirai( $hotel_ref = 0 ) {
+    $hotels = vbl_get_mirai_hotels();
+    $name = '';
+    $slug = '';
+
+    if ( is_numeric( $hotel_ref ) && $hotel_ref > 0 ) {
+        $name = (string) get_the_title( $hotel_ref );
+        $slug = (string) get_post_field( 'post_name', $hotel_ref );
+        $acf_name = function_exists( 'vbl_field' ) ? vbl_field( 'vbl_hotel_name', $hotel_ref ) : '';
+        if ( ! empty( $acf_name ) ) {
+            $name .= ' ' . $acf_name;
+        }
+    } elseif ( is_string( $hotel_ref ) ) {
+        $name = $hotel_ref;
+        $slug = sanitize_title( $hotel_ref );
+    } elseif ( is_object( $hotel_ref ) && isset( $hotel_ref->ID ) ) {
+        return vbl_resolve_hotel_mirai( $hotel_ref->ID );
+    }
+
+    $haystack = mb_strtolower( $name . ' ' . $slug );
+
+    if ( strpos( $haystack, 'residence' ) !== false ) {
+        return $hotels['residence'];
+    }
+    if ( strpos( $haystack, 'suite' ) !== false ) {
+        return $hotels['suites'];
+    }
+    if ( strpos( $haystack, 'village' ) !== false ) {
+        return $hotels['village'];
+    }
+    if ( strpos( $haystack, 'funchal' ) !== false ) {
+        return $hotels['funchal'];
+    }
+    if ( strpos( $haystack, 'porto' ) !== false || strpos( $haystack, 'santo' ) !== false ) {
+        return $hotels['porto-santo'];
+    }
+
+    // Default Porto Santo
+    return $hotels['porto-santo'];
+}
+
+
 
 
 

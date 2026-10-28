@@ -234,7 +234,7 @@ $frase2_desc  = vbl_field( 'vbl_frase2_desc', false, 'Deixe-se envolver pela bel
 
       <!-- ====== DROPDOWNS POPUPS ====== -->
       <!-- 1. Dropdown Onde -->
-      <div id="vblDropdownWhere" class="vbl-booking-popup font-body hidden absolute bottom-[calc(100%+12px)] left-0 w-full sm:w-[380px] bg-black/60 backdrop-blur-md border border-white/60 shadow-[0_20px_50px_rgba(0,0,0,0.5)] p-5 text-white z-50 rounded-none">
+      <div id="vblDropdownWhere" class="vbl-popup-where vbl-booking-popup font-body hidden absolute bottom-[calc(100%+12px)] left-0 w-full sm:w-[380px] bg-black/60 backdrop-blur-md border border-white/60 shadow-[0_20px_50px_rgba(0,0,0,0.5)] p-5 text-white z-50 rounded-none">
         <div class="flex items-center justify-between mb-3 pb-2 border-b border-white/20">
           <span class="text-[11px] uppercase tracking-[1px] text-white/70 font-medium">Selecione o Hotel / Destino</span>
           <button type="button" class="vbl-close-popup text-white/60 hover:text-white text-lg leading-none cursor-pointer" aria-label="Fechar">&times;</button>
@@ -262,7 +262,7 @@ $frase2_desc  = vbl_field( 'vbl_frase2_desc', false, 'Deixe-se envolver pela bel
       </div>
 
       <!-- 2. Dropdown Quando (Datas) -->
-      <div id="vblDropdownWhen" class="vbl-booking-popup font-body hidden absolute bottom-[calc(100%+12px)] left-0 xl:left-[24%] w-full sm:w-[400px] bg-black/60 backdrop-blur-md border border-white/60 shadow-[0_20px_50px_rgba(0,0,0,0.5)] p-5 text-white z-50 rounded-none">
+      <div id="vblDropdownWhen" class="vbl-popup-when vbl-booking-popup font-body hidden absolute bottom-[calc(100%+12px)] left-0 xl:left-[24%] w-full sm:w-[400px] bg-black/60 backdrop-blur-md border border-white/60 shadow-[0_20px_50px_rgba(0,0,0,0.5)] p-5 text-white z-50 rounded-none">
         <div class="flex items-center justify-between mb-4 pb-2 border-b border-white/20">
           <span class="text-[11px] uppercase tracking-[1px] text-white/70 font-medium">Selecione as Datas da Estadia</span>
           <button type="button" class="vbl-close-popup text-white/60 hover:text-white text-lg leading-none cursor-pointer" aria-label="Fechar">&times;</button>
@@ -270,21 +270,21 @@ $frase2_desc  = vbl_field( 'vbl_frase2_desc', false, 'Deixe-se envolver pela bel
         <div class="grid grid-cols-2 gap-3 mb-4">
           <div class="flex flex-col gap-1.5">
             <label for="vblCheckinInput" class="text-[10px] uppercase tracking-[1px] text-white/70">Check-in (Entrada)</label>
-            <input type="date" id="vblCheckinInput" class="bg-white/5 border border-white/40 text-white text-[13px] px-3 py-2 rounded-none outline-none focus:border-white focus:bg-white/10 transition-colors w-full cursor-pointer [color-scheme:dark]">
+            <input type="date" id="vblCheckinInput" class="vbl-checkin-input bg-white/5 border border-white/40 text-white text-[13px] px-3 py-2 rounded-none outline-none focus:border-white focus:bg-white/10 transition-colors w-full cursor-pointer [color-scheme:dark]">
           </div>
           <div class="flex flex-col gap-1.5">
             <label for="vblCheckoutInput" class="text-[10px] uppercase tracking-[1px] text-white/70">Check-out (Saída)</label>
-            <input type="date" id="vblCheckoutInput" class="bg-white/5 border border-white/40 text-white text-[13px] px-3 py-2 rounded-none outline-none focus:border-white focus:bg-white/10 transition-colors w-full cursor-pointer [color-scheme:dark]">
+            <input type="date" id="vblCheckoutInput" class="vbl-checkout-input bg-white/5 border border-white/40 text-white text-[13px] px-3 py-2 rounded-none outline-none focus:border-white focus:bg-white/10 transition-colors w-full cursor-pointer [color-scheme:dark]">
           </div>
         </div>
         <div class="flex items-center justify-between pt-3 border-t border-white/20">
-          <span id="vblNightsCount" class="text-[11px] uppercase tracking-[1px] text-white/90 font-medium">2 Noites</span>
-          <button type="button" id="vblConfirmDates" class="px-5 py-2 border border-white text-white bg-transparent hover:bg-white/20 text-[11px] uppercase tracking-[1.2px] font-medium transition-colors cursor-pointer">Confirmar</button>
+          <span id="vblNightsCount" class="vbl-nights-count text-[11px] uppercase tracking-[1px] text-white/90 font-medium">2 Noites</span>
+          <button type="button" id="vblConfirmDates" class="vbl-confirm-dates px-5 py-2 border border-white text-white bg-transparent hover:bg-white/20 text-[11px] uppercase tracking-[1.2px] font-medium transition-colors cursor-pointer">Confirmar</button>
         </div>
       </div>
 
       <!-- 3. Dropdown Quem (Hóspedes & Quartos) -->
-      <div id="vblDropdownWho" class="vbl-booking-popup font-body hidden absolute bottom-[calc(100%+12px)] left-0 xl:left-[48%] w-full sm:w-[360px] bg-black/60 backdrop-blur-md border border-white/60 shadow-[0_20px_50px_rgba(0,0,0,0.5)] p-5 text-white z-50 rounded-none">
+      <div id="vblDropdownWho" class="vbl-popup-who vbl-booking-popup font-body hidden absolute bottom-[calc(100%+12px)] left-0 xl:left-[48%] w-full sm:w-[360px] bg-black/60 backdrop-blur-md border border-white/60 shadow-[0_20px_50px_rgba(0,0,0,0.5)] p-5 text-white z-50 rounded-none">
         <div class="flex items-center justify-between mb-4 pb-2 border-b border-white/20">
           <span class="text-[11px] uppercase tracking-[1px] text-white/70 font-medium">Hóspedes e Quartos</span>
           <button type="button" class="vbl-close-popup text-white/60 hover:text-white text-lg leading-none cursor-pointer" aria-label="Fechar">&times;</button>
@@ -298,7 +298,7 @@ $frase2_desc  = vbl_field( 'vbl_frase2_desc', false, 'Deixe-se envolver pela bel
             </div>
             <div class="flex items-center gap-3">
               <button type="button" class="vbl-counter-btn w-8 h-8 rounded-none border border-white/40 hover:border-white hover:bg-white/15 flex items-center justify-center text-white text-base transition-colors cursor-pointer select-none" data-action="dec" data-target="adults">−</button>
-              <span id="vblCountAdults" class="w-6 text-center text-[15px] font-medium">2</span>
+              <span id="vblCountAdults" class="vbl-count-adults w-6 text-center text-[15px] font-medium">2</span>
               <button type="button" class="vbl-counter-btn w-8 h-8 rounded-none border border-white/40 hover:border-white hover:bg-white/15 flex items-center justify-center text-white text-base transition-colors cursor-pointer select-none" data-action="inc" data-target="adults">+</button>
             </div>
           </div>
@@ -310,7 +310,7 @@ $frase2_desc  = vbl_field( 'vbl_frase2_desc', false, 'Deixe-se envolver pela bel
             </div>
             <div class="flex items-center gap-3">
               <button type="button" class="vbl-counter-btn w-8 h-8 rounded-none border border-white/40 hover:border-white hover:bg-white/15 flex items-center justify-center text-white text-base transition-colors cursor-pointer select-none" data-action="dec" data-target="children">−</button>
-              <span id="vblCountChildren" class="w-6 text-center text-[15px] font-medium">0</span>
+              <span id="vblCountChildren" class="vbl-count-children w-6 text-center text-[15px] font-medium">0</span>
               <button type="button" class="vbl-counter-btn w-8 h-8 rounded-none border border-white/40 hover:border-white hover:bg-white/15 flex items-center justify-center text-white text-base transition-colors cursor-pointer select-none" data-action="inc" data-target="children">+</button>
             </div>
           </div>
@@ -322,13 +322,13 @@ $frase2_desc  = vbl_field( 'vbl_frase2_desc', false, 'Deixe-se envolver pela bel
             </div>
             <div class="flex items-center gap-3">
               <button type="button" class="vbl-counter-btn w-8 h-8 rounded-none border border-white/40 hover:border-white hover:bg-white/15 flex items-center justify-center text-white text-base transition-colors cursor-pointer select-none" data-action="dec" data-target="rooms">−</button>
-              <span id="vblCountRooms" class="w-6 text-center text-[15px] font-medium">1</span>
+              <span id="vblCountRooms" class="vbl-count-rooms w-6 text-center text-[15px] font-medium">1</span>
               <button type="button" class="vbl-counter-btn w-8 h-8 rounded-none border border-white/40 hover:border-white hover:bg-white/15 flex items-center justify-center text-white text-base transition-colors cursor-pointer select-none" data-action="inc" data-target="rooms">+</button>
             </div>
           </div>
         </div>
         <div class="flex justify-end pt-3 border-t border-white/20">
-          <button type="button" id="vblConfirmWho" class="px-5 py-2 border border-white text-white bg-transparent hover:bg-white/20 text-[11px] uppercase tracking-[1.2px] font-medium transition-colors cursor-pointer">Confirmar</button>
+          <button type="button" id="vblConfirmWho" class="vbl-confirm-who px-5 py-2 border border-white text-white bg-transparent hover:bg-white/20 text-[11px] uppercase tracking-[1.2px] font-medium transition-colors cursor-pointer">Confirmar</button>
         </div>
       </div>
 
