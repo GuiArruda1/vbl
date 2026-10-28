@@ -92,8 +92,31 @@ $comod_text     = vbl_field( 'vbl_quarto_comod_text', $post_id, 'Diam elit fauci
 if ( ! function_exists( 'vbl_get_quarto_icon_url' ) ) {
     function vbl_get_quarto_icon_url( $icone_key = '', $nome = '' ) {
         $base_uri = VBL_URI . '/assets/images/icons-quarto/';
+
+        // Se passar diretamente o ficheiro SVG
+        if ( ! empty( $icone_key ) && substr( $icone_key, -4 ) === '.svg' ) {
+            return $base_uri . $icone_key;
+        }
+
         $map = array(
             'varanda'             => 'varanda.svg',
+            'terraco_privado'     => 'varanda.svg',
+            'varanda_equipada'    => 'varanda.svg',
+            'cama'                => 'cama.svg',
+            'duas_camas'          => 'cama.svg',
+            'sofa'                => 'sofa.svg',
+            'sofa_cama'           => 'sofa.svg',
+            'sala'                => 'sala.svg',
+            'sala_de_estar'       => 'sala.svg',
+            'placa_inducao'       => 'placa_inducao.svg',
+            'microondas'          => 'microondas.svg',
+            'maquina_loica'       => 'maquina_loica.svg',
+            'frigorifico'         => 'frigorifico.svg',
+            'mini_frigo_fervedor' => 'frigorifico.svg',
+            'fervedor'            => 'fervedor.svg',
+            'chuveiro'            => 'banheira_com_duche.svg',
+            'secador_telefone'    => 'secador_de_cabelo.svg',
+            'wifi_tv'             => 'wifi.svg',
             'wifi'                => 'wifi.svg',
             'banheira_com_duche'  => 'banheira_com_duche.svg',
             'cofre'               => 'cofre.svg',
@@ -113,6 +136,30 @@ if ( ! function_exists( 'vbl_get_quarto_icon_url' ) ) {
         }
 
         $n = mb_strtolower( trim( $nome ) );
+        if ( strpos( $n, 'cama' ) !== false ) {
+            return $base_uri . 'cama.svg';
+        }
+        if ( strpos( $n, 'sofá' ) !== false || strpos( $n, 'sofa' ) !== false ) {
+            return $base_uri . 'sofa.svg';
+        }
+        if ( strpos( $n, 'sala' ) !== false ) {
+            return $base_uri . 'sala.svg';
+        }
+        if ( strpos( $n, 'indução' ) !== false || strpos( $n, 'inducao' ) !== false || strpos( $n, 'fogão' ) !== false || strpos( $n, 'placa' ) !== false ) {
+            return $base_uri . 'placa_inducao.svg';
+        }
+        if ( strpos( $n, 'micro-ondas' ) !== false || strpos( $n, 'microondas' ) !== false || strpos( $n, 'forno' ) !== false ) {
+            return $base_uri . 'microondas.svg';
+        }
+        if ( strpos( $n, 'loiça' ) !== false || strpos( $n, 'louça' ) !== false || strpos( $n, 'lavar loiça' ) !== false ) {
+            return $base_uri . 'maquina_loica.svg';
+        }
+        if ( strpos( $n, 'frigorífico' ) !== false || strpos( $n, 'frigorifico' ) !== false || strpos( $n, 'frigo' ) !== false ) {
+            return $base_uri . 'frigorifico.svg';
+        }
+        if ( strpos( $n, 'fervedor' ) !== false || strpos( $n, 'chaleira' ) !== false ) {
+            return $base_uri . 'fervedor.svg';
+        }
         if ( strpos( $n, 'varanda' ) !== false || strpos( $n, 'terraço' ) !== false || strpos( $n, 'balcony' ) !== false ) {
             return $base_uri . 'varanda.svg';
         }
@@ -154,22 +201,99 @@ if ( ! function_exists( 'vbl_get_quarto_icon_url' ) ) {
     }
 }
 
-$comodidades_list = vbl_field( 'vbl_quarto_comodidades_list', $post_id, array() );
-if ( empty( $comodidades_list ) || ! is_array( $comodidades_list ) ) {
-    $comodidades_list = array(
-        array( 'nome' => 'VARANDA',                  'icone' => 'varanda' ),
-        array( 'nome' => 'COFRE (GRÁTIS)',           'icone' => 'cofre' ),
-        array( 'nome' => 'SECADOR DE CABELO',        'icone' => 'secador_de_cabelo' ),
-        array( 'nome' => 'TELEVISÃO',                'icone' => 'televisao' ),
-        array( 'nome' => 'INTERNET WIFI (GRÁTIS)',   'icone' => 'wifi' ),
-        array( 'nome' => 'TOUCADOR',                 'icone' => 'toucador' ),
-        array( 'nome' => 'TELEFONE',                 'icone' => 'phone' ),
-        array( 'nome' => 'CHÃO DE MOSAICO',          'icone' => 'chao_de_mosaico' ),
-        array( 'nome' => 'BANHEIRA COM DUCHE',       'icone' => 'banheira_com_duche' ),
-        array( 'nome' => 'AR CONDICIONADO',          'icone' => 'ar_condicionado' ),
-        array( 'nome' => 'AMENIDADES DE BANHO',      'icone' => 'amenidades_de_banho' ),
-        array( 'nome' => 'BIDÉ',                     'icone' => 'bide' ),
-    );
+$amenities_catalog  = function_exists( 'vbl_get_quarto_amenities_catalog' ) ? vbl_get_quarto_amenities_catalog() : array();
+$selected_amenities = vbl_field( 'vbl_quarto_amenities', $post_id, array() );
+
+// Se ainda não tiver sido gravado na base de dados, usa pré-definição com base no quarto/slug
+if ( empty( $selected_amenities ) || ! is_array( $selected_amenities ) ) {
+    $q_slug  = get_post_field( 'post_name', $post_id );
+    $q_title = mb_strtolower( get_the_title( $post_id ) );
+
+    if ( $post_id == 587 || strpos( $q_slug, 'vila' ) !== false || strpos( $q_title, 'vila' ) !== false ) {
+        $selected_amenities = array(
+            'terraco_privado',
+            'sala_de_estar',
+            'sofa_cama',
+            'placa_inducao',
+            'microondas',
+            'maquina_loica',
+            'mini_frigo_fervedor',
+            'ar_condicionado',
+            'wifi_tv',
+            'chuveiro',
+            'secador_telefone',
+        );
+    } elseif ( $post_id == 586 || strpos( $q_slug, 'suite' ) !== false || strpos( $q_title, 'suite' ) !== false ) {
+        $selected_amenities = array(
+            'varanda_equipada',
+            'duas_camas',
+            'sofa_cama',
+            'ar_condicionado',
+            'wifi_tv',
+            'mini_frigo_fervedor',
+            'chuveiro',
+            'secador_telefone',
+        );
+    } elseif ( $post_id == 585 || strpos( $q_slug, 'deluxe' ) !== false || strpos( $q_title, 'deluxe' ) !== false || strpos( $q_slug, 'twin' ) !== false || strpos( $q_title, 'twin' ) !== false ) {
+        $selected_amenities = array(
+            'varanda_equipada',
+            'duas_camas',
+            'ar_condicionado',
+            'wifi_tv',
+            'mini_frigo_fervedor',
+            'chuveiro',
+            'secador_telefone',
+        );
+    }
+}
+
+$comodidades_list = array();
+if ( ! empty( $selected_amenities ) && is_array( $selected_amenities ) ) {
+    foreach ( $selected_amenities as $skey ) {
+        if ( isset( $amenities_catalog[ $skey ] ) ) {
+            $comodidades_list[] = array(
+                'nome'  => $amenities_catalog[ $skey ]['label'],
+                'icone' => $amenities_catalog[ $skey ]['icon'],
+            );
+        }
+    }
+}
+
+// Suporte a comodidades adicionais por textarea (opcional)
+$custom_amenities_raw = vbl_field( 'vbl_quarto_amenities_custom', $post_id, '' );
+if ( ! empty( $custom_amenities_raw ) ) {
+    $c_lines = array_filter( array_map( 'trim', explode( "\n", $custom_amenities_raw ) ) );
+    foreach ( $c_lines as $cline ) {
+        if ( ! empty( $cline ) ) {
+            $comodidades_list[] = array(
+                'nome'  => $cline,
+                'icone' => 'auto',
+            );
+        }
+    }
+}
+
+// Fallback legado se ainda estiver vazio
+if ( empty( $comodidades_list ) ) {
+    $legacy_list = vbl_field( 'vbl_quarto_comodidades_list', $post_id, array() );
+    if ( ! empty( $legacy_list ) && is_array( $legacy_list ) ) {
+        $comodidades_list = $legacy_list;
+    } else {
+        $comodidades_list = array(
+            array( 'nome' => 'VARANDA',                  'icone' => 'varanda' ),
+            array( 'nome' => 'COFRE (GRÁTIS)',           'icone' => 'cofre' ),
+            array( 'nome' => 'SECADOR DE CABELO',        'icone' => 'secador_de_cabelo' ),
+            array( 'nome' => 'TELEVISÃO',                'icone' => 'televisao' ),
+            array( 'nome' => 'INTERNET WIFI (GRÁTIS)',   'icone' => 'wifi' ),
+            array( 'nome' => 'TOUCADOR',                 'icone' => 'toucador' ),
+            array( 'nome' => 'TELEFONE',                 'icone' => 'phone' ),
+            array( 'nome' => 'CHÃO DE MOSAICO',          'icone' => 'chao_de_mosaico' ),
+            array( 'nome' => 'BANHEIRA COM DUCHE',       'icone' => 'banheira_com_duche' ),
+            array( 'nome' => 'AR CONDICIONADO',          'icone' => 'ar_condicionado' ),
+            array( 'nome' => 'AMENIDADES DE BANHO',      'icone' => 'amenidades_de_banho' ),
+            array( 'nome' => 'BIDÉ',                     'icone' => 'bide' ),
+        );
+    }
 }
 
 // Banner Frase Final

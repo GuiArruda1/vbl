@@ -824,6 +824,12 @@ function vbl_register_acf_fields() {
     ) );
 
     /* ---- Single Quarto (CPT vbl_quarto) ---- */
+    $amenities_catalog = vbl_get_quarto_amenities_catalog();
+    $amenity_choices   = array();
+    foreach ( $amenities_catalog as $akey => $adata ) {
+        $amenity_choices[ $akey ] = $adata['label'];
+    }
+
     acf_add_local_field_group( array(
         'key'    => 'group_vbl_single_quarto',
         'title'  => 'Informações do Quarto',
@@ -876,44 +882,24 @@ function vbl_register_acf_fields() {
             array( 'key' => 'field_vbl_quarto_comod_title', 'label' => 'Título Comodidades', 'name' => 'vbl_quarto_comod_title', 'type' => 'text', 'default_value' => 'NISI ORCI LEO SED IN' ),
             array( 'key' => 'field_vbl_quarto_comod_text', 'label' => 'Texto Explicativo', 'name' => 'vbl_quarto_comod_text', 'type' => 'textarea', 'rows' => 3, 'default_value' => 'Mi lectus elit at adipiscing euismod gravida libero duis. Bibendum fusce imperdiet egestas amet nec. Sed ullamcorper eget euismod morbi ut egestas id proin posuere. In faucibus nec pellentesque interdum mauris sed tellus.' ),
             array(
-                'key'          => 'field_vbl_quarto_comodidades_list',
-                'label'        => 'Lista de Comodidades / Ícones',
-                'name'         => 'vbl_quarto_comodidades_list',
-                'type'         => 'repeater',
-                'instructions' => 'Selecione o ícone ou deixe em Automático para o sistema detetar pelo nome.',
-                'button_label' => 'Adicionar Comodidade',
-                'layout'       => 'table',
-                'sub_fields'   => array(
-                    array(
-                        'key'           => 'field_vbl_q_comod_icone',
-                        'label'         => 'Ícone',
-                        'name'          => 'icone',
-                        'type'          => 'select',
-                        'choices'       => array(
-                            'auto'                => '— Automático (detectar pelo nome) —',
-                            'varanda'             => 'Varanda',
-                            'wifi'                => 'Internet WiFi (Grátis)',
-                            'banheira_com_duche'  => 'Banheira com Duche',
-                            'cofre'               => 'Cofre (Grátis)',
-                            'toucador'            => 'Toucador',
-                            'ar_condicionado'     => 'Ar Condicionado',
-                            'secador_de_cabelo'   => 'Secador de Cabelo',
-                            'phone'               => 'Telefone',
-                            'amenidades_de_banho' => 'Amenidades de Banho',
-                            'televisao'           => 'Televisão',
-                            'chao_de_mosaico'     => 'Chão de Mosaico',
-                            'bide'                => 'Bidé',
-                        ),
-                        'default_value' => 'auto',
-                    ),
-                    array(
-                        'key'      => 'field_vbl_q_comod_nome',
-                        'label'    => 'Nome da Comodidade (Ex: VARANDA, INTERNET WIFI (GRÁTIS))',
-                        'name'     => 'nome',
-                        'type'     => 'text',
-                        'required' => 1,
-                    ),
-                ),
+                'key'           => 'field_vbl_quarto_amenities',
+                'label'         => 'Comodidades do Quarto (Assinale as incluídas)',
+                'name'          => 'vbl_quarto_amenities',
+                'type'          => 'checkbox',
+                'instructions'  => 'Assinale as comodidades e características pertencentes a este quarto. Cada item será apresentado com o seu respectivo ícone no frontend.',
+                'choices'       => $amenity_choices,
+                'default_value' => array(),
+                'layout'        => 'vertical',
+                'toggle'        => 1,
+                'return_format' => 'value',
+            ),
+            array(
+                'key'           => 'field_vbl_quarto_amenities_custom',
+                'label'         => 'Outras Comodidades Personalizadas (Opcional)',
+                'name'          => 'vbl_quarto_amenities_custom',
+                'type'          => 'textarea',
+                'instructions'  => 'Adicione outras comodidades não listadas acima (uma por linha). O sistema detectará o ícone automaticamente.',
+                'rows'          => 3,
             ),
 
             /* Tab: Frase Banner Final */
@@ -1335,4 +1321,178 @@ function vbl_register_acf_fields() {
     ) );
 }
 add_action( 'acf/init', 'vbl_register_acf_fields' );
+
+/**
+ * Catálogo mestre de Comodidades dos Quartos (Chave => [ Label, Ícone ])
+ */
+function vbl_get_quarto_amenities_catalog() {
+    return array(
+        'varanda_equipada'    => array(
+            'label' => 'Varanda equipada com mesa e cadeiras',
+            'icon'  => 'varanda.svg',
+        ),
+        'terraco_privado'     => array(
+            'label' => 'Terraço privado equipado com mesa e cadeiras',
+            'icon'  => 'varanda.svg',
+        ),
+        'duas_camas'          => array(
+            'label' => 'Duas camas',
+            'icon'  => 'cama.svg',
+        ),
+        'sofa_cama'           => array(
+            'label' => 'Sofá-cama',
+            'icon'  => 'sofa.svg',
+        ),
+        'sala_de_estar'       => array(
+            'label' => 'Sala de estar',
+            'icon'  => 'sala.svg',
+        ),
+        'ar_condicionado'     => array(
+            'label' => 'Ar condicionado',
+            'icon'  => 'ar_condicionado.svg',
+        ),
+        'wifi_tv'             => array(
+            'label' => 'Wi-Fi gratuito e Televisão',
+            'icon'  => 'wifi.svg',
+        ),
+        'mini_frigo_fervedor' => array(
+            'label' => 'Mini-frigorífico e fervedor de água',
+            'icon'  => 'frigorifico.svg',
+        ),
+        'chuveiro'            => array(
+            'label' => 'Chuveiro',
+            'icon'  => 'banheira_com_duche.svg',
+        ),
+        'secador_telefone'    => array(
+            'label' => 'Secador de cabelo e telefone',
+            'icon'  => 'secador_de_cabelo.svg',
+        ),
+        'placa_inducao'       => array(
+            'label' => 'Placa de indução',
+            'icon'  => 'placa_inducao.svg',
+        ),
+        'microondas'          => array(
+            'label' => 'Forno micro-ondas',
+            'icon'  => 'microondas.svg',
+        ),
+        'maquina_loica'       => array(
+            'label' => 'Máquina de lavar loiça',
+            'icon'  => 'maquina_loica.svg',
+        ),
+        'wifi'                => array(
+            'label' => 'Internet Wi-Fi (Grátis)',
+            'icon'  => 'wifi.svg',
+        ),
+        'televisao'           => array(
+            'label' => 'Televisão',
+            'icon'  => 'televisao.svg',
+        ),
+        'secador_de_cabelo'   => array(
+            'label' => 'Secador de cabelo',
+            'icon'  => 'secador_de_cabelo.svg',
+        ),
+        'telefone'            => array(
+            'label' => 'Telefone',
+            'icon'  => 'phone.svg',
+        ),
+        'varanda'             => array(
+            'label' => 'Varanda',
+            'icon'  => 'varanda.svg',
+        ),
+        'cofre'               => array(
+            'label' => 'Cofre (Grátis)',
+            'icon'  => 'cofre.svg',
+        ),
+        'toucador'            => array(
+            'label' => 'Toucador',
+            'icon'  => 'toucador.svg',
+        ),
+        'banheira_com_duche'  => array(
+            'label' => 'Banheira com duche',
+            'icon'  => 'banheira_com_duche.svg',
+        ),
+        'amenidades_de_banho' => array(
+            'label' => 'Amenidades de banho',
+            'icon'  => 'amenidades_de_banho.svg',
+        ),
+        'chao_de_mosaico'     => array(
+            'label' => 'Chão de mosaico',
+            'icon'  => 'chao_de_mosaico.svg',
+        ),
+        'bide'                => array(
+            'label' => 'Bidé',
+            'icon'  => 'bide.svg',
+        ),
+    );
+}
+
+/**
+ * Auto-popula as comodidades iniciais dos quartos com base na descrição fornecida
+ */
+function vbl_seed_quarto_amenities_meta() {
+    if ( get_option( 'vbl_quarto_amenities_seeded_v3' ) ) {
+        return;
+    }
+
+    $quartos = get_posts( array(
+        'post_type'      => 'vbl_quarto',
+        'posts_per_page' => -1,
+        'post_status'    => 'any',
+    ) );
+
+    if ( empty( $quartos ) ) {
+        return;
+    }
+
+    foreach ( $quartos as $quarto ) {
+        $slug  = $quarto->post_name;
+        $title = mb_strtolower( $quarto->post_title );
+        $id    = (int) $quarto->ID;
+
+        // Vilas – V1 Geminadas
+        if ( $id === 587 || strpos( $slug, 'vila' ) !== false || strpos( $title, 'vila' ) !== false ) {
+            update_post_meta( $quarto->ID, 'vbl_quarto_amenities', array(
+                'terraco_privado',
+                'sala_de_estar',
+                'sofa_cama',
+                'placa_inducao',
+                'microondas',
+                'maquina_loica',
+                'mini_frigo_fervedor',
+                'ar_condicionado',
+                'wifi_tv',
+                'chuveiro',
+                'secador_telefone',
+            ) );
+        }
+        // Suite Vista Mar
+        elseif ( $id === 586 || strpos( $slug, 'suite' ) !== false || strpos( $title, 'suite' ) !== false ) {
+            update_post_meta( $quarto->ID, 'vbl_quarto_amenities', array(
+                'varanda_equipada',
+                'duas_camas',
+                'sofa_cama',
+                'ar_condicionado',
+                'wifi_tv',
+                'mini_frigo_fervedor',
+                'chuveiro',
+                'secador_telefone',
+            ) );
+        }
+        // Twin Deluxe Vista Mar
+        elseif ( $id === 585 || strpos( $slug, 'deluxe' ) !== false || strpos( $title, 'deluxe' ) !== false || strpos( $slug, 'twin' ) !== false || strpos( $title, 'twin' ) !== false ) {
+            update_post_meta( $quarto->ID, 'vbl_quarto_amenities', array(
+                'varanda_equipada',
+                'duas_camas',
+                'ar_condicionado',
+                'wifi_tv',
+                'mini_frigo_fervedor',
+                'chuveiro',
+                'secador_telefone',
+            ) );
+        }
+    }
+
+    update_option( 'vbl_quarto_amenities_seeded_v3', 1 );
+}
+add_action( 'init', 'vbl_seed_quarto_amenities_meta' );
 
