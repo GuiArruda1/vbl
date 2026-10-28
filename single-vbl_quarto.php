@@ -45,6 +45,22 @@ if ( empty( $cta_desc ) || ! is_string( $cta_desc ) ) {
     $cta_desc = 'Garanta a sua estadia com as melhores condições e tarifas exclusivas no site oficial.';
 }
 
+// Carrossel de Outros Quartos (Configurado na Página Mãe do Hotel / Microsite)
+$rel_rooms_subtitle = $hotel_id ? vbl_field( 'vbl_hhotel_rel_rooms_subtitle', $hotel_id, 'ROOMS & SUITES' ) : 'ROOMS & SUITES';
+if ( empty( $rel_rooms_subtitle ) || ! is_string( $rel_rooms_subtitle ) ) {
+    $rel_rooms_subtitle = 'ROOMS & SUITES';
+}
+
+$rel_rooms_title = $hotel_id ? vbl_field( 'vbl_hhotel_rel_rooms_title', $hotel_id, 'AMET ET LEO NEQUE<br>LOREM IPSUM SIT' ) : 'AMET ET LEO NEQUE<br>LOREM IPSUM SIT';
+if ( empty( $rel_rooms_title ) || ! is_string( $rel_rooms_title ) ) {
+    $rel_rooms_title = 'AMET ET LEO NEQUE<br>LOREM IPSUM SIT';
+}
+
+$rel_rooms_desc = $hotel_id ? vbl_field( 'vbl_hhotel_rel_rooms_desc', $hotel_id, 'Gravida turpis posuere in mauris. Eget placerat pretium tempus pellentesque amet venenatis est viverra. Sed id condimentum eget amet augue pretium et leo integer. Neque eu ut vulputate nisi sed. Lorem ipsum dolor sit amet consectetur.' ) : 'Gravida turpis posuere in mauris. Eget placerat pretium tempus pellentesque amet venenatis est viverra. Sed id condimentum eget amet augue pretium et leo integer. Neque eu ut vulputate nisi sed. Lorem ipsum dolor sit amet consectetur.';
+if ( empty( $rel_rooms_desc ) || ! is_string( $rel_rooms_desc ) ) {
+    $rel_rooms_desc = 'Gravida turpis posuere in mauris. Eget placerat pretium tempus pellentesque amet venenatis est viverra. Sed id condimentum eget amet augue pretium et leo integer. Neque eu ut vulputate nisi sed. Lorem ipsum dolor sit amet consectetur.';
+}
+
 // Categoria & Detalhes
 $categoria = vbl_field( 'vbl_quarto_categoria', $post_id, 'SUITE' );
 $intro_desc = get_the_excerpt( $post_id );
@@ -551,13 +567,13 @@ $frase_line3 = vbl_field( 'vbl_quarto_frase_line3', $post_id, 'LACUS EGET UT SIT
       <!-- Cabeçalho Outros Quartos -->
       <div class="text-center mb-12 lg:mb-16 flex flex-col items-center">
         <span class="font-body text-[11px] xl:text-[12px] tracking-[2.5px] uppercase text-[#0da9a6] font-medium mb-3">
-          ROOMS & SUITES
+          <?php echo esc_html( $rel_rooms_subtitle ); ?>
         </span>
         <h2 class="font-display text-[40px] sm:text-[52px] lg:text-[64px] leading-[1.05] uppercase text-[#0d5257] font-normal mb-4">
-          AMET ET LEO NEQUE<br>LOREM IPSUM SIT
+          <?php echo wp_kses_post( $rel_rooms_title ); ?>
         </h2>
         <p class="font-body font-light text-[14px] text-black/70 max-w-[620px]">
-          Gravida turpis posuere in mauris. Eget placerat pretium tempus pellentesque amet venenatis est viverra. Sed id condimentum eget amet augue pretium et leo integer. Neque eu ut vulputate nisi sed. Lorem ipsum dolor sit amet consectetur.
+          <?php echo nl2br( esc_html( $rel_rooms_desc ) ); ?>
         </p>
       </div>
 

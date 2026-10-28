@@ -408,8 +408,17 @@ function vbl_register_acf_fields() {
             array( 'key' => 'field_vbl_hhome_nl_privacy', 'label' => 'Texto Política de Privacidade', 'name' => 'vbl_newsletter_privacy', 'type' => 'text', 'default_value' => 'Política de Privacidade.' ),
             array( 'key' => 'field_vbl_hhome_nl_privacy_url', 'label' => 'Link Política de Privacidade', 'name' => 'vbl_newsletter_privacy_url', 'type' => 'text', 'default_value' => '/politica-de-privacidade' ),
 
-            /* Tab: CTA Reservas (Quartos do Microsite) */
-            array( 'key' => 'field_vbl_hhome_tab_cta_reservas', 'label' => 'CTA Reservas (Quartos)', 'name' => '', 'type' => 'tab' ),
+            /* Tab: Páginas dos Quartos (Single) */
+            array( 'key' => 'field_vbl_hhome_tab_single_quartos', 'label' => 'Páginas dos Quartos (Single)', 'name' => '', 'type' => 'tab' ),
+            
+            // Secção 1: Banner de Reserva (CTA)
+            array(
+                'key'     => 'field_vbl_hhome_msg_cta',
+                'label'   => 'Banner de Reserva (CTA)',
+                'name'    => '',
+                'type'    => 'message',
+                'message' => '<strong>Banner de Reserva (CTA)</strong> exibido em todas as páginas de quartos individuais deste hotel.',
+            ),
             array(
                 'key'           => 'field_vbl_hhotel_cta_subtitle',
                 'label'         => '01. Subtítulo (2 a 4 palavras)',
@@ -434,6 +443,40 @@ function vbl_register_acf_fields() {
                 'rows'          => 3,
                 'instructions'  => 'Texto explicativo do banner de reserva exibido nos quartos deste hotel.',
                 'default_value' => 'Garanta a sua estadia com as melhores condições e tarifas exclusivas no site oficial.',
+            ),
+
+            // Secção 2: Carrossel Outros Quartos
+            array(
+                'key'     => 'field_vbl_hhome_msg_rel_rooms',
+                'label'   => 'Carrossel "Outros Quartos Relacionados"',
+                'name'    => '',
+                'type'    => 'message',
+                'message' => '<strong>Carrossel de Outros Quartos</strong> exibido no rodapé das páginas de quartos individuais deste hotel.',
+            ),
+            array(
+                'key'           => 'field_vbl_hhotel_rel_rooms_subtitle',
+                'label'         => 'Subtítulo do Carrossel',
+                'name'          => 'vbl_hhotel_rel_rooms_subtitle',
+                'type'          => 'text',
+                'instructions'  => 'Ex: ROOMS & SUITES.',
+                'default_value' => 'ROOMS & SUITES',
+            ),
+            array(
+                'key'           => 'field_vbl_hhotel_rel_rooms_title',
+                'label'         => 'Título do Carrossel',
+                'name'          => 'vbl_hhotel_rel_rooms_title',
+                'type'          => 'text',
+                'instructions'  => 'Ex: AMET ET LEO NEQUE&lt;br&gt;LOREM IPSUM SIT ou OUTROS QUARTOS &amp; SUITES.',
+                'default_value' => 'AMET ET LEO NEQUE<br>LOREM IPSUM SIT',
+            ),
+            array(
+                'key'           => 'field_vbl_hhotel_rel_rooms_desc',
+                'label'         => 'Descrição do Carrossel',
+                'name'          => 'vbl_hhotel_rel_rooms_desc',
+                'type'          => 'textarea',
+                'rows'          => 3,
+                'instructions'  => 'Texto introdutório antes dos slides de outros quartos.',
+                'default_value' => 'Gravida turpis posuere in mauris. Eget placerat pretium tempus pellentesque amet venenatis est viverra. Sed id condimentum eget amet augue pretium et leo integer. Neque eu ut vulputate nisi sed. Lorem ipsum dolor sit amet consectetur.',
             ),
         ),
         'location' => array(
