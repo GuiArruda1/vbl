@@ -19,6 +19,13 @@ function vbl_field( $field_name, $post_id = false, $default = '' ) {
             return $value;
         }
     }
+    $target_id = $post_id ? $post_id : get_the_ID();
+    if ( $target_id ) {
+        $meta_val = get_post_meta( $target_id, $field_name, true );
+        if ( $meta_val !== '' && $meta_val !== false && $meta_val !== null ) {
+            return $meta_val;
+        }
+    }
     $customizer_value = get_theme_mod( $field_name, '' );
     if ( $customizer_value !== '' && $customizer_value !== false ) {
         return $customizer_value;
@@ -658,19 +665,11 @@ function vbl_register_acf_fields() {
             array( 'key' => 'field_vbl_hhotel_tab_inst', 'label' => 'Instalações & Áreas Comuns', 'type' => 'tab' ),
             array( 'key' => 'field_vbl_hhotel_inst_subtitle', 'label' => 'Subtítulo', 'name' => 'vbl_hhotel_inst_subtitle', 'type' => 'text', 'default_value' => 'INSTALAÇÕES & ÁREAS COMUNS' ),
             array(
-                'key'          => 'field_vbl_hhotel_instalacoes',
-                'label'        => 'Lista de Instalações',
-                'name'         => 'vbl_hhotel_instalacoes',
-                'type'         => 'repeater',
-                'instructions' => 'Adicione as áreas comuns que aparecem no carrossel.',
-                'button_label' => 'Adicionar Instalação',
-                'layout'       => 'row',
-                'sub_fields'   => array(
-                    array( 'key' => 'field_vbl_hhotel_inst_title', 'label' => 'Nome da Instalação (Ex: RECEÇÃO)', 'name' => 'title', 'type' => 'text', 'required' => 1 ),
-                    array( 'key' => 'field_vbl_hhotel_inst_desc', 'label' => 'Descrição', 'name' => 'description', 'type' => 'textarea', 'rows' => 3 ),
-                    array( 'key' => 'field_vbl_hhotel_inst_image', 'label' => 'Fotografia Principal', 'name' => 'image', 'type' => 'image', 'return_format' => 'url', 'preview_size' => 'medium' ),
-                    array( 'key' => 'field_vbl_hhotel_inst_thumb', 'label' => 'Fotografia Miniatura', 'name' => 'thumb', 'type' => 'image', 'return_format' => 'url', 'preview_size' => 'thumbnail' ),
-                ),
+                'key'     => 'field_vbl_hhotel_inst_notice',
+                'label'   => 'Lista de Instalações & Áreas Comuns',
+                'name'    => '',
+                'type'    => 'message',
+                'message' => 'A gestão da lista de instalações, fotografias e textos deste hotel é feita na caixa <strong>"🏢 Instalações & Áreas Comuns deste Hotel (Carrossel)"</strong> (Meta Box nativa logo abaixo nesta página), com suporte a adicionar, reordenar por arrasto e upload de imagens sem necessidade de licença do ACF Pro.',
             ),
         ),
         'location' => array(
