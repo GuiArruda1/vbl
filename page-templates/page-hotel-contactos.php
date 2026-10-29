@@ -22,9 +22,9 @@ $hotel_tit = vbl_field( 'vbl_hct_title', false, 'ENTRAR EM<br>CONTACTO' );
 $morada   = vbl_field( 'vbl_hct_morada', false, "Sítio do Cabeço da Ponta, Apartado 243,\n9400-909 Porto Santo" );
 $telefone = vbl_field( 'vbl_hct_telefone', false, '+351 291 980 800' );
 $email    = vbl_field( 'vbl_hct_email', false, 'portosanto@vilabaleira.com' );
-$mapa_img = vbl_field( 'vbl_hct_mapa_img', false, vbl_img( 'contactos/mapa.webp' ) );
+$mapa_img = vbl_field( 'vbl_hct_mapa_img', false, vbl_img( 'contactos/mapa.jpg' ) );
 if ( empty( $mapa_img ) ) {
-    $mapa_img = vbl_img( 'contactos/mapa.webp' );
+    $mapa_img = vbl_img( 'contactos/mapa.jpg' );
 }
 
 // ACF Fields: Formulário
