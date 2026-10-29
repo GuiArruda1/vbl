@@ -22,10 +22,12 @@ $hotel_tit = vbl_field( 'vbl_hct_title', false, 'ENTRAR EM<br>CONTACTO' );
 $morada   = vbl_field( 'vbl_hct_morada', false, "Sítio do Cabeço da Ponta, Apartado 243,\n9400-909 Porto Santo" );
 $telefone = vbl_field( 'vbl_hct_telefone', false, '+351 291 980 800' );
 $email    = vbl_field( 'vbl_hct_email', false, 'portosanto@vilabaleira.com' );
-$mapa_img = vbl_field( 'vbl_hct_mapa_img', false, vbl_img( 'contactos/mapa.jpg' ) );
+$mapa_img   = vbl_field( 'vbl_hct_mapa_img', false, vbl_img( 'contactos/mapa.jpg' ) );
 if ( empty( $mapa_img ) ) {
     $mapa_img = vbl_img( 'contactos/mapa.jpg' );
 }
+$mapa_url   = vbl_field( 'vbl_hct_mapa_url', false, 'https://maps.google.com/?q=Vila+Baleira+Porto+Santo' );
+$mapa_embed = vbl_field( 'vbl_hct_mapa_embed', false, '' );
 
 // ACF Fields: Formulário
 $form_sub    = vbl_field( 'vbl_hct_form_sub', false, 'LOREM IPSUM DOLOR SIT AMET CONSECTETUR' );
@@ -53,22 +55,42 @@ $privacy_url = vbl_field( 'vbl_privacy_url', false, home_url( '/politica-de-priv
   <section class="w-full py-20 lg:py-32 bg-white">
     <div class="max-w-[1920px] mx-auto px-6 xl:px-[8.33%] grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">
       
-      <!-- Coluna Esquerda: Mapa Ilustrado com Pin -->
+      <!-- Coluna Esquerda: Mapa Ilustrado com Pin ou Google Maps Interativo -->
       <div class="lg:col-span-6 relative flex justify-start">
-        <div class="relative w-full aspect-[4/3] max-w-[620px] bg-[#93d4e8]/20 rounded-xs overflow-hidden flex items-center justify-center p-6 sm:p-10 shadow-xs">
-          <!-- Imagem do Mapa -->
-          <img src="<?php echo esc_url( $mapa_img ); ?>" alt="Localização no Porto Santo" class="w-full h-full object-contain">
-
-          <!-- Pin Ciano Decorativo Indicando a Localização -->
-          <div class="absolute top-[52%] left-[46%] -translate-x-1/2 -translate-y-1/2 flex flex-col items-center pointer-events-none">
-            <div class="w-6 h-6 rounded-full bg-[#0da9a6] border-2 border-white shadow-md flex items-center justify-center animate-pulse">
-              <div class="w-2 h-2 rounded-full bg-white"></div>
-            </div>
-            <span class="bg-white/95 backdrop-blur-xs text-[#0d5257] text-[9px] font-body uppercase tracking-wider px-2 py-0.5 rounded-xs shadow-xs mt-1 whitespace-nowrap font-medium">
-              Vila Baleira
-            </span>
+        <?php if ( ! empty( $mapa_embed ) ) : ?>
+          <div class="relative w-full aspect-[4/3] max-w-[620px] rounded-xs overflow-hidden shadow-xs bg-[#93d4e8]/20">
+            <?php if ( strpos( $mapa_embed, '<iframe' ) !== false ) : ?>
+              <div class="w-full h-full [&>iframe]:w-full [&>iframe]:h-full [&>iframe]:border-0">
+                <?php echo $mapa_embed; ?>
+              </div>
+            <?php else : ?>
+              <iframe src="<?php echo esc_url( $mapa_embed ); ?>" width="100%" height="100%" class="w-full h-full border-0" allowfullscreen="" loading="lazy"></iframe>
+            <?php endif; ?>
           </div>
-        </div>
+        <?php else : ?>
+          <div class="relative w-full aspect-[4/3] max-w-[620px] bg-[#93d4e8]/20 rounded-xs overflow-hidden flex items-center justify-center p-6 sm:p-10 shadow-xs group">
+            <!-- Imagem do Mapa -->
+            <?php if ( ! empty( $mapa_url ) ) : ?>
+            <a href="<?php echo esc_url( $mapa_url ); ?>" target="_blank" rel="noopener noreferrer" class="block w-full h-full" title="Abrir localização no Google Maps">
+            <?php endif; ?>
+
+              <img src="<?php echo esc_url( $mapa_img ); ?>" alt="Localização no Porto Santo" class="w-full h-full object-contain transition-transform duration-300 group-hover:scale-105">
+
+              <!-- Pin Ciano Decorativo Indicando a Localização -->
+              <div class="absolute top-[52%] left-[46%] -translate-x-1/2 -translate-y-1/2 flex flex-col items-center pointer-events-none">
+                <div class="w-6 h-6 rounded-full bg-[#0da9a6] border-2 border-white shadow-md flex items-center justify-center animate-pulse">
+                  <div class="w-2 h-2 rounded-full bg-white"></div>
+                </div>
+                <span class="bg-white/95 backdrop-blur-xs text-[#0d5257] text-[9px] font-body uppercase tracking-wider px-2 py-0.5 rounded-xs shadow-xs mt-1 whitespace-nowrap font-medium">
+                  Vila Baleira
+                </span>
+              </div>
+
+            <?php if ( ! empty( $mapa_url ) ) : ?>
+            </a>
+            <?php endif; ?>
+          </div>
+        <?php endif; ?>
       </div>
 
       <!-- Coluna Direita: Informações de Contacto -->
