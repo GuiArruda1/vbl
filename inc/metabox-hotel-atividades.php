@@ -77,6 +77,11 @@ add_action( 'admin_enqueue_scripts', 'vbl_hotel_atividades_admin_scripts' );
  * CSS partilhado para os repeaters de atividades
  */
 function vbl_hotel_atividades_shared_styles() {
+    static $printed = false;
+    if ( $printed ) {
+        return;
+    }
+    $printed = true;
     ?>
     <style>
         .vbl-rep-wrap { margin-top: 10px; }
@@ -222,6 +227,46 @@ function vbl_hotel_atividades_shared_styles() {
             border-top: 1px solid #f0f0f1;
         }
     </style>
+
+    <script>
+    jQuery(document).ready(function($) {
+        // Manipulador global de upload para todos os repeaters de atividades
+        $(document).on('click', '.vbl-rep-upload-btn', function(e) {
+            e.preventDefault();
+            var $box       = $(this).closest('.vbl-rep-img-box');
+            var $preview   = $box.find('.vbl-rep-img-preview');
+            var $noImg     = $box.find('.vbl-rep-no-img');
+            var $inputUrl  = $box.find('.vbl-rep-img-url');
+            var $inputId   = $box.find('.vbl-rep-img-id');
+            var $removeBtn = $box.find('.vbl-rep-remove-img-btn');
+
+            var uploader = wp.media({
+                title: 'Selecionar Fotografia',
+                button: { text: 'Usar Fotografia' },
+                multiple: false
+            }).on('select', function() {
+                var attachment = uploader.state().get('selection').first().toJSON();
+                var imgUrl = attachment.sizes && attachment.sizes.large ? attachment.sizes.large.url : attachment.url;
+                $preview.attr('src', imgUrl).css('display', 'block').show();
+                $noImg.hide();
+                $inputUrl.val(imgUrl);
+                $inputId.val(attachment.id);
+                $removeBtn.show();
+            }).open();
+        });
+
+        // Manipulador global para remover imagem
+        $(document).on('click', '.vbl-rep-remove-img-btn', function(e) {
+            e.preventDefault();
+            var $box = $(this).closest('.vbl-rep-img-box');
+            $box.find('.vbl-rep-img-preview').attr('src', '').hide();
+            $box.find('.vbl-rep-no-img').show();
+            $box.find('.vbl-rep-img-url').val('');
+            $box.find('.vbl-rep-img-id').val('');
+            $(this).hide();
+        });
+    });
+    </script>
     <?php
 }
 
@@ -286,7 +331,7 @@ function vbl_render_hotel_tratamentos_metabox( $post ) {
                 <div class="vbl-rep-img-box">
                     <label>Fotografia</label>
                     <div class="vbl-rep-preview-wrap">
-                        <img class="vbl-rep-img-preview" src="<?php echo esc_url( $image ); ?>" style="<?php echo empty( $image ) ? 'display:none;' : ''; ?>" alt="Pré-visualização" />
+                        <img class="vbl-rep-img-preview" src="<?php echo esc_url( $image ); ?>" style="<?php echo empty( $image ) ? 'display:none;' : ''; ?>" alt="Pré-visualização" onerror="this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.style.display='block';" />
                         <span class="vbl-rep-no-img" style="<?php echo ! empty( $image ) ? 'display:none;' : ''; ?>">Sem Foto</span>
                     </div>
                     <input type="hidden" class="vbl-rep-img-url" name="vbl_hativ_tratamentos_list[<?php echo esc_attr( $index ); ?>][image]" value="<?php echo esc_attr( $image ); ?>" />
@@ -330,7 +375,7 @@ function vbl_render_hotel_tratamentos_metabox( $post ) {
         <div class="vbl-rep-img-box">
             <label>Fotografia</label>
             <div class="vbl-rep-preview-wrap">
-                <img class="vbl-rep-img-preview" src="" style="display:none;" alt="Pré-visualização" />
+                <img class="vbl-rep-img-preview" src="" style="display:none;" alt="Pré-visualização" onerror="this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.style.display='block';" />
                 <span class="vbl-rep-no-img">Sem Foto</span>
             </div>
             <input type="hidden" class="vbl-rep-img-url" name="vbl_hativ_tratamentos_list[{{INDEX}}][image]" value="" />
@@ -397,40 +442,6 @@ function vbl_render_hotel_tratamentos_metabox( $post ) {
             }
         });
 
-        // Media Uploader
-        $tratContainer.on('click', '.vbl-rep-upload-btn', function(e) {
-            e.preventDefault();
-            var $box = $(this).closest('.vbl-rep-img-box');
-            var $preview = $box.find('.vbl-rep-img-preview');
-            var $noImg = $box.find('.vbl-rep-no-img');
-            var $inputUrl = $box.find('.vbl-rep-img-url');
-            var $inputId = $box.find('.vbl-rep-img-id');
-            var $removeBtn = $box.find('.vbl-rep-remove-img-btn');
-
-            var uploader = wp.media({
-                title: 'Selecionar Fotografia do Tratamento',
-                button: { text: 'Usar Fotografia' },
-                multiple: false
-            }).on('select', function() {
-                var attachment = uploader.state().get('selection').first().toJSON();
-                var imgUrl = attachment.sizes && attachment.sizes.large ? attachment.sizes.large.url : attachment.url;
-                $preview.attr('src', imgUrl).show();
-                $noImg.hide();
-                $inputUrl.val(imgUrl);
-                $inputId.val(attachment.id);
-                $removeBtn.show();
-            }).open();
-        });
-
-        $tratContainer.on('click', '.vbl-rep-remove-img-btn', function(e) {
-            e.preventDefault();
-            var $box = $(this).closest('.vbl-rep-img-box');
-            $box.find('.vbl-rep-img-preview').attr('src', '').hide();
-            $box.find('.vbl-rep-no-img').show();
-            $box.find('.vbl-rep-img-url').val('');
-            $box.find('.vbl-rep-img-id').val('');
-            $(this).hide();
-        });
     });
     </script>
     <?php
@@ -440,6 +451,7 @@ function vbl_render_hotel_tratamentos_metabox( $post ) {
  * 4. Renderizar Meta Box: Animação Noturna / Clubes ou Espaços Temáticos
  */
 function vbl_render_hotel_animacao_metabox( $post ) {
+    vbl_hotel_atividades_shared_styles();
     $post_id = $post->ID;
     $slides  = get_post_meta( $post_id, 'vbl_hativ_anim_slides', true );
 
@@ -490,7 +502,7 @@ function vbl_render_hotel_animacao_metabox( $post ) {
                 <div class="vbl-rep-img-box">
                     <label>Fotografia</label>
                     <div class="vbl-rep-preview-wrap">
-                        <img class="vbl-rep-img-preview" src="<?php echo esc_url( $image ); ?>" style="<?php echo empty( $image ) ? 'display:none;' : ''; ?>" alt="Pré-visualização" />
+                        <img class="vbl-rep-img-preview" src="<?php echo esc_url( $image ); ?>" style="<?php echo empty( $image ) ? 'display:none;' : ''; ?>" alt="Pré-visualização" onerror="this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.style.display='block';" />
                         <span class="vbl-rep-no-img" style="<?php echo ! empty( $image ) ? 'display:none;' : ''; ?>">Sem Foto</span>
                     </div>
                     <input type="hidden" class="vbl-rep-img-url" name="vbl_hativ_anim_slides[<?php echo esc_attr( $index ); ?>][image]" value="<?php echo esc_attr( $image ); ?>" />
@@ -533,7 +545,7 @@ function vbl_render_hotel_animacao_metabox( $post ) {
         <div class="vbl-rep-img-box">
             <label>Fotografia</label>
             <div class="vbl-rep-preview-wrap">
-                <img class="vbl-rep-img-preview" src="" style="display:none;" alt="Pré-visualização" />
+                <img class="vbl-rep-img-preview" src="" style="display:none;" alt="Pré-visualização" onerror="this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.style.display='block';" />
                 <span class="vbl-rep-no-img">Sem Foto</span>
             </div>
             <input type="hidden" class="vbl-rep-img-url" name="vbl_hativ_anim_slides[{{INDEX}}][image]" value="" />
@@ -608,6 +620,7 @@ function vbl_render_hotel_animacao_metabox( $post ) {
  * 5. Renderizar Meta Box: Atividades do Programa Semanal
  */
 function vbl_render_hotel_programa_metabox( $post ) {
+    vbl_hotel_atividades_shared_styles();
     $post_id   = $post->ID;
     $atividades = get_post_meta( $post_id, 'vbl_hativ_programa_list', true );
 
@@ -686,7 +699,7 @@ function vbl_render_hotel_programa_metabox( $post ) {
                 <div class="vbl-rep-img-box">
                     <label>Fotografia</label>
                     <div class="vbl-rep-preview-wrap">
-                        <img class="vbl-rep-img-preview" src="<?php echo esc_url( $image ); ?>" style="<?php echo empty( $image ) ? 'display:none;' : ''; ?>" alt="Pré-visualização" />
+                        <img class="vbl-rep-img-preview" src="<?php echo esc_url( $image ); ?>" style="<?php echo empty( $image ) ? 'display:none;' : ''; ?>" alt="Pré-visualização" onerror="this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.style.display='block';" />
                         <span class="vbl-rep-no-img" style="<?php echo ! empty( $image ) ? 'display:none;' : ''; ?>">Sem Foto</span>
                     </div>
                     <input type="hidden" class="vbl-rep-img-url" name="vbl_hativ_programa_list[<?php echo esc_attr( $index ); ?>][image]" value="<?php echo esc_attr( $image ); ?>" />
@@ -739,7 +752,7 @@ function vbl_render_hotel_programa_metabox( $post ) {
         <div class="vbl-rep-img-box">
             <label>Fotografia</label>
             <div class="vbl-rep-preview-wrap">
-                <img class="vbl-rep-img-preview" src="" style="display:none;" alt="Pré-visualização" />
+                <img class="vbl-rep-img-preview" src="" style="display:none;" alt="Pré-visualização" onerror="this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.style.display='block';" />
                 <span class="vbl-rep-no-img">Sem Foto</span>
             </div>
             <input type="hidden" class="vbl-rep-img-url" name="vbl_hativ_programa_list[{{INDEX}}][image]" value="" />
