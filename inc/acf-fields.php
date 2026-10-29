@@ -1066,21 +1066,12 @@ function vbl_register_acf_fields() {
 
             /* Tab: Experiências da Região (Slider) */
             array( 'key' => 'field_vbl_hreg_tab_exp', 'label' => 'Experiências da Região (Slider)', 'type' => 'tab' ),
-            array( 'key' => 'field_vbl_hreg_exp_tagline', 'label' => 'Tagline Geral', 'name' => 'vbl_hreg_exp_tagline', 'type' => 'text', 'default_value' => 'ELIT FAUCIBUS ENIM ALIQUET' ),
-            array( 'key' => 'field_vbl_hreg_exp_title', 'label' => 'Título Geral', 'name' => 'vbl_hreg_exp_title', 'type' => 'text', 'default_value' => 'TÍTULO PARA AS<br>EXPERIÊNCIAS' ),
-            array( 'key' => 'field_vbl_hreg_exp_desc', 'label' => 'Descrição Geral', 'name' => 'vbl_hreg_exp_desc', 'type' => 'textarea', 'rows' => 3, 'default_value' => 'Diam elit faucibus enim pellentesque nisi orci neque leo. Aliquet dignissim dui tortor massa morbi scelerisque mi tincidunt. Quam id morbi tincidunt turpis ut eget amet metus.' ),
             array(
-                'key'          => 'field_vbl_hreg_exp_list',
-                'label'        => 'Lista de Experiências',
-                'name'         => 'vbl_hreg_exp_list',
-                'type'         => 'repeater',
-                'button_label' => 'Adicionar Experiência',
-                'layout'       => 'row',
-                'sub_fields'   => array(
-                    array( 'key' => 'field_vbl_hreg_item_title', 'label' => 'Nome da Experiência', 'name' => 'title', 'type' => 'text', 'required' => 1 ),
-                    array( 'key' => 'field_vbl_hreg_item_desc', 'label' => 'Descrição', 'name' => 'description', 'type' => 'textarea', 'rows' => 4 ),
-                    array( 'key' => 'field_vbl_hreg_item_image', 'label' => 'Fotografia', 'name' => 'image', 'type' => 'image', 'return_format' => 'url', 'preview_size' => 'medium' ),
-                ),
+                'key'     => 'field_vbl_hreg_notice',
+                'label'   => 'Lista de Experiências',
+                'name'    => '',
+                'type'    => 'message',
+                'message' => 'A gestão da lista de experiências e fotografias é feita na caixa nativa <strong>"🏖️ Experiências da Região deste Hotel (Carrossel)"</strong> logo abaixo nesta página, com suporte a adicionar, reordenar por arrasto e upload de imagens sem necessidade de licença do ACF Pro.',
             ),
         ),
         'location' => array(
