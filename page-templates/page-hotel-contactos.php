@@ -68,16 +68,16 @@ $privacy_url = vbl_field( 'vbl_privacy_url', false, home_url( '/politica-de-priv
             <?php endif; ?>
           </div>
         <?php else : ?>
-          <div class="relative w-full aspect-[4/3] max-w-[620px] bg-[#93d4e8]/20 rounded-xs overflow-hidden flex items-center justify-center p-6 sm:p-10 shadow-xs group">
+          <div class="relative w-full aspect-[4/3] max-w-[620px] bg-[#93d4e8]/20 rounded-xs overflow-hidden shadow-xs group">
             <!-- Imagem do Mapa -->
             <?php if ( ! empty( $mapa_url ) ) : ?>
-            <a href="<?php echo esc_url( $mapa_url ); ?>" target="_blank" rel="noopener noreferrer" class="block w-full h-full" title="Abrir localização no Google Maps">
+            <a href="<?php echo esc_url( $mapa_url ); ?>" target="_blank" rel="noopener noreferrer" class="block w-full h-full relative" title="Abrir localização no Google Maps">
             <?php endif; ?>
 
-              <img src="<?php echo esc_url( $mapa_img ); ?>" alt="Localização no Porto Santo" class="w-full h-full object-contain transition-transform duration-300 group-hover:scale-105">
+              <img src="<?php echo esc_url( $mapa_img ); ?>" alt="Localização no Porto Santo" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
 
               <!-- Pin Ciano Decorativo Indicando a Localização -->
-              <div class="absolute top-[52%] left-[46%] -translate-x-1/2 -translate-y-1/2 flex flex-col items-center pointer-events-none">
+              <div class="absolute top-[52%] left-[46%] -translate-x-1/2 -translate-y-1/2 flex flex-col items-center pointer-events-none z-10">
                 <div class="w-6 h-6 rounded-full bg-[#0da9a6] border-2 border-white shadow-md flex items-center justify-center animate-pulse">
                   <div class="w-2 h-2 rounded-full bg-white"></div>
                 </div>
