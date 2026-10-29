@@ -1023,23 +1023,12 @@ function vbl_register_acf_fields() {
 
             /* Tab: Restaurantes & Bares (Slider) */
             array( 'key' => 'field_vbl_hrest_tab_slider', 'label' => 'Restaurantes & Bares (Slider)', 'type' => 'tab' ),
-            array( 'key' => 'field_vbl_hrest_slider_subtitle', 'label' => 'Subtítulo Geral', 'name' => 'vbl_hrest_slider_subtitle', 'type' => 'text', 'default_value' => 'LACUS EGET UT SIT ENIM VITAE' ),
             array(
-                'key'          => 'field_vbl_hrest_list',
-                'label'        => 'Lista de Restaurantes / Bares',
-                'name'         => 'vbl_hrest_list',
-                'type'         => 'repeater',
-                'button_label' => 'Adicionar Espaço',
-                'layout'       => 'row',
-                'sub_fields'   => array(
-                    array( 'key' => 'field_vbl_hrest_sub', 'label' => 'Subtítulo / Categoria (Ex: RESTAURANTE PRINCIPAL · BUFFET)', 'name' => 'subtitle', 'type' => 'text' ),
-                    array( 'key' => 'field_vbl_hrest_title', 'label' => 'Nome do Restaurante / Bar', 'name' => 'title', 'type' => 'text', 'required' => 1 ),
-                    array( 'key' => 'field_vbl_hrest_desc', 'label' => 'Descrição', 'name' => 'description', 'type' => 'textarea', 'rows' => 4 ),
-                    array( 'key' => 'field_vbl_hrest_image', 'label' => 'Fotografia Principal', 'name' => 'image', 'type' => 'image', 'return_format' => 'url', 'preview_size' => 'medium' ),
-                    array( 'key' => 'field_vbl_hrest_thumb', 'label' => 'Fotografia Miniatura', 'name' => 'thumb', 'type' => 'image', 'return_format' => 'url', 'preview_size' => 'thumbnail' ),
-                    array( 'key' => 'field_vbl_hrest_menu_url', 'label' => 'Link do Menu (PDF ou URL)', 'name' => 'menu_url', 'type' => 'text', 'default_value' => '#' ),
-                    array( 'key' => 'field_vbl_hrest_menu_label', 'label' => 'Texto do Botão (Ex: CONSULTAR MENU)', 'name' => 'menu_label', 'type' => 'text', 'default_value' => 'CONSULTAR MENU' ),
-                ),
+                'key'     => 'field_vbl_hrest_notice',
+                'label'   => 'Lista de Restaurantes / Bares',
+                'name'    => '',
+                'type'    => 'message',
+                'message' => 'A gestão da lista de restaurantes/bares, fotografias principais, miniaturas e cartas de menu é feita na caixa nativa <strong>"🍽️ Restaurantes & Bares deste Hotel (Carrossel)"</strong> logo abaixo nesta página, com suporte a adicionar, reordenar por arrasto e upload de imagens sem necessidade de licença do ACF Pro.',
             ),
         ),
         'location' => array(
