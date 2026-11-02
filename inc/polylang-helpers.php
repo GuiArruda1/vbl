@@ -52,7 +52,6 @@ function vbl_get_languages() {
         'languages' => array(
             array( 'slug' => 'pt', 'code' => 'PT', 'name' => 'Português', 'url' => '?lang=pt', 'is_current' => true ),
             array( 'slug' => 'en', 'code' => 'EN', 'name' => 'English', 'url' => '?lang=en', 'is_current' => false ),
-            array( 'slug' => 'de', 'code' => 'DE', 'name' => 'Deutsch', 'url' => '?lang=de', 'is_current' => false ),
         ),
     );
 }
