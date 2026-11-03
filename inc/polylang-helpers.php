@@ -150,6 +150,39 @@ function vbl_get_default_translations( $lang = 'en' ) {
             'Subscrever'                        => 'Subscribe',
             'Li e aceito a'                     => 'I have read and accept the',
             'Política de Privacidade.'          => 'Privacy Policy.',
+
+            // Motor de Reserva / Barra de Pesquisa
+            'ONDE'                              => 'WHERE',
+            'Onde'                              => 'Where',
+            'QUANDO'                            => 'WHEN',
+            'Quando'                            => 'When',
+            'QUEM'                              => 'GUESTS',
+            'Quem'                              => 'Guests',
+            'PROMOÇÃO'                          => 'PROMO',
+            'Promoção'                          => 'Promo',
+            'CÓDIGO'                            => 'CODE',
+            'Código'                            => 'Code',
+            'Código promocional'                => 'Promo code',
+            'PESQUISAR'                         => 'SEARCH',
+            'Pesquisar'                         => 'Search',
+            'todos os hotéis'                   => 'all hotels',
+            'Todos os Hotéis'                   => 'All Hotels',
+            'Entrada · Saída'                   => 'Check-in · Check-out',
+            '2 adultos · 1 quarto'              => '2 adults · 1 room',
+            'Selecione o Hotel / Destino'       => 'Select Hotel / Destination',
+            'Selecione as Datas da Estadia'     => 'Select Stay Dates',
+            'Check-in (Entrada)'                => 'Check-in (Arrival)',
+            'Check-out (Saída)'                 => 'Check-out (Departure)',
+            '2 Noites'                          => '2 Nights',
+            'Confirmar'                         => 'Confirm',
+            'Hóspedes e Quartos'                => 'Guests & Rooms',
+            'Adultos'                           => 'Adults',
+            'Idade 12+ anos'                    => 'Age 12+ years',
+            'Crianças'                          => 'Children',
+            '0 aos 11 anos'                     => '0 to 11 years',
+            'Quartos'                           => 'Rooms',
+            'Quantidade'                        => 'Quantity',
+            'Fechar'                            => 'Close',
         ),
     );
 
@@ -272,5 +305,17 @@ add_action( 'init', function() {
         pll_register_string( 'vbl_subscrever', 'Subscrever', 'Vila Baleira' );
         pll_register_string( 'vbl_li_aceito', 'Li e aceito a', 'Vila Baleira' );
         pll_register_string( 'vbl_politica_priv_link', 'Política de Privacidade.', 'Vila Baleira' );
+
+        // Motor de Reserva / Barra de Pesquisa
+        pll_register_string( 'vbl_booking_onde', 'ONDE', 'Vila Baleira - Reservas' );
+        pll_register_string( 'vbl_booking_quando', 'QUANDO', 'Vila Baleira - Reservas' );
+        pll_register_string( 'vbl_booking_quem', 'QUEM', 'Vila Baleira - Reservas' );
+        pll_register_string( 'vbl_booking_promocao', 'PROMOÇÃO', 'Vila Baleira - Reservas' );
+        pll_register_string( 'vbl_booking_codigo', 'CÓDIGO', 'Vila Baleira - Reservas' );
+        pll_register_string( 'vbl_booking_pesquisar', 'PESQUISAR', 'Vila Baleira - Reservas' );
+        pll_register_string( 'vbl_booking_todos_hoteis', 'todos os hotéis', 'Vila Baleira - Reservas' );
+        pll_register_string( 'vbl_booking_entrada_saida', 'Entrada · Saída', 'Vila Baleira - Reservas' );
+        pll_register_string( 'vbl_booking_2adultos_1quarto', '2 adultos · 1 quarto', 'Vila Baleira - Reservas' );
+        pll_register_string( 'vbl_booking_confirmar', 'Confirmar', 'Vila Baleira - Reservas' );
     }
 } );

@@ -943,7 +943,12 @@
       var countChildrenEl = engine.querySelector('.vbl-count-children');
       var countRoomsEl    = engine.querySelector('.vbl-count-rooms');
 
+      var htmlLang = document.documentElement.lang || 'pt';
+      var isEN = htmlLang.substring(0, 2).toLowerCase() === 'en';
+
       var monthsPT = ['JAN', 'FEV', 'MAR', 'ABR', 'MAI', 'JUN', 'JUL', 'AGO', 'SET', 'OUT', 'NOV', 'DEZ'];
+      var monthsEN = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+      var months   = isEN ? monthsEN : monthsPT;
 
       // Initial State
       var initialHotelName = engine.getAttribute('data-hotel-name') || 'todos os hotéis';
@@ -965,6 +970,14 @@
         rooms: 1
       };
 
+      if (isEN && initialHotelName.toLowerCase() === 'todos os hotéis') {
+        hotelDisplayEls.forEach(function (el) {
+          if (el.textContent.trim().toLowerCase() === 'todos os hotéis') {
+            el.textContent = 'all hotels';
+          }
+        });
+      }
+
       function formatDateISO(d) {
         var year = d.getFullYear();
         var month = String(d.getMonth() + 1).padStart(2, '0');
@@ -974,7 +987,7 @@
 
       function formatDateDisplay(d) {
         var day = String(d.getDate()).padStart(2, '0');
-        var month = monthsPT[d.getMonth()];
+        var month = months[d.getMonth()];
         return day + ' ' + month;
       }
 
@@ -994,7 +1007,11 @@
       function updateNightsDisplay() {
         if (!nightsCountEl) return;
         var n = calcNights();
-        nightsCountEl.textContent = n === 1 ? '1 Noite' : n + ' Noites';
+        if (isEN) {
+          nightsCountEl.textContent = n === 1 ? '1 Night' : n + ' Nights';
+        } else {
+          nightsCountEl.textContent = n === 1 ? '1 Noite' : n + ' Noites';
+        }
       }
 
       function updateDatesSummary() {
@@ -1007,12 +1024,21 @@
 
       function updateGuestsSummary() {
         var parts = [];
-        parts.push(state.adults === 1 ? '1 adulto' : state.adults + ' adultos');
-        if (state.children > 0) {
-          parts.push(state.children === 1 ? '1 criança' : state.children + ' crianças');
+        if (isEN) {
+          parts.push(state.adults === 1 ? '1 adult' : state.adults + ' adults');
+          if (state.children > 0) {
+            parts.push(state.children === 1 ? '1 child' : state.children + ' children');
+          }
+          var guestsStr = parts.join(', ');
+          var roomsStr = state.rooms === 1 ? '1 room' : state.rooms + ' rooms';
+        } else {
+          parts.push(state.adults === 1 ? '1 adulto' : state.adults + ' adultos');
+          if (state.children > 0) {
+            parts.push(state.children === 1 ? '1 criança' : state.children + ' crianças');
+          }
+          var guestsStr = parts.join(', ');
+          var roomsStr = state.rooms === 1 ? '1 quarto' : state.rooms + ' quartos';
         }
-        var guestsStr = parts.join(', ');
-        var roomsStr = state.rooms === 1 ? '1 quarto' : state.rooms + ' quartos';
         var text = guestsStr + ' · ' + roomsStr;
         guestsDisplayEls.forEach(function (el) {
           el.textContent = text;
@@ -1110,8 +1136,13 @@
           state.hotelId       = this.getAttribute('data-hotel-id') || '';
           state.hotelIds      = this.getAttribute('data-hotel-ids') || '';
 
+          var displayLabel = state.hotelName;
+          if (isEN && state.hotelName.toLowerCase() === 'todos os hotéis') {
+            displayLabel = 'all hotels';
+          }
+
           hotelDisplayEls.forEach(function (el) {
-            el.textContent = state.hotelName;
+            el.textContent = displayLabel;
           });
 
           updateHotelActiveOption();

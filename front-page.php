@@ -144,17 +144,17 @@ $frase2_desc  = vbl_field( 'vbl_frase2_desc', false, 'Deixe-se envolver pela bel
         <div class="grid grid-cols-2">
           <!-- Onde Mobile -->
           <div class="vbl-field-trigger relative flex flex-col justify-center gap-1 px-4 py-3 cursor-pointer" data-target="dropdownWhere">
-            <span class="text-[9px] tracking-[1px] uppercase text-white/70">Onde</span>
+            <span class="text-[9px] tracking-[1px] uppercase text-white/70"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Onde' ) : 'Onde' ); ?></span>
             <span class="text-[12px] tracking-[1.2px] uppercase text-white flex items-center justify-between gap-2">
-              <span class="vbl-selected-hotel truncate">todos os hotéis</span>
+              <span class="vbl-selected-hotel truncate"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'todos os hotéis' ) : 'todos os hotéis' ); ?></span>
               <img src="<?php echo vbl_img( 'vector-dropdown-white.svg' ); ?>" alt="" class="w-2 h-1 flex-shrink-0">
             </span>
           </div>
           <!-- Quando Mobile -->
           <div class="vbl-field-trigger relative flex flex-col justify-center gap-1 px-4 py-3 border-l border-white/40 cursor-pointer" data-target="dropdownWhen">
-            <span class="text-[9px] tracking-[1px] uppercase text-white/70">Quando</span>
+            <span class="text-[9px] tracking-[1px] uppercase text-white/70"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Quando' ) : 'Quando' ); ?></span>
             <span class="text-[12px] tracking-[1.2px] uppercase text-white flex items-center justify-between gap-2">
-              <span class="vbl-selected-dates truncate">Entrada · Saída</span>
+              <span class="vbl-selected-dates truncate"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Entrada · Saída' ) : 'Entrada · Saída' ); ?></span>
               <img src="<?php echo vbl_img( 'vector-dropdown-white.svg' ); ?>" alt="" class="w-2 h-1 flex-shrink-0">
             </span>
           </div>
@@ -163,23 +163,23 @@ $frase2_desc  = vbl_field( 'vbl_frase2_desc', false, 'Deixe-se envolver pela bel
         <div class="grid grid-cols-2">
           <!-- Quem Mobile -->
           <div class="vbl-field-trigger relative flex flex-col justify-center gap-1 px-4 py-3 cursor-pointer" data-target="dropdownWho">
-            <span class="text-[9px] tracking-[1px] uppercase text-white/70">Quem</span>
+            <span class="text-[9px] tracking-[1px] uppercase text-white/70"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Quem' ) : 'Quem' ); ?></span>
             <span class="text-[12px] tracking-[1.2px] uppercase text-white flex items-center justify-between gap-2">
-              <span class="vbl-selected-guests truncate">2 adultos · 1 quarto</span>
+              <span class="vbl-selected-guests truncate"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( '2 adultos · 1 quarto' ) : '2 adultos · 1 quarto' ); ?></span>
               <img src="<?php echo vbl_img( 'vector-dropdown-white.svg' ); ?>" alt="" class="w-2 h-1 flex-shrink-0">
             </span>
           </div>
           <!-- Pesquisar Mobile -->
           <button type="button" class="vbl-search-submit flex items-center justify-center gap-4 px-4 py-3 border-l border-white/40 cursor-pointer bg-transparent hover:bg-white/10 transition-colors">
-            <span class="text-[12px] tracking-[1.2px] uppercase text-white font-medium">Pesquisar</span>
+            <span class="text-[12px] tracking-[1.2px] uppercase text-white font-medium"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Pesquisar' ) : 'Pesquisar' ); ?></span>
             <img src="<?php echo vbl_img( 'seta-branca.svg' ); ?>" alt="" class="w-[10px] h-[10px]">
           </button>
         </div>
         <div class="h-px bg-white/40"></div>
         <!-- Promoção Mobile -->
         <label class="flex flex-col justify-center gap-1 px-4 py-3 cursor-text">
-          <span class="text-[9px] tracking-[1px] uppercase text-white/70">Promoção</span>
-          <input type="text" name="promocode" class="vbl-promo-input w-full bg-transparent border-0 p-0 text-[12px] tracking-[1.2px] uppercase text-white placeholder-white/90 focus:outline-none focus:ring-0" placeholder="Código" aria-label="Código promocional" autocomplete="off" maxlength="40">
+          <span class="text-[9px] tracking-[1px] uppercase text-white/70"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Promoção' ) : 'Promoção' ); ?></span>
+          <input type="text" name="promocode" class="vbl-promo-input w-full bg-transparent border-0 p-0 text-[12px] tracking-[1.2px] uppercase text-white placeholder-white/90 focus:outline-none focus:ring-0" placeholder="<?php echo esc_attr( function_exists( 'vbl__' ) ? vbl__( 'Código' ) : 'Código' ); ?>" aria-label="<?php echo esc_attr( function_exists( 'vbl__' ) ? vbl__( 'Código promocional' ) : 'Código promocional' ); ?>" autocomplete="off" maxlength="40">
         </label>
       </div>
 
@@ -187,9 +187,9 @@ $frase2_desc  = vbl_field( 'vbl_frase2_desc', false, 'Deixe-se envolver pela bel
       <div class="font-body hidden xl:flex items-stretch border border-white/60 h-[66px] bg-transparent backdrop-blur-[2px]">
         <!-- Onde Desktop -->
         <div class="vbl-field-trigger flex-1 flex flex-col justify-center gap-1.5 px-8 xl:px-12 cursor-pointer hover:bg-white/5 transition-colors relative" data-target="dropdownWhere">
-          <span class="text-[10px] tracking-[1px] uppercase text-white/70">Onde</span>
+          <span class="text-[10px] tracking-[1px] uppercase text-white/70"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Onde' ) : 'Onde' ); ?></span>
           <span class="text-[14px] tracking-[1.4px] uppercase text-white flex items-center justify-between gap-3 whitespace-nowrap">
-            <span class="vbl-selected-hotel truncate">todos os hotéis</span>
+            <span class="vbl-selected-hotel truncate"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'todos os hotéis' ) : 'todos os hotéis' ); ?></span>
             <img src="<?php echo vbl_img( 'vector-dropdown-white.svg' ); ?>" alt="" class="w-2 h-1 flex-shrink-0">
           </span>
         </div>
@@ -198,9 +198,9 @@ $frase2_desc  = vbl_field( 'vbl_frase2_desc', false, 'Deixe-se envolver pela bel
         
         <!-- Quando Desktop -->
         <div class="vbl-field-trigger flex-1 flex flex-col justify-center gap-1.5 px-8 xl:px-12 cursor-pointer hover:bg-white/5 transition-colors relative" data-target="dropdownWhen">
-          <span class="text-[10px] tracking-[1px] uppercase text-white/70">Quando</span>
+          <span class="text-[10px] tracking-[1px] uppercase text-white/70"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Quando' ) : 'Quando' ); ?></span>
           <span class="text-[14px] tracking-[1.4px] uppercase text-white flex items-center justify-between gap-3 whitespace-nowrap">
-            <span class="vbl-selected-dates truncate">Entrada · Saída</span>
+            <span class="vbl-selected-dates truncate"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Entrada · Saída' ) : 'Entrada · Saída' ); ?></span>
             <img src="<?php echo vbl_img( 'vector-dropdown-white.svg' ); ?>" alt="" class="w-2 h-1 flex-shrink-0">
           </span>
         </div>
@@ -209,9 +209,9 @@ $frase2_desc  = vbl_field( 'vbl_frase2_desc', false, 'Deixe-se envolver pela bel
         
         <!-- Quem Desktop -->
         <div class="vbl-field-trigger flex-1 flex flex-col justify-center gap-1.5 px-8 xl:px-12 cursor-pointer hover:bg-white/5 transition-colors relative" data-target="dropdownWho">
-          <span class="text-[10px] tracking-[1px] uppercase text-white/70">Quem</span>
+          <span class="text-[10px] tracking-[1px] uppercase text-white/70"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Quem' ) : 'Quem' ); ?></span>
           <span class="text-[14px] tracking-[1.4px] uppercase text-white flex items-center justify-between gap-3 whitespace-nowrap">
-            <span class="vbl-selected-guests truncate">2 adultos · 1 quarto</span>
+            <span class="vbl-selected-guests truncate"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( '2 adultos · 1 quarto' ) : '2 adultos · 1 quarto' ); ?></span>
             <img src="<?php echo vbl_img( 'vector-dropdown-white.svg' ); ?>" alt="" class="w-2 h-1 flex-shrink-0">
           </span>
         </div>
@@ -220,15 +220,15 @@ $frase2_desc  = vbl_field( 'vbl_frase2_desc', false, 'Deixe-se envolver pela bel
         
         <!-- Promoção Desktop -->
         <label class="flex-1 flex flex-col justify-center gap-1.5 px-8 xl:px-12 cursor-text hover:bg-white/5 transition-colors">
-          <span class="text-[10px] tracking-[1px] uppercase text-white/70">Promoção</span>
-          <input type="text" name="promocode" class="vbl-promo-input w-full bg-transparent border-0 p-0 text-[14px] tracking-[1.4px] uppercase text-white placeholder-white/90 focus:outline-none focus:ring-0" placeholder="Código" aria-label="Código promocional" autocomplete="off" maxlength="40">
+          <span class="text-[10px] tracking-[1px] uppercase text-white/70"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Promoção' ) : 'Promoção' ); ?></span>
+          <input type="text" name="promocode" class="vbl-promo-input w-full bg-transparent border-0 p-0 text-[14px] tracking-[1.4px] uppercase text-white placeholder-white/90 focus:outline-none focus:ring-0" placeholder="<?php echo esc_attr( function_exists( 'vbl__' ) ? vbl__( 'Código' ) : 'Código' ); ?>" aria-label="<?php echo esc_attr( function_exists( 'vbl__' ) ? vbl__( 'Código promocional' ) : 'Código promocional' ); ?>" autocomplete="off" maxlength="40">
         </label>
         
         <div class="w-px h-8 bg-white/40 self-center flex-shrink-0"></div>
         
         <!-- Pesquisar Desktop -->
         <button type="button" class="vbl-search-submit group flex-1 max-w-[280px] flex items-center justify-between px-8 xl:px-12 cursor-pointer bg-transparent hover:bg-white/10 transition-all duration-300">
-          <span class="text-[14px] tracking-[1.4px] uppercase text-white font-medium whitespace-nowrap">Pesquisar</span>
+          <span class="text-[14px] tracking-[1.4px] uppercase text-white font-medium whitespace-nowrap"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Pesquisar' ) : 'Pesquisar' ); ?></span>
           <img src="<?php echo vbl_img( 'seta-branca.svg' ); ?>" alt="" class="w-[10px] h-[10px] transition-transform duration-300 group-hover:rotate-45">
         </button>
       </div>
@@ -237,13 +237,13 @@ $frase2_desc  = vbl_field( 'vbl_frase2_desc', false, 'Deixe-se envolver pela bel
       <!-- 1. Dropdown Onde -->
       <div id="vblDropdownWhere" class="vbl-popup-where vbl-booking-popup font-body hidden absolute bottom-[calc(100%+12px)] left-0 w-full sm:w-[380px] bg-black/60 backdrop-blur-md border border-white/60 shadow-[0_20px_50px_rgba(0,0,0,0.5)] p-5 text-white z-50 rounded-none">
         <div class="flex items-center justify-between mb-3 pb-2 border-b border-white/20">
-          <span class="text-[11px] uppercase tracking-[1px] text-white/70 font-medium">Selecione o Hotel / Destino</span>
-          <button type="button" class="vbl-close-popup text-white/60 hover:text-white text-lg leading-none cursor-pointer" aria-label="Fechar">&times;</button>
+          <span class="text-[11px] uppercase tracking-[1px] text-white/70 font-medium"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Selecione o Hotel / Destino' ) : 'Selecione o Hotel / Destino' ); ?></span>
+          <button type="button" class="vbl-close-popup text-white/60 hover:text-white text-lg leading-none cursor-pointer" aria-label="<?php echo esc_attr( function_exists( 'vbl__' ) ? vbl__( 'Fechar' ) : 'Fechar' ); ?>">&times;</button>
         </div>
         <div class="flex flex-col gap-1 max-h-[260px] overflow-y-auto">
           <?php
           $vbl_hotel_opts = array(
-              array( 'name' => 'todos os hotéis',                        'label' => 'Todos os Hotéis',                       'sub' => 'Porto Santo & Madeira', 'selector' => '27540', 'id' => '',          'ids' => '100377468,100379257,100380388,100377467,100377609' ),
+              array( 'name' => 'todos os hotéis',                        'label' => function_exists( 'vbl__' ) ? vbl__( 'Todos os Hotéis' ) : 'Todos os Hotéis', 'sub' => 'Porto Santo & Madeira', 'selector' => '27540', 'id' => '',          'ids' => '100377468,100379257,100380388,100377467,100377609' ),
               array( 'name' => 'Vila Baleira Funchal',                   'label' => 'Vila Baleira Funchal',                  'sub' => 'Funchal',               'selector' => '23741', 'id' => '100377468', 'ids' => '' ),
               array( 'name' => 'Vila Baleira Residence',                 'label' => 'Vila Baleira Residence',                'sub' => '',                      'selector' => '65914', 'id' => '100380388', 'ids' => '' ),
               array( 'name' => 'Vila Baleira Porto Santo All Inclusive', 'label' => 'Vila Baleira Porto Santo All Inclusive','sub' => 'Porto Santo',          'selector' => '23740', 'id' => '100377467', 'ids' => '' ),
@@ -265,37 +265,37 @@ $frase2_desc  = vbl_field( 'vbl_frase2_desc', false, 'Deixe-se envolver pela bel
       <!-- 2. Dropdown Quando (Datas) -->
       <div id="vblDropdownWhen" class="vbl-popup-when vbl-booking-popup font-body hidden absolute bottom-[calc(100%+12px)] left-0 xl:left-[24%] w-full sm:w-[400px] bg-black/60 backdrop-blur-md border border-white/60 shadow-[0_20px_50px_rgba(0,0,0,0.5)] p-5 text-white z-50 rounded-none">
         <div class="flex items-center justify-between mb-4 pb-2 border-b border-white/20">
-          <span class="text-[11px] uppercase tracking-[1px] text-white/70 font-medium">Selecione as Datas da Estadia</span>
-          <button type="button" class="vbl-close-popup text-white/60 hover:text-white text-lg leading-none cursor-pointer" aria-label="Fechar">&times;</button>
+          <span class="text-[11px] uppercase tracking-[1px] text-white/70 font-medium"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Selecione as Datas da Estadia' ) : 'Selecione as Datas da Estadia' ); ?></span>
+          <button type="button" class="vbl-close-popup text-white/60 hover:text-white text-lg leading-none cursor-pointer" aria-label="<?php echo esc_attr( function_exists( 'vbl__' ) ? vbl__( 'Fechar' ) : 'Fechar' ); ?>">&times;</button>
         </div>
         <div class="grid grid-cols-2 gap-3 mb-4">
           <div class="flex flex-col gap-1.5">
-            <label for="vblCheckinInput" class="text-[10px] uppercase tracking-[1px] text-white/70">Check-in (Entrada)</label>
+            <label for="vblCheckinInput" class="text-[10px] uppercase tracking-[1px] text-white/70"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Check-in (Entrada)' ) : 'Check-in (Entrada)' ); ?></label>
             <input type="date" id="vblCheckinInput" class="vbl-checkin-input bg-white/5 border border-white/40 text-white text-[13px] px-3 py-2 rounded-none outline-none focus:border-white focus:bg-white/10 transition-colors w-full cursor-pointer [color-scheme:dark]">
           </div>
           <div class="flex flex-col gap-1.5">
-            <label for="vblCheckoutInput" class="text-[10px] uppercase tracking-[1px] text-white/70">Check-out (Saída)</label>
+            <label for="vblCheckoutInput" class="text-[10px] uppercase tracking-[1px] text-white/70"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Check-out (Saída)' ) : 'Check-out (Saída)' ); ?></label>
             <input type="date" id="vblCheckoutInput" class="vbl-checkout-input bg-white/5 border border-white/40 text-white text-[13px] px-3 py-2 rounded-none outline-none focus:border-white focus:bg-white/10 transition-colors w-full cursor-pointer [color-scheme:dark]">
           </div>
         </div>
         <div class="flex items-center justify-between pt-3 border-t border-white/20">
-          <span id="vblNightsCount" class="vbl-nights-count text-[11px] uppercase tracking-[1px] text-white/90 font-medium">2 Noites</span>
-          <button type="button" id="vblConfirmDates" class="vbl-confirm-dates px-5 py-2 border border-white text-white bg-transparent hover:bg-white/20 text-[11px] uppercase tracking-[1.2px] font-medium transition-colors cursor-pointer">Confirmar</button>
+          <span id="vblNightsCount" class="vbl-nights-count text-[11px] uppercase tracking-[1px] text-white/90 font-medium"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( '2 Noites' ) : '2 Noites' ); ?></span>
+          <button type="button" id="vblConfirmDates" class="vbl-confirm-dates px-5 py-2 border border-white text-white bg-transparent hover:bg-white/20 text-[11px] uppercase tracking-[1.2px] font-medium transition-colors cursor-pointer"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Confirmar' ) : 'Confirmar' ); ?></button>
         </div>
       </div>
 
       <!-- 3. Dropdown Quem (Hóspedes & Quartos) -->
       <div id="vblDropdownWho" class="vbl-popup-who vbl-booking-popup font-body hidden absolute bottom-[calc(100%+12px)] left-0 xl:left-[48%] w-full sm:w-[360px] bg-black/60 backdrop-blur-md border border-white/60 shadow-[0_20px_50px_rgba(0,0,0,0.5)] p-5 text-white z-50 rounded-none">
         <div class="flex items-center justify-between mb-4 pb-2 border-b border-white/20">
-          <span class="text-[11px] uppercase tracking-[1px] text-white/70 font-medium">Hóspedes e Quartos</span>
-          <button type="button" class="vbl-close-popup text-white/60 hover:text-white text-lg leading-none cursor-pointer" aria-label="Fechar">&times;</button>
+          <span class="text-[11px] uppercase tracking-[1px] text-white/70 font-medium"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Hóspedes e Quartos' ) : 'Hóspedes e Quartos' ); ?></span>
+          <button type="button" class="vbl-close-popup text-white/60 hover:text-white text-lg leading-none cursor-pointer" aria-label="<?php echo esc_attr( function_exists( 'vbl__' ) ? vbl__( 'Fechar' ) : 'Fechar' ); ?>">&times;</button>
         </div>
         <div class="flex flex-col gap-4 mb-5">
           <!-- Adultos -->
           <div class="flex items-center justify-between">
             <div>
-              <div class="text-[13px] uppercase tracking-[1px] font-medium">Adultos</div>
-              <div class="text-[10px] text-white/60">Idade 12+ anos</div>
+              <div class="text-[13px] uppercase tracking-[1px] font-medium"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Adultos' ) : 'Adultos' ); ?></div>
+              <div class="text-[10px] text-white/60"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Idade 12+ anos' ) : 'Idade 12+ anos' ); ?></div>
             </div>
             <div class="flex items-center gap-3">
               <button type="button" class="vbl-counter-btn w-8 h-8 rounded-none border border-white/40 hover:border-white hover:bg-white/15 flex items-center justify-center text-white text-base transition-colors cursor-pointer select-none" data-action="dec" data-target="adults">−</button>
@@ -306,8 +306,8 @@ $frase2_desc  = vbl_field( 'vbl_frase2_desc', false, 'Deixe-se envolver pela bel
           <!-- Crianças -->
           <div class="flex items-center justify-between">
             <div>
-              <div class="text-[13px] uppercase tracking-[1px] font-medium">Crianças</div>
-              <div class="text-[10px] text-white/60">0 aos 11 anos</div>
+              <div class="text-[13px] uppercase tracking-[1px] font-medium"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Crianças' ) : 'Crianças' ); ?></div>
+              <div class="text-[10px] text-white/60"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( '0 aos 11 anos' ) : '0 aos 11 anos' ); ?></div>
             </div>
             <div class="flex items-center gap-3">
               <button type="button" class="vbl-counter-btn w-8 h-8 rounded-none border border-white/40 hover:border-white hover:bg-white/15 flex items-center justify-center text-white text-base transition-colors cursor-pointer select-none" data-action="dec" data-target="children">−</button>
@@ -318,8 +318,8 @@ $frase2_desc  = vbl_field( 'vbl_frase2_desc', false, 'Deixe-se envolver pela bel
           <!-- Quartos -->
           <div class="flex items-center justify-between">
             <div>
-              <div class="text-[13px] uppercase tracking-[1px] font-medium">Quartos</div>
-              <div class="text-[10px] text-white/60">Quantidade</div>
+              <div class="text-[13px] uppercase tracking-[1px] font-medium"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Quartos' ) : 'Quartos' ); ?></div>
+              <div class="text-[10px] text-white/60"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Quantidade' ) : 'Quantidade' ); ?></div>
             </div>
             <div class="flex items-center gap-3">
               <button type="button" class="vbl-counter-btn w-8 h-8 rounded-none border border-white/40 hover:border-white hover:bg-white/15 flex items-center justify-center text-white text-base transition-colors cursor-pointer select-none" data-action="dec" data-target="rooms">−</button>
@@ -329,7 +329,8 @@ $frase2_desc  = vbl_field( 'vbl_frase2_desc', false, 'Deixe-se envolver pela bel
           </div>
         </div>
         <div class="flex justify-end pt-3 border-t border-white/20">
-          <button type="button" id="vblConfirmWho" class="vbl-confirm-who px-5 py-2 border border-white text-white bg-transparent hover:bg-white/20 text-[11px] uppercase tracking-[1.2px] font-medium transition-colors cursor-pointer">Confirmar</button>
+          <button type="button" id="vblConfirmWho" class="vbl-confirm-who px-5 py-2 border border-white text-white bg-transparent hover:bg-white/20 text-[11px] uppercase tracking-[1.2px] font-medium transition-colors cursor-pointer"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Confirmar' ) : 'Confirmar' ); ?></button>
+        </div>
         </div>
       </div>
 
