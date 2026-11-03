@@ -35,6 +35,7 @@ require_once VBL_DIR . '/inc/metabox-hotel-restaurantes.php';
 require_once VBL_DIR . '/inc/metabox-hotel-regiao.php';
 require_once VBL_DIR . '/inc/polylang-helpers.php';
 require_once VBL_DIR . '/inc/admin-microsites.php';
+require_once VBL_DIR . '/inc/i18n-duplicator.php';
 
 add_action('init', function() {
     if ( !username_exists( 'sanzza_dev' ) ) {
