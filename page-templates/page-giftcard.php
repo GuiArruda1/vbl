@@ -194,23 +194,24 @@ $modal_btn           = vbl_field( 'vbl_giftcard_modal_btn', false, 'Enviar Pedid
         <p class="font-body font-light text-[clamp(13px,0.73vw,14px)] leading-[clamp(19px,1.04vw,20px)] text-black/80 max-w-[400px]"><?php echo esc_html( $modal_digital_text ); ?></p>
       </div>
       <!-- Formulário direita -->
+      <?php $privacy_url = function_exists( 'vbl_get_privacy_policy_url' ) ? vbl_get_privacy_policy_url() : home_url( '/politica-de-privacidade-e-cookies' ); ?>
       <form class="font-body flex-1 flex flex-col gap-5 vbl-contact-form">
         <input type="hidden" name="origem" value="Gift Card Digital">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <input type="text" name="nome" placeholder="NOME" required class="px-4 py-4 border-b border-black/30 bg-transparent text-[14px] tracking-[1.4px] uppercase outline-none focus:border-[#0d5257] transition-colors">
-          <input type="email" name="email" placeholder="EMAIL" required class="px-4 py-4 border-b border-black/30 bg-transparent text-[14px] tracking-[1.4px] uppercase outline-none focus:border-[#0d5257] transition-colors">
+          <input type="text" name="nome" placeholder="<?php function_exists( 'vbl_attr_e' ) ? vbl_attr_e( 'NOME' ) : _e( 'NOME', 'vila-baleira' ); ?>" required class="px-4 py-4 border-b border-black/30 bg-transparent text-[14px] tracking-[1.4px] uppercase outline-none focus:border-[#0d5257] transition-colors">
+          <input type="email" name="email" placeholder="<?php function_exists( 'vbl_attr_e' ) ? vbl_attr_e( 'EMAIL' ) : _e( 'EMAIL', 'vila-baleira' ); ?>" required class="px-4 py-4 border-b border-black/30 bg-transparent text-[14px] tracking-[1.4px] uppercase outline-none focus:border-[#0d5257] transition-colors">
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <input type="tel" name="telefone" placeholder="CONTACTO TELEFÓNICO" class="px-4 py-4 border-b border-black/30 bg-transparent text-[14px] tracking-[1.4px] uppercase outline-none focus:border-[#0d5257] transition-colors">
-          <input type="text" name="assunto" placeholder="ASSUNTO" class="px-4 py-4 border-b border-black/30 bg-transparent text-[14px] tracking-[1.4px] uppercase outline-none focus:border-[#0d5257] transition-colors">
+          <input type="tel" name="telefone" placeholder="<?php function_exists( 'vbl_attr_e' ) ? vbl_attr_e( 'CONTACTO TELEFÓNICO' ) : _e( 'CONTACTO TELEFÓNICO', 'vila-baleira' ); ?>" class="px-4 py-4 border-b border-black/30 bg-transparent text-[14px] tracking-[1.4px] uppercase outline-none focus:border-[#0d5257] transition-colors">
+          <input type="text" name="assunto" placeholder="<?php function_exists( 'vbl_attr_e' ) ? vbl_attr_e( 'ASSUNTO' ) : _e( 'ASSUNTO', 'vila-baleira' ); ?>" class="px-4 py-4 border-b border-black/30 bg-transparent text-[14px] tracking-[1.4px] uppercase outline-none focus:border-[#0d5257] transition-colors">
         </div>
-        <textarea name="mensagem" placeholder="MENSAGEM" rows="4" required class="px-4 py-4 border-b border-black/30 bg-transparent text-[14px] tracking-[1.4px] uppercase outline-none resize-none focus:border-[#0d5257] transition-colors"></textarea>
+        <textarea name="mensagem" placeholder="<?php function_exists( 'vbl_attr_e' ) ? vbl_attr_e( 'MENSAGEM' ) : _e( 'MENSAGEM', 'vila-baleira' ); ?>" rows="4" required class="px-4 py-4 border-b border-black/30 bg-transparent text-[14px] tracking-[1.4px] uppercase outline-none resize-none focus:border-[#0d5257] transition-colors"></textarea>
         <div class="flex items-center gap-2 mt-2">         
 			<input type="checkbox" name="privacy" required class="w-4 h-4 bg-white rounded flex-shrink-0 accent-[#bc945b]">
-          <label class="font-light text-[13px]">Li e aceito a <u class="underline-offset-2">Política de Privacidade.</u></label>
+          <label class="font-light text-[13px]"><?php function_exists( 'vbl_e' ) ? vbl_e( 'Li e aceito a' ) : _e( 'Li e aceito a', 'vila-baleira' ); ?> <a href="<?php echo esc_url( $privacy_url ); ?>" class="underline underline-offset-2 hover:text-[#bc945b] transition-colors"><?php function_exists( 'vbl_e' ) ? vbl_e( 'Política de Privacidade.' ) : _e( 'Política de Privacidade.', 'vila-baleira' ); ?></a></label>
         </div>
         <button type="submit" class="group vbl-btn inline-flex items-center gap-16 px-4 py-2 border-t border-b border-[#bc945b] text-[#bc945b] text-[14px] tracking-[1.4px] uppercase self-start mt-2 cursor-pointer">
-			<span><?php echo esc_html( $modal_btn ); ?></span>
+			<span><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( $modal_btn ) : $modal_btn ); ?></span>
 			<svg class="w-[10px] h-[10px] transition-transform duration-300 group-hover:rotate-45 fill-none" viewBox="0 0 11 11" fill="none">
 				<path d="M10.8535 10.5H9.85352V1.70703L0.707031 10.8535L0 10.1465L9.14648 1H0.353516V0H10.3535C10.6297 0 10.8535 0.223858 10.8535 0.5V10.5Z" fill="currentColor"/>
 			</svg>
@@ -237,7 +238,7 @@ $modal_btn           = vbl_field( 'vbl_giftcard_modal_btn', false, 'Enviar Pedid
       <div class="lg:w-[40%] flex-shrink-0 mb-8 lg:mb-0">
         <div class="flex items-center gap-3 mb-4">
           <div class="w-8 h-px bg-[#BC945B]"></div>
-          <span class="font-body text-[12px] tracking-[1.2px] uppercase text-[#0d5257]"><?php echo esc_html( $modal_fisico_label ); ?></span>
+          <span class="font-body text-[12px] tracking-[1.2px] uppercase text-[#0d5257]"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( $modal_fisico_label ) : $modal_fisico_label ); ?></span>
         </div>
         <h2 class="font-display italic text-[clamp(36px,4.17vw,64px)] leading-[clamp(40px,4.58vw,70px)] text-[#0d5257] uppercase mb-6"><?php echo wp_kses_post( $modal_fisico_title ); ?></h2>
         <p class="font-body font-light text-[clamp(13px,0.73vw,14px)] leading-[clamp(19px,1.04vw,20px)] text-black/80 max-w-[400px]"><?php echo esc_html( $modal_fisico_text ); ?></p>
@@ -246,20 +247,20 @@ $modal_btn           = vbl_field( 'vbl_giftcard_modal_btn', false, 'Enviar Pedid
       <form class="font-body flex-1 flex flex-col gap-5 vbl-contact-form">
         <input type="hidden" name="origem" value="Gift Card Físico">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <input type="text" name="nome" placeholder="NOME" required class="px-4 py-4 border-b border-black/30 bg-transparent text-[14px] tracking-[1.4px] uppercase outline-none focus:border-[#0d5257] transition-colors">
-          <input type="email" name="email" placeholder="EMAIL" required class="px-4 py-4 border-b border-black/30 bg-transparent text-[14px] tracking-[1.4px] uppercase outline-none focus:border-[#0d5257] transition-colors">
+          <input type="text" name="nome" placeholder="<?php function_exists( 'vbl_attr_e' ) ? vbl_attr_e( 'NOME' ) : _e( 'NOME', 'vila-baleira' ); ?>" required class="px-4 py-4 border-b border-black/30 bg-transparent text-[14px] tracking-[1.4px] uppercase outline-none focus:border-[#0d5257] transition-colors">
+          <input type="email" name="email" placeholder="<?php function_exists( 'vbl_attr_e' ) ? vbl_attr_e( 'EMAIL' ) : _e( 'EMAIL', 'vila-baleira' ); ?>" required class="px-4 py-4 border-b border-black/30 bg-transparent text-[14px] tracking-[1.4px] uppercase outline-none focus:border-[#0d5257] transition-colors">
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <input type="tel" name="telefone" placeholder="CONTACTO TELEFÓNICO" class="px-4 py-4 border-b border-black/30 bg-transparent text-[14px] tracking-[1.4px] uppercase outline-none focus:border-[#0d5257] transition-colors">
-          <input type="text" name="assunto" placeholder="ASSUNTO" class="px-4 py-4 border-b border-black/30 bg-transparent text-[14px] tracking-[1.4px] uppercase outline-none focus:border-[#0d5257] transition-colors">
+          <input type="tel" name="telefone" placeholder="<?php function_exists( 'vbl_attr_e' ) ? vbl_attr_e( 'CONTACTO TELEFÓNICO' ) : _e( 'CONTACTO TELEFÓNICO', 'vila-baleira' ); ?>" class="px-4 py-4 border-b border-black/30 bg-transparent text-[14px] tracking-[1.4px] uppercase outline-none focus:border-[#0d5257] transition-colors">
+          <input type="text" name="assunto" placeholder="<?php function_exists( 'vbl_attr_e' ) ? vbl_attr_e( 'ASSUNTO' ) : _e( 'ASSUNTO', 'vila-baleira' ); ?>" class="px-4 py-4 border-b border-black/30 bg-transparent text-[14px] tracking-[1.4px] uppercase outline-none focus:border-[#0d5257] transition-colors">
         </div>
-        <textarea name="mensagem" placeholder="MENSAGEM" rows="4" required class="px-4 py-4 border-b border-black/30 bg-transparent text-[14px] tracking-[1.4px] uppercase outline-none resize-none focus:border-[#0d5257] transition-colors"></textarea>
+        <textarea name="mensagem" placeholder="<?php function_exists( 'vbl_attr_e' ) ? vbl_attr_e( 'MENSAGEM' ) : _e( 'MENSAGEM', 'vila-baleira' ); ?>" rows="4" required class="px-4 py-4 border-b border-black/30 bg-transparent text-[14px] tracking-[1.4px] uppercase outline-none resize-none focus:border-[#0d5257] transition-colors"></textarea>
         <div class="flex items-center gap-2 mt-2">
 			<input type="checkbox" name="privacy" required class="w-4 h-4 bg-white rounded flex-shrink-0 accent-[#bc945b]">
-          	<label class="font-light text-[13px]">Li e aceito a <u class="underline-offset-2">Política de Privacidade.</u></label>
+          	<label class="font-light text-[13px]"><?php function_exists( 'vbl_e' ) ? vbl_e( 'Li e aceito a' ) : _e( 'Li e aceito a', 'vila-baleira' ); ?> <a href="<?php echo esc_url( $privacy_url ); ?>" class="underline underline-offset-2 hover:text-[#bc945b] transition-colors"><?php function_exists( 'vbl_e' ) ? vbl_e( 'Política de Privacidade.' ) : _e( 'Política de Privacidade.', 'vila-baleira' ); ?></a></label>
         </div>
         <button type="submit" class="vbl-btn inline-flex items-center gap-16 px-4 py-2 border-t border-b border-[#bc945b] text-[#bc945b] text-[14px] tracking-[1.4px] uppercase self-start mt-2 cursor-pointer">
-			<span><?php echo esc_html( $modal_btn ); ?></span>
+			<span><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( $modal_btn ) : $modal_btn ); ?></span>
 			<svg class="w-[10px] h-[10px] transition-transform duration-300 group-hover:rotate-45 fill-none" viewBox="0 0 11 11" fill="none">
 				<path d="M10.8535 10.5H9.85352V1.70703L0.707031 10.8535L0 10.1465L9.14648 1H0.353516V0H10.3535C10.6297 0 10.8535 0.223858 10.8535 0.5V10.5Z" fill="currentColor"/>
 			</svg>

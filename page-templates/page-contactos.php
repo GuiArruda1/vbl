@@ -46,7 +46,7 @@ $icon_email = vbl_img('contactos/icon-email.svg');
           <div class="flex gap-4 items-start">
             <img src="<?php echo esc_url($icon_morada); ?>" alt="" aria-hidden="true" class="w-12 h-12 flex-shrink-0">
             <div>
-              <p class="text-[12px] tracking-[1.2px] uppercase text-verde mb-1 font-medium">Morada</p>
+              <p class="text-[12px] tracking-[1.2px] uppercase text-verde mb-1 font-medium"><?php function_exists( 'vbl_e' ) ? vbl_e( 'Morada' ) : _e( 'Morada', 'vila-baleira' ); ?></p>
               <p class="font-light text-[14px] lg:text-[16px] leading-relaxed"><?php echo esc_html($morada_geral); ?>
               </p>
             </div>
@@ -55,7 +55,7 @@ $icon_email = vbl_img('contactos/icon-email.svg');
             <div class="flex gap-4 items-start">
               <img src="<?php echo esc_url($icon_telefone); ?>" alt="" aria-hidden="true" class="w-12 h-12 flex-shrink-0">
               <div>
-                <p class="text-[12px] tracking-[1.2px] uppercase text-verde mb-1 font-medium">Telefone</p>
+                <p class="text-[12px] tracking-[1.2px] uppercase text-verde mb-1 font-medium"><?php function_exists( 'vbl_e' ) ? vbl_e( 'Telefone' ) : _e( 'Telefone', 'vila-baleira' ); ?></p>
                 <p class="font-light text-[14px] lg:text-[16px] leading-relaxed">
                   <?php echo esc_html($telefone_geral); ?></p>
               </div>
@@ -63,7 +63,7 @@ $icon_email = vbl_img('contactos/icon-email.svg');
             <div class="flex gap-4 items-start">
               <img src="<?php echo esc_url($icon_email); ?>" alt="" aria-hidden="true" class="w-12 h-12 flex-shrink-0">
               <div>
-                <p class="text-[12px] tracking-[1.2px] uppercase text-verde mb-1 font-medium">Email</p>
+                <p class="text-[12px] tracking-[1.2px] uppercase text-verde mb-1 font-medium"><?php function_exists( 'vbl_e' ) ? vbl_e( 'Email' ) : _e( 'Email', 'vila-baleira' ); ?></p>
                 <p class="font-light text-[14px] lg:text-[16px] leading-relaxed"><?php echo esc_html($email_geral); ?>
                 </p>
               </div>
@@ -107,45 +107,46 @@ $arvore_form = vbl_img('contactos/arvore-form.svg');
 
       <!-- Coluna Direita: Formulário Semântico -->
       <div class="lg:col-span-7 font-body">
+        <?php $privacy_url = function_exists( 'vbl_get_privacy_policy_url' ) ? vbl_get_privacy_policy_url() : home_url( '/politica-de-privacidade-e-cookies' ); ?>
         <form id="vblContactForm" class="flex flex-col gap-6">
           <?php wp_nonce_field('vbl_contact_form_nonce', 'vbl_contact_nonce'); ?>
           <input type="hidden" name="origem" value="Página de Contactos Geral">
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div>
-              <label for="ct_nome" class="sr-only">Nome</label>
-              <input type="text" id="ct_nome" name="nome" placeholder="NOME" required class="vbl-form-input">
+              <label for="ct_nome" class="sr-only"><?php function_exists( 'vbl_e' ) ? vbl_e( 'Nome' ) : _e( 'Nome', 'vila-baleira' ); ?></label>
+              <input type="text" id="ct_nome" name="nome" placeholder="<?php function_exists( 'vbl_attr_e' ) ? vbl_attr_e( 'NOME' ) : _e( 'NOME', 'vila-baleira' ); ?>" required class="vbl-form-input">
             </div>
             <div>
-              <label for="ct_email" class="sr-only">Email</label>
-              <input type="email" id="ct_email" name="email" placeholder="EMAIL" required class="vbl-form-input">
+              <label for="ct_email" class="sr-only"><?php function_exists( 'vbl_e' ) ? vbl_e( 'Email' ) : _e( 'Email', 'vila-baleira' ); ?></label>
+              <input type="email" id="ct_email" name="email" placeholder="<?php function_exists( 'vbl_attr_e' ) ? vbl_attr_e( 'EMAIL' ) : _e( 'EMAIL', 'vila-baleira' ); ?>" required class="vbl-form-input">
             </div>
           </div>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div>
-              <label for="ct_telefone" class="sr-only">Contacto Telefónico</label>
-              <input type="tel" id="ct_telefone" name="telefone" placeholder="CONTACTO TELEFÓNICO"
+              <label for="ct_telefone" class="sr-only"><?php function_exists( 'vbl_e' ) ? vbl_e( 'Contacto Telefónico' ) : _e( 'Contacto Telefónico', 'vila-baleira' ); ?></label>
+              <input type="tel" id="ct_telefone" name="telefone" placeholder="<?php function_exists( 'vbl_attr_e' ) ? vbl_attr_e( 'CONTACTO TELEFÓNICO' ) : _e( 'CONTACTO TELEFÓNICO', 'vila-baleira' ); ?>"
                 class="vbl-form-input">
             </div>
             <div>
-              <label for="ct_assunto" class="sr-only">Assunto</label>
-              <input type="text" id="ct_assunto" name="assunto" placeholder="ASSUNTO" required class="vbl-form-input">
+              <label for="ct_assunto" class="sr-only"><?php function_exists( 'vbl_e' ) ? vbl_e( 'Assunto' ) : _e( 'Assunto', 'vila-baleira' ); ?></label>
+              <input type="text" id="ct_assunto" name="assunto" placeholder="<?php function_exists( 'vbl_attr_e' ) ? vbl_attr_e( 'ASSUNTO' ) : _e( 'ASSUNTO', 'vila-baleira' ); ?>" required class="vbl-form-input">
             </div>
           </div>
           <div>
-            <label for="ct_mensagem" class="sr-only">Mensagem</label>
-            <textarea id="ct_mensagem" name="mensagem" placeholder="MENSAGEM" rows="4" required
+            <label for="ct_mensagem" class="sr-only"><?php function_exists( 'vbl_e' ) ? vbl_e( 'Mensagem' ) : _e( 'Mensagem', 'vila-baleira' ); ?></label>
+            <textarea id="ct_mensagem" name="mensagem" placeholder="<?php function_exists( 'vbl_attr_e' ) ? vbl_attr_e( 'MENSAGEM' ) : _e( 'MENSAGEM', 'vila-baleira' ); ?>" rows="4" required
               class="vbl-form-input resize-none"></textarea>
           </div>
           <div class="flex items-center gap-3 mt-2">
             <input type="checkbox" id="ct_privacy" name="privacy" required
               class="w-4 h-4 rounded accent-dourado cursor-pointer">
             <label for="ct_privacy" class="font-light text-[13px] text-preto/80 cursor-pointer">
-              Li e aceito a <u class="underline-offset-2">Política de Privacidade.</u>
+              <?php function_exists( 'vbl_e' ) ? vbl_e( 'Li e aceito a' ) : _e( 'Li e aceito a', 'vila-baleira' ); ?> <a href="<?php echo esc_url( $privacy_url ); ?>" class="underline underline-offset-2 hover:text-dourado transition-colors"><?php function_exists( 'vbl_e' ) ? vbl_e( 'Política de Privacidade.' ) : _e( 'Política de Privacidade.', 'vila-baleira' ); ?></a>
             </label>
           </div>
           <div class="flex flex-col gap-3">
             <button type="submit" class="vbl-btn-primary self-start mt-4 cursor-pointer">
-              <span>Enviar Pedido</span>
+              <span><?php function_exists( 'vbl_e' ) ? vbl_e( 'Enviar Pedido' ) : _e( 'Enviar Pedido', 'vila-baleira' ); ?></span>
               <svg class="w-[10px] h-[10px] transition-transform duration-300 group-hover:rotate-45" viewBox="0 0 11 11"
                 fill="none" aria-hidden="true">
                 <path

@@ -132,12 +132,12 @@ $lang_data = function_exists( 'vbl_get_languages' ) ? vbl_get_languages() : arra
 
         <!-- Linha 1: Nome Completo -->
         <div>
-          <label for="carreira_nome" class="sr-only">Nome Completo</label>
+          <label for="carreira_nome" class="sr-only"><?php function_exists( 'vbl_e' ) ? vbl_e( 'Nome Completo' ) : _e( 'Nome Completo', 'vila-baleira' ); ?></label>
           <input
             type="text"
             id="carreira_nome"
             name="nome"
-            placeholder="NOME COMPLETO"
+            placeholder="<?php function_exists( 'vbl_attr_e' ) ? vbl_attr_e( 'NOME COMPLETO' ) : _e( 'NOME COMPLETO', 'vila-baleira' ); ?>"
             required
             class="vbl-form-input-clean text-black">
         </div>
@@ -145,22 +145,22 @@ $lang_data = function_exists( 'vbl_get_languages' ) ? vbl_get_languages() : arra
         <!-- Linha 2: Contacto Telefónico & Email -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
           <div>
-            <label for="carreira_telefone" class="sr-only">Contacto Telefónico</label>
+            <label for="carreira_telefone" class="sr-only"><?php function_exists( 'vbl_e' ) ? vbl_e( 'Contacto Telefónico' ) : _e( 'Contacto Telefónico', 'vila-baleira' ); ?></label>
             <input
               type="tel"
               id="carreira_telefone"
               name="telefone"
-              placeholder="CONTACTO TELEFÓNICO"
+              placeholder="<?php function_exists( 'vbl_attr_e' ) ? vbl_attr_e( 'CONTACTO TELEFÓNICO' ) : _e( 'CONTACTO TELEFÓNICO', 'vila-baleira' ); ?>"
               required
               class="vbl-form-input-clean text-black">
           </div>
           <div>
-            <label for="carreira_email" class="sr-only">Email</label>
+            <label for="carreira_email" class="sr-only"><?php function_exists( 'vbl_e' ) ? vbl_e( 'Email' ) : _e( 'Email', 'vila-baleira' ); ?></label>
             <input
               type="email"
               id="carreira_email"
               name="email"
-              placeholder="EMAIL"
+              placeholder="<?php function_exists( 'vbl_attr_e' ) ? vbl_attr_e( 'EMAIL' ) : _e( 'EMAIL', 'vila-baleira' ); ?>"
               required
               class="vbl-form-input-clean text-black">
           </div>
@@ -171,13 +171,13 @@ $lang_data = function_exists( 'vbl_get_languages' ) ? vbl_get_languages() : arra
           
           <!-- Posição a que me candidato -->
           <div class="relative">
-            <label for="carreira_posicao" class="sr-only">Posição a que me candidato</label>
+            <label for="carreira_posicao" class="sr-only"><?php function_exists( 'vbl_e' ) ? vbl_e( 'Posição a que me candidato' ) : _e( 'Posição a que me candidato', 'vila-baleira' ); ?></label>
             <select
               id="carreira_posicao"
               name="posicao"
               required
               class="vbl-form-input-clean appearance-none bg-transparent cursor-pointer pr-8 text-black/60 focus:text-black valid:text-black">
-              <option value="" disabled selected hidden>POSIÇÃO A QUE ME CANDIDATO</option>
+              <option value="" disabled selected hidden><?php function_exists( 'vbl_e' ) ? vbl_e( 'POSIÇÃO A QUE ME CANDIDATO' ) : _e( 'POSIÇÃO A QUE ME CANDIDATO', 'vila-baleira' ); ?></option>
               <?php foreach ( $positions_list as $pos ) : ?>
                 <option value="<?php echo esc_attr( $pos['value'] ); ?>" class="text-black bg-white normal-case"><?php echo esc_html( $pos['label'] ); ?></option>
               <?php endforeach; ?>
@@ -202,9 +202,9 @@ $lang_data = function_exists( 'vbl_get_languages' ) ? vbl_get_languages() : arra
               for="carreira_cv"
               id="carreira_cv_label"
               class="vbl-form-input-clean flex items-center justify-between cursor-pointer select-none text-black/60 hover:text-black transition-colors"
-              title="Carregar currículo (PDF, DOC, DOCX)">
-              <span id="carreira_cv_filename" class="truncate pr-3">UPLOAD CV</span>
-              <span id="carreira_cv_action" class="text-[20px] font-light leading-none flex-shrink-0 text-black/70 hover:text-black transition-colors" title="Selecionar ficheiro">+</span>
+              title="<?php function_exists( 'vbl_attr_e' ) ? vbl_attr_e( 'Carregar currículo (PDF, DOC, DOCX)' ) : _e( 'Carregar currículo (PDF, DOC, DOCX)', 'vila-baleira' ); ?>">
+              <span id="carreira_cv_filename" class="truncate pr-3"><?php function_exists( 'vbl_e' ) ? vbl_e( 'UPLOAD CV' ) : _e( 'UPLOAD CV', 'vila-baleira' ); ?></span>
+              <span id="carreira_cv_action" class="text-[20px] font-light leading-none flex-shrink-0 text-black/70 hover:text-black transition-colors" title="<?php function_exists( 'vbl_attr_e' ) ? vbl_attr_e( 'Selecionar ficheiro' ) : _e( 'Selecionar ficheiro', 'vila-baleira' ); ?>">+</span>
             </label>
           </div>
 

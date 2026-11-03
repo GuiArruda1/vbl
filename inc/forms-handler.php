@@ -352,7 +352,9 @@ function vbl_handle_contact_submission() {
 	$sub_id = vbl_log_form_submission( 'contacto', $data, $recipient, $mail_sent, $mail_error );
 
 	// 10. Send Response
-	$success_msg = __( 'Obrigado! A sua mensagem foi enviada com sucesso. Entraremos em contacto brevemente.', 'vila-baleira' );
+	$success_msg = function_exists( 'vbl__' ) 
+		? vbl__( 'Obrigado! A sua mensagem foi enviada com sucesso. Entraremos em contacto brevemente.' )
+		: __( 'Obrigado! A sua mensagem foi enviada com sucesso. Entraremos em contacto brevemente.', 'vila-baleira' );
 
 	if ( wp_doing_ajax() ) {
 		wp_send_json_success( array(
@@ -453,7 +455,9 @@ function vbl_handle_eventos_submission() {
 	$sub_id = vbl_log_form_submission( 'eventos', $data, $recipient, $mail_sent, $mail_error );
 
 	// 10. Send Response
-	$success_msg = __( 'Obrigado! O seu pedido de orçamento foi enviado com sucesso. Entraremos em contacto brevemente.', 'vila-baleira' );
+	$success_msg = function_exists( 'vbl__' )
+		? vbl__( 'Obrigado! O seu pedido de orçamento foi enviado com sucesso. Entraremos em contacto brevemente.' )
+		: __( 'Obrigado! O seu pedido de orçamento foi enviado com sucesso. Entraremos em contacto brevemente.', 'vila-baleira' );
 
 	if ( wp_doing_ajax() ) {
 		wp_send_json_success( array(

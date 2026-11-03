@@ -34,10 +34,10 @@ $seta_dourada = vbl_img( 'seta-dourada.svg' );
       <form class="flex flex-col gap-6 items-start w-full vbl-newsletter-form">
         <?php wp_nonce_field( 'vbl_nonce', 'vbl_newsletter_nonce' ); ?>
         <div class="flex flex-col gap-4 w-full">
-          <input type="email" name="email" placeholder="EMAIL" required class="font-body w-full pb-2 pt-1 border-b border-black/40 bg-transparent text-[13px] tracking-[1.6px] uppercase outline-none placeholder:text-black/60 focus:border-[#bc945b] transition-colors">
+          <input type="email" name="email" placeholder="<?php function_exists( 'vbl_attr_e' ) ? vbl_attr_e( 'EMAIL' ) : _e( 'EMAIL', 'vila-baleira' ); ?>" required class="font-body w-full pb-2 pt-1 border-b border-black/40 bg-transparent text-[13px] tracking-[1.6px] uppercase outline-none placeholder:text-black/60 focus:border-[#bc945b] transition-colors">
           <div class="flex items-center gap-3">
             <input type="checkbox" name="privacy" id="nl_privacy_mob_home" required class="w-4 h-4 bg-white rounded border border-black/30 flex-shrink-0 cursor-pointer accent-[#bc945b]">
-            <label for="nl_privacy_mob_home" class="font-body font-light text-[12px] text-black/80 cursor-pointer">Li e aceito a <a href="<?php echo esc_url( $nl_privacy_url ); ?>" class="underline underline-offset-2 hover:text-[#bc945b] transition-colors"><?php echo esc_html( $nl_privacy ); ?></a></label>
+            <label for="nl_privacy_mob_home" class="font-body font-light text-[12px] text-black/80 cursor-pointer"><?php function_exists( 'vbl_e' ) ? vbl_e( 'Li e aceito a' ) : _e( 'Li e aceito a', 'vila-baleira' ); ?> <a href="<?php echo esc_url( $nl_privacy_url ); ?>" class="underline underline-offset-2 hover:text-[#bc945b] transition-colors"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( $nl_privacy ) : $nl_privacy ); ?></a></label>
           </div>
         </div>
         <button type="submit" class="group font-body vbl-btn inline-flex items-center justify-between w-[220px] px-5 py-3.5 border-t border-b border-x-0 border-[#bc945b]/60 hover:border-[#bc945b] text-[#bc945b] hover:text-white hover:bg-[#bc945b] text-[11px] font-medium tracking-[2.5px] uppercase transition-all duration-300">
@@ -72,10 +72,10 @@ $seta_dourada = vbl_img( 'seta-dourada.svg' );
       <form class="flex flex-col gap-7 items-start w-full vbl-newsletter-form">
         <?php wp_nonce_field( 'vbl_nonce', 'vbl_newsletter_nonce_home' ); ?>
         <div class="flex flex-col gap-4 w-full">
-          <input type="email" name="email" placeholder="EMAIL" required class="font-body w-full pb-2 pt-1 border-b border-black/40 bg-transparent text-[13px] xl:text-[14px] tracking-[1.8px] uppercase outline-none placeholder:text-black/60 focus:border-[#bc945b] transition-colors">
+          <input type="email" name="email" placeholder="<?php function_exists( 'vbl_attr_e' ) ? vbl_attr_e( 'EMAIL' ) : _e( 'EMAIL', 'vila-baleira' ); ?>" required class="font-body w-full pb-2 pt-1 border-b border-black/40 bg-transparent text-[13px] xl:text-[14px] tracking-[1.8px] uppercase outline-none placeholder:text-black/60 focus:border-[#bc945b] transition-colors">
           <div class="flex items-center gap-3">
             <input type="checkbox" name="privacy" id="nl_privacy_desk_home" required class="w-4 h-4 bg-white rounded border border-black/30 flex-shrink-0 cursor-pointer accent-[#bc945b]">
-            <label for="nl_privacy_desk_home" class="font-body font-light text-[12px] xl:text-[13px] text-black/80 cursor-pointer">Li e aceito a <a href="<?php echo esc_url( $nl_privacy_url ); ?>" class="underline underline-offset-2 hover:text-[#bc945b] transition-colors"><?php echo esc_html( $nl_privacy ); ?></a></label>
+            <label for="nl_privacy_desk_home" class="font-body font-light text-[12px] xl:text-[13px] text-black/80 cursor-pointer"><?php function_exists( 'vbl_e' ) ? vbl_e( 'Li e aceito a' ) : _e( 'Li e aceito a', 'vila-baleira' ); ?> <a href="<?php echo esc_url( $nl_privacy_url ); ?>" class="underline underline-offset-2 hover:text-[#bc945b] transition-colors"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( $nl_privacy ) : $nl_privacy ); ?></a></label>
           </div>
         </div>
         <button type="submit" class="group font-body vbl-btn inline-flex items-center justify-between w-[220px] xl:w-[240px] px-5 py-3.5 border-t border-b border-x-0 border-[#bc945b]/60 hover:border-[#bc945b] text-[#bc945b] hover:text-white hover:bg-[#bc945b] text-[11px] xl:text-[12px] font-medium tracking-[2.5px] uppercase transition-all duration-300">

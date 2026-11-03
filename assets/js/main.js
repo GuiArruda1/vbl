@@ -358,6 +358,25 @@
   })();
 
   /* ========================================
+     i18n Dictionary Helper
+     ======================================== */
+  var vblI18n = (typeof vblData !== 'undefined' && vblData.i18n) ? vblData.i18n : {
+    sending: 'A ENVIAR...',
+    sendingMsg: 'A enviar a sua mensagem...',
+    sendingEventos: 'A enviar pedido de orçamento...',
+    sendingCarreiras: 'A submeter a tua candidatura...',
+    successMsg: 'Obrigado! A sua mensagem foi enviada com sucesso.',
+    successEventos: 'Obrigado! O seu pedido de orçamento foi enviado com sucesso.',
+    successCarreiras: 'Candidatura enviada com sucesso! Obrigado.',
+    errorMsg: 'Ocorreu um erro ao enviar. Por favor tente novamente.',
+    connError: 'Ocorreu um erro de ligação. Por favor tente novamente.',
+    cvRequired: 'Por favor anexe o seu currículo (CV).',
+    cvLimit: 'O ficheiro selecionado excede o limite máximo de 10MB.',
+    nlSuccess: 'Obrigado pela subscrição!',
+    nlError: 'Erro ao processar. Tente novamente.'
+  };
+
+  /* ========================================
      Newsletter Form AJAX
      ======================================== */
   document.querySelectorAll('.vbl-newsletter-form').forEach(function (form) {
@@ -373,7 +392,7 @@
       // Check if vblData exists (WordPress AJAX)
       if (typeof vblData === 'undefined') {
         if (messageEl) {
-          messageEl.textContent = 'Obrigado pela subscrição!';
+          messageEl.textContent = vblI18n.nlSuccess;
           messageEl.classList.remove('hidden');
           messageEl.classList.add('text-verde');
         }
@@ -394,7 +413,7 @@
         .then(function (res) { return res.json(); })
         .then(function (data) {
           if (messageEl) {
-            messageEl.textContent = data.data.message || 'Obrigado!';
+            messageEl.textContent = data.data.message || vblI18n.nlSuccess;
             messageEl.classList.remove('hidden');
             messageEl.classList.add(data.success ? 'text-verde' : 'text-red-600');
           }
@@ -404,7 +423,7 @@
         })
         .catch(function () {
           if (messageEl) {
-            messageEl.textContent = 'Erro ao processar. Tente novamente.';
+            messageEl.textContent = vblI18n.nlError;
             messageEl.classList.remove('hidden');
             messageEl.classList.add('text-red-600');
           }
@@ -435,7 +454,7 @@
       }
 
       if (typeof vblData === 'undefined') {
-        feedbackEl.textContent = 'Mensagem enviada com sucesso!';
+        feedbackEl.textContent = vblI18n.successMsg;
         feedbackEl.className = 'text-[14px] font-medium py-2 text-[#0da9a6]';
         feedbackEl.classList.remove('hidden');
         form.reset();
@@ -444,11 +463,11 @@
 
       if (submitBtn) {
         submitBtn.disabled = true;
-        if (btnSpan) btnSpan.textContent = 'A ENVIAR...';
+        if (btnSpan) btnSpan.textContent = vblI18n.sending;
       }
 
       feedbackEl.className = 'text-[14px] font-medium py-2 text-gray-500';
-      feedbackEl.textContent = 'A enviar a sua mensagem...';
+      feedbackEl.textContent = vblI18n.sendingMsg;
       feedbackEl.classList.remove('hidden');
 
       var formData = new FormData(form);
@@ -463,16 +482,16 @@
         .then(function (data) {
           if (data && data.success) {
             feedbackEl.className = 'text-[14px] font-medium py-2 text-green-600';
-            feedbackEl.textContent = (data.data && data.data.message) ? data.data.message : 'Obrigado! A sua mensagem foi enviada com sucesso.';
+            feedbackEl.textContent = (data.data && data.data.message) ? data.data.message : vblI18n.successMsg;
             form.reset();
           } else {
             feedbackEl.className = 'text-[14px] font-medium py-2 text-red-600';
-            feedbackEl.textContent = (data && data.data && data.data.message) ? data.data.message : 'Ocorreu um erro ao enviar. Por favor tente novamente.';
+            feedbackEl.textContent = (data && data.data && data.data.message) ? data.data.message : vblI18n.errorMsg;
           }
         })
         .catch(function () {
           feedbackEl.className = 'text-[14px] font-medium py-2 text-red-600';
-          feedbackEl.textContent = 'Ocorreu um erro de ligação. Por favor tente novamente.';
+          feedbackEl.textContent = vblI18n.connError;
         })
         .finally(function () {
           if (submitBtn) {
@@ -503,7 +522,7 @@
       }
 
       if (typeof vblData === 'undefined') {
-        feedbackEl.textContent = 'Pedido de orçamento enviado com sucesso!';
+        feedbackEl.textContent = vblI18n.successEventos;
         feedbackEl.className = 'text-[14px] font-medium py-2 text-[#0da9a6]';
         feedbackEl.classList.remove('hidden');
         eventosForm.reset();
@@ -512,11 +531,11 @@
 
       if (submitBtn) {
         submitBtn.disabled = true;
-        if (btnSpan) btnSpan.textContent = 'A ENVIAR...';
+        if (btnSpan) btnSpan.textContent = vblI18n.sending;
       }
 
       feedbackEl.className = 'text-[14px] font-medium py-2 text-gray-500';
-      feedbackEl.textContent = 'A enviar pedido de orçamento...';
+      feedbackEl.textContent = vblI18n.sendingEventos;
       feedbackEl.classList.remove('hidden');
 
       var formData = new FormData(eventosForm);
@@ -531,16 +550,16 @@
         .then(function (data) {
           if (data && data.success) {
             feedbackEl.className = 'text-[14px] font-medium py-2 text-green-600';
-            feedbackEl.textContent = (data.data && data.data.message) ? data.data.message : 'Obrigado! O seu pedido de orçamento foi enviado com sucesso.';
+            feedbackEl.textContent = (data.data && data.data.message) ? data.data.message : vblI18n.successEventos;
             eventosForm.reset();
           } else {
             feedbackEl.className = 'text-[14px] font-medium py-2 text-red-600';
-            feedbackEl.textContent = (data && data.data && data.data.message) ? data.data.message : 'Ocorreu um erro ao enviar. Por favor tente novamente.';
+            feedbackEl.textContent = (data && data.data && data.data.message) ? data.data.message : vblI18n.errorMsg;
           }
         })
         .catch(function () {
           feedbackEl.className = 'text-[14px] font-medium py-2 text-red-600';
-          feedbackEl.textContent = 'Ocorreu um erro de ligação. Por favor tente novamente.';
+          feedbackEl.textContent = vblI18n.connError;
         })
         .finally(function () {
           if (submitBtn) {
@@ -592,7 +611,7 @@
         if (fileInput.files && fileInput.files.length > 0) {
           var file = fileInput.files[0];
           if (file.size > 10 * 1024 * 1024) {
-            alert('O ficheiro selecionado excede o limite máximo de 10MB.');
+            alert(vblI18n.cvLimit);
             resetCvUpload();
             return;
           }
@@ -628,7 +647,7 @@
 
       if (!fileInput || !fileInput.files || fileInput.files.length === 0) {
         feedbackEl.className = 'text-[14px] font-medium py-3 px-4 text-red-800 bg-red-50 border border-red-200 rounded-sm';
-        feedbackEl.textContent = 'Por favor anexe o seu currículo (CV).';
+        feedbackEl.textContent = vblI18n.cvRequired;
         feedbackEl.classList.remove('hidden');
         var cvLabel = document.getElementById('carreira_cv_label');
         if (cvLabel) {
@@ -640,11 +659,11 @@
 
       if (submitBtn) {
         submitBtn.disabled = true;
-        if (btnSpan) btnSpan.textContent = 'A ENVIAR...';
+        if (btnSpan) btnSpan.textContent = vblI18n.sending;
       }
 
       feedbackEl.className = 'text-[14px] font-medium py-3 px-4 text-[#0d5257] bg-[#0d5257]/10 border border-[#0d5257]/20 rounded-sm';
-      feedbackEl.textContent = 'A submeter a tua candidatura...';
+      feedbackEl.textContent = vblI18n.sendingCarreiras;
       feedbackEl.classList.remove('hidden');
 
       var formData = new FormData(form);
@@ -663,17 +682,17 @@
         .then(function (data) {
           if (data && data.success) {
             feedbackEl.className = 'text-[14px] font-medium py-3 px-4 text-emerald-800 bg-emerald-50 border border-emerald-200 rounded-sm';
-            feedbackEl.textContent = (data.data && data.data.message) ? data.data.message : 'Candidatura enviada com sucesso! Obrigado.';
+            feedbackEl.textContent = (data.data && data.data.message) ? data.data.message : vblI18n.successCarreiras;
             form.reset();
             resetCvUpload();
           } else {
             feedbackEl.className = 'text-[14px] font-medium py-3 px-4 text-red-800 bg-red-50 border border-red-200 rounded-sm';
-            feedbackEl.textContent = (data && data.data && data.data.message) ? data.data.message : 'Ocorreu um erro ao enviar. Por favor tenta novamente.';
+            feedbackEl.textContent = (data && data.data && data.data.message) ? data.data.message : vblI18n.errorMsg;
           }
         })
         .catch(function () {
           feedbackEl.className = 'text-[14px] font-medium py-3 px-4 text-red-800 bg-red-50 border border-red-200 rounded-sm';
-          feedbackEl.textContent = 'Ocorreu um erro de ligação ao servidor. Por favor tenta novamente.';
+          feedbackEl.textContent = vblI18n.connError;
         })
         .finally(function () {
           if (submitBtn) {

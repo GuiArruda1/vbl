@@ -68,7 +68,7 @@ $orc_subtitle = vbl_field( 'vbl_hevent_orc_subtitle', false, 'SOLICITAÇÃO DE D
 $orc_title    = vbl_field( 'vbl_hevent_orc_title', false, 'PEDIDO DE<br>ORÇAMENTO' );
 $orc_p1       = vbl_field( 'vbl_hevent_orc_p1', false, 'Consequat sapien facilisi platea viverra. Facilisi a viverra sollicitudin euismod. Nisl ac ultricies augue ante tortor consequat quam porttitor.' );
 $orc_p2       = vbl_field( 'vbl_hevent_orc_p2', false, 'Consequat sapien facilisi platea viverra. Facilisi a viverra sollicitudin euismod. Nisl ac ultricies augue ante tortor consequat quam porttitor.' );
-$privacy_url  = vbl_field( 'vbl_privacy_url', false, home_url( '/politica-de-privacidade' ) );
+$privacy_url  = function_exists( 'vbl_get_privacy_policy_url' ) ? vbl_get_privacy_policy_url() : ( function_exists( 'vbl_field' ) ? vbl_field( 'vbl_privacy_url', false, home_url( '/politica-de-privacidade' ) ) : home_url( '/politica-de-privacidade' ) );
 ?>
 
 <main class="w-full bg-white text-black overflow-hidden">
@@ -261,44 +261,44 @@ $privacy_url  = vbl_field( 'vbl_privacy_url', false, home_url( '/politica-de-pri
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <!-- Nome -->
             <div>
-              <input type="text" name="nome" placeholder="NOME" required class="w-full px-1 py-3 border-b border-black/30 bg-transparent text-[13px] tracking-[1.5px] uppercase outline-none focus:border-[#0da9a6] placeholder:text-black/60 transition-colors font-body">
+              <input type="text" name="nome" placeholder="<?php function_exists( 'vbl_attr_e' ) ? vbl_attr_e( 'NOME' ) : _e( 'NOME', 'vila-baleira' ); ?>" required class="w-full px-1 py-3 border-b border-black/30 bg-transparent text-[13px] tracking-[1.5px] uppercase outline-none focus:border-[#0da9a6] placeholder:text-black/60 transition-colors font-body">
             </div>
 
             <!-- Email -->
             <div>
-              <input type="email" name="email" placeholder="EMAIL" required class="w-full px-1 py-3 border-b border-black/30 bg-transparent text-[13px] tracking-[1.5px] uppercase outline-none focus:border-[#0da9a6] placeholder:text-black/60 transition-colors font-body">
+              <input type="email" name="email" placeholder="<?php function_exists( 'vbl_attr_e' ) ? vbl_attr_e( 'EMAIL' ) : _e( 'EMAIL', 'vila-baleira' ); ?>" required class="w-full px-1 py-3 border-b border-black/30 bg-transparent text-[13px] tracking-[1.5px] uppercase outline-none focus:border-[#0da9a6] placeholder:text-black/60 transition-colors font-body">
             </div>
           </div>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <!-- Telefone -->
             <div>
-              <input type="tel" name="telefone" placeholder="CONTACTO TELEFÓNICO" required class="w-full px-1 py-3 border-b border-black/30 bg-transparent text-[13px] tracking-[1.5px] uppercase outline-none focus:border-[#0da9a6] placeholder:text-black/60 transition-colors font-body">
+              <input type="tel" name="telefone" placeholder="<?php function_exists( 'vbl_attr_e' ) ? vbl_attr_e( 'CONTACTO TELEFÓNICO' ) : _e( 'CONTACTO TELEFÓNICO', 'vila-baleira' ); ?>" required class="w-full px-1 py-3 border-b border-black/30 bg-transparent text-[13px] tracking-[1.5px] uppercase outline-none focus:border-[#0da9a6] placeholder:text-black/60 transition-colors font-body">
             </div>
 
             <!-- Empresa / Tipo de Evento -->
             <div>
-              <input type="text" name="empresa" placeholder="EMPRESA / TIPO DE EVENTO" class="w-full px-1 py-3 border-b border-black/30 bg-transparent text-[13px] tracking-[1.5px] uppercase outline-none focus:border-[#0da9a6] placeholder:text-black/60 transition-colors font-body">
+              <input type="text" name="empresa" placeholder="<?php function_exists( 'vbl_attr_e' ) ? vbl_attr_e( 'EMPRESA / TIPO DE EVENTO' ) : _e( 'EMPRESA / TIPO DE EVENTO', 'vila-baleira' ); ?>" class="w-full px-1 py-3 border-b border-black/30 bg-transparent text-[13px] tracking-[1.5px] uppercase outline-none focus:border-[#0da9a6] placeholder:text-black/60 transition-colors font-body">
             </div>
           </div>
 
           <!-- Mensagem -->
           <div>
-            <textarea name="mensagem" rows="3" placeholder="MENSAGEM / DETALHES DO EVENTO" required class="w-full px-1 py-3 border-b border-black/30 bg-transparent text-[13px] tracking-[1.5px] uppercase outline-none focus:border-[#0da9a6] placeholder:text-black/60 transition-colors font-body resize-none"></textarea>
+            <textarea name="mensagem" rows="3" placeholder="<?php function_exists( 'vbl_attr_e' ) ? vbl_attr_e( 'MENSAGEM / DETALHES DO EVENTO' ) : _e( 'MENSAGEM / DETALHES DO EVENTO', 'vila-baleira' ); ?>" required class="w-full px-1 py-3 border-b border-black/30 bg-transparent text-[13px] tracking-[1.5px] uppercase outline-none focus:border-[#0da9a6] placeholder:text-black/60 transition-colors font-body resize-none"></textarea>
           </div>
 
           <!-- Checkbox Privacidade -->
           <div class="flex items-center gap-3 pt-2">
             <input type="checkbox" name="privacy" id="eventPrivacy" required class="w-4 h-4 bg-white border border-transparent rounded-xs accent-[#0da9a6]">
             <label for="eventPrivacy" class="font-body font-light text-[12px] text-black/80">
-              Li e aceito a <a href="<?php echo esc_url( $privacy_url ); ?>" class="underline underline-offset-2 hover:text-[#0da9a6] transition-colors">Política de Privacidade</a>.
+              <?php function_exists( 'vbl_e' ) ? vbl_e( 'Li e aceito a' ) : _e( 'Li e aceito a', 'vila-baleira' ); ?> <a href="<?php echo esc_url( $privacy_url ); ?>" class="underline underline-offset-2 hover:text-[#0da9a6] transition-colors"><?php function_exists( 'vbl_e' ) ? vbl_e( 'Política de Privacidade' ) : _e( 'Política de Privacidade', 'vila-baleira' ); ?></a>.
             </label>
           </div>
 
           <!-- Botão Enviar Pedido -->
           <div class="pt-4">
             <button type="submit" class="vbl-btn-microsite">
-              <span>ENVIAR PEDIDO</span>
+              <span><?php function_exists( 'vbl_e' ) ? vbl_e( 'ENVIAR PEDIDO' ) : _e( 'ENVIAR PEDIDO', 'vila-baleira' ); ?></span>
               <svg viewBox="0 0 12 12" fill="none">
                 <path d="M1 11L11 1H3.5M11 1V8.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
@@ -314,28 +314,6 @@ $privacy_url  = vbl_field( 'vbl_privacy_url', false, home_url( '/politica-de-pri
   </section>
 
 </main>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  const form = document.getElementById('vblEventosForm');
-  const feedback = document.getElementById('vblEventosFeedback');
-
-  if (form && feedback) {
-    form.addEventListener('submit', function(e) {
-      e.preventDefault();
-      feedback.classList.remove('hidden', 'text-green-600', 'text-red-600');
-      feedback.textContent = 'A enviar pedido...';
-
-      // Simulação ou chamada AJAX nativa
-      setTimeout(function() {
-        feedback.classList.add('text-green-600');
-        feedback.textContent = 'Obrigado! O seu pedido de orçamento foi enviado com sucesso. Entraremos em contacto brevemente.';
-        form.reset();
-      }, 1000);
-    });
-  }
-});
-</script>
 
 <?php
 // Inclui o Footer independente do Hotel

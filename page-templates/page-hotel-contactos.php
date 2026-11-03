@@ -34,7 +34,7 @@ $form_sub    = vbl_field( 'vbl_hct_form_sub', false, 'LOREM IPSUM DOLOR SIT AMET
 $form_tit    = vbl_field( 'vbl_hct_form_tit', false, 'FAUCIBUS SIT<br>DIAM ELIT' );
 $form_p1     = vbl_field( 'vbl_hct_form_p1', false, 'Convallis odio massa pellentesque elit non eu fusce auctor mattis. Diam integer ultricies vitae. Lorem ipsum dolor sit amet consectetur.' );
 $form_p2     = vbl_field( 'vbl_hct_form_p2', false, 'Convallis odio massa pellentesque elit non eu fusce auctor mattis. Diam integer ultricies vitae. Lorem ipsum dolor sit amet consectetur.' );
-$privacy_url = vbl_field( 'vbl_privacy_url', false, home_url( '/politica-de-privacidade' ) );
+$privacy_url = function_exists( 'vbl_get_privacy_policy_url' ) ? vbl_get_privacy_policy_url() : ( function_exists( 'vbl_field' ) ? vbl_field( 'vbl_privacy_url', false, home_url( '/politica-de-privacidade' ) ) : home_url( '/politica-de-privacidade' ) );
 ?>
 
 <main class="w-full bg-white text-black overflow-hidden">
@@ -121,7 +121,7 @@ $privacy_url = vbl_field( 'vbl_privacy_url', false, home_url( '/politica-de-priv
               </svg>
             </div>
             <div class="flex flex-col">
-              <span class="text-[10px] tracking-[1.5px] uppercase text-[#0da9a6] font-medium mb-1">MORADA</span>
+              <span class="text-[10px] tracking-[1.5px] uppercase text-[#0da9a6] font-medium mb-1"><?php function_exists( 'vbl_e' ) ? vbl_e( 'MORADA' ) : _e( 'MORADA', 'vila-baleira' ); ?></span>
               <p class="font-light text-[13px] xl:text-[14px] leading-relaxed text-[#333333]">
                 <?php echo nl2br( esc_html( $morada ) ); ?>
               </p>
@@ -139,7 +139,7 @@ $privacy_url = vbl_field( 'vbl_privacy_url', false, home_url( '/politica-de-priv
                 </svg>
               </div>
               <div class="flex flex-col">
-                <span class="text-[10px] tracking-[1.5px] uppercase text-[#0da9a6] font-medium mb-1">TELEFONE</span>
+                <span class="text-[10px] tracking-[1.5px] uppercase text-[#0da9a6] font-medium mb-1"><?php function_exists( 'vbl_e' ) ? vbl_e( 'TELEFONE' ) : _e( 'TELEFONE', 'vila-baleira' ); ?></span>
                 <a href="tel:<?php echo esc_attr( preg_replace( '/[^0-9+]/', '', $telefone ) ); ?>" class="font-light text-[13px] xl:text-[14px] text-[#333333] hover:text-[#0da9a6] transition-colors">
                   <?php echo esc_html( $telefone ); ?>
                 </a>
@@ -154,7 +154,7 @@ $privacy_url = vbl_field( 'vbl_privacy_url', false, home_url( '/politica-de-priv
                 </svg>
               </div>
               <div class="flex flex-col">
-                <span class="text-[10px] tracking-[1.5px] uppercase text-[#0da9a6] font-medium mb-1">EMAIL</span>
+                <span class="text-[10px] tracking-[1.5px] uppercase text-[#0da9a6] font-medium mb-1"><?php function_exists( 'vbl_e' ) ? vbl_e( 'EMAIL' ) : _e( 'EMAIL', 'vila-baleira' ); ?></span>
                 <a href="mailto:<?php echo esc_attr( $email ); ?>" class="font-light text-[13px] xl:text-[14px] text-[#333333] hover:text-[#0da9a6] transition-colors">
                   <?php echo esc_html( $email ); ?>
                 </a>
@@ -190,44 +190,44 @@ $privacy_url = vbl_field( 'vbl_privacy_url', false, home_url( '/politica-de-priv
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-10">
             <!-- Nome -->
             <div>
-              <input type="text" name="nome" placeholder="NOME" required class="w-full px-1 py-3 border-b border-black/30 bg-transparent text-[13px] tracking-[1.5px] uppercase outline-none focus:border-[#0da9a6] placeholder:text-black/60 transition-colors font-body">
+              <input type="text" name="nome" placeholder="<?php function_exists( 'vbl_attr_e' ) ? vbl_attr_e( 'NOME' ) : _e( 'NOME', 'vila-baleira' ); ?>" required class="w-full px-1 py-3 border-b border-black/30 bg-transparent text-[13px] tracking-[1.5px] uppercase outline-none focus:border-[#0da9a6] placeholder:text-black/60 transition-colors font-body">
             </div>
 
             <!-- Email -->
             <div>
-              <input type="email" name="email" placeholder="EMAIL" required class="w-full px-1 py-3 border-b border-black/30 bg-transparent text-[13px] tracking-[1.5px] uppercase outline-none focus:border-[#0da9a6] placeholder:text-black/60 transition-colors font-body">
+              <input type="email" name="email" placeholder="<?php function_exists( 'vbl_attr_e' ) ? vbl_attr_e( 'EMAIL' ) : _e( 'EMAIL', 'vila-baleira' ); ?>" required class="w-full px-1 py-3 border-b border-black/30 bg-transparent text-[13px] tracking-[1.5px] uppercase outline-none focus:border-[#0da9a6] placeholder:text-black/60 transition-colors font-body">
             </div>
           </div>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-10">
             <!-- Telefone -->
             <div>
-              <input type="tel" name="telefone" placeholder="CONTACTO TELEFÓNICO" required class="w-full px-1 py-3 border-b border-black/30 bg-transparent text-[13px] tracking-[1.5px] uppercase outline-none focus:border-[#0da9a6] placeholder:text-black/60 transition-colors font-body">
+              <input type="tel" name="telefone" placeholder="<?php function_exists( 'vbl_attr_e' ) ? vbl_attr_e( 'CONTACTO TELEFÓNICO' ) : _e( 'CONTACTO TELEFÓNICO', 'vila-baleira' ); ?>" required class="w-full px-1 py-3 border-b border-black/30 bg-transparent text-[13px] tracking-[1.5px] uppercase outline-none focus:border-[#0da9a6] placeholder:text-black/60 transition-colors font-body">
             </div>
 
             <!-- Assunto -->
             <div>
-              <input type="text" name="assunto" placeholder="ASSUNTO" class="w-full px-1 py-3 border-b border-black/30 bg-transparent text-[13px] tracking-[1.5px] uppercase outline-none focus:border-[#0da9a6] placeholder:text-black/60 transition-colors font-body">
+              <input type="text" name="assunto" placeholder="<?php function_exists( 'vbl_attr_e' ) ? vbl_attr_e( 'ASSUNTO' ) : _e( 'ASSUNTO', 'vila-baleira' ); ?>" class="w-full px-1 py-3 border-b border-black/30 bg-transparent text-[13px] tracking-[1.5px] uppercase outline-none focus:border-[#0da9a6] placeholder:text-black/60 transition-colors font-body">
             </div>
           </div>
 
           <!-- Mensagem -->
           <div>
-            <textarea name="mensagem" rows="3" placeholder="MENSAGEM" required class="w-full px-1 py-3 border-b border-black/30 bg-transparent text-[13px] tracking-[1.5px] uppercase outline-none focus:border-[#0da9a6] placeholder:text-black/60 transition-colors font-body resize-none"></textarea>
+            <textarea name="mensagem" rows="3" placeholder="<?php function_exists( 'vbl_attr_e' ) ? vbl_attr_e( 'MENSAGEM' ) : _e( 'MENSAGEM', 'vila-baleira' ); ?>" required class="w-full px-1 py-3 border-b border-black/30 bg-transparent text-[13px] tracking-[1.5px] uppercase outline-none focus:border-[#0da9a6] placeholder:text-black/60 transition-colors font-body resize-none"></textarea>
           </div>
 
           <!-- Checkbox Privacidade -->
           <div class="flex items-center gap-3 pt-2">
             <input type="checkbox" name="privacy" id="contactPrivacy" required class="w-4 h-4 bg-white border border-transparent rounded-xs accent-[#0da9a6]">
             <label for="contactPrivacy" class="font-body font-light text-[12px] text-black/80">
-              Li e aceito a <a href="<?php echo esc_url( $privacy_url ); ?>" class="underline underline-offset-2 hover:text-[#0da9a6] transition-colors">Política de Privacidade</a>.
+              <?php function_exists( 'vbl_e' ) ? vbl_e( 'Li e aceito a' ) : _e( 'Li e aceito a', 'vila-baleira' ); ?> <a href="<?php echo esc_url( $privacy_url ); ?>" class="underline underline-offset-2 hover:text-[#0da9a6] transition-colors"><?php function_exists( 'vbl_e' ) ? vbl_e( 'Política de Privacidade' ) : _e( 'Política de Privacidade', 'vila-baleira' ); ?></a>.
             </label>
           </div>
 
           <!-- Botão Enviar Pedido -->
           <div class="pt-4">
             <button type="submit" class="vbl-btn-microsite">
-              <span>ENVIAR PEDIDO</span>
+              <span><?php function_exists( 'vbl_e' ) ? vbl_e( 'ENVIAR PEDIDO' ) : _e( 'ENVIAR PEDIDO', 'vila-baleira' ); ?></span>
               <svg viewBox="0 0 12 12" fill="none">
                 <path d="M1 11L11 1H3.5M11 1V8.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
@@ -267,27 +267,6 @@ $privacy_url = vbl_field( 'vbl_privacy_url', false, home_url( '/politica-de-priv
   </section>
 
 </main>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  const form = document.getElementById('vblContactosHotelForm');
-  const feedback = document.getElementById('vblContactFeedback');
-
-  if (form && feedback) {
-    form.addEventListener('submit', function(e) {
-      e.preventDefault();
-      feedback.classList.remove('hidden', 'text-green-600', 'text-red-600');
-      feedback.textContent = 'A enviar mensagem...';
-
-      setTimeout(function() {
-        feedback.classList.add('text-green-600');
-        feedback.textContent = 'Obrigado! A sua mensagem foi enviada com sucesso. Responderemos com brevidade.';
-        form.reset();
-      }, 1000);
-    });
-  }
-});
-</script>
 
 <?php
 // Inclui o Footer independente do Hotel

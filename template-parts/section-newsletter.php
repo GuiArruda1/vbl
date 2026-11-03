@@ -102,20 +102,20 @@ if ( empty( $nl_btn ) )         $nl_btn         = function_exists( 'vbl__' ) ? v
       <form class="flex flex-col gap-6 w-full vbl-newsletter-form">
         <?php wp_nonce_field('vbl_nonce', 'vbl_newsletter_nonce'); ?>
         <div class="font-body flex flex-col gap-4 w-full">
-          <input type="email" name="email" placeholder="EMAIL" required
+          <input type="email" name="email" placeholder="<?php function_exists( 'vbl_attr_e' ) ? vbl_attr_e( 'EMAIL' ) : _e( 'EMAIL', 'vila-baleira' ); ?>" required
             class="w-full pb-2 pt-1 border-b border-black/40 bg-transparent text-[13px] tracking-[1.6px] uppercase outline-none placeholder:text-black/60 <?php echo esc_attr($focus_class); ?> transition-colors">
           <div class="flex items-center gap-3">
             <input type="checkbox" name="privacy" id="nl_privacy_mob" required
               class="w-4 h-4 bg-white border border-black/30 rounded flex-shrink-0 cursor-pointer <?php echo esc_attr($accent_checkbox); ?>">
             <label for="nl_privacy_mob" class="font-body font-light text-[12px] text-black/80 cursor-pointer">
               <?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Li e aceito a' ) : 'Li e aceito a' ); ?> <a href="<?php echo esc_url($nl_privacy_url); ?>"
-                class="underline underline-offset-2 <?php echo esc_attr($hover_link_class); ?> transition-colors"><?php echo esc_html($nl_privacy); ?></a>
+                class="underline underline-offset-2 <?php echo esc_attr($hover_link_class); ?> transition-colors"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( $nl_privacy ) : $nl_privacy ); ?></a>
             </label>
           </div>
         </div>
         <button type="submit"
           class="group vbl-btn font-body inline-flex items-center justify-between w-[220px] px-5 py-3.5 border-t border-b border-x-0 <?php echo esc_attr($btn_border_class); ?> <?php echo esc_attr($text_class); ?> hover:text-white <?php echo $is_microsite ? 'hover:bg-[#0da9a6]' : 'hover:bg-[#bc945b]'; ?> text-[11px] font-medium tracking-[2.5px] uppercase transition-all duration-300">
-          <span><?php echo esc_html($nl_btn); ?></span>
+          <span><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( $nl_btn ) : $nl_btn ); ?></span>
           <svg class="w-3.5 h-3.5 <?php echo esc_attr($text_class); ?> group-hover:text-white transition-all duration-300 group-hover:rotate-45"
             viewBox="0 0 12 12" fill="none">
             <path d="M1 11L11 1M11 1H3.5M11 1V8.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"
@@ -346,16 +346,16 @@ if ( empty( $nl_btn ) )         $nl_btn         = function_exists( 'vbl__' ) ? v
       <form class="vbl-nl-main__form vbl-newsletter-form">
         <?php wp_nonce_field('vbl_nonce', 'vbl_newsletter_nonce_desktop'); ?>
         <div class="vbl-nl-main__fields">
-          <input type="email" name="email" placeholder="EMAIL" required class="vbl-nl-main__email">
+          <input type="email" name="email" placeholder="<?php function_exists( 'vbl_attr_e' ) ? vbl_attr_e( 'EMAIL' ) : _e( 'EMAIL', 'vila-baleira' ); ?>" required class="vbl-nl-main__email">
           <div class="vbl-nl-main__privacy">
             <input type="checkbox" name="privacy" id="nl_privacy_desktop" required>
             <label for="nl_privacy_desktop">
-              <?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Li e aceito a' ) : 'Li e aceito a' ); ?> <a href="<?php echo esc_url($nl_privacy_url); ?>"><?php echo esc_html($nl_privacy); ?></a>
+              <?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Li e aceito a' ) : 'Li e aceito a' ); ?> <a href="<?php echo esc_url($nl_privacy_url); ?>"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( $nl_privacy ) : $nl_privacy ); ?></a>
             </label>
           </div>
         </div>
         <button type="submit" class="vbl-nl-main__btn vbl-btn">
-          <span><?php echo esc_html($nl_btn); ?></span>
+          <span><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( $nl_btn ) : $nl_btn ); ?></span>
           <svg viewBox="0 0 12 12" fill="none">
             <path d="M1 11L11 1M11 1H3.5M11 1V8.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
           </svg>
@@ -402,7 +402,7 @@ if ( empty( $nl_btn ) )         $nl_btn         = function_exists( 'vbl__' ) ? v
         <?php wp_nonce_field('vbl_nonce', 'vbl_newsletter_nonce_desktop'); ?>
         
         <div class="font-body flex flex-col gap-4 w-full">
-          <input type="email" name="email" placeholder="EMAIL" required
+          <input type="email" name="email" placeholder="<?php function_exists( 'vbl_attr_e' ) ? vbl_attr_e( 'EMAIL' ) : _e( 'EMAIL', 'vila-baleira' ); ?>" required
             class="w-full pb-2.5 pt-1 border-b border-black/40 bg-transparent text-[13px] xl:text-[14px] tracking-[1.8px] uppercase outline-none placeholder:text-black/60 <?php echo esc_attr($focus_class); ?> transition-colors">
           
           <div class="flex items-center gap-3 pt-1">
@@ -410,14 +410,14 @@ if ( empty( $nl_btn ) )         $nl_btn         = function_exists( 'vbl__' ) ? v
               class="w-4 h-4 bg-white border border-black/30 rounded flex-shrink-0 cursor-pointer <?php echo esc_attr($accent_checkbox); ?>">
             <label for="nl_privacy_desktop_micro" class="font-body font-light text-[12px] xl:text-[12.5px] text-black/80 leading-normal cursor-pointer">
               <?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Li e aceito a' ) : 'Li e aceito a' ); ?> <a href="<?php echo esc_url($nl_privacy_url); ?>"
-                class="underline underline-offset-2 <?php echo esc_attr($hover_link_class); ?> transition-colors"><?php echo esc_html($nl_privacy); ?></a>
+                class="underline underline-offset-2 <?php echo esc_attr($hover_link_class); ?> transition-colors"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( $nl_privacy ) : $nl_privacy ); ?></a>
             </label>
           </div>
         </div>
 
         <button type="submit"
           class="group vbl-btn font-body inline-flex items-center justify-between w-[220px] xl:w-[240px] px-5 py-3.5 border-t border-b border-x-0 <?php echo esc_attr($btn_border_class); ?> <?php echo esc_attr($text_class); ?> hover:text-white hover:bg-[#0da9a6] text-[11px] xl:text-[12px] font-medium tracking-[2.5px] uppercase transition-all duration-300">
-          <span><?php echo esc_html($nl_btn); ?></span>
+          <span><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( $nl_btn ) : $nl_btn ); ?></span>
           <svg class="w-3.5 h-3.5 <?php echo esc_attr($text_class); ?> group-hover:text-white transition-all duration-300 group-hover:rotate-45"
             viewBox="0 0 12 12" fill="none">
             <path d="M1 11L11 1M11 1H3.5M11 1V8.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"

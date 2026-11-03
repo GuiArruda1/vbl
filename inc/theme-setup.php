@@ -109,9 +109,25 @@ function vbl_enqueue_assets() {
     );
 
     wp_localize_script( 'vbl-main', 'vblData', array(
-        'ajaxUrl'  => admin_url( 'admin-ajax.php' ),
-        'themeUrl' => VBL_URI,
-        'nonce'    => wp_create_nonce( 'vbl_nonce' ),
+        'ajaxUrl'     => admin_url( 'admin-ajax.php' ),
+        'themeUrl'    => VBL_URI,
+        'nonce'       => wp_create_nonce( 'vbl_nonce' ),
+        'currentLang' => function_exists( 'vbl_get_current_language' ) ? vbl_get_current_language() : ( function_exists( 'pll_current_language' ) ? pll_current_language( 'slug' ) : 'pt' ),
+        'i18n'        => array(
+            'sending'          => function_exists( 'vbl__' ) ? vbl__( 'A ENVIAR...' ) : 'A ENVIAR...',
+            'sendingMsg'       => function_exists( 'vbl__' ) ? vbl__( 'A enviar a sua mensagem...' ) : 'A enviar a sua mensagem...',
+            'sendingEventos'   => function_exists( 'vbl__' ) ? vbl__( 'A enviar pedido de orçamento...' ) : 'A enviar pedido de orçamento...',
+            'sendingCarreiras' => function_exists( 'vbl__' ) ? vbl__( 'A submeter a tua candidatura...' ) : 'A submeter a tua candidatura...',
+            'successMsg'       => function_exists( 'vbl__' ) ? vbl__( 'Obrigado! A sua mensagem foi enviada com sucesso.' ) : 'Obrigado! A sua mensagem foi enviada com sucesso.',
+            'successEventos'   => function_exists( 'vbl__' ) ? vbl__( 'Obrigado! O seu pedido de orçamento foi enviado com sucesso.' ) : 'Obrigado! O seu pedido de orçamento foi enviado com sucesso.',
+            'successCarreiras' => function_exists( 'vbl__' ) ? vbl__( 'Candidatura enviada com sucesso! Obrigado.' ) : 'Candidatura enviada com sucesso! Obrigado.',
+            'errorMsg'         => function_exists( 'vbl__' ) ? vbl__( 'Ocorreu um erro ao enviar. Por favor tente novamente.' ) : 'Ocorreu um erro ao enviar. Por favor tente novamente.',
+            'connError'        => function_exists( 'vbl__' ) ? vbl__( 'Ocorreu um erro de ligação. Por favor tente novamente.' ) : 'Ocorreu um erro de ligação. Por favor tente novamente.',
+            'cvRequired'       => function_exists( 'vbl__' ) ? vbl__( 'Por favor anexe o seu currículo (CV).' ) : 'Por favor anexe o seu currículo (CV).',
+            'cvLimit'          => function_exists( 'vbl__' ) ? vbl__( 'O ficheiro selecionado excede o limite máximo de 10MB.' ) : 'O ficheiro selecionado excede o limite máximo de 10MB.',
+            'nlSuccess'        => function_exists( 'vbl__' ) ? vbl__( 'Obrigado pela subscrição!' ) : 'Obrigado pela subscrição!',
+            'nlError'          => function_exists( 'vbl__' ) ? vbl__( 'Erro ao processar. Tente novamente.' ) : 'Erro ao processar. Tente novamente.',
+        ),
     ) );
 
     // Mirai Booking Engine Core (Option 3 Integration)

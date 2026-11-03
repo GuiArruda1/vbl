@@ -10,6 +10,47 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
+ * Get current language slug (e.g. 'pt', 'en') with multi-layered fallback
+ *
+ * @return string
+ */
+function vbl_get_current_language() {
+    if ( function_exists( 'pll_current_language' ) ) {
+        $slug = pll_current_language( 'slug' );
+        if ( ! empty( $slug ) ) {
+            return strtolower( $slug );
+        }
+    }
+
+    // Check queried object / post language
+    $post_id = get_the_ID();
+    if ( ! $post_id && isset( $GLOBALS['post']->ID ) ) {
+        $post_id = $GLOBALS['post']->ID;
+    }
+    if ( $post_id && function_exists( 'pll_get_post_language' ) ) {
+        $lang = pll_get_post_language( $post_id, 'slug' );
+        if ( ! empty( $lang ) ) {
+            return strtolower( $lang );
+        }
+    }
+
+    // Check request URI (e.g. /en/...)
+    if ( isset( $_SERVER['REQUEST_URI'] ) ) {
+        $uri = (string) $_SERVER['REQUEST_URI'];
+        if ( preg_match( '#^/([a-z]{2})(?:/|$)#i', $uri, $matches ) ) {
+            return strtolower( $matches[1] );
+        }
+    }
+
+    // Check $_GET['lang']
+    if ( ! empty( $_GET['lang'] ) && is_string( $_GET['lang'] ) ) {
+        return strtolower( sanitize_text_field( $_GET['lang'] ) );
+    }
+
+    return 'pt';
+}
+
+/**
  * Get formatted language switcher data from Polylang (with graceful fallback)
  *
  * @return array
@@ -194,6 +235,69 @@ function vbl_get_default_translations( $lang = 'en' ) {
             'Quartos'                           => 'Rooms',
             'Quantidade'                        => 'Quantity',
             'Fechar'                            => 'Close',
+
+            // Formulários e Contactos
+            'NOME'                              => 'NAME',
+            'Nome'                              => 'Name',
+            'NOME COMPLETO'                     => 'FULL NAME',
+            'Nome Completo'                     => 'Full Name',
+            'EMAIL'                             => 'EMAIL',
+            'Email'                             => 'Email',
+            'CONTACTO TELEFÓNICO'               => 'PHONE NUMBER',
+            'Contacto Telefónico'               => 'Phone Number',
+            'TELEFONE'                          => 'PHONE',
+            'Telefone'                          => 'Phone',
+            'ASSUNTO'                           => 'SUBJECT',
+            'Assunto'                           => 'Subject',
+            'MENSAGEM'                          => 'MESSAGE',
+            'Mensagem'                          => 'Message',
+            'MENSAGEM / DETALHES DO EVENTO'     => 'MESSAGE / EVENT DETAILS',
+            'EMPRESA / TIPO DE EVENTO'          => 'COMPANY / EVENT TYPE',
+            'POSIÇÃO A QUE ME CANDIDATO'        => 'POSITION APPLIED FOR',
+            'Posição a que me candidato'        => 'Position applied for',
+            'UPLOAD CV'                         => 'UPLOAD CV',
+            'Upload CV'                         => 'Upload CV',
+            'Carregar currículo (PDF, DOC, DOCX)' => 'Upload CV (PDF, DOC, DOCX)',
+            'Selecionar ficheiro'               => 'Select file',
+            'Remover ficheiro'                  => 'Remove file',
+            'ENVIAR PEDIDO'                     => 'SEND REQUEST',
+            'Enviar Pedido'                     => 'Send Request',
+            'Enviar pedido'                     => 'Send request',
+            'ENVIAR CANDIDATURA'                => 'SUBMIT APPLICATION',
+            'Enviar Candidatura'                => 'Submit Application',
+            'ENTRAR EM<br>CONTACTO'             => 'GET IN<br>TOUCH',
+            'Entrar em<br>Contacto'             => 'Get in<br>Touch',
+            'ENTRAR EM CONTACTO'                => 'GET IN TOUCH',
+            'Entrar em Contacto'                => 'Get in Touch',
+            'Li e aceito a'                     => 'I have read and accept the',
+            'Li e aceito a '                    => 'I have read and accept the ',
+            'Política de Privacidade'           => 'Privacy Policy',
+            'Política de Privacidade.'          => 'Privacy Policy.',
+            'Política de privacidade e cookies' => 'Privacy and Cookies Policy',
+            'A enviar...'                       => 'Sending...',
+            'A ENVIAR...'                       => 'SENDING...',
+            'A enviar mensagem...'              => 'Sending message...',
+            'A enviar a sua mensagem...'         => 'Sending your message...',
+            'A enviar pedido de orçamento...'   => 'Sending quotation request...',
+            'A submeter a tua candidatura...'   => 'Submitting your application...',
+            'Obrigado! A sua mensagem foi enviada com sucesso.' => 'Thank you! Your message has been sent successfully.',
+            'Obrigado! A sua mensagem foi enviada com sucesso. Responderemos com brevidade.' => 'Thank you! Your message has been sent successfully. We will reply shortly.',
+            'Obrigado! A sua mensagem foi enviada com sucesso. Entraremos em contacto brevemente.' => 'Thank you! Your message has been sent successfully. We will contact you shortly.',
+            'Obrigado! O seu pedido de orçamento foi enviado com sucesso.' => 'Thank you! Your quotation request has been sent successfully.',
+            'Obrigado! O seu pedido de orçamento foi enviado com sucesso. Entraremos em contacto brevemente.' => 'Thank you! Your quotation request has been sent successfully. We will contact you shortly.',
+            'Candidatura enviada com sucesso! Obrigado.' => 'Application submitted successfully! Thank you.',
+            'Mensagem enviada com sucesso!'     => 'Message sent successfully!',
+            'Ocorreu um erro ao enviar. Por favor tente novamente.' => 'An error occurred while sending. Please try again.',
+            'Ocorreu um erro ao enviar. Por favor tenta novamente.' => 'An error occurred while sending. Please try again.',
+            'Ocorreu um erro de ligação. Por favor tente novamente.' => 'A connection error occurred. Please try again.',
+            'Ocorreu um erro de ligação ao servidor. Por favor tenta novamente.' => 'A server connection error occurred. Please try again.',
+            'Por favor preencha todos os campos obrigatórios.' => 'Please fill in all required fields.',
+            'Por favor anexe o seu currículo (CV).' => 'Please attach your curriculum vitae (CV).',
+            'O ficheiro selecionado excede o limite máximo de 10MB.' => 'The selected file exceeds the maximum limit of 10MB.',
+            'Sessão expirada. Por favor recarregue a página.' => 'Session expired. Please reload the page.',
+            'Obrigado pela subscrição!'          => 'Thank you for subscribing!',
+            'Email subscrito com sucesso!'      => 'Successfully subscribed!',
+            'Erro ao processar. Tente novamente.' => 'Error processing. Please try again.',
         ),
     );
 
@@ -222,7 +326,7 @@ function vbl__( $string, $context = 'vila-baleira' ) {
     }
 
     // Fallback dictionary if Polylang hasn't set a translation yet for current language
-    $current_lang = function_exists( 'pll_current_language' ) ? pll_current_language( 'slug' ) : '';
+    $current_lang = function_exists( 'vbl_get_current_language' ) ? vbl_get_current_language() : ( function_exists( 'pll_current_language' ) ? pll_current_language( 'slug' ) : '' );
     if ( 'en' === $current_lang ) {
         $dict = vbl_get_default_translations( 'en' );
         if ( isset( $dict[ $trimmed ] ) ) {
@@ -231,6 +335,65 @@ function vbl__( $string, $context = 'vila-baleira' ) {
     }
 
     return __( $string, $context );
+}
+
+/**
+ * Output escaped translated string
+ *
+ * @param string $string Original string in Portuguese
+ * @param string $context Text domain or context
+ */
+function vbl_e( $string, $context = 'vila-baleira' ) {
+    echo esc_html( vbl__( $string, $context ) );
+}
+
+/**
+ * Output escaped attribute translated string
+ *
+ * @param string $string Original string in Portuguese
+ * @param string $context Text domain or context
+ */
+function vbl_attr_e( $string, $context = 'vila-baleira' ) {
+    echo esc_attr( vbl__( $string, $context ) );
+}
+
+/**
+ * Get localized privacy policy page URL
+ *
+ * @return string
+ */
+function vbl_get_privacy_policy_url() {
+    $custom = function_exists( 'vbl_field' ) ? vbl_field( 'vbl_privacy_url', false, '' ) : '';
+    if ( ! empty( $custom ) ) {
+        return function_exists( 'vbl_resolve_url' ) ? vbl_resolve_url( $custom ) : $custom;
+    }
+
+    $cur_lang = function_exists( 'vbl_get_current_language' ) ? vbl_get_current_language() : ( function_exists( 'pll_current_language' ) ? pll_current_language( 'slug' ) : '' );
+
+    // Check by post path
+    $slug_candidates = ( 'en' === $cur_lang )
+        ? array( 'privacy-cookies-policy', 'privacy-policy', 'politica-de-privacidade-e-cookies', 'politica-de-privacidade' )
+        : array( 'politica-de-privacidade-e-cookies', 'politica-de-privacidade', 'privacy-cookies-policy' );
+
+    foreach ( $slug_candidates as $slug ) {
+        $page = get_page_by_path( $slug );
+        if ( $page ) {
+            if ( ! empty( $cur_lang ) && function_exists( 'pll_get_post' ) ) {
+                $trans_id = pll_get_post( $page->ID, $cur_lang );
+                if ( $trans_id ) {
+                    return get_permalink( $trans_id );
+                }
+            }
+            return get_permalink( $page->ID );
+        }
+    }
+
+    $wp_privacy = function_exists( 'get_privacy_policy_url' ) ? get_privacy_policy_url() : '';
+    if ( ! empty( $wp_privacy ) ) {
+        return $wp_privacy;
+    }
+
+    return home_url( '/politica-de-privacidade-e-cookies' );
 }
 
 /**
@@ -332,5 +495,15 @@ add_action( 'init', function() {
         pll_register_string( 'vbl_booking_entrada_saida', 'Entrada · Saída', 'Vila Baleira - Reservas' );
         pll_register_string( 'vbl_booking_2adultos_1quarto', '2 adultos · 1 quarto', 'Vila Baleira - Reservas' );
         pll_register_string( 'vbl_booking_confirmar', 'Confirmar', 'Vila Baleira - Reservas' );
+
+        // Formulários & Contactos
+        pll_register_string( 'vbl_form_nome', 'NOME', 'Vila Baleira - Formulários' );
+        pll_register_string( 'vbl_form_email', 'EMAIL', 'Vila Baleira - Formulários' );
+        pll_register_string( 'vbl_form_telefone', 'CONTACTO TELEFÓNICO', 'Vila Baleira - Formulários' );
+        pll_register_string( 'vbl_form_assunto', 'ASSUNTO', 'Vila Baleira - Formulários' );
+        pll_register_string( 'vbl_form_mensagem', 'MENSAGEM', 'Vila Baleira - Formulários' );
+        pll_register_string( 'vbl_form_empresa', 'EMPRESA / TIPO DE EVENTO', 'Vila Baleira - Formulários' );
+        pll_register_string( 'vbl_form_enviar', 'ENVIAR PEDIDO', 'Vila Baleira - Formulários' );
+        pll_register_string( 'vbl_form_politica_priv', 'Política de Privacidade', 'Vila Baleira - Formulários' );
     }
 } );
