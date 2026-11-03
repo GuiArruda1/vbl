@@ -343,7 +343,7 @@ $frase_line3 = vbl_field( 'vbl_quarto_frase_line3', $post_id, 'LACUS EGET UT SIT
 
       <!-- Botão Reservar -->
       <a href="<?php echo esc_url( $hotel_booking_url ); ?>" class="vbl-btn-microsite w-[180px]">
-        <span>RESERVAR</span>
+        <span><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'RESERVAR' ) : 'RESERVAR' ); ?></span>
         <svg viewBox="0 0 12 12" fill="none">
           <path d="M1 11L11 1H3.5M11 1V8.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>

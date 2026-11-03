@@ -252,15 +252,29 @@ add_action( 'manage_page_posts_custom_column', function( $column, $post_id ) {
 function vbl_get_mega_menu_hotels() {
     $known_order = array( 'porto-santo', 'suites', 'village', 'funchal', 'madeira', 'residences', 'residence' );
 
-    $hotel_pages = get_posts( array(
-        'post_type'      => 'page',
-        'post_status'    => 'publish',
-        'posts_per_page' => -1,
-        'meta_key'       => '_wp_page_template',
-        'meta_value'     => 'page-templates/page-hotel-home.php',
-        'orderby'        => 'menu_order ID',
-        'order'          => 'ASC',
-    ) );
+    $current_lang = function_exists( 'pll_current_language' ) ? pll_current_language( 'slug' ) : '';
+
+    $query_args = array(
+        'post_type'        => 'page',
+        'post_status'      => 'publish',
+        'posts_per_page'   => -1,
+        'meta_key'         => '_wp_page_template',
+        'meta_value'       => 'page-templates/page-hotel-home.php',
+        'orderby'          => 'menu_order ID',
+        'order'            => 'ASC',
+        'suppress_filters' => false,
+    );
+
+    if ( ! empty( $current_lang ) ) {
+        $query_args['lang'] = $current_lang;
+    }
+
+    $hotel_pages = get_posts( $query_args );
+
+    if ( empty( $hotel_pages ) ) {
+        unset( $query_args['lang'] );
+        $hotel_pages = get_posts( $query_args );
+    }
 
     $defaults_by_slug = array(
         'porto-santo' => array(

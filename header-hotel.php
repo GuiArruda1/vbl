@@ -136,7 +136,7 @@ $is_contactos_active    = (strpos($current_template, 'hotel-contactos') !== fals
                   <!-- Slider Arrows -->
                   <button
                     class="absolute left-6 xl:left-[4%] top-[40%] z-10 w-10 h-10 border border-[#00B5B4] text-[#00B5B4] bg-transparent flex items-center justify-center hover:bg-[#00B5B4] hover:text-white transition-colors cursor-pointer"
-                    aria-label="Anterior">
+                    aria-label="<?php echo esc_attr( function_exists( 'vbl__' ) ? vbl__( 'Anterior' ) : 'Anterior' ); ?>">
                     <svg class="w-4 h-4 sm:w-5 sm:h-5" viewBox="0 0 30 30" fill="none" stroke="currentColor"
                       stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                       <path d="M28 15H1M1 15L14 2M1 15L14 28" />
@@ -145,7 +145,7 @@ $is_contactos_active    = (strpos($current_template, 'hotel-contactos') !== fals
 
                   <button
                     class="absolute right-6 xl:right-[4%] top-[40%] z-10 w-10 h-10 border border-[#00B5B4] text-[#00B5B4] bg-transparent flex items-center justify-center hover:bg-[#00B5B4] hover:text-white transition-colors cursor-pointer"
-                    aria-label="Seguinte">
+                    aria-label="<?php echo esc_attr( function_exists( 'vbl__' ) ? vbl__( 'Seguinte' ) : 'Seguinte' ); ?>">
                     <svg class="w-4 h-4 sm:w-5 sm:h-5" viewBox="0 0 30 30" fill="none" stroke="currentColor"
                       stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                       <path d="M1 15H28M28 15L15 2M28 15L15 28" />
@@ -233,7 +233,7 @@ $is_contactos_active    = (strpos($current_template, 'hotel-contactos') !== fals
         <button type="button"
           class="vbl-hotels-trigger text-[11px] 2xl:text-[13px] tracking-[0.8px] 2xl:tracking-[1.3px] uppercase text-white hover:text-white transition-colors flex items-center gap-1.5 cursor-pointer"
           data-mega-trigger data-mega-top="80">
-          <span>Hotéis</span>
+          <span><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Hotéis' ) : 'Hotéis' ); ?></span>
           <svg class="vbl-dropdown-arrow w-2.5 h-1.5 text-current transition-transform duration-300" viewBox="0 0 10 6" fill="none">
             <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" />
           </svg>
@@ -242,7 +242,8 @@ $is_contactos_active    = (strpos($current_template, 'hotel-contactos') !== fals
         <!-- Selector Idioma Desktop -->
         <div class="relative group h-full flex items-center vbl-lang-switcher">
           <button type="button"
-            class="vbl-lang-trigger text-[11px] 2xl:text-[13px] tracking-[0.8px] 2xl:tracking-[1.3px] uppercase text-white hover:text-white transition-colors flex items-center gap-1.5 cursor-pointer py-2">
+            class="vbl-lang-trigger text-[11px] 2xl:text-[13px] tracking-[0.8px] 2xl:tracking-[1.3px] uppercase text-white hover:text-white transition-colors flex items-center gap-1.5 cursor-pointer py-2"
+            aria-label="<?php echo esc_attr( function_exists( 'vbl__' ) ? vbl__( 'Alterar idioma' ) : 'Alterar idioma' ); ?>">
             <span><?php echo esc_html($lang_data['current']); ?></span>
             <svg class="w-2.5 h-1.5 text-current group-hover:rotate-180 transition-transform duration-300"
               viewBox="0 0 10 6" fill="none">
@@ -263,7 +264,7 @@ $is_contactos_active    = (strpos($current_template, 'hotel-contactos') !== fals
         <!-- Botão Reservar -->
         <a href="<?php echo esc_url($hotel_booking_url); ?>"
           class="vbl-hotel-btn-reservar group inline-flex items-center border border-white text-white text-[11px] 2xl:text-[13px] tracking-[1px] 2xl:tracking-[1.4px] uppercase px-3.5 2xl:px-5 py-1.5 2xl:py-2 hover:bg-[#0da9a6] hover:border-[#0da9a6] hover:text-white transition-all duration-300">
-          <span class="mr-2 2xl:mr-3">Reservar</span>
+          <span class="mr-2 2xl:mr-3"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Reservar' ) : 'Reservar' ); ?></span>
           <svg class="w-[10px] h-[10px] transition-transform duration-300 group-hover:rotate-45" viewBox="0 0 11 11"
             fill="none">
             <path
@@ -277,7 +278,7 @@ $is_contactos_active    = (strpos($current_template, 'hotel-contactos') !== fals
       <div class="xl:hidden flex items-center gap-3">
         <!-- Language Switcher Mobile Header -->
         <div class="relative group vbl-lang-switcher">
-          <button type="button" class="vbl-lang-trigger text-[12px] sm:text-[14px] tracking-[1.4px] uppercase text-white flex items-center gap-1.5 cursor-pointer vbl-hotel-lang-mobile">
+          <button type="button" class="vbl-lang-trigger text-[12px] sm:text-[14px] tracking-[1.4px] uppercase text-white flex items-center gap-1.5 cursor-pointer vbl-hotel-lang-mobile" aria-label="<?php echo esc_attr( function_exists( 'vbl__' ) ? vbl__( 'Alterar idioma' ) : 'Alterar idioma' ); ?>">
             <span><?php echo esc_html($lang_data['current']); ?></span>
             <svg class="w-2 h-1 group-hover:rotate-180 transition-transform duration-300 text-white" viewBox="0 0 8 4" fill="none" aria-hidden="true"><path d="M1 0.5L4 3.5L7 0.5" stroke="currentColor" stroke-width="1.2"/></svg>
           </button>
@@ -292,7 +293,7 @@ $is_contactos_active    = (strpos($current_template, 'hotel-contactos') !== fals
 
         <a href="<?php echo esc_url($hotel_booking_url); ?>"
           class="vbl-hotel-btn-reservar group hidden [@media(min-width:426px)_and_(max-width:1279px)]:flex items-center gap-2 sm:gap-4 px-3 py-1.5 sm:px-4 sm:py-2 border border-white text-white text-[12px] sm:text-[14px] tracking-[1.2px] sm:tracking-[1.4px] uppercase transition-all duration-300">
-          <span>Reservar</span>
+          <span><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Reservar' ) : 'Reservar' ); ?></span>
           <svg class="w-[9px] h-[9px] sm:w-[10px] sm:h-[10px] transition-transform duration-300 group-hover:rotate-45"
             viewBox="0 0 11 11" fill="none" aria-hidden="true">
             <path
@@ -301,7 +302,7 @@ $is_contactos_active    = (strpos($current_template, 'hotel-contactos') !== fals
           </svg>
         </a>
         <button class="w-8 h-8 flex flex-col items-center justify-center gap-1.5 menu-toggle cursor-pointer"
-          aria-label="Abrir Menu">
+          aria-label="<?php echo esc_attr( function_exists( 'vbl__' ) ? vbl__( 'Abrir Menu' ) : 'Abrir Menu' ); ?>">
           <span class="w-6 h-px bg-white transition-colors duration-300"></span>
           <span class="w-6 h-px bg-white transition-colors duration-300"></span>
           <span class="w-4 h-px bg-white self-end transition-colors duration-300"></span>
@@ -363,7 +364,7 @@ $is_contactos_active    = (strpos($current_template, 'hotel-contactos') !== fals
           </div>
         <?php endif; ?>
       </a>
-      <button id="menuClose" class="w-8 h-8 flex items-center justify-center" aria-label="Fechar menu">
+      <button id="menuClose" class="w-8 h-8 flex items-center justify-center cursor-pointer" aria-label="<?php echo esc_attr( function_exists( 'vbl__' ) ? vbl__( 'Fechar menu' ) : 'Fechar menu' ); ?>">
         <svg class="w-5 h-5" viewBox="0 0 20 20" fill="none">
           <line x1="2" y1="2" x2="18" y2="18" stroke="#0d5257" stroke-width="1.5" />
           <line x1="18" y1="2" x2="2" y2="18" stroke="#0d5257" stroke-width="1.5" />
@@ -375,7 +376,7 @@ $is_contactos_active    = (strpos($current_template, 'hotel-contactos') !== fals
       <button type="button" id="mobileHotelToggle"
         class="flex items-center justify-between w-full text-left cursor-pointer">
         <span
-          class="text-[16px] tracking-[1.6px] uppercase text-[#0d5257] font-medium pointer-events-none">Hotéis</span>
+          class="text-[16px] tracking-[1.6px] uppercase text-[#0d5257] font-medium pointer-events-none"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Hotéis' ) : 'Hotéis' ); ?></span>
         <svg class="w-3 h-2 text-[#0d5257] transition-transform duration-300 pointer-events-none" id="mobileHotelArrow"
           viewBox="0 0 12 8" fill="none">
           <path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" stroke-width="1.5" />
@@ -405,9 +406,9 @@ $is_contactos_active    = (strpos($current_template, 'hotel-contactos') !== fals
               </div>
             </a>
           <?php endforeach; ?>
-          <a href="<?php echo esc_url(home_url('/hoteis')); ?>"
+          <a href="<?php echo esc_url( function_exists( 'vbl_resolve_url' ) ? vbl_resolve_url( '/hoteis' ) : home_url( '/hoteis' ) ); ?>"
             class="flex items-center justify-center gap-3 py-3 mt-1 border-t border-[#eee8e5]">
-            <span class="text-[12px] tracking-[1.2px] uppercase text-[#bc945b] font-medium">Ver todos os hotéis</span>
+            <span class="text-[12px] tracking-[1.2px] uppercase text-[#bc945b] font-medium"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Ver todos os hotéis' ) : 'Ver todos os hotéis' ); ?></span>
             <svg class="w-[8px] h-[8px] text-[#bc945b]" viewBox="0 0 11 11" fill="none">
               <path d="M1 10L10 1M10 1H3M10 1V8" stroke="currentColor" stroke-width="1" />
             </svg>
@@ -463,7 +464,7 @@ $is_contactos_active    = (strpos($current_template, 'hotel-contactos') !== fals
                     <div class="flex items-center gap-3">
                       <div class="w-6 h-px bg-[#0da9a6]"></div>
                       <span
-                        class="font-body text-[8px] md:text-[9px] tracking-[1px] uppercase text-[#0da9a6] font-normal">QUARTO</span>
+                        class="font-body text-[8px] md:text-[9px] tracking-[1px] uppercase text-[#0da9a6] font-normal"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'QUARTO' ) : 'QUARTO' ); ?></span>
                     </div>
                     <span
                       class="font-display text-[15px] md:text-[17px] text-[#0d5257] uppercase leading-tight"><?php echo esc_html(get_the_title($mr_post->ID)); ?></span>
@@ -473,7 +474,7 @@ $is_contactos_active    = (strpos($current_template, 'hotel-contactos') !== fals
             endif; ?>
             <a href="<?php echo esc_url($subpage_links['rooms']['url']); ?>"
               class="flex items-center justify-center gap-3 py-3 mt-1 border-t border-[#eee8e5]">
-              <span class="text-[12px] tracking-[1.2px] uppercase text-[#0da9a6] font-medium">Ver todos os quartos</span>
+              <span class="text-[12px] tracking-[1.2px] uppercase text-[#0da9a6] font-medium"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Ver todos os quartos' ) : 'Ver todos os quartos' ); ?></span>
               <svg class="w-[8px] h-[8px] text-[#0da9a6]" viewBox="0 0 11 11" fill="none">
                 <path d="M1 10L10 1M10 1H3M10 1V8" stroke="currentColor" stroke-width="1" />
               </svg>
@@ -504,14 +505,14 @@ $is_contactos_active    = (strpos($current_template, 'hotel-contactos') !== fals
       <div class="h-px bg-[#eee8e5] my-2"></div>
       <a href="<?php echo esc_url($hotel_booking_url); ?>"
         class="vbl-hotel-btn-reservar flex items-center justify-between w-full px-6 py-4 border border-[#0da9a6] text-[#0da9a6] text-[14px] tracking-[1.4px] uppercase my-2">
-        <span>Reservar</span>
+        <span><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Reservar' ) : 'Reservar' ); ?></span>
         <svg class="w-[10px] h-[10px]" viewBox="0 0 11 11" fill="none">
           <path d="M1 10L10 1M10 1H3M10 1V8" stroke="currentColor" stroke-width="1.2" />
         </svg>
       </a>
       <!-- Mobile Menu Languages -->
       <div class="flex items-center gap-4 pt-2">
-        <span class="text-[12px] uppercase text-[#0d5257]/60">Idioma:</span>
+        <span class="text-[12px] uppercase text-[#0d5257]/60"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Idioma:' ) : 'Idioma:' ); ?></span>
         <div class="flex items-center gap-3">
           <?php foreach ($lang_data['languages'] as $lang_item): ?>
             <a href="<?php echo esc_url($lang_item['url']); ?>"

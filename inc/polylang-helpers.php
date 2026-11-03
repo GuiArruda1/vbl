@@ -116,7 +116,18 @@ function vbl_get_default_translations( $lang = 'en' ) {
             'Gift Card'                         => 'Gift Card',
             'Contactos'                         => 'Contacts',
             'Reservar'                          => 'Book Now',
+            'RESERVAR'                          => 'BOOK NOW',
+            'RESERVAR ESTADIA'                  => 'BOOK STAY',
             'Alterar idioma'                    => 'Change language',
+            'Idioma:'                           => 'Language:',
+            'Abrir Menu'                        => 'Open Menu',
+            'Fechar menu'                       => 'Close Menu',
+            'Anterior'                          => 'Previous',
+            'Seguinte'                          => 'Next',
+            'Menu'                              => 'Menu',
+            'QUARTO'                            => 'ROOM',
+            'Quarto'                            => 'Room',
+            'Ver todos os quartos'              => 'View all rooms',
 
             // Footer Section Headers
             'GRUPO VILA BALEIRA'                => 'VILA BALEIRA GROUP',
@@ -278,6 +289,10 @@ add_action( 'init', function() {
         pll_register_string( 'vbl_gift_card', 'Gift Card', 'Vila Baleira' );
         pll_register_string( 'vbl_contactos', 'Contactos', 'Vila Baleira' );
         pll_register_string( 'vbl_voltar_topo', 'Voltar ao topo', 'Vila Baleira' );
+        pll_register_string( 'vbl_idioma', 'Idioma:', 'Vila Baleira' );
+        pll_register_string( 'vbl_abrir_menu', 'Abrir Menu', 'Vila Baleira' );
+        pll_register_string( 'vbl_fechar_menu', 'Fechar menu', 'Vila Baleira' );
+        pll_register_string( 'vbl_menu', 'Menu', 'Vila Baleira' );
 
         // Footer Section Headers
         pll_register_string( 'vbl_footer_grupo', 'GRUPO VILA BALEIRA', 'Vila Baleira - Rodapé' );

@@ -96,24 +96,24 @@ $frase2_desc  = vbl_field( 'vbl_frase2_desc', false, 'Deixe-se envolver pela bel
           ) );
           ?>
         </nav>
-        <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-2">
+        <a href="<?php echo esc_url( function_exists( 'pll_home_url' ) ? pll_home_url() : home_url( '/' ) ); ?>" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-2">
           <img src="<?php echo vbl_img( 'logo-top-white.svg' ); ?>" alt="<?php bloginfo( 'name' ); ?>" class="h-7 xl:h-[48px] w-auto">
           <img src="<?php echo vbl_img( 'logo-bottom-white.svg' ); ?>" alt="" class="h-[10px] xl:h-[14px] w-auto">
         </a>
         <div class="font-body hidden xl:flex items-center gap-6 xl:gap-10">
-          <a href="<?php echo esc_url( home_url( '/contactos' ) ); ?>" class="vbl-nav-link-white text-[14px] tracking-[1.4px] uppercase text-white">Contactos</a>
+          <a href="<?php echo esc_url( function_exists( 'vbl_resolve_url' ) ? vbl_resolve_url( '/contactos' ) : home_url( '/contactos' ) ); ?>" class="vbl-nav-link-white text-[14px] tracking-[1.4px] uppercase text-white"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Contactos' ) : 'Contactos' ); ?></a>
           <?php if ( function_exists( 'vbl_render_language_switcher' ) ) { vbl_render_language_switcher( 'white' ); } ?>
           	<a href="#reservas" class="group vbl-btn-reservar flex items-center gap-16 px-4 py-2 border border-white text-white text-[14px] tracking-[1.4px] uppercase transition-all duration-500 ease-in-out">
-				<span>Reservar</span>
+				<span><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Reservar' ) : 'Reservar' ); ?></span>
 				<img src="<?php echo vbl_img( 'seta-branca.svg' ); ?>" alt="" class="w-[10px] h-[10px] transition-transform duration-300 group-hover:rotate-45">
 			</a>			
         </div>
-        <button class="xl:hidden w-8 h-8 flex flex-col items-center justify-center gap-1.5 menu-toggle" aria-label="Menu">
+        <button class="xl:hidden w-8 h-8 flex flex-col items-center justify-center gap-1.5 menu-toggle" aria-label="<?php echo esc_attr( function_exists( 'vbl__' ) ? vbl__( 'Menu' ) : 'Menu' ); ?>">
           <span class="w-6 h-px bg-white"></span><span class="w-6 h-px bg-white"></span><span class="w-4 h-px bg-white self-end"></span>
         </button>
 		<!-- reservar semi mobile -->
 		<a href="#reservas" class="hidden [@media(min-width:426px)_and_(max-width:1279px)]:flex font-body group items-center gap-16 px-4 py-2 border border-white text-white text-[14px] tracking-[1.4px] uppercase transition-all duration-500 ease-in-out">
-			<span>Reservar</span>
+			<span><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Reservar' ) : 'Reservar' ); ?></span>
 			<img src="<?php echo vbl_img( 'seta-branca.svg' ); ?>" alt="" class="w-[10px] h-[10px] transition-transform duration-300 group-hover:rotate-45">
 		</a>
 		<div class="hidden max-[425px]:flex font-body">
@@ -573,6 +573,8 @@ function vbl_fallback_menu_transparent() {
         $dropdown = ! empty( $item['dropdown'] ) ? ' <svg class="vbl-dropdown-arrow w-2 h-1" viewBox="0 0 8 4" fill="none"><path d="M1 0.5L4 3.5L7 0.5" stroke="white" stroke-width="1.2"/></svg>' : '';
         $extra = ! empty( $item['dropdown'] ) ? ' flex items-center gap-2' : '';
         $mega = ! empty( $item['dropdown'] ) ? ' data-mega-trigger data-mega-top="144"' : '';
-        echo '<a href="' . esc_url( home_url( $item['url'] ) ) . '" class="vbl-nav-link-white text-[14px] tracking-[1.4px] uppercase text-white' . $extra . '"' . $mega . '>' . esc_html( $item['label'] ) . $dropdown . '</a>';
+        $label = function_exists( 'vbl__' ) ? vbl__( $item['label'] ) : $item['label'];
+        $url   = function_exists( 'vbl_resolve_url' ) ? vbl_resolve_url( $item['url'] ) : home_url( $item['url'] );
+        echo '<a href="' . esc_url( $url ) . '" class="vbl-nav-link-white text-[14px] tracking-[1.4px] uppercase text-white' . $extra . '"' . $mega . '>' . esc_html( $label ) . $dropdown . '</a>';
     }
 }

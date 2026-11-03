@@ -42,21 +42,18 @@ $modal_btn           = vbl_field( 'vbl_giftcard_modal_btn', false, 'Enviar Pedid
   <div class="absolute font-body top-0 left-0 w-full h-20 xl:h-[80px] z-20">
     <div class="max-w-[1920px] mx-auto h-full flex items-center justify-between px-6 xl:px-10">
       <nav class="hidden lg:flex items-center gap-6 xl:gap-10">
-        <a href="<?php echo esc_url( home_url( '/hoteis' ) ); ?>" class="vbl-nav-link-white text-[14px] tracking-[1.4px] uppercase text-white flex items-center gap-2" data-mega-trigger data-mega-top="100">Hotéis <svg class="vbl-dropdown-arrow w-2 h-1" viewBox="0 0 8 4" fill="none"><path d="M1 0.5L4 3.5L7 0.5" stroke="white" stroke-width="1.2"/></svg></a>
-        <a href="<?php echo esc_url( home_url( '/o-grupo' ) ); ?>" class="vbl-nav-link-white text-[14px] tracking-[1.4px] uppercase text-white">O Grupo</a>
-        <a href="<?php echo esc_url( home_url( '/experiencias' ) ); ?>" class="vbl-nav-link-white text-[14px] tracking-[1.4px] uppercase text-white">Experiências</a>
-        <a href="<?php echo esc_url( home_url( '/gift-card' ) ); ?>" class="vbl-nav-link-white text-[14px] tracking-[1.4px] uppercase text-white">Gift Card</a>
+        <?php vbl_header_nav_items( 'transparent' ); ?>
       </nav>
-      <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-1">
+      <a href="<?php echo esc_url( function_exists( 'pll_home_url' ) ? pll_home_url() : home_url( '/' ) ); ?>" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-1">
         <img src="<?php echo vbl_img( 'logo-top-white.svg' ); ?>" alt="<?php bloginfo( 'name' ); ?>" class="h-7 xl:h-8 w-auto">
         <img src="<?php echo vbl_img( 'logo-bottom-white.svg' ); ?>" alt="" class="h-[8px] xl:h-[12px] w-auto">
       </a>
       <div class="hidden lg:flex items-center gap-6 xl:gap-10">
-        <a href="<?php echo esc_url( home_url( '/contactos' ) ); ?>" class="vbl-nav-link-white text-[14px] tracking-[1.4px] uppercase text-white">Contactos</a>
+        <a href="<?php echo esc_url( function_exists( 'vbl_resolve_url' ) ? vbl_resolve_url( '/contactos' ) : home_url( '/contactos' ) ); ?>" class="vbl-nav-link-white text-[14px] tracking-[1.4px] uppercase text-white"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Contactos' ) : 'Contactos' ); ?></a>
         <?php if ( function_exists( 'vbl_render_language_switcher' ) ) { vbl_render_language_switcher( 'white' ); } ?>
-        <a href="#" class="vbl-btn-reservar flex items-center gap-16 px-4 py-2 border border-white text-white text-[14px] tracking-[1.4px] uppercase"><span>Reservar</span><svg class="w-[10px] h-[10px]" viewBox="0 0 11 11" fill="none"><path d="M1 10L10 1M10 1H3M10 1V8" stroke="white" stroke-width="1.2"/></svg></a>
+        <a href="<?php echo esc_url( function_exists( 'pll_home_url' ) ? rtrim( pll_home_url(), '/' ) . '/#reservas' : home_url( '/#reservas' ) ); ?>" class="vbl-btn-reservar flex items-center gap-16 px-4 py-2 border border-white text-white text-[14px] tracking-[1.4px] uppercase"><span><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Reservar' ) : 'Reservar' ); ?></span><svg class="w-[10px] h-[10px]" viewBox="0 0 11 11" fill="none"><path d="M1 10L10 1M10 1H3M10 1V8" stroke="white" stroke-width="1.2"/></svg></a>
       </div>
-      <button class="lg:hidden w-8 h-8 flex flex-col items-center justify-center gap-1.5 menu-toggle" aria-label="Menu">
+      <button class="lg:hidden w-8 h-8 flex flex-col items-center justify-center gap-1.5 menu-toggle cursor-pointer" aria-label="<?php echo esc_attr( function_exists( 'vbl__' ) ? vbl__( 'Menu' ) : 'Menu' ); ?>">
         <span class="w-6 h-px bg-white"></span><span class="w-6 h-px bg-white"></span><span class="w-4 h-px bg-white self-end"></span>
       </button>
     </div>

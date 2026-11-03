@@ -60,21 +60,21 @@ $lang_data = function_exists( 'vbl_get_languages' ) ? vbl_get_languages() : arra
       </nav>
 
       <!-- Logo Central (White) -->
-      <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-1" aria-label="<?php bloginfo( 'name' ); ?>">
+      <a href="<?php echo esc_url( function_exists( 'pll_home_url' ) ? pll_home_url() : home_url( '/' ) ); ?>" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-1" aria-label="<?php bloginfo( 'name' ); ?>">
         <img src="<?php echo esc_url( vbl_img( 'logo-top-white.svg' ) ); ?>" alt="<?php bloginfo( 'name' ); ?>" class="h-7 xl:h-8 w-auto">
         <img src="<?php echo esc_url( vbl_img( 'logo-bottom-white.svg' ) ); ?>" alt="" class="h-[8px] xl:h-[12px] w-auto">
       </a>
 
       <!-- Nav Direita Desktop -->
       <div class="hidden xl:flex items-center gap-6 xl:gap-10">
-        <a href="<?php echo esc_url( home_url( '/contactos' ) ); ?>" class="vbl-nav-link-white text-[14px] tracking-[1.4px] uppercase text-white">Contactos</a>
+        <a href="<?php echo esc_url( function_exists( 'vbl_resolve_url' ) ? vbl_resolve_url( '/contactos' ) : home_url( '/contactos' ) ); ?>" class="vbl-nav-link-white text-[14px] tracking-[1.4px] uppercase text-white"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Contactos' ) : 'Contactos' ); ?></a>
         
         <!-- Language Switcher Desktop -->
         <?php if ( function_exists( 'vbl_render_language_switcher' ) ) { vbl_render_language_switcher( 'white' ); } ?>
 
         <!-- Botão Reservar Desktop -->
-        <a href="#" class="group vbl-btn-reservar flex items-center gap-16 px-4 py-2 border border-white text-white text-[14px] tracking-[1.4px] uppercase transition-all duration-500 ease-in-out">
-          <span>Reservar</span>
+        <a href="<?php echo esc_url( function_exists( 'pll_home_url' ) ? rtrim( pll_home_url(), '/' ) . '/#reservas' : home_url( '/#reservas' ) ); ?>" class="group vbl-btn-reservar flex items-center gap-16 px-4 py-2 border border-white text-white text-[14px] tracking-[1.4px] uppercase transition-all duration-500 ease-in-out">
+          <span><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Reservar' ) : 'Reservar' ); ?></span>
           <svg class="w-[10px] h-[10px] transition-transform duration-300 group-hover:rotate-45 fill-none" viewBox="0 0 11 11" fill="none" aria-hidden="true">
             <path d="M10.8535 10.5H9.85352V1.70703L0.707031 10.8535L0 10.1465L9.14648 1H0.353516V0H10.3535C10.6297 0 10.8535 0.223858 10.8535 0.5V10.5Z" fill="currentColor"/>
           </svg>
@@ -82,7 +82,7 @@ $lang_data = function_exists( 'vbl_get_languages' ) ? vbl_get_languages() : arra
       </div>
 
       <!-- Mobile Hamburger Button -->
-      <button class="xl:hidden w-8 h-8 flex flex-col items-center justify-center gap-1.5 menu-toggle cursor-pointer" aria-label="Abrir Menu" aria-expanded="false">
+      <button class="xl:hidden w-8 h-8 flex flex-col items-center justify-center gap-1.5 menu-toggle cursor-pointer" aria-label="<?php echo esc_attr( function_exists( 'vbl__' ) ? vbl__( 'Abrir Menu' ) : 'Abrir Menu' ); ?>" aria-expanded="false">
         <span class="w-6 h-px bg-white"></span>
         <span class="w-6 h-px bg-white"></span>
         <span class="w-4 h-px bg-white self-end"></span>
@@ -91,8 +91,8 @@ $lang_data = function_exists( 'vbl_get_languages' ) ? vbl_get_languages() : arra
       <!-- Mobile & Tablet RESERVAR Button -->
       <div class="xl:hidden flex items-center gap-3">
         <?php if ( function_exists( 'vbl_render_language_switcher' ) ) { vbl_render_language_switcher( 'white', true ); } ?>
-        <a href="#" class="vbl-btn-reservar group hidden [@media(min-width:426px)_and_(max-width:1279px)]:flex items-center gap-2 sm:gap-4 px-3 py-1.5 sm:px-4 sm:py-2 border border-white text-white text-[12px] sm:text-[14px] tracking-[1.2px] sm:tracking-[1.4px] uppercase transition-all duration-300">
-          <span>Reservar</span>
+        <a href="<?php echo esc_url( function_exists( 'pll_home_url' ) ? rtrim( pll_home_url(), '/' ) . '/#reservas' : home_url( '/#reservas' ) ); ?>" class="vbl-btn-reservar group hidden [@media(min-width:426px)_and_(max-width:1279px)]:flex items-center gap-2 sm:gap-4 px-3 py-1.5 sm:px-4 sm:py-2 border border-white text-white text-[12px] sm:text-[14px] tracking-[1.2px] sm:tracking-[1.4px] uppercase transition-all duration-300">
+          <span><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Reservar' ) : 'Reservar' ); ?></span>
           <svg class="w-[9px] h-[9px] sm:w-[10px] sm:h-[10px] transition-transform duration-300 group-hover:rotate-45" viewBox="0 0 11 11" fill="none" aria-hidden="true">
             <path d="M10.8535 10.5H9.85352V1.70703L0.707031 10.8535L0 10.1465L9.14648 1H0.353516V0H10.3535C10.6297 0 10.8535 0.223858 10.8535 0.5V10.5Z" fill="currentColor"/>
           </svg>
