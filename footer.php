@@ -36,7 +36,7 @@ $youtube   = vbl_opt( 'youtube', 'https://www.youtube.com/@VilaBaleiraHotels' );
 
         <!-- Grupo Vila Baleira Links -->
         <div class="flex flex-col gap-6">
-          <p class="font-medium text-[14px] tracking-[1.4px] uppercase text-[#0d5257]">GRUPO VILA BALEIRA</p>
+          <p class="font-medium text-[14px] tracking-[1.4px] uppercase text-[#0d5257]"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'GRUPO VILA BALEIRA' ) : 'GRUPO VILA BALEIRA' ); ?></p>
           <div class="grid grid-cols-2 gap-x-8 gap-y-2 font-light text-[16px] leading-[24px] text-black/80">
             <?php
             $footer_links = vbl_opt( 'footer_links', array(
@@ -49,7 +49,7 @@ $youtube   = vbl_opt( 'youtube', 'https://www.youtube.com/@VilaBaleiraHotels' );
                 if ( ! empty( $link['label'] ) ) :
             ?>
                 <a href="<?php echo esc_url( function_exists( 'vbl_resolve_url' ) ? vbl_resolve_url( $link['url'] ) : $link['url'] ); ?>" class="hover:text-[#bc945b] hover:underline hover:decoration-[#bc945b] hover:underline-offset-4 decoration-1 transition-all whitespace-nowrap">
-                  <?php echo esc_html( $link['label'] ); ?>
+                  <?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( $link['label'] ) : $link['label'] ); ?>
                 </a>
             <?php 
                 endif;
@@ -60,7 +60,7 @@ $youtube   = vbl_opt( 'youtube', 'https://www.youtube.com/@VilaBaleiraHotels' );
 
         <!-- Morada -->
         <div class="flex flex-col gap-6">
-          <p class="font-medium text-[14px] tracking-[1.4px] uppercase text-[#0d5257]">MORADA</p>
+          <p class="font-medium text-[14px] tracking-[1.4px] uppercase text-[#0d5257]"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'MORADA' ) : 'MORADA' ); ?></p>
           <p class="font-light text-[16px] leading-[24px] text-black/80 max-w-[200px]">
             <a href="https://maps.google.com/?q=<?php echo urlencode( strip_tags( $address ) ); ?>" target="_blank" rel="noopener" class="hover:text-[#bc945b] hover:underline hover:decoration-[#bc945b] hover:underline-offset-4 decoration-1 transition-all inline-block">
               <?php echo nl2br( esc_html( $address ) ); ?>
@@ -70,7 +70,7 @@ $youtube   = vbl_opt( 'youtube', 'https://www.youtube.com/@VilaBaleiraHotels' );
 
         <!-- Contactos -->
         <div class="flex flex-col gap-6">
-          <p class="font-medium text-[14px] tracking-[1.4px] uppercase text-[#0d5257]">CONTACTOS</p>
+          <p class="font-medium text-[14px] tracking-[1.4px] uppercase text-[#0d5257]"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'CONTACTOS' ) : 'CONTACTOS' ); ?></p>
           <div class="font-light text-[16px] leading-[24px] text-black/80 flex flex-col gap-1">
             <p><a href="tel:<?php echo esc_html( $phone ); ?>" class="hover:text-[#bc945b] hover:underline hover:decoration-[#bc945b] hover:underline-offset-4 decoration-1 transition-all whitespace-nowrap"><?php echo esc_html( $phone ); ?></a></p>
             <p><a href="mailto:<?php echo esc_html( $email ); ?>" class="hover:text-[#bc945b] hover:underline hover:decoration-[#bc945b] hover:underline-offset-4 decoration-1 transition-all"><?php echo esc_html( $email ); ?></a></p>
@@ -79,7 +79,7 @@ $youtube   = vbl_opt( 'youtube', 'https://www.youtube.com/@VilaBaleiraHotels' );
 
         <!-- Siga-nos -->
         <div class="flex flex-col gap-6">
-          <p class="font-medium text-[14px] tracking-[1.4px] uppercase text-[#0d5257]">SIGA-NOS</p>
+          <p class="font-medium text-[14px] tracking-[1.4px] uppercase text-[#0d5257]"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'SIGA-NOS' ) : 'SIGA-NOS' ); ?></p>
           <div class="flex items-center gap-5 text-[#0d5257]">
             <a href="<?php echo esc_url( $facebook ); ?>" target="_blank" rel="noopener" class="hover:text-[#bc945b] transition-colors duration-300">
               <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
@@ -119,9 +119,9 @@ $youtube   = vbl_opt( 'youtube', 'https://www.youtube.com/@VilaBaleiraHotels' );
               if ( ! empty( $llink['url'] ) && $llink['url'] !== '#' ) :
                   $resolved_url = function_exists( 'vbl_resolve_url' ) ? vbl_resolve_url( $llink['url'] ) : esc_url( $llink['url'] );
           ?>
-              <a href="<?php echo esc_url( $resolved_url ); ?>"<?php echo $target; ?> class="hover:text-[#bc945b] hover:underline hover:decoration-[#bc945b] hover:underline-offset-4 decoration-1 transition-all"><span class="whitespace-nowrap"><?php echo esc_html( $llink['label'] ); ?></span></a><span class="text-[#bc945b] hidden lg:inline">|</span>
+              <a href="<?php echo esc_url( $resolved_url ); ?>"<?php echo $target; ?> class="hover:text-[#bc945b] hover:underline hover:decoration-[#bc945b] hover:underline-offset-4 decoration-1 transition-all"><span class="whitespace-nowrap"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( $llink['label'] ) : $llink['label'] ); ?></span></a><span class="text-[#bc945b] hidden lg:inline">|</span>
           <?php else : ?>
-              <span class="whitespace-nowrap"><?php echo esc_html( $llink['label'] ); ?></span><span class="text-[#bc945b] hidden lg:inline">|</span>
+              <span class="whitespace-nowrap"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( $llink['label'] ) : $llink['label'] ); ?></span><span class="text-[#bc945b] hidden lg:inline">|</span>
           <?php
               endif;
           endforeach;
@@ -146,7 +146,7 @@ $youtube   = vbl_opt( 'youtube', 'https://www.youtube.com/@VilaBaleiraHotels' );
 	<!-- Reservar em mobile -->
 	<div id="barraFixaMobile" class="fixed bottom-0 left-0 right-0 z-[99999] bg-white border-t border-[#eee8e5] px-6 py-3 flex items-center justify-between shadow-[0_-4px_20px_rgba(0,0,0,0.1)] [@media(min-width:426px)]:hidden">		
     	<a href="#" class="font-body w-full flex items-center justify-between gap-4 px-6 py-4 border border-[#0d5257] text-[#0d5257] text-[14px] tracking-[1.4px] uppercase transition-all duration-300">
-        	<span>Reservar</span>
+        	<span><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Reservar' ) : 'Reservar' ); ?></span>
         	<svg class="w-[10px] h-[10px]" viewBox="0 0 11 11" fill="none"><path d="M1 10L10 1M10 1H3M10 1V8" stroke="currentColor" stroke-width="1.2"/></svg>
     	</a>
 	</div>
@@ -154,7 +154,7 @@ $youtube   = vbl_opt( 'youtube', 'https://www.youtube.com/@VilaBaleiraHotels' );
 	<!-- Back to top -->
 	<div id="backTopWrapper" class="fixed bottom-20 sm:bottom-6 xl:bottom-8 left-0 right-0 w-full pointer-events-none z-[999]">
 	  <div class="max-w-[1920px] mx-auto px-6 xl:px-10 flex justify-end w-full">
-	    <button id="backTop" type="button" aria-label="Voltar ao topo" class="group vbl-back-top w-10 h-10 border border-[#bc945b] flex items-center justify-center bg-white/90 backdrop-blur-sm hover:bg-[#bc945b] hover:border-[#bc945b] cursor-pointer text-[#bc945b] hover:text-white shadow-md pointer-events-auto" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+	    <button id="backTop" type="button" aria-label="<?php echo esc_attr( function_exists( 'vbl__' ) ? vbl__( 'Voltar ao topo' ) : 'Voltar ao topo' ); ?>" class="group vbl-back-top w-10 h-10 border border-[#bc945b] flex items-center justify-center bg-white/90 backdrop-blur-sm hover:bg-[#bc945b] hover:border-[#bc945b] cursor-pointer text-[#bc945b] hover:text-white shadow-md pointer-events-auto" onclick="window.scrollTo({top:0,behavior:'smooth'})">
 	      <svg class="w-3.5 h-3.5 pointer-events-none" viewBox="0 0 16 16" fill="none"><polyline points="2,10 8,4 14,10" stroke="currentColor" stroke-width="2"/></svg>
 	    </button>
 	  </div>

@@ -69,12 +69,12 @@ if ( empty( $nl_privacy_url ) ) $nl_privacy_url = vbl_option( 'vbl_newsletter_pr
 if ( empty( $nl_btn ) )         $nl_btn         = vbl_option( 'vbl_newsletter_btn', '' );
 
 // 3. Fallbacks finais padrão
-if ( empty( $nl_subtitle ) )    $nl_subtitle    = 'Subscreva a nossa';
-if ( empty( $nl_title ) )       $nl_title       = 'Newsletter';
-if ( empty( $nl_text ) )        $nl_text        = 'Seja o primeiro a receber as novidades sobre os nossos hotéis.';
-if ( empty( $nl_privacy ) )     $nl_privacy     = 'Política de Privacidade.';
-if ( empty( $nl_privacy_url ) ) $nl_privacy_url = function_exists( 'vbl_resolve_url' ) ? vbl_resolve_url( '/politica-de-privacidade' ) : home_url( '/politica-de-privacidade' );
-if ( empty( $nl_btn ) )         $nl_btn         = 'Subscrever';
+if ( empty( $nl_subtitle ) )    $nl_subtitle    = function_exists( 'vbl__' ) ? vbl__( 'Subscreva a nossa' ) : 'Subscreva a nossa';
+if ( empty( $nl_title ) )       $nl_title       = function_exists( 'vbl__' ) ? vbl__( 'Newsletter' ) : 'Newsletter';
+if ( empty( $nl_text ) )        $nl_text        = function_exists( 'vbl__' ) ? vbl__( 'Seja o primeiro a receber as novidades sobre os nossos hotéis.' ) : 'Seja o primeiro a receber as novidades sobre os nossos hotéis.';
+if ( empty( $nl_privacy ) )     $nl_privacy     = function_exists( 'vbl__' ) ? vbl__( 'Política de Privacidade.' ) : 'Política de Privacidade.';
+if ( empty( $nl_privacy_url ) ) $nl_privacy_url = function_exists( 'vbl_resolve_url' ) ? vbl_resolve_url( '/politica-de-privacidade-e-cookies' ) : home_url( '/politica-de-privacidade-e-cookies' );
+if ( empty( $nl_btn ) )         $nl_btn         = function_exists( 'vbl__' ) ? vbl__( 'Subscrever' ) : 'Subscrever';
 ?>
 
 <!-- ====== NEWSLETTER COMPACTA ====== -->
@@ -108,7 +108,7 @@ if ( empty( $nl_btn ) )         $nl_btn         = 'Subscrever';
             <input type="checkbox" name="privacy" id="nl_privacy_mob" required
               class="w-4 h-4 bg-white border border-black/30 rounded flex-shrink-0 cursor-pointer <?php echo esc_attr($accent_checkbox); ?>">
             <label for="nl_privacy_mob" class="font-body font-light text-[12px] text-black/80 cursor-pointer">
-              Li e aceito a <a href="<?php echo esc_url($nl_privacy_url); ?>"
+              <?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Li e aceito a' ) : 'Li e aceito a' ); ?> <a href="<?php echo esc_url($nl_privacy_url); ?>"
                 class="underline underline-offset-2 <?php echo esc_attr($hover_link_class); ?> transition-colors"><?php echo esc_html($nl_privacy); ?></a>
             </label>
           </div>
@@ -350,7 +350,7 @@ if ( empty( $nl_btn ) )         $nl_btn         = 'Subscrever';
           <div class="vbl-nl-main__privacy">
             <input type="checkbox" name="privacy" id="nl_privacy_desktop" required>
             <label for="nl_privacy_desktop">
-              Li e aceito a <a href="<?php echo esc_url($nl_privacy_url); ?>"><?php echo esc_html($nl_privacy); ?></a>
+              <?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Li e aceito a' ) : 'Li e aceito a' ); ?> <a href="<?php echo esc_url($nl_privacy_url); ?>"><?php echo esc_html($nl_privacy); ?></a>
             </label>
           </div>
         </div>
@@ -409,7 +409,7 @@ if ( empty( $nl_btn ) )         $nl_btn         = 'Subscrever';
             <input type="checkbox" name="privacy" id="nl_privacy_desktop_micro" required
               class="w-4 h-4 bg-white border border-black/30 rounded flex-shrink-0 cursor-pointer <?php echo esc_attr($accent_checkbox); ?>">
             <label for="nl_privacy_desktop_micro" class="font-body font-light text-[12px] xl:text-[12.5px] text-black/80 leading-normal cursor-pointer">
-              Li e aceito a <a href="<?php echo esc_url($nl_privacy_url); ?>"
+              <?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Li e aceito a' ) : 'Li e aceito a' ); ?> <a href="<?php echo esc_url($nl_privacy_url); ?>"
                 class="underline underline-offset-2 <?php echo esc_attr($hover_link_class); ?> transition-colors"><?php echo esc_html($nl_privacy); ?></a>
             </label>
           </div>

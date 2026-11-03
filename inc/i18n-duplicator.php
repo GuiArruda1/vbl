@@ -503,7 +503,7 @@ function vbl_duplicate_menus_to_en() {
  * @param array $target_post_types Lista de post_types a processar.
  * @return array
  */
-function vbl_execute_i18n_duplication( $target_post_types = array( 'page', 'vbl_quarto', 'vbl_experiencia', 'vbl_noticia', 'post', 'nav_menu' ) ) {
+function vbl_execute_i18n_duplication( $target_post_types = array( 'page', 'vbl_quarto', 'vbl_experiencia', 'vbl_noticia', 'post', 'nav_menu', 'strings' ) ) {
 	if ( ! function_exists( 'pll_get_post_translations' ) || ! function_exists( 'pll_set_post_language' ) ) {
 		return array(
 			'success' => false,
@@ -524,8 +524,24 @@ function vbl_execute_i18n_duplication( $target_post_types = array( 'page', 'vbl_
 		}
 	}
 
-	// 2. Assegurar que CPTs têm o idioma PT se estiverem sem idioma
-	$content_types = array_diff( $target_post_types, array( 'nav_menu' ) );
+	// 2. Processar Strings de Rodapé e Tema no Polylang
+	if ( in_array( 'strings', $target_post_types, true ) ) {
+		if ( function_exists( 'vbl_sync_polylang_strings' ) ) {
+			$synced = vbl_sync_polylang_strings( 'en' );
+			if ( $synced ) {
+				$cloned_total[] = array(
+					'id'        => '-',
+					'post_type' => 'strings',
+					'title'     => 'Textos do Rodapé & Tema (Strings Sincronizadas)',
+					'slug'      => 'polylang-strings',
+					'pt_id'     => '-',
+				);
+			}
+		}
+	}
+
+	// 3. Assegurar que CPTs têm o idioma PT se estiverem sem idioma
+	$content_types = array_diff( $target_post_types, array( 'nav_menu', 'strings' ) );
 	foreach ( $content_types as $ptype ) {
 		$unassigned = get_posts( array(
 			'post_type'      => $ptype,
@@ -741,12 +757,12 @@ function vbl_render_i18n_duplicator_page() {
 	if ( isset( $_POST['vbl_run_i18n_duplication'] ) && check_admin_referer( 'vbl_i18n_duplication_nonce' ) ) {
 		$selected_types = isset( $_POST['vbl_post_types'] ) && is_array( $_POST['vbl_post_types'] ) 
 			? array_map( 'sanitize_key', $_POST['vbl_post_types'] ) 
-			: array( 'page', 'vbl_quarto', 'vbl_experiencia', 'vbl_noticia', 'post', 'nav_menu' );
+			: array( 'page', 'vbl_quarto', 'vbl_experiencia', 'vbl_noticia', 'post', 'nav_menu', 'strings' );
 
 		$results = vbl_execute_i18n_duplication( $selected_types );
 	}
 
-	// Contagem de itens pendentes por Post Type e Menus
+	// Contagem de itens pendentes por Post Type, Menus e Strings
 	$supported_types = array(
 		'page'            => __( 'Páginas do Portal & Microsites', 'vila-baleira' ),
 		'vbl_quarto'      => __( 'Quartos & Suites', 'vila-baleira' ),
@@ -754,12 +770,33 @@ function vbl_render_i18n_duplicator_page() {
 		'vbl_noticia'     => __( 'Notícias (CPT)', 'vila-baleira' ),
 		'post'            => __( 'Artigos de Blog (Posts)', 'vila-baleira' ),
 		'nav_menu'        => __( 'Menus de Navegação', 'vila-baleira' ),
+		'strings'         => __( 'Textos do Rodapé & Tema (Strings)', 'vila-baleira' ),
 	);
 
 	$stats = array();
 	$total_pending = 0;
 
 	foreach ( $supported_types as $type_key => $type_label ) {
+		if ( $type_key === 'strings' ) {
+			$en_term = get_term_by( 'slug', 'en', 'language' );
+			$is_synced = false;
+			if ( $en_term ) {
+				$saved_strings = get_term_meta( $en_term->term_id, '_pll_strings_translations', true );
+				if ( ! empty( $saved_strings ) && is_array( $saved_strings ) && count( $saved_strings ) >= 10 ) {
+					$is_synced = true;
+				}
+			}
+			$stats['strings'] = array(
+				'label'   => $type_label,
+				'total'   => 1,
+				'pending' => $is_synced ? 0 : 1,
+			);
+			if ( ! $is_synced ) {
+				$total_pending += 1;
+			}
+			continue;
+		}
+
 		if ( $type_key === 'nav_menu' ) {
 			$all_menus = wp_get_nav_menus();
 			$pt_menus  = array();
@@ -848,6 +885,8 @@ function vbl_render_i18n_duplicator_page() {
 								<td>
 									<?php if ( $c['post_type'] === 'nav_menu' ) : ?>
 										<a href="<?php echo esc_url( admin_url( 'nav-menus.php?action=edit&menu=' . $c['id'] ) ); ?>" target="_blank" class="button button-small">Editar Menu ↗</a>
+									<?php elseif ( $c['post_type'] === 'strings' ) : ?>
+										<a href="<?php echo esc_url( admin_url( 'admin.php?page=mlang_strings' ) ); ?>" target="_blank" class="button button-small">Ver Strings Polylang ↗</a>
 									<?php else : ?>
 										<a href="<?php echo esc_url( get_permalink( $c['id'] ) ); ?>" target="_blank" class="button button-small">Ver ↗</a>
 									<?php endif; ?>

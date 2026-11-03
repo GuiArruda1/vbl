@@ -37,25 +37,66 @@ function vbl_register_settings() {
 add_action( 'admin_init', 'vbl_register_settings' );
 
 /**
- * Helper: Resolve relative or absolute URLs
+ * Helper: Resolve relative or absolute URLs with multilingual (Polylang) awareness.
  * Allows paths like /aviso-legal, relative slugs, anchors (#), or full https:// URLs.
  * In staging/production, relative paths dynamically resolve using home_url().
+ * If Polylang is active and the current language is not default, resolves to translated permalink.
  */
-function vbl_resolve_url( $url ) {
+function vbl_resolve_url( $url, $lang = null ) {
     $url = trim( (string) $url );
     if ( empty( $url ) || $url === '#' ) {
         return $url ?: '#';
     }
-    // Protocol-relative, anchors, telephone or mailto
-    if ( preg_match( '#^(https?:|mailto:|tel:|//|#)#i', $url ) ) {
+    // Anchors, telephone or mailto
+    if ( preg_match( '~^(mailto:|tel:|#)~i', $url ) ) {
+        return $url;
+    }
+
+    if ( ! $lang && function_exists( 'pll_current_language' ) ) {
+        $lang = pll_current_language( 'slug' );
+    }
+
+    // Check if external domain
+    $site_host = parse_url( home_url(), PHP_URL_HOST );
+    $url_host  = parse_url( $url, PHP_URL_HOST );
+    if ( ! empty( $url_host ) && strcasecmp( $site_host, $url_host ) !== 0 ) {
         return esc_url( $url );
     }
-    // Relative path starting with /
-    if ( strpos( $url, '/' ) === 0 ) {
-        return esc_url( home_url( $url ) );
+
+    // Homepage resolution
+    $path = parse_url( $url, PHP_URL_PATH );
+    if ( empty( $path ) || $path === '/' || $url === home_url( '/' ) || $url === home_url() ) {
+        return function_exists( 'pll_home_url' ) && $lang ? esc_url( pll_home_url( $lang ) ) : esc_url( home_url( '/' ) );
     }
-    // Relative slug without leading /
-    return esc_url( home_url( '/' . $url ) );
+
+    $full_url = ( strpos( $url, 'http://' ) === 0 || strpos( $url, 'https://' ) === 0 )
+        ? $url 
+        : ( ( strpos( $url, '/' ) === 0 ) ? home_url( $url ) : home_url( '/' . $url ) );
+
+    // If Polylang is active, resolve to the translated post
+    if ( $lang && function_exists( 'pll_get_post' ) ) {
+        $pid = url_to_postid( $full_url );
+        if ( ! $pid ) {
+            $clean_slug = trim( parse_url( $full_url, PHP_URL_PATH ), '/' );
+            $clean_slug = preg_replace( '#^(en|pt|es|de)/#', '', $clean_slug );
+            $page = get_page_by_path( $clean_slug );
+            if ( $page ) {
+                $pid = $page->ID;
+            }
+        }
+
+        if ( $pid ) {
+            $trans_id = pll_get_post( $pid, $lang );
+            if ( $trans_id ) {
+                $permalink = get_permalink( $trans_id );
+                if ( $permalink ) {
+                    return esc_url( $permalink );
+                }
+            }
+        }
+    }
+
+    return esc_url( $full_url );
 }
 
 /* ========================================
