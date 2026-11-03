@@ -102,7 +102,7 @@ $frase2_desc  = vbl_field( 'vbl_frase2_desc', false, 'Deixe-se envolver pela bel
         </a>
         <div class="font-body hidden xl:flex items-center gap-6 xl:gap-10">
           <a href="<?php echo esc_url( home_url( '/contactos' ) ); ?>" class="vbl-nav-link-white text-[14px] tracking-[1.4px] uppercase text-white">Contactos</a>
-          <span class="vbl-nav-link-white text-[14px] tracking-[1.4px] uppercase text-white flex items-center gap-2 cursor-pointer">PT <img src="<?php echo vbl_img( 'vector-dropdown-white.svg' ); ?>" alt="" class="w-2 h-1"></span>
+          <?php if ( function_exists( 'vbl_render_language_switcher' ) ) { vbl_render_language_switcher( 'white' ); } ?>
           	<a href="#reservas" class="group vbl-btn-reservar flex items-center gap-16 px-4 py-2 border border-white text-white text-[14px] tracking-[1.4px] uppercase transition-all duration-500 ease-in-out">
 				<span>Reservar</span>
 				<img src="<?php echo vbl_img( 'seta-branca.svg' ); ?>" alt="" class="w-[10px] h-[10px] transition-transform duration-300 group-hover:rotate-45">
@@ -116,8 +116,9 @@ $frase2_desc  = vbl_field( 'vbl_frase2_desc', false, 'Deixe-se envolver pela bel
 			<span>Reservar</span>
 			<img src="<?php echo vbl_img( 'seta-branca.svg' ); ?>" alt="" class="w-[10px] h-[10px] transition-transform duration-300 group-hover:rotate-45">
 		</a>
-		<span class="hidden max-[425px]:flex font-body vbl-nav-link-white text-[14px] tracking-[1.4px] uppercase text-white flex items-center gap-2 cursor-pointer">PT <img src="<?php echo vbl_img( 'vector-dropdown-white.svg' ); ?>" alt="" class="w-2 h-1">
-		</span>
+		<div class="hidden max-[425px]:flex font-body">
+			<?php if ( function_exists( 'vbl_render_language_switcher' ) ) { vbl_render_language_switcher( 'white', true ); } ?>
+		</div>
 		  
       </div>
     </div>

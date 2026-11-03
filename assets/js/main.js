@@ -52,6 +52,46 @@
   }
 
   /* ========================================
+     Language Switcher Dropdown (Click & Touch Toggle)
+     ======================================== */
+  document.querySelectorAll('.vbl-lang-switcher').forEach(function (switcher) {
+    var trigger = switcher.querySelector('.vbl-lang-trigger');
+    var dropdown = switcher.querySelector('.vbl-lang-dropdown');
+    if (!trigger || !dropdown) return;
+
+    trigger.addEventListener('click', function (e) {
+      e.stopPropagation();
+      var isHidden = dropdown.classList.contains('hidden');
+      // Close all other dropdowns
+      document.querySelectorAll('.vbl-lang-dropdown').forEach(function (d) {
+        d.classList.add('hidden');
+        d.classList.remove('flex');
+      });
+      document.querySelectorAll('.vbl-lang-trigger').forEach(function (t) {
+        t.setAttribute('aria-expanded', 'false');
+      });
+
+      if (isHidden) {
+        dropdown.classList.remove('hidden');
+        dropdown.classList.add('flex');
+        trigger.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+
+  document.addEventListener('click', function (e) {
+    if (!e.target.closest('.vbl-lang-switcher')) {
+      document.querySelectorAll('.vbl-lang-dropdown').forEach(function (d) {
+        d.classList.add('hidden');
+        d.classList.remove('flex');
+      });
+      document.querySelectorAll('.vbl-lang-trigger').forEach(function (t) {
+        t.setAttribute('aria-expanded', 'false');
+      });
+    }
+  });
+
+  /* ========================================
      Mobile Accordions (Hotéis & Rooms)
      ======================================== */
   function setupAccordion(toggleId, cardsId, arrowId) {

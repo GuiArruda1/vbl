@@ -240,7 +240,7 @@ $is_contactos_active    = (strpos($current_template, 'hotel-contactos') !== fals
         </button>
 
         <!-- Selector Idioma Desktop -->
-        <div class="relative group h-full flex items-center">
+        <div class="relative group h-full flex items-center vbl-lang-switcher">
           <button type="button"
             class="vbl-lang-trigger text-[11px] 2xl:text-[13px] tracking-[0.8px] 2xl:tracking-[1.3px] uppercase text-white hover:text-white transition-colors flex items-center gap-1.5 cursor-pointer py-2">
             <span><?php echo esc_html($lang_data['current']); ?></span>
@@ -250,7 +250,7 @@ $is_contactos_active    = (strpos($current_template, 'hotel-contactos') !== fals
             </svg>
           </button>
           <div
-            class="absolute top-full right-0 hidden group-hover:flex flex-col bg-white border border-[#eee8e5] py-2 min-w-[90px] shadow-xl text-[#0d5257] z-50">
+            class="vbl-lang-dropdown absolute top-full right-0 hidden group-hover:flex flex-col bg-white border border-[#eee8e5] py-2 min-w-[90px] shadow-xl text-[#0d5257] z-50">
             <?php foreach ($lang_data['languages'] as $lang_item): ?>
               <a href="<?php echo esc_url($lang_item['url']); ?>"
                 class="px-4 py-1.5 text-[12px] uppercase <?php echo !empty($lang_item['is_current']) ? 'font-bold text-[#0da9a6]' : 'text-[#0d5257] hover:text-[#0da9a6] hover:bg-[#f8f6f4]'; ?> transition-colors">
@@ -276,12 +276,12 @@ $is_contactos_active    = (strpos($current_template, 'hotel-contactos') !== fals
       <!-- Mobile & Tablet Controls -->
       <div class="xl:hidden flex items-center gap-3">
         <!-- Language Switcher Mobile Header -->
-        <div class="relative group">
-          <button type="button" class="text-[12px] sm:text-[14px] tracking-[1.4px] uppercase text-white flex items-center gap-1.5 cursor-pointer vbl-hotel-lang-mobile">
+        <div class="relative group vbl-lang-switcher">
+          <button type="button" class="vbl-lang-trigger text-[12px] sm:text-[14px] tracking-[1.4px] uppercase text-white flex items-center gap-1.5 cursor-pointer vbl-hotel-lang-mobile">
             <span><?php echo esc_html($lang_data['current']); ?></span>
             <svg class="w-2 h-1 group-hover:rotate-180 transition-transform duration-300 text-white" viewBox="0 0 8 4" fill="none" aria-hidden="true"><path d="M1 0.5L4 3.5L7 0.5" stroke="currentColor" stroke-width="1.2"/></svg>
           </button>
-          <div class="absolute top-full right-0 hidden group-hover:flex flex-col bg-white border border-[#eee8e5] py-2 min-w-[80px] shadow-xl text-[#0d5257] z-50">
+          <div class="vbl-lang-dropdown absolute top-full right-0 hidden group-hover:flex flex-col bg-white border border-[#eee8e5] py-2 min-w-[80px] shadow-xl text-[#0d5257] z-50">
             <?php foreach ($lang_data['languages'] as $lang_item): ?>
               <a href="<?php echo esc_url($lang_item['url']); ?>" class="px-4 py-1.5 text-[12px] uppercase <?php echo !empty($lang_item['is_current']) ? 'font-bold text-[#0da9a6]' : 'text-[#0d5257] hover:text-[#0da9a6] hover:bg-[#f8f6f4]'; ?> transition-colors">
                 <?php echo esc_html($lang_item['code']); ?>

@@ -576,3 +576,4 @@ function vbl_forms_admin_page() {
 	</div>
 	<?php
 }
+

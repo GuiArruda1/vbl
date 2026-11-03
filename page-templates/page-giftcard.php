@@ -53,7 +53,7 @@ $modal_btn           = vbl_field( 'vbl_giftcard_modal_btn', false, 'Enviar Pedid
       </a>
       <div class="hidden lg:flex items-center gap-6 xl:gap-10">
         <a href="<?php echo esc_url( home_url( '/contactos' ) ); ?>" class="vbl-nav-link-white text-[14px] tracking-[1.4px] uppercase text-white">Contactos</a>
-        <span class="vbl-nav-link-white text-[14px] tracking-[1.4px] uppercase text-white flex items-center gap-2 cursor-pointer">PT <svg class="w-2 h-1" viewBox="0 0 8 4" fill="none"><path d="M1 0.5L4 3.5L7 0.5" stroke="white" stroke-width="1.2"/></svg></span>
+        <?php if ( function_exists( 'vbl_render_language_switcher' ) ) { vbl_render_language_switcher( 'white' ); } ?>
         <a href="#" class="vbl-btn-reservar flex items-center gap-16 px-4 py-2 border border-white text-white text-[14px] tracking-[1.4px] uppercase"><span>Reservar</span><svg class="w-[10px] h-[10px]" viewBox="0 0 11 11" fill="none"><path d="M1 10L10 1M10 1H3M10 1V8" stroke="white" stroke-width="1.2"/></svg></a>
       </div>
       <button class="lg:hidden w-8 h-8 flex flex-col items-center justify-center gap-1.5 menu-toggle" aria-label="Menu">

@@ -41,19 +41,7 @@ $lang_data      = function_exists( 'vbl_get_languages' ) ? vbl_get_languages() :
         <a href="<?php echo esc_url( home_url( '/contactos' ) ); ?>" class="vbl-nav-link text-[14px] tracking-[1.4px] uppercase text-[#0d5257]">Contactos</a>
         
         <!-- Language Switcher Desktop -->
-        <div class="relative group">
-          <button type="button" class="vbl-nav-link text-[14px] tracking-[1.4px] uppercase text-[#0d5257] flex items-center gap-2 cursor-pointer">
-            <span><?php echo esc_html( $lang_data['current'] ); ?></span>
-            <svg class="w-2 h-1 group-hover:rotate-180 transition-transform duration-300" viewBox="0 0 8 4" fill="none"><path d="M1 0.5L4 3.5L7 0.5" stroke="currentColor" stroke-width="1.2"/></svg>
-          </button>
-          <div class="absolute top-full right-0 hidden group-hover:flex flex-col bg-white border border-[#eee8e5] py-2 min-w-[90px] shadow-xl text-[#0d5257] z-50">
-            <?php foreach ( $lang_data['languages'] as $lang_item ) : ?>
-              <a href="<?php echo esc_url( $lang_item['url'] ); ?>" class="px-4 py-1.5 text-[12px] uppercase <?php echo ! empty( $lang_item['is_current'] ) ? 'font-bold text-[#0da9a6]' : 'text-[#0d5257] hover:text-[#0da9a6] hover:bg-[#f8f6f4]'; ?> transition-colors">
-                <?php echo esc_html( $lang_item['code'] ); ?>
-              </a>
-            <?php endforeach; ?>
-          </div>
-        </div>
+        <?php if ( function_exists( 'vbl_render_language_switcher' ) ) { vbl_render_language_switcher( 'dark' ); } ?>
 
         <a href="<?php echo esc_url( home_url( '/#reservas' ) ); ?>" class="group vbl-btn-reservar flex items-center gap-16 px-4 py-2 border border-[#0d5257] text-[#0d5257] text-[14px] tracking-[1.4px] uppercase transition-all duration-500 ease-in-out">
 			<span>Reservar</span>
@@ -71,19 +59,7 @@ $lang_data      = function_exists( 'vbl_get_languages' ) ? vbl_get_languages() :
 
       <!-- Mobile & Tablet RESERVAR Button -->
       <div class="xl:hidden flex items-center gap-3">
-        <div class="relative group">
-          <button type="button" class="text-[12px] sm:text-[14px] tracking-[1.4px] uppercase text-[#0d5257] flex items-center gap-1.5 cursor-pointer">
-            <span><?php echo esc_html( $lang_data['current'] ); ?></span>
-            <svg class="w-2 h-1 group-hover:rotate-180 transition-transform duration-300" viewBox="0 0 8 4" fill="none" aria-hidden="true"><path d="M1 0.5L4 3.5L7 0.5" stroke="currentColor" stroke-width="1.2"/></svg>
-          </button>
-          <div class="absolute top-full right-0 hidden group-hover:flex flex-col bg-white border border-[#eee8e5] py-2 min-w-[80px] shadow-xl text-[#0d5257] z-50">
-            <?php foreach ( $lang_data['languages'] as $lang_item ) : ?>
-              <a href="<?php echo esc_url( $lang_item['url'] ); ?>" class="px-4 py-1.5 text-[12px] uppercase <?php echo ! empty( $lang_item['is_current'] ) ? 'font-bold text-[#0da9a6]' : 'text-[#0d5257] hover:text-[#0da9a6] hover:bg-[#f8f6f4]'; ?> transition-colors">
-                <?php echo esc_html( $lang_item['code'] ); ?>
-              </a>
-            <?php endforeach; ?>
-          </div>
-        </div>
+        <?php if ( function_exists( 'vbl_render_language_switcher' ) ) { vbl_render_language_switcher( 'dark', true ); } ?>
         <a href="<?php echo esc_url( home_url( '/#reservas' ) ); ?>" class="vbl-btn-reservar group hidden [@media(min-width:426px)_and_(max-width:1279px)]:flex items-center gap-2 sm:gap-4 px-3 py-1.5 sm:px-4 sm:py-2 border border-[#0d5257] text-[#0d5257] text-[12px] sm:text-[14px] tracking-[1.2px] sm:tracking-[1.4px] uppercase transition-all duration-300">
           <span>Reservar</span>
           <svg class="w-[9px] h-[9px] sm:w-[10px] sm:h-[10px] transition-transform duration-300 group-hover:rotate-45" viewBox="0 0 11 11" fill="none" aria-hidden="true">
