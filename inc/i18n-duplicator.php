@@ -1,6 +1,6 @@
 <?php
 /**
- * Vila Baleira — Duplicador 1-Click de Páginas, Posts e Custom Post Types para Inglês (Polylang)
+ * Vila Baleira — Duplicador 1-Click de Páginas, Posts, CPTs e Menus de Navegação para Inglês (Polylang)
  *
  * Suporta:
  *  - Páginas (page) com preservação de hierarquia de microsites de hotéis
@@ -8,6 +8,8 @@
  *  - Experiências (vbl_experiencia) com tradução de categorias e ACF
  *  - Notícias (vbl_noticia)
  *  - Artigos de Blog (post)
+ *  - Menus de Navegação (nav_menu) com remapeamento de links para posts em inglês,
+ *    tradução de labels, preservação de submenus e atribuição de localizações no Polylang.
  *
  * @package Vila_Baleira
  */
@@ -93,10 +95,12 @@ add_action( 'init', function() {
 	}
 
 	$param = sanitize_key( $_GET['duplicar_en'] );
-	$types = array( 'page', 'vbl_quarto', 'vbl_experiencia', 'vbl_noticia', 'post' );
+	$all_types = array( 'page', 'vbl_quarto', 'vbl_experiencia', 'vbl_noticia', 'post', 'nav_menu' );
 
-	if ( in_array( $param, $types, true ) ) {
+	if ( in_array( $param, $all_types, true ) ) {
 		$types = array( $param );
+	} else {
+		$types = $all_types;
 	}
 
 	$results = vbl_execute_i18n_duplication( $types );
@@ -123,12 +127,13 @@ add_action( 'init', function() {
 			.badge-exp { background: #dcfce7; color: #166534; }
 			.badge-noticia { background: #f3e8ff; color: #6b21a8; }
 			.badge-post { background: #ffe4e6; color: #9f1239; }
+			.badge-menu { background: #fae8ff; color: #86198f; }
 		</style>
 	</head>
 	<body>
 		<div class="container">
 			<h1>✔ Sucesso: <?php echo esc_html( $results['count'] ); ?> itens duplicados e vinculados em Inglês!</h1>
-			<p>Todos os campos ACF, templates, categorias e associações com os hotéis foram clonados e ligados no Polylang.</p>
+			<p>Todos os campos ACF, templates, categorias, menus e associações com os hotéis foram clonados e ligados no Polylang.</p>
 			
 			<table>
 				<thead>
@@ -136,7 +141,7 @@ add_action( 'init', function() {
 						<th>Tipo</th>
 						<th>ID EN</th>
 						<th>Título Inglês</th>
-						<th>Slug</th>
+						<th>Slug / Detalhe</th>
 						<th>Origem PT</th>
 					</tr>
 				</thead>
@@ -144,13 +149,13 @@ add_action( 'init', function() {
 					<?php foreach ( $results['cloned'] as $item ) : ?>
 						<tr>
 							<td>
-								<span class="badge badge-<?php echo esc_attr( str_replace( 'vbl_', '', $item['post_type'] ) ); ?>">
+								<span class="badge badge-<?php echo esc_attr( str_replace( array('vbl_', 'nav_'), '', $item['post_type'] ) ); ?>">
 									<?php echo esc_html( $item['post_type'] ); ?>
 								</span>
 							</td>
 							<td><strong>#<?php echo esc_html( $item['id'] ); ?></strong></td>
 							<td><strong><?php echo esc_html( $item['title'] ); ?></strong></td>
-							<td><code>/<?php echo esc_html( $item['slug'] ); ?>/</code></td>
+							<td><code><?php echo esc_html( $item['slug'] ); ?></code></td>
 							<td>ID <?php echo esc_html( $item['pt_id'] ); ?></td>
 						</tr>
 					<?php endforeach; ?>
@@ -166,7 +171,7 @@ add_action( 'init', function() {
 } );
 
 /**
- * Retorna dicionário geral de traduções para Páginas, Quartos e Experiências
+ * Retorna dicionário geral de traduções para Páginas, Quartos, Experiências e Rótulos de Menus
  */
 function vbl_get_i18n_dictionaries() {
 	return array(
@@ -239,6 +244,33 @@ function vbl_get_i18n_dictionaries() {
 			'familia-criancas'  => 'Family & Kids',
 			'excursoes-ilhas'   => 'Excursions & Islands',
 		),
+		'menu_labels' => array(
+			'Início'                   => 'Home',
+			'Home'                     => 'Home',
+			'Hotéis'                   => 'Hotels',
+			'O Grupo'                  => 'The Group',
+			'Experiências'             => 'Experiences',
+			'Gift Card'                => 'Gift Card',
+			'Notícias'                 => 'News',
+			'Contactos'                => 'Contacts',
+			'Carreiras'                => 'Careers',
+			'Reservar'                 => 'Book Now',
+			'Sobre Nós'                => 'About Us',
+			'Sobre o Hotel'            => 'The Hotel',
+			'O Hotel'                  => 'The Hotel',
+			'Alojamento'               => 'Accommodation',
+			'Quartos'                  => 'Rooms',
+			'Quartos & Suites'         => 'Rooms & Suites',
+			'Restaurantes'             => 'Restaurants',
+			'Restaurantes & Bares'     => 'Restaurants & Bars',
+			'Atividades'               => 'Activities',
+			'Região'                   => 'Region',
+			'A Região'                 => 'The Region',
+			'Eventos'                  => 'Events',
+			'Eventos & Salas'          => 'Events & Meetings',
+			'Termos e Condições'       => 'Terms & Conditions',
+			'Política de Privacidade'  => 'Privacy Policy',
+		),
 	);
 }
 
@@ -290,12 +322,188 @@ function vbl_get_or_create_en_term( $term_id, $taxonomy ) {
 }
 
 /**
- * Motor Central de Duplicação Universal (Páginas, Posts e CPTs)
+ * Duplicador de Menus de Navegação para Inglês (EN)
+ *
+ * @return array
+ */
+function vbl_duplicate_menus_to_en() {
+	$menus = wp_get_nav_menus();
+	if ( empty( $menus ) ) {
+		return array(
+			'success' => true,
+			'count'   => 0,
+			'cloned'  => array(),
+		);
+	}
+
+	$dicts            = vbl_get_i18n_dictionaries();
+	$menu_labels_dict = $dicts['menu_labels'];
+	$cloned_menus     = array();
+
+	// Obter localizações de menus ativas no tema
+	$theme_locations = get_theme_mod( 'nav_menu_locations' ) ?: array();
+	$polylang_opts   = get_option( 'polylang' ) ?: array();
+	$nav_menus_pll   = isset( $polylang_opts['nav_menus'] ) && is_array( $polylang_opts['nav_menus'] ) ? $polylang_opts['nav_menus'] : array();
+
+	foreach ( $menus as $menu ) {
+		// Ignorar menus que já sejam de inglês
+		if ( preg_match( '/\s*\(EN\)$/i', $menu->name ) || preg_match( '/\s*\(English\)$/i', $menu->name ) ) {
+			continue;
+		}
+
+		$en_menu_name = $menu->name . ' (EN)';
+		$existing_en_menu = wp_get_nav_menu_object( $en_menu_name );
+
+		if ( $existing_en_menu ) {
+			$en_menu_id = $existing_en_menu->term_id;
+			// Limpar itens antigos se já existia para recriar sincronizado
+			$old_items = wp_get_nav_menu_items( $en_menu_id );
+			if ( ! empty( $old_items ) ) {
+				foreach ( $old_items as $oi ) {
+					wp_delete_post( $oi->ID, true );
+				}
+			}
+		} else {
+			$en_menu_id = wp_create_nav_menu( $en_menu_name );
+			if ( is_wp_error( $en_menu_id ) || ! $en_menu_id ) {
+				continue;
+			}
+		}
+
+		// Obter itens do menu original PT
+		$items = wp_get_nav_menu_items( $menu->term_id );
+		if ( empty( $items ) ) {
+			$items = array();
+		}
+
+		$id_map = array(); // Mapeia [orig_item_id => new_item_id]
+		$pass2  = array(); // Itens com parent para ligar no segundo passo
+
+		// Passo 1: Inserir todos os itens com seus destinos mapeados
+		foreach ( $items as $item ) {
+			$title     = mb_convert_encoding( (string) $item->title, 'UTF-8', 'UTF-8, ISO-8859-1, Windows-1252' );
+			$object_id = $item->object_id;
+			$url       = $item->url;
+
+			// 1. Remapear itens do tipo Post Type (Página, Quarto, Experiência, Notícia, Post)
+			if ( $item->type === 'post_type' && $object_id > 0 ) {
+				$trans = function_exists( 'pll_get_post_translations' ) ? pll_get_post_translations( $object_id ) : array();
+				if ( ! empty( $trans['en'] ) ) {
+					$object_id = $trans['en'];
+					$en_post   = get_post( $object_id );
+					if ( $en_post ) {
+						// Se o rótulo original coincidir com o título original do post, usar o novo título em inglês
+						$orig_post = get_post( $item->object_id );
+						if ( $orig_post && trim( (string) $item->title ) === trim( (string) $orig_post->post_title ) ) {
+							$title = $en_post->post_title;
+						}
+					}
+				}
+			}
+
+			// 2. Remapear itens do tipo Taxonomia
+			if ( $item->type === 'taxonomy' && $object_id > 0 && function_exists( 'pll_get_term' ) ) {
+				$en_term = pll_get_term( $object_id, 'en' );
+				if ( $en_term ) {
+					$object_id = $en_term;
+				}
+			}
+
+			// 3. Traduzir rótulos através do dicionário
+			$clean_title_key = trim( (string) $title );
+			if ( isset( $menu_labels_dict[ $clean_title_key ] ) ) {
+				$title = $menu_labels_dict[ $clean_title_key ];
+			} elseif ( isset( $dicts['pages'][ sanitize_title( $clean_title_key ) ] ) ) {
+				$title = $dicts['pages'][ sanitize_title( $clean_title_key ) ]['title'];
+			}
+
+			// 4. Adaptar URLs personalizadas se contiverem links internos
+			if ( $item->type === 'custom' && ! empty( $url ) ) {
+				$url = preg_replace( '#^/([^/]+)/?$#', '/en/$1/', $url );
+				if ( isset( $menu_labels_dict[ $clean_title_key ] ) ) {
+					$title = $menu_labels_dict[ $clean_title_key ];
+				}
+			}
+
+			$new_item_id = wp_update_nav_menu_item( $en_menu_id, 0, array(
+				'menu-item-title'       => $title,
+				'menu-item-object-id'   => $object_id,
+				'menu-item-object'      => $item->object,
+				'menu-item-parent-id'   => 0, // Atualizado no passo 2
+				'menu-item-position'    => $item->menu_order,
+				'menu-item-type'        => $item->type,
+				'menu-item-url'         => $url,
+				'menu-item-description' => $item->description,
+				'menu-item-attr-title'  => $item->attr_title,
+				'menu-item-target'      => $item->target,
+				'menu-item-classes'     => is_array( $item->classes ) ? implode( ' ', array_filter( $item->classes ) ) : (string) $item->classes,
+				'menu-item-xfn'         => $item->xfn,
+				'menu-item-status'      => 'publish',
+			) );
+
+			if ( ! is_wp_error( $new_item_id ) && $new_item_id ) {
+				$id_map[ $item->ID ] = $new_item_id;
+				if ( ! empty( $item->menu_item_parent ) ) {
+					$pass2[] = array(
+						'new_id'         => $new_item_id,
+						'orig_parent_id' => $item->menu_item_parent,
+					);
+				}
+			}
+		}
+
+		// Passo 2: Reassociar a hierarquia de submenus
+		foreach ( $pass2 as $p2 ) {
+			$orig_pid = $p2['orig_parent_id'];
+			if ( isset( $id_map[ $orig_pid ] ) ) {
+				update_post_meta( $p2['new_id'], '_menu_item_menu_item_parent', $id_map[ $orig_pid ] );
+			}
+		}
+
+		// Passo 3: Atribuir o novo menu em inglês às localizações do tema no Polylang
+		$registered_locs = get_registered_nav_menus();
+		$assigned_locs   = array();
+
+		foreach ( $registered_locs as $loc_slug => $loc_label ) {
+			$curr_pt = $nav_menus_pll[ get_stylesheet() ][ $loc_slug ]['pt'] ?? ( $theme_locations[ $loc_slug ] ?? 0 );
+			if ( (int) $curr_pt === (int) $menu->term_id ) {
+				$assigned_locs[] = $loc_slug;
+			}
+		}
+
+		if ( ! empty( $assigned_locs ) ) {
+			$themes_to_update = array_unique( array( get_stylesheet(), get_template(), 'vbl', 'vila-baleira-theme' ) );
+			foreach ( $themes_to_update as $thm ) {
+				foreach ( $assigned_locs as $as_loc ) {
+					$polylang_opts['nav_menus'][ $thm ][ $as_loc ]['en'] = $en_menu_id;
+				}
+			}
+			update_option( 'polylang', $polylang_opts );
+		}
+
+		$cloned_menus[] = array(
+			'id'        => $en_menu_id,
+			'post_type' => 'nav_menu',
+			'title'     => $en_menu_name,
+			'slug'      => $menu->slug . '-en',
+			'pt_id'     => $menu->term_id,
+		);
+	}
+
+	return array(
+		'success' => true,
+		'count'   => count( $cloned_menus ),
+		'cloned'  => $cloned_menus,
+	);
+}
+
+/**
+ * Motor Central de Duplicação Universal (Páginas, Posts, CPTs e Menus)
  *
  * @param array $target_post_types Lista de post_types a processar.
  * @return array
  */
-function vbl_execute_i18n_duplication( $target_post_types = array( 'page', 'vbl_quarto', 'vbl_experiencia', 'vbl_noticia', 'post' ) ) {
+function vbl_execute_i18n_duplication( $target_post_types = array( 'page', 'vbl_quarto', 'vbl_experiencia', 'vbl_noticia', 'post', 'nav_menu' ) ) {
 	if ( ! function_exists( 'pll_get_post_translations' ) || ! function_exists( 'pll_set_post_language' ) ) {
 		return array(
 			'success' => false,
@@ -308,8 +516,17 @@ function vbl_execute_i18n_duplication( $target_post_types = array( 'page', 'vbl_
 	$dicts        = vbl_get_i18n_dictionaries();
 	$cloned_total = array();
 
-	// 1. Assegurar que CPTs têm o idioma PT se estiverem sem idioma
-	foreach ( $target_post_types as $ptype ) {
+	// 1. Processar Menus de Navegação se solicitado
+	if ( in_array( 'nav_menu', $target_post_types, true ) ) {
+		$menu_results = vbl_duplicate_menus_to_en();
+		if ( ! empty( $menu_results['cloned'] ) ) {
+			$cloned_total = array_merge( $cloned_total, $menu_results['cloned'] );
+		}
+	}
+
+	// 2. Assegurar que CPTs têm o idioma PT se estiverem sem idioma
+	$content_types = array_diff( $target_post_types, array( 'nav_menu' ) );
+	foreach ( $content_types as $ptype ) {
 		$unassigned = get_posts( array(
 			'post_type'      => $ptype,
 			'post_status'    => array( 'publish', 'draft' ),
@@ -326,8 +543,8 @@ function vbl_execute_i18n_duplication( $target_post_types = array( 'page', 'vbl_
 		}
 	}
 
-	// 2. Processar cada Post Type solicitado
-	foreach ( $target_post_types as $ptype ) {
+	// 3. Processar cada Post Type solicitado
+	foreach ( $content_types as $ptype ) {
 		$posts = get_posts( array(
 			'post_type'      => $ptype,
 			'post_status'    => 'publish',
@@ -524,24 +741,49 @@ function vbl_render_i18n_duplicator_page() {
 	if ( isset( $_POST['vbl_run_i18n_duplication'] ) && check_admin_referer( 'vbl_i18n_duplication_nonce' ) ) {
 		$selected_types = isset( $_POST['vbl_post_types'] ) && is_array( $_POST['vbl_post_types'] ) 
 			? array_map( 'sanitize_key', $_POST['vbl_post_types'] ) 
-			: array( 'page', 'vbl_quarto', 'vbl_experiencia', 'vbl_noticia', 'post' );
+			: array( 'page', 'vbl_quarto', 'vbl_experiencia', 'vbl_noticia', 'post', 'nav_menu' );
 
 		$results = vbl_execute_i18n_duplication( $selected_types );
 	}
 
-	// Contagem de itens pendentes por Post Type
+	// Contagem de itens pendentes por Post Type e Menus
 	$supported_types = array(
 		'page'            => __( 'Páginas do Portal & Microsites', 'vila-baleira' ),
 		'vbl_quarto'      => __( 'Quartos & Suites', 'vila-baleira' ),
 		'vbl_experiencia' => __( 'Experiências', 'vila-baleira' ),
 		'vbl_noticia'     => __( 'Notícias (CPT)', 'vila-baleira' ),
 		'post'            => __( 'Artigos de Blog (Posts)', 'vila-baleira' ),
+		'nav_menu'        => __( 'Menus de Navegação', 'vila-baleira' ),
 	);
 
 	$stats = array();
 	$total_pending = 0;
 
 	foreach ( $supported_types as $type_key => $type_label ) {
+		if ( $type_key === 'nav_menu' ) {
+			$all_menus = wp_get_nav_menus();
+			$pt_menus  = array();
+			$pending_m = 0;
+			foreach ( $all_menus as $m ) {
+				if ( preg_match( '/\s*\(EN\)$/i', $m->name ) || preg_match( '/\s*\(English\)$/i', $m->name ) ) {
+					continue;
+				}
+				$pt_menus[] = $m;
+				$en_m = wp_get_nav_menu_object( $m->name . ' (EN)' );
+				if ( ! $en_m ) {
+					$pending_m++;
+				}
+			}
+
+			$stats['nav_menu'] = array(
+				'label'   => $type_label,
+				'total'   => count( $pt_menus ),
+				'pending' => $pending_m,
+			);
+			$total_pending += $pending_m;
+			continue;
+		}
+
 		$posts = get_posts( array(
 			'post_type'      => $type_key,
 			'post_status'    => 'publish',
@@ -585,7 +827,7 @@ function vbl_render_i18n_duplicator_page() {
 				<h3 style="margin: 0 0 8px 0; color: #065f46;">
 					✔ <?php printf( esc_html__( 'Sucesso: %d itens foram duplicados e associados no Polylang!', 'vila-baleira' ), (int) $results['count'] ); ?>
 				</h3>
-				<p style="margin: 0 0 12px 0;">Todos os campos ACF, templates, categorias e ligações bidirecionais foram preservados.</p>
+				<p style="margin: 0 0 12px 0;">Todos os campos ACF, templates, categorias, menus e ligações bidirecionais foram preservados.</p>
 				<table class="widefat striped" style="margin-top: 10px;">
 					<thead>
 						<tr>
@@ -603,7 +845,13 @@ function vbl_render_i18n_duplicator_page() {
 								<td><strong>#<?php echo esc_html( $c['id'] ); ?></strong></td>
 								<td><strong><?php echo esc_html( $c['title'] ); ?></strong></td>
 								<td>ID <?php echo esc_html( $c['pt_id'] ); ?></td>
-								<td><a href="<?php echo esc_url( get_permalink( $c['id'] ) ); ?>" target="_blank" class="button button-small">Ver ↗</a></td>
+								<td>
+									<?php if ( $c['post_type'] === 'nav_menu' ) : ?>
+										<a href="<?php echo esc_url( admin_url( 'nav-menus.php?action=edit&menu=' . $c['id'] ) ); ?>" target="_blank" class="button button-small">Editar Menu ↗</a>
+									<?php else : ?>
+										<a href="<?php echo esc_url( get_permalink( $c['id'] ) ); ?>" target="_blank" class="button button-small">Ver ↗</a>
+									<?php endif; ?>
+								</td>
 							</tr>
 						<?php endforeach; ?>
 					</tbody>
@@ -616,7 +864,7 @@ function vbl_render_i18n_duplicator_page() {
 				<?php esc_html_e( 'Estado Geral das Traduções (PT &rarr; EN)', 'vila-baleira' ); ?>
 			</h2>
 			<p style="color: #475569; font-size: 14px; line-height: 1.6;">
-				Esta ferramenta verifica todos os tipos de conteúdo do site, cria uma cópia atribuída ao idioma <strong>Inglês (EN)</strong>, clona os campos ACF, repeaters, taxonomias e <strong>associa automaticamente a tradução correspondente no Polylang</strong>.
+				Esta ferramenta verifica todos os tipos de conteúdo do site (incluindo <strong>menus de navegação</strong>), cria uma cópia atribuída ao idioma <strong>Inglês (EN)</strong>, clona os campos ACF, repeaters, taxonomias e <strong>associa automaticamente a tradução correspondente no Polylang</strong>.
 			</p>
 
 			<form method="post" action="">
@@ -663,7 +911,7 @@ function vbl_render_i18n_duplicator_page() {
 
 				<?php if ( $total_pending === 0 ) : ?>
 					<div style="background: #dcfce7; border: 1px solid #86efac; color: #166534; padding: 14px 18px; border-radius: 6px; margin: 20px 0;">
-						<strong>✔ Fantástico! Todo o conteúdo do site (Páginas, Quartos, Experiências e Notícias) já possui versão correspondente em Inglês!</strong>
+						<strong>✔ Fantástico! Todo o conteúdo do site (Páginas, Quartos, Experiências, Notícias e Menus) já possui versão correspondente em Inglês!</strong>
 					</div>
 				<?php else : ?>
 					<p class="submit" style="margin-bottom: 0;">
