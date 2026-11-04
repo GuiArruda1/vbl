@@ -169,12 +169,13 @@ function vbl_widgets_init() {
 add_action( 'widgets_init', 'vbl_widgets_init' );
 
 /* ========================================
-   Performance & Media: WebP & SVG Upload Support
+   Performance & Media: WebP & SVG Upload Support (with Strict Sanitization)
    ======================================== */
 function vbl_enable_custom_uploads( $mimes ) {
     $mimes['webp'] = 'image/webp';
     $mimes['svg']  = 'image/svg+xml';
-    $mimes['svgz'] = 'image/svg+xml';
+    // Remove svgz: compressed SVG is unsafe for pre-filtering
+    unset( $mimes['svgz'] );
     return $mimes;
 }
 add_filter( 'upload_mimes', 'vbl_enable_custom_uploads' );
@@ -188,13 +189,81 @@ function vbl_fix_svg_mime_type( $data, $file, $filename, $mimes ) {
     if ( $ext === 'svg' ) {
         $data['type'] = 'image/svg+xml';
         $data['ext']  = 'svg';
-    } elseif ( $ext === 'svgz' ) {
-        $data['type'] = 'image/svg+xml';
-        $data['ext']  = 'svgz';
     }
     return $data;
 }
 add_filter( 'wp_check_filetype_and_ext', 'vbl_fix_svg_mime_type', 10, 4 );
+
+/**
+ * Sanitize uploaded SVG files to prevent Stored XSS and XML External Entity (XXE) attacks
+ *
+ * @param array $file Array containing tmp_name, name, type, error, size.
+ * @return array
+ */
+function vbl_sanitize_svg_upload( $file ) {
+    if ( empty( $file['tmp_name'] ) || empty( $file['name'] ) ) {
+        return $file;
+    }
+
+    $ext = strtolower( pathinfo( $file['name'], PATHINFO_EXTENSION ) );
+    if ( 'svg' !== $ext ) {
+        return $file;
+    }
+
+    $svg_content = file_get_contents( $file['tmp_name'] );
+    if ( false === $svg_content || empty( $svg_content ) ) {
+        $file['error'] = __( 'Ficheiro SVG vazio ou ilegível.', 'vila-baleira' );
+        return $file;
+    }
+
+    // 1. Block dangerous active script vectors, event handlers and external entities
+    $dangerous_patterns = array(
+        '#<script[\s\S]*?>#i',
+        '#<foreignobject[\s\S]*?>#i',
+        '#<!ENTITY#i',
+        '#<!DOCTYPE[^>]*SYSTEM#i',
+        '#\bon[a-z]+\s*=#i', // inline event handlers: onload, onclick, onerror, etc.
+        '#xlink:href\s*=\s*["\']\s*javascript:#i',
+        '#href\s*=\s*["\']\s*javascript:#i',
+        '#href\s*=\s*["\']\s*data:#i',
+        '#<use[\s\S]*?href\s*=\s*["\']http#i', // external <use> inclusions
+    );
+
+    foreach ( $dangerous_patterns as $pattern ) {
+        if ( preg_match( $pattern, $svg_content ) ) {
+            $file['error'] = __( 'O ficheiro SVG foi rejeitado por conter elementos ou scripts não permitidos (Segurança).', 'vila-baleira' );
+            return $file;
+        }
+    }
+
+    // 2. Validate XML parsing with LIBXML_NONET (XXE Prevention)
+    $prev_libxml = libxml_use_internal_errors( true );
+    if ( function_exists( 'libxml_disable_entity_loader' ) && PHP_VERSION_ID < 80000 ) {
+        @libxml_disable_entity_loader( true );
+    }
+
+    $dom = new DOMDocument();
+    $dom->formatOutput = false;
+    $dom->preserveWhiteSpace = true;
+
+    $loaded = $dom->loadXML( $svg_content, LIBXML_NONET | LIBXML_NOWARNING | LIBXML_NOERROR );
+    libxml_clear_errors();
+    libxml_use_internal_errors( $prev_libxml );
+
+    if ( ! $loaded ) {
+        $file['error'] = __( 'Ficheiro SVG com estrutura XML inválida.', 'vila-baleira' );
+        return $file;
+    }
+
+    // Ensure root element is <svg>
+    if ( ! $dom->documentElement || strtolower( $dom->documentElement->tagName ) !== 'svg' ) {
+        $file['error'] = __( 'O ficheiro XML fornecido não possui raiz <svg>.', 'vila-baleira' );
+        return $file;
+    }
+
+    return $file;
+}
+add_filter( 'wp_handle_upload_prefilter', 'vbl_sanitize_svg_upload' );
 
 function vbl_displayable_webp( $result, $path ) {
     if ( $result === true ) {

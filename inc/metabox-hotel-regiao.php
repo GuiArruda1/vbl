@@ -545,13 +545,3 @@ function vbl_save_hotel_regiao_metabox( $post_id ) {
     }
 }
 add_action( 'save_post', 'vbl_save_hotel_regiao_metabox' );
-
-/**
- * 5. Limpeza de compatibilidade: remove meta '_vbl_hreg_exp_list' corrompida se existir
- */
-add_action( 'init', function() {
-    global $wpdb;
-    if ( isset( $wpdb->postmeta ) ) {
-        $wpdb->query( "DELETE FROM {$wpdb->postmeta} WHERE meta_key = '_vbl_hreg_exp_list' AND meta_value LIKE 'a:%'" );
-    }
-} );

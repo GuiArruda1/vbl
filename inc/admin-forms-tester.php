@@ -34,6 +34,24 @@ function vbl_forms_admin_menu() {
 add_action( 'admin_menu', 'vbl_forms_admin_menu' );
 
 /**
+ * Sanitize a CSV cell value against Formula / CSV Injection (CWE-1236)
+ * Prepend single quote if value begins with dangerous formula triggers (=, +, -, @, \t, \r)
+ *
+ * @param mixed $value
+ * @return string
+ */
+function vbl_sanitize_csv_cell( $value ) {
+	if ( ! is_scalar( $value ) ) {
+		return '';
+	}
+	$str = (string) $value;
+	if ( preg_match( '/^[=\+\-@\t\r]/', $str ) ) {
+		return "'" . $str;
+	}
+	return $str;
+}
+
+/**
  * Handle Admin Actions (Export CSV, Clear Test Logs, Clear All)
  */
 function vbl_forms_handle_admin_actions() {
@@ -88,7 +106,7 @@ function vbl_forms_handle_admin_actions() {
 				$anexo = $data['Ficheiro de Currículo (CV)'];
 			}
 
-			fputcsv( $out, array(
+			$row = array(
 				$entry['id'] ?? '',
 				$entry['timestamp'] ?? '',
 				strtoupper( $entry['form_type'] ?? '' ),
@@ -102,7 +120,10 @@ function vbl_forms_handle_admin_actions() {
 				$anexo,
 				$status,
 				$entry['ip'] ?? '',
-			) );
+			);
+
+			// Neutralize CSV formula injection across all cells
+			fputcsv( $out, array_map( 'vbl_sanitize_csv_cell', $row ) );
 		}
 
 		fclose( $out );

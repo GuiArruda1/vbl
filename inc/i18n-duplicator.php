@@ -87,11 +87,21 @@ add_action( 'admin_menu', function() {
 }, 25 );
 
 /**
- * Execução via GET URL: /?duplicar_en=1 ou ?duplicar_en=all ou ?duplicar_en=cpt
+ * Execução via GET URL com verificação de Nonce (Proteção CSRF):
+ * /?duplicar_en=1&_wpnonce=...
  */
 add_action( 'init', function() {
 	if ( ! isset( $_GET['duplicar_en'] ) || ! current_user_can( 'manage_options' ) ) {
 		return;
+	}
+
+	$nonce = isset( $_GET['_wpnonce'] ) ? sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ) ) : '';
+	if ( ! wp_verify_nonce( $nonce, 'vbl_duplicar_en_action' ) ) {
+		wp_die(
+			esc_html__( 'Acesso não autorizado ou link expirado (Proteção CSRF). Por favor utilize a interface em Ferramentas > Duplicar para EN no painel de administração.', 'vila-baleira' ),
+			esc_html__( 'Verificação de Segurança Falhou (CSRF)', 'vila-baleira' ),
+			array( 'response' => 403 )
+		);
 	}
 
 	$param = sanitize_key( $_GET['duplicar_en'] );

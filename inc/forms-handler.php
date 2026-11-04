@@ -542,6 +542,11 @@ function vbl_handle_carreiras_submission() {
 		require_once ABSPATH . 'wp-admin/includes/file.php';
 	}
 
+	// Randomize filename with unguessable cryptographic token to prevent enumeration of candidate PII
+	$orig_ext  = strtolower( pathinfo( $file['name'], PATHINFO_EXTENSION ) );
+	$orig_base = sanitize_title( pathinfo( $file['name'], PATHINFO_FILENAME ) ) ?: 'candidato';
+	$file['name'] = 'cv_' . $orig_base . '_' . wp_generate_password( 24, false ) . '.' . $orig_ext;
+
 	$upload_overrides = array(
 		'test_form' => false,
 		'mimes'     => array(
