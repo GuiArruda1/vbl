@@ -583,3 +583,4 @@ function vbl_save_quarto_galeria_metabox( $post_id ) {
     }
 }
 add_action( 'save_post_vbl_quarto', 'vbl_save_quarto_galeria_metabox' );
+

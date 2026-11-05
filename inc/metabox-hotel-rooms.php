@@ -26,7 +26,10 @@ function vbl_add_hotel_rooms_metabox( $post_type, $post ) {
         $template = get_page_template_slug( $post->ID );
     }
 
-    if ( 'page-templates/page-hotel-home.php' === $template || strpos( (string) $template, 'page-hotel-home.php' ) !== false ) {
+    $is_hotel_home  = ( 'page-templates/page-hotel-home.php' === $template || strpos( (string) $template, 'page-hotel-home.php' ) !== false );
+    $is_hotel_rooms = ( 'page-templates/page-hotel-rooms.php' === $template || strpos( (string) $template, 'page-hotel-rooms.php' ) !== false );
+
+    if ( $is_hotel_home || $is_hotel_rooms ) {
         add_meta_box(
             'vbl_hotel_rooms_slider_metabox',
             '⭐ Slider de Quartos & Suites deste Hotel',
@@ -56,11 +59,14 @@ add_action( 'admin_enqueue_scripts', 'vbl_hotel_rooms_admin_scripts' );
 function vbl_render_hotel_rooms_metabox( $post ) {
     wp_nonce_field( 'vbl_save_hotel_rooms_data', 'vbl_hotel_rooms_meta_nonce' );
 
-    $current_hotel_id = $post->ID;
+    $current_hotel_id = ( $post->post_parent > 0 ) ? $post->post_parent : $post->ID;
     $hotel_title      = get_the_title( $current_hotel_id );
     $hotel_fallback   = function_exists( 'vbl_get_hotel_fallback_image' ) 
         ? vbl_get_hotel_fallback_image( $current_hotel_id ) 
         : ( function_exists( 'vbl_img' ) ? vbl_img( 'hoteis/porto-santo-520x400.jpg' ) : '' );
+
+    // IDs de busca do Hotel: o post atual e o hotel pai (se for subpágina)
+    $target_hotel_ids = array_values( array_unique( array_filter( array( $post->ID, $post->post_parent, $current_hotel_id ) ) ) );
 
     // Obter todos os quartos (vbl_quarto) associados especificamente a este Hotel
     $hotel_rooms = get_posts( array(
@@ -70,13 +76,13 @@ function vbl_render_hotel_rooms_metabox( $post ) {
             'relation' => 'OR',
             array(
                 'key'     => 'vbl_quarto_hotel',
-                'value'   => $current_hotel_id,
-                'compare' => '=',
+                'value'   => $target_hotel_ids,
+                'compare' => 'IN',
             ),
             array(
                 'key'     => 'vbl_quarto_hotel',
-                'value'   => strval( $current_hotel_id ),
-                'compare' => '=',
+                'value'   => array_map( 'strval', $target_hotel_ids ),
+                'compare' => 'IN',
             ),
         ),
         'orderby'        => 'menu_order title',
@@ -94,8 +100,14 @@ function vbl_render_hotel_rooms_metabox( $post ) {
         ) );
     }
 
-    // Dados salvos
+    // Dados salvos (tenta desta página, ou herda do hotel pai se vazio)
     $slides = get_post_meta( $post->ID, '_vbl_hotel_rooms_slider', true );
+    if ( empty( $slides ) && $post->post_parent ) {
+        $slides = get_post_meta( $post->post_parent, '_vbl_hotel_rooms_slider', true );
+    }
+    if ( empty( $slides ) ) {
+        $slides = get_post_meta( $post->ID, 'vbl_hrooms_list', true );
+    }
 
     // Se ainda não existir configuração salva, pré-carrega automaticamente os quartos reais deste hotel
     if ( empty( $slides ) || ! is_array( $slides ) ) {
@@ -582,20 +594,29 @@ function vbl_save_hotel_rooms_metabox( $post_id ) {
                 set_post_thumbnail( $room_id, $image_id );
             }
 
+            $subtitle = sanitize_text_field( $slide['subtitle'] );
+            $url      = esc_url_raw( $slide['url'] );
+
             $clean_slides[] = array(
                 'room_id'     => $room_id,
                 'image_id'    => $image_id,
                 'title'       => wp_kses_post( $slide['title'] ),
-                'subtitle'    => sanitize_text_field( $slide['subtitle'] ),
+                'subtitle'    => $subtitle,
+                'category'    => $subtitle,
                 'description' => sanitize_textarea_field( $slide['description'] ),
                 'image'       => $image,
-                'url'         => esc_url_raw( $slide['url'] ),
+                'url'         => $url,
+                'link'        => $url,
             );
         }
 
         update_post_meta( $post_id, '_vbl_hotel_rooms_slider', $clean_slides );
+        update_post_meta( $post_id, 'vbl_hrooms_list', $clean_slides );
+        delete_post_meta( $post_id, '_vbl_hrooms_list' );
     } else {
         delete_post_meta( $post_id, '_vbl_hotel_rooms_slider' );
+        delete_post_meta( $post_id, 'vbl_hrooms_list' );
+        delete_post_meta( $post_id, '_vbl_hrooms_list' );
     }
 }
 add_action( 'save_post', 'vbl_save_hotel_rooms_metabox' );
