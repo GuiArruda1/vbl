@@ -24,7 +24,7 @@ function vbl_add_contactos_hoteis_metabox() {
             'vbl_render_contactos_hoteis_metabox',
             'page',
             'normal',
-            'high'
+            'default'
         );
     }
 }

@@ -22,7 +22,7 @@ function vbl_add_timeline_metabox() {
             'vbl_render_timeline_metabox',
             'page',
             'normal',
-            'high'
+            'default'
         );
     }
 }

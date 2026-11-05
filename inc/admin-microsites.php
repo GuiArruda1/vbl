@@ -496,3 +496,124 @@ function vbl_get_hotel_fallback_image( $post_id = null ) {
 
     return function_exists( 'vbl_img' ) ? vbl_img( 'hoteis/porto-santo-520x400.jpg' ) : '';
 }
+
+/**
+ * ----------------------------------------------------------------------
+ * Otimizações de Layout do Editor (Sticky Tabs & Posicionamento Prioritário)
+ * ----------------------------------------------------------------------
+ */
+
+/**
+ * 1. Enfileirar CSS do editor com Tabs Fixas (Sticky) e Estilo Vila Baleira
+ */
+function vbl_admin_editor_layout_assets( $hook ) {
+    if ( ! in_array( $hook, array( 'post.php', 'post-new.php' ), true ) ) {
+        return;
+    }
+
+    $screen = get_current_screen();
+    if ( ! $screen || ! in_array( $screen->post_type, array( 'page', 'vbl_quarto' ), true ) ) {
+        return;
+    }
+
+    wp_enqueue_style(
+        'vbl-admin-editor-layout',
+        get_template_directory_uri() . '/assets/css/admin-editor.css',
+        array(),
+        defined( 'VBL_VERSION' ) ? VBL_VERSION : '1.6.0'
+    );
+}
+add_action( 'admin_enqueue_scripts', 'vbl_admin_editor_layout_assets' );
+
+/**
+ * 2. Adicionar classe no body para páginas sem editor de blocos (Microsites e Quartos)
+ */
+function vbl_admin_body_editor_classes( $classes ) {
+    $screen = get_current_screen();
+    if ( ! $screen || 'post' !== $screen->base ) {
+        return $classes;
+    }
+
+    if ( 'vbl_quarto' === $screen->post_type ) {
+        return $classes . ' vbl-no-editor';
+    }
+
+    if ( 'page' === $screen->post_type && ! empty( $_GET['post'] ) ) {
+        $post_id  = intval( $_GET['post'] );
+        $template = get_post_meta( $post_id, '_wp_page_template', true );
+        $hotel_templates = vbl_get_hotel_templates();
+        // Excetua apenas templates que usem the_content()
+        if ( in_array( $template, $hotel_templates, true ) && 'page-templates/page-hotel-internal.php' !== $template ) {
+            $classes .= ' vbl-no-editor';
+        }
+    }
+
+    return $classes;
+}
+add_filter( 'admin_body_class', 'vbl_admin_body_editor_classes' );
+
+/**
+ * 3. Ocultar o bloco de conteúdo vazio do Gutenberg para templates de microsites e quartos
+ */
+function vbl_disable_block_editor_for_microsite_pages( $screen ) {
+    if ( ! $screen || 'post' !== $screen->base ) {
+        return;
+    }
+
+    if ( 'vbl_quarto' === $screen->post_type ) {
+        remove_post_type_support( 'vbl_quarto', 'editor' );
+    }
+
+    if ( 'page' === $screen->post_type && ! empty( $_GET['post'] ) ) {
+        $post_id  = intval( $_GET['post'] );
+        $template = get_post_meta( $post_id, '_wp_page_template', true );
+        $hotel_templates = vbl_get_hotel_templates();
+        if ( in_array( $template, $hotel_templates, true ) && 'page-templates/page-hotel-internal.php' !== $template ) {
+            remove_post_type_support( 'page', 'editor' );
+        }
+    }
+}
+add_action( 'current_screen', 'vbl_disable_block_editor_for_microsite_pages' );
+
+/**
+ * 4. Forçar a secção mestre de abas (ACF) no TOPO por defeito, antes de qualquer outra meta box
+ */
+function vbl_enforce_acf_tabs_first_metabox( $order ) {
+    if ( ! is_array( $order ) ) {
+        return $order;
+    }
+
+    foreach ( array( 'normal', 'advanced', 'side' ) as $context ) {
+        if ( empty( $order[ $context ] ) ) {
+            continue;
+        }
+
+        $boxes = is_array( $order[ $context ] ) ? $order[ $context ] : explode( ',', $order[ $context ] );
+        $acf_top_boxes = array();
+        $other_boxes   = array();
+
+        foreach ( $boxes as $box_id ) {
+            $box_id = trim( $box_id );
+            if ( empty( $box_id ) ) {
+                continue;
+            }
+
+            // Se for o grupo principal com abas de hotel, quartos ou páginas
+            if ( strpos( $box_id, 'acf-group_vbl_' ) !== false ) {
+                $acf_top_boxes[] = $box_id;
+            } else {
+                $other_boxes[] = $box_id;
+            }
+        }
+
+        if ( ! empty( $acf_top_boxes ) ) {
+            $sorted = array_merge( $acf_top_boxes, $other_boxes );
+            $order[ $context ] = is_array( $order[ $context ] ) ? $sorted : implode( ',', $sorted );
+        }
+    }
+
+    return $order;
+}
+add_filter( 'get_user_option_meta-box-order_page', 'vbl_enforce_acf_tabs_first_metabox', 999 );
+add_filter( 'get_user_option_meta-box-order_vbl_quarto', 'vbl_enforce_acf_tabs_first_metabox', 999 );
+

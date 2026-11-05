@@ -1,0 +1,130 @@
+/**
+ * Vila Baleira Admin Editor Styles
+ * Fixed Sticky Tabs & Layout Optimization for Hotel Microsites and Quartos
+ */
+
+/* 1. Ensure containers don't trap sticky elements */
+.edit-post-meta-boxes-main,
+.edit-post-meta-boxes-area,
+.postbox-container,
+.meta-box-sortables,
+.postbox,
+.postbox .inside,
+.acf-fields {
+    overflow: visible !important;
+}
+
+/* 2. Remove / collapse empty Gutenberg block editor on microsite templates */
+body.vbl-no-editor .block-editor-writing-flow,
+body.vbl-no-editor .block-editor-block-list__layout,
+body.vbl-no-editor .editor-styles-wrapper .block-editor-block-list__layout {
+    display: none !important;
+    min-height: 0 !important;
+    height: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+body.vbl-no-editor .edit-post-visual-editor {
+    padding-bottom: 0 !important;
+}
+
+body.vbl-no-editor .edit-post-meta-boxes-main {
+    padding-top: 10px !important;
+}
+
+/* 3. Master Section Meta Box (Tabbed ACF Section) */
+.postbox.acf-postbox {
+    border-radius: 8px !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.03) !important;
+    border: 1px solid #e2e8f0 !important;
+    margin-bottom: 24px !important;
+}
+
+/* Master Section Meta Box Header */
+.postbox.acf-postbox > .postbox-header {
+    background: #f8fafc !important;
+    border-bottom: 1px solid #e2e8f0 !important;
+    padding: 12px 18px !important;
+    border-radius: 8px 8px 0 0 !important;
+}
+
+.postbox.acf-postbox > .postbox-header h2 {
+    font-size: 15px !important;
+    font-weight: 700 !important;
+    color: #0f172a !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+}
+
+/* 4. Sticky ACF Tabs Navigation Bar */
+.acf-postbox > .inside > .acf-tab-wrap,
+.postbox .acf-tab-wrap {
+    position: -webkit-sticky !important;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 9999 !important;
+    background: #ffffff !important;
+    padding: 12px 16px 8px 16px !important;
+    margin: -6px -16px 18px -16px !important;
+    border-bottom: 2px solid #00b5b4 !important;
+    box-shadow: 0 4px 14px rgba(13, 82, 87, 0.08) !important;
+}
+
+/* Modern Tab Group */
+.acf-tab-group {
+    border-bottom: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 6px !important;
+}
+
+.acf-tab-group li {
+    margin: 0 !important;
+}
+
+.acf-tab-group li a.acf-tab-button {
+    display: inline-flex !important;
+    align-items: center !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    color: #4b5563 !important;
+    background: #f1f5f9 !important;
+    border: 1px solid #cbd5e1 !important;
+    border-bottom: none !important;
+    border-radius: 6px 6px 0 0 !important;
+    padding: 8px 16px !important;
+    text-decoration: none !important;
+    transition: all 0.15s ease-in-out !important;
+}
+
+.acf-tab-group li a.acf-tab-button:hover {
+    background: #e0f2f1 !important;
+    color: #0d5257 !important;
+    border-color: #80cbc4 !important;
+}
+
+.acf-tab-group li.active a.acf-tab-button {
+    background: #00b5b4 !important;
+    color: #ffffff !important;
+    border-color: #00b5b4 !important;
+    box-shadow: 0 -2px 6px rgba(0, 181, 180, 0.3) !important;
+}
+
+/* 5. Sub-sections and Notice Messages */
+.acf-field-message .acf-label {
+    display: none !important;
+}
+
+.acf-field-message .acf-input {
+    background: #f0fdfa !important;
+    border: 1px solid #99f6e4 !important;
+    border-left: 4px solid #00b5b4 !important;
+    border-radius: 6px !important;
+    padding: 12px 16px !important;
+    color: #134e4a !important;
+    font-size: 13.5px !important;
+}

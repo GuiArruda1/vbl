@@ -36,7 +36,7 @@ function vbl_add_hotel_rooms_metabox( $post_type, $post ) {
             'vbl_render_hotel_rooms_metabox',
             'page',
             'normal',
-            'high'
+            'default'
         );
     }
 }

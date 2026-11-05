@@ -34,7 +34,7 @@ function vbl_add_hotel_restaurantes_metabox( $post_type, $post ) {
             'vbl_render_hotel_restaurantes_metabox',
             'page',
             'normal',
-            'high'
+            'default'
         );
     }
 }

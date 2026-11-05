@@ -38,7 +38,7 @@ function vbl_add_hotel_atividades_metaboxes( $post_type, $post ) {
             'vbl_render_hotel_tratamentos_metabox',
             'page',
             'normal',
-            'high'
+            'default'
         );
 
         add_meta_box(

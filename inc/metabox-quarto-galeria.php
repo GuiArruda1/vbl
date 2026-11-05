@@ -28,7 +28,7 @@ function vbl_add_quarto_galeria_metabox( $post_type, $post ) {
         'vbl_render_quarto_galeria_metabox',
         'vbl_quarto',
         'normal',
-        'high'
+        'default'
     );
 }
 add_action( 'add_meta_boxes', 'vbl_add_quarto_galeria_metabox', 10, 2 );

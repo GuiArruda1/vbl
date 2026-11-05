@@ -214,8 +214,8 @@ function vbl_register_acf_fields() {
         'location' => array(
             array( array( 'param' => 'page_type', 'operator' => '==', 'value' => 'front_page' ) ),
         ),
-        'menu_order' => 0,
-        'position'   => 'normal',
+        'menu_order' => -100,
+        'position'   => 'acf_after_title',
         'style'      => 'default',
         'active'     => true,
     ) );
@@ -244,8 +244,8 @@ function vbl_register_acf_fields() {
         'location' => array(
             array( array( 'param' => 'options_page', 'operator' => '==', 'value' => 'vbl-global-settings' ) ),
         ),
-        'menu_order' => 0,
-        'position'   => 'normal',
+        'menu_order' => -100,
+        'position'   => 'acf_after_title',
         'style'      => 'default',
         'active'     => true,
     ) );
@@ -275,8 +275,8 @@ function vbl_register_acf_fields() {
         'location' => array(
             array( array( 'param' => 'page_template', 'operator' => '==', 'value' => 'page-templates/page-contactos.php' ) ),
         ),
-        'menu_order' => 0,
-        'position'   => 'normal',
+        'menu_order' => -100,
+        'position'   => 'acf_after_title',
         'style'      => 'default',
         'active'     => true,
     ) );
@@ -297,8 +297,8 @@ function vbl_register_acf_fields() {
         'location' => array(
             array( array( 'param' => 'post_type', 'operator' => '==', 'value' => 'vbl_experiencia' ) ),
         ),
-        'menu_order' => 0,
-        'position'   => 'normal',
+        'menu_order' => -100,
+        'position'   => 'acf_after_title',
         'style'      => 'default',
         'active'     => true,
     ) );
@@ -471,8 +471,8 @@ function vbl_register_acf_fields() {
         'location' => array(
             array( array( 'param' => 'page_template', 'operator' => '==', 'value' => 'page-templates/page-hotel-home.php' ) ),
         ),
-        'menu_order' => 0,
-        'position'   => 'normal',
+        'menu_order' => -100,
+        'position'   => 'acf_after_title',
         'style'      => 'default',
         'active'     => true,
     ) );
@@ -549,8 +549,8 @@ function vbl_register_acf_fields() {
         'location' => array(
             array( array( 'param' => 'page_template', 'operator' => '==', 'value' => 'page-templates/page-hoteis.php' ) ),
         ),
-        'menu_order' => 0,
-        'position'   => 'normal',
+        'menu_order' => -100,
+        'position'   => 'acf_after_title',
         'style'      => 'default',
         'active'     => true,
     ) );
@@ -635,8 +635,8 @@ function vbl_register_acf_fields() {
         'location' => array(
             array( array( 'param' => 'page_template', 'operator' => '==', 'value' => 'page-templates/page-ogrupo.php' ) ),
         ),
-        'menu_order' => 0,
-        'position'   => 'normal',
+        'menu_order' => -100,
+        'position'   => 'acf_after_title',
         'style'      => 'default',
         'active'     => true,
     ) );
@@ -671,8 +671,8 @@ function vbl_register_acf_fields() {
         'location' => array(
             array( array( 'param' => 'page_template', 'operator' => '==', 'value' => 'page-templates/page-experiencias.php' ) ),
         ),
-        'menu_order' => 0,
-        'position'   => 'normal',
+        'menu_order' => -100,
+        'position'   => 'acf_after_title',
         'style'      => 'default',
         'active'     => true,
     ) );
@@ -719,8 +719,8 @@ function vbl_register_acf_fields() {
         'location' => array(
             array( array( 'param' => 'page_template', 'operator' => '==', 'value' => 'page-templates/page-giftcard.php' ) ),
         ),
-        'menu_order' => 0,
-        'position'   => 'normal',
+        'menu_order' => -100,
+        'position'   => 'acf_after_title',
         'style'      => 'default',
         'active'     => true,
     ) );
@@ -763,8 +763,8 @@ function vbl_register_acf_fields() {
         'location' => array(
             array( array( 'param' => 'page_template', 'operator' => '==', 'value' => 'page-templates/page-hotel-sobre.php' ) ),
         ),
-        'menu_order' => 0,
-        'position'   => 'normal',
+        'menu_order' => -100,
+        'position'   => 'acf_after_title',
         'style'      => 'default',
         'active'     => true,
     ) );
@@ -797,8 +797,8 @@ function vbl_register_acf_fields() {
         'location' => array(
             array( array( 'param' => 'page_template', 'operator' => '==', 'value' => 'page-templates/page-hotel-rooms.php' ) ),
         ),
-        'menu_order' => 0,
-        'position'   => 'normal',
+        'menu_order' => -100,
+        'position'   => 'acf_after_title',
         'style'      => 'default',
         'active'     => true,
     ) );
@@ -888,8 +888,8 @@ function vbl_register_acf_fields() {
         'location' => array(
             array( array( 'param' => 'post_type', 'operator' => '==', 'value' => 'vbl_quarto' ) ),
         ),
-        'menu_order' => 0,
-        'position'   => 'normal',
+        'menu_order' => -100,
+        'position'   => 'acf_after_title',
         'style'      => 'default',
         'active'     => true,
     ) );
@@ -967,8 +967,8 @@ function vbl_register_acf_fields() {
         'location' => array(
             array( array( 'param' => 'page_template', 'operator' => '==', 'value' => 'page-templates/page-hotel-atividades.php' ) ),
         ),
-        'menu_order' => 0,
-        'position'   => 'normal',
+        'menu_order' => -100,
+        'position'   => 'acf_after_title',
         'style'      => 'default',
         'active'     => true,
     ) );
@@ -1010,8 +1010,8 @@ function vbl_register_acf_fields() {
         'location' => array(
             array( array( 'param' => 'page_template', 'operator' => '==', 'value' => 'page-templates/page-hotel-restaurantes.php' ) ),
         ),
-        'menu_order' => 0,
-        'position'   => 'normal',
+        'menu_order' => -100,
+        'position'   => 'acf_after_title',
         'style'      => 'default',
         'active'     => true,
     ) );
@@ -1053,8 +1053,8 @@ function vbl_register_acf_fields() {
         'location' => array(
             array( array( 'param' => 'page_template', 'operator' => '==', 'value' => 'page-templates/page-hotel-regiao.php' ) ),
         ),
-        'menu_order' => 0,
-        'position'   => 'normal',
+        'menu_order' => -100,
+        'position'   => 'acf_after_title',
         'style'      => 'default',
         'active'     => true,
     ) );
@@ -1113,8 +1113,8 @@ function vbl_register_acf_fields() {
         'location' => array(
             array( array( 'param' => 'page_template', 'operator' => '==', 'value' => 'page-templates/page-hotel-eventos.php' ) ),
         ),
-        'menu_order' => 0,
-        'position'   => 'normal',
+        'menu_order' => -100,
+        'position'   => 'acf_after_title',
         'style'      => 'default',
         'active'     => true,
     ) );
@@ -1149,8 +1149,8 @@ function vbl_register_acf_fields() {
         'location' => array(
             array( array( 'param' => 'page_template', 'operator' => '==', 'value' => 'page-templates/page-hotel-contactos.php' ) ),
         ),
-        'menu_order' => 0,
-        'position'   => 'normal',
+        'menu_order' => -100,
+        'position'   => 'acf_after_title',
         'style'      => 'default',
         'active'     => true,
     ) );
@@ -1260,8 +1260,8 @@ function vbl_register_acf_fields() {
         'location' => array(
             array( array( 'param' => 'page_template', 'operator' => '==', 'value' => 'page-templates/page-carreiras.php' ) ),
         ),
-        'menu_order' => 0,
-        'position'   => 'normal',
+        'menu_order' => -100,
+        'position'   => 'acf_after_title',
         'style'      => 'default',
         'active'     => true,
     ) );
