@@ -501,6 +501,52 @@ body.admin-bar .header-fixo {
 }
 
 /* ========================================
+   Hotel Header — Responsive Safeguards
+   Prevents overlapping menu items on MacBook Pro (13", 14", 15", 16") and 1080p screens
+   ======================================== */
+@media (min-width: 1280px) and (max-width: 1728px) {
+  #headerHotel .max-w-\[1920px\] {
+    padding-left: 28px !important;
+    padding-right: 28px !important;
+  }
+  #headerHotel .vbl-hotel-nav-link,
+  #headerHotel .vbl-hotels-trigger,
+  #headerHotel .vbl-lang-trigger {
+    font-size: 11px !important;
+    letter-spacing: 0.5px !important;
+  }
+  #headerHotel nav {
+    gap: 12px !important;
+  }
+  #headerHotel .vbl-hotel-btn-reservar {
+    font-size: 11px !important;
+    padding: 6px 14px !important;
+    letter-spacing: 0.8px !important;
+  }
+}
+
+@media (min-width: 1280px) and (max-width: 1440px) {
+  #headerHotel .max-w-\[1920px\] {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+  #headerHotel .vbl-hotel-nav-link,
+  #headerHotel .vbl-hotels-trigger,
+  #headerHotel .vbl-lang-trigger {
+    font-size: 10.5px !important;
+    letter-spacing: 0.35px !important;
+  }
+  #headerHotel nav {
+    gap: 9px !important;
+  }
+  #headerHotel .vbl-hotel-btn-reservar {
+    font-size: 10.5px !important;
+    padding: 5px 10px !important;
+    letter-spacing: 0.6px !important;
+  }
+}
+
+/* ========================================
    MOBILE
    ======================================== */
 
