@@ -33,6 +33,7 @@ require_once VBL_DIR . '/inc/metabox-hotel-instalacoes.php';
 require_once VBL_DIR . '/inc/metabox-hotel-atividades.php';
 require_once VBL_DIR . '/inc/metabox-hotel-restaurantes.php';
 require_once VBL_DIR . '/inc/metabox-hotel-regiao.php';
+require_once VBL_DIR . '/inc/metabox-quarto-galeria.php';
 require_once VBL_DIR . '/inc/polylang-helpers.php';
 require_once VBL_DIR . '/inc/admin-microsites.php';
 require_once VBL_DIR . '/inc/i18n-duplicator.php';

@@ -865,15 +865,11 @@ function vbl_register_acf_fields() {
             /* Tab: Galeria & Apresentação */
             array( 'key' => 'field_vbl_q_tab_galeria', 'label' => 'Galeria & Fotos', 'type' => 'tab' ),
             array(
-                'key'          => 'field_vbl_quarto_galeria',
-                'label'        => 'Galeria de Fotografias (Slider)',
-                'name'         => 'vbl_quarto_galeria',
-                'type'         => 'repeater',
-                'button_label' => 'Adicionar Fotografia',
-                'layout'       => 'row',
-                'sub_fields'   => array(
-                    array( 'key' => 'field_vbl_q_gal_img', 'label' => 'Fotografia', 'name' => 'image', 'type' => 'image', 'return_format' => 'url', 'preview_size' => 'medium' ),
-                ),
+                'key'     => 'field_vbl_quarto_galeria_notice',
+                'label'   => 'Galeria de Fotografias (Slider)',
+                'name'    => '',
+                'type'    => 'message',
+                'message' => 'A gestão da galeria e fotografias deste quarto é feita na caixa nativa <strong>"📸 Galeria de Fotografias do Quarto (Slider)"</strong> logo abaixo nesta página, com suporte a adicionar múltiplas imagens, reordenar por arrasto e pré-visualização sem necessidade de licença do ACF Pro.',
             ),
 
             /* Tab: Comodidades */
