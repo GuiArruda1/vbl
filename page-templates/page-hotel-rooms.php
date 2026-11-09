@@ -16,9 +16,13 @@ if ( empty( $hero_bg ) ) {
 }
 
 // ACF Fields: Introdução
-$intro_tagline = vbl_field( 'vbl_hrooms_intro_tagline', false, 'ROOMS & SUITES' );
-$intro_title   = vbl_field( 'vbl_hrooms_intro_title', false, 'O QUARTO IDEAL PARA<br>A SUA ESTADIA' );
-$intro_text    = vbl_field( 'vbl_hrooms_intro_text', false, 'Gravida turpis posuere in mauris. Eget placerat pretium tempus pellentesque amet venenatis enim est. Sed id condimentum eget amet augue pretium et leo integer. Neque eu ut vulputate nisi sed. Lorem ipsum dolor sit amet consectetur.' );
+$intro_tagline   = vbl_field( 'vbl_hrooms_intro_tagline', false, 'ROOMS & SUITES' );
+$intro_title     = vbl_field( 'vbl_hrooms_intro_title', false, 'O QUARTO IDEAL PARA<br>A SUA ESTADIA' );
+$intro_text      = vbl_field( 'vbl_hrooms_intro_text', false, 'Gravida turpis posuere in mauris. Eget placerat pretium tempus pellentesque amet venenatis enim est. Sed id condimentum eget amet augue pretium et leo integer. Neque eu ut vulputate nisi sed. Lorem ipsum dolor sit amet consectetur.' );
+$rooms_btn_label = vbl_field( 'vbl_hrooms_btn_label', false, 'VER QUARTO' );
+if ( empty( $rooms_btn_label ) ) {
+    $rooms_btn_label = 'VER QUARTO';
+}
 
 // 1. Tenta carregar do Meta Box nativo de Quartos do Hotel (da página atual ou do Hotel Pai)
 $current_page_id = get_the_ID();
@@ -233,7 +237,7 @@ if ( empty( $rooms_list ) ) {
 
             <!-- Link Ver Quarto -->
             <a href="<?php echo esc_url( $link ); ?>" class="vbl-btn-microsite group/btn">
-              <span>VER QUARTO</span>
+              <span><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( $rooms_btn_label ) : $rooms_btn_label ); ?></span>
               <svg viewBox="0 0 12 12" fill="none">
                 <path d="M1 11L11 1H3.5M11 1V8.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>

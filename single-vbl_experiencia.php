@@ -99,11 +99,11 @@ $cat_name   = ( ! empty( $terms ) && ! is_wp_error( $terms ) ) ? $terms[0]->name
   <div class="vbl-container">
     <div class="flex items-center justify-between mb-12">
       <div>
-        <div class="vbl-subtitle mb-2"><span>DESCUBRA MAIS</span></div>
-        <h2 class="font-display text-[28px] sm:text-[40px] text-verde uppercase">Outras Experiências</h2>
+        <div class="vbl-subtitle mb-2"><span><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'DESCUBRA MAIS' ) : 'DESCUBRA MAIS' ); ?></span></div>
+        <h2 class="font-display text-[28px] sm:text-[40px] text-verde uppercase"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Outras Experiências' ) : 'Outras Experiências' ); ?></h2>
       </div>
       <a href="<?php echo esc_url( home_url( '/experiencias' ) ); ?>" class="hidden sm:inline-flex vbl-btn-white">
-        <span>Ver Todas</span>
+        <span><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Ver Todas' ) : 'Ver Todas' ); ?></span>
       </a>
     </div>
 

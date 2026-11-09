@@ -10,17 +10,27 @@ require_once VBL_DIR . '/header-hotel.php';
 
 $post_id = get_the_ID();
 
-// Hotel Pai (Post Object ID)
+// Hotel Pai (Post Object ID) com suporte a Polylang
 $parent_hotel = vbl_field( 'vbl_quarto_hotel', $post_id );
 $hotel_id = false;
 if ( $parent_hotel ) {
     $hotel_id = is_object( $parent_hotel ) ? $parent_hotel->ID : (int) $parent_hotel;
+}
+if ( $hotel_id && function_exists( 'pll_get_post' ) ) {
+    $trans_hotel = pll_get_post( $hotel_id );
+    if ( $trans_hotel ) {
+        $hotel_id = $trans_hotel;
+    }
 }
 
 $hotel_name = $hotel_id ? vbl_field( 'vbl_hotel_name', $hotel_id, 'Porto Santo' ) : 'Porto Santo';
 $hotel_booking_url = vbl_field( 'vbl_quarto_booking_url', $post_id );
 if ( empty( $hotel_booking_url ) ) {
     $hotel_booking_url = vbl_field( 'vbl_hotel_booking_url', $hotel_id, '#' );
+}
+$btn_reservar_label = vbl_field( 'vbl_quarto_btn_label', $post_id, 'RESERVAR' );
+if ( empty( $btn_reservar_label ) ) {
+    $btn_reservar_label = 'RESERVAR';
 }
 $mirai_hotel = function_exists( 'vbl_resolve_hotel_mirai' ) ? vbl_resolve_hotel_mirai( $hotel_id ?: $hotel_name ) : array(
     'chain_selector' => '23740',
@@ -29,36 +39,62 @@ $mirai_hotel = function_exists( 'vbl_resolve_hotel_mirai' ) ? vbl_resolve_hotel_
     'short_name'     => $hotel_name,
 );
 
-// CTA de Reservas (Configurado na Página Mãe do Hotel / Microsite)
-$cta_subtitle = $hotel_id ? vbl_field( 'vbl_hhotel_cta_subtitle', $hotel_id, 'RESERVAR ESTADIA' ) : 'RESERVAR ESTADIA';
+// CTA de Reservas (Configurado no Quarto via ACF ou herdado do Hotel Pai)
+$cta_subtitle = vbl_field( 'vbl_quarto_cta_subtitle', $post_id );
+if ( empty( $cta_subtitle ) && $hotel_id ) {
+    $cta_subtitle = vbl_field( 'vbl_hhotel_cta_subtitle', $hotel_id );
+}
 if ( empty( $cta_subtitle ) || ! is_string( $cta_subtitle ) ) {
     $cta_subtitle = 'RESERVAR ESTADIA';
 }
 
-$cta_title = $hotel_id ? vbl_field( 'vbl_hhotel_cta_title', $hotel_id, 'FAÇA JÁ A SUA RESERVA' ) : 'FAÇA JÁ A SUA RESERVA';
+$cta_title = vbl_field( 'vbl_quarto_cta_title', $post_id );
+if ( empty( $cta_title ) && $hotel_id ) {
+    $cta_title = vbl_field( 'vbl_hhotel_cta_title', $hotel_id );
+}
 if ( empty( $cta_title ) || ! is_string( $cta_title ) ) {
     $cta_title = 'FAÇA JÁ A SUA RESERVA';
 }
 
-$cta_desc = $hotel_id ? vbl_field( 'vbl_hhotel_cta_desc', $hotel_id, 'Garanta a sua estadia com as melhores condições e tarifas exclusivas no site oficial.' ) : 'Garanta a sua estadia com as melhores condições e tarifas exclusivas no site oficial.';
+$cta_desc = vbl_field( 'vbl_quarto_cta_desc', $post_id );
+if ( empty( $cta_desc ) && $hotel_id ) {
+    $cta_desc = vbl_field( 'vbl_hhotel_cta_desc', $hotel_id );
+}
 if ( empty( $cta_desc ) || ! is_string( $cta_desc ) ) {
     $cta_desc = 'Garanta a sua estadia com as melhores condições e tarifas exclusivas no site oficial.';
 }
 
-// Carrossel de Outros Quartos (Configurado na Página Mãe do Hotel / Microsite)
-$rel_rooms_subtitle = $hotel_id ? vbl_field( 'vbl_hhotel_rel_rooms_subtitle', $hotel_id, 'ROOMS & SUITES' ) : 'ROOMS & SUITES';
+// Carrossel de Outros Quartos (Configurado no Quarto via ACF ou herdado do Hotel Pai)
+$rel_rooms_subtitle = vbl_field( 'vbl_quarto_rel_subtitle', $post_id );
+if ( empty( $rel_rooms_subtitle ) && $hotel_id ) {
+    $rel_rooms_subtitle = vbl_field( 'vbl_hhotel_rel_rooms_subtitle', $hotel_id );
+}
 if ( empty( $rel_rooms_subtitle ) || ! is_string( $rel_rooms_subtitle ) ) {
     $rel_rooms_subtitle = 'ROOMS & SUITES';
 }
 
-$rel_rooms_title = $hotel_id ? vbl_field( 'vbl_hhotel_rel_rooms_title', $hotel_id, 'AMET ET LEO NEQUE<br>LOREM IPSUM SIT' ) : 'AMET ET LEO NEQUE<br>LOREM IPSUM SIT';
+$rel_rooms_title = vbl_field( 'vbl_quarto_rel_title', $post_id );
+if ( empty( $rel_rooms_title ) && $hotel_id ) {
+    $rel_rooms_title = vbl_field( 'vbl_hhotel_rel_rooms_title', $hotel_id );
+}
 if ( empty( $rel_rooms_title ) || ! is_string( $rel_rooms_title ) ) {
-    $rel_rooms_title = 'AMET ET LEO NEQUE<br>LOREM IPSUM SIT';
+    $rel_rooms_title = 'OUTROS QUARTOS & SUITES';
 }
 
-$rel_rooms_desc = $hotel_id ? vbl_field( 'vbl_hhotel_rel_rooms_desc', $hotel_id, 'Gravida turpis posuere in mauris. Eget placerat pretium tempus pellentesque amet venenatis est viverra. Sed id condimentum eget amet augue pretium et leo integer. Neque eu ut vulputate nisi sed. Lorem ipsum dolor sit amet consectetur.' ) : 'Gravida turpis posuere in mauris. Eget placerat pretium tempus pellentesque amet venenatis est viverra. Sed id condimentum eget amet augue pretium et leo integer. Neque eu ut vulputate nisi sed. Lorem ipsum dolor sit amet consectetur.';
+$rel_rooms_desc = vbl_field( 'vbl_quarto_rel_desc', $post_id );
+if ( empty( $rel_rooms_desc ) && $hotel_id ) {
+    $rel_rooms_desc = vbl_field( 'vbl_hhotel_rel_rooms_desc', $hotel_id );
+}
 if ( empty( $rel_rooms_desc ) || ! is_string( $rel_rooms_desc ) ) {
     $rel_rooms_desc = 'Gravida turpis posuere in mauris. Eget placerat pretium tempus pellentesque amet venenatis est viverra. Sed id condimentum eget amet augue pretium et leo integer. Neque eu ut vulputate nisi sed. Lorem ipsum dolor sit amet consectetur.';
+}
+
+$rel_rooms_btn_label = vbl_field( 'vbl_quarto_rel_btn_label', $post_id );
+if ( empty( $rel_rooms_btn_label ) && $hotel_id ) {
+    $rel_rooms_btn_label = vbl_field( 'vbl_hrooms_btn_label', $hotel_id );
+}
+if ( empty( $rel_rooms_btn_label ) || ! is_string( $rel_rooms_btn_label ) ) {
+    $rel_rooms_btn_label = 'VER QUARTO';
 }
 
 // Categoria & Detalhes
@@ -327,7 +363,7 @@ $frase_line3 = vbl_field( 'vbl_quarto_frase_line3', $post_id, 'LACUS EGET UT SIT
       <!-- Categoria / Tagline Superior -->
       <div class="flex items-center justify-center gap-3 mb-4">
         <span class="font-body text-[11px] xl:text-[12px] tracking-[2.5px] uppercase text-[#0da9a6] font-medium">
-          <?php echo esc_html( $categoria ); ?>
+          <?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( $categoria ) : $categoria ); ?>
         </span>
       </div>
 
@@ -343,7 +379,7 @@ $frase_line3 = vbl_field( 'vbl_quarto_frase_line3', $post_id, 'LACUS EGET UT SIT
 
       <!-- Botão Reservar -->
       <a href="<?php echo esc_url( $hotel_booking_url ); ?>" class="vbl-btn-microsite w-[180px]">
-        <span><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'RESERVAR' ) : 'RESERVAR' ); ?></span>
+        <span><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( $btn_reservar_label ) : $btn_reservar_label ); ?></span>
         <svg viewBox="0 0 12 12" fill="none">
           <path d="M1 11L11 1H3.5M11 1V8.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
@@ -364,20 +400,20 @@ $frase_line3 = vbl_field( 'vbl_quarto_frase_line3', $post_id, 'LACUS EGET UT SIT
             if ( empty( $gal_img ) ) continue;
         ?>
         <div class="w-full h-full flex-shrink-0">
-          <img src="<?php echo esc_url( $gal_img ); ?>" alt="Fotografia do Quarto" class="w-full h-full object-cover object-center">
+          <img src="<?php echo esc_url( $gal_img ); ?>" alt="<?php echo esc_attr( function_exists( 'vbl__' ) ? vbl__( 'Fotografia do Quarto' ) : 'Fotografia do Quarto' ); ?>" class="w-full h-full object-cover object-center">
         </div>
         <?php endforeach; ?>
       </div>
 
       <!-- Seta Esquerda -->
-      <button type="button" id="vblGaleriaPrev" class="absolute left-4 sm:left-8 lg:left-12 xl:left-16 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 border border-white/70 text-white bg-black/15 hover:bg-white hover:text-[#0d5257] hover:border-white flex items-center justify-center transition-all duration-300 cursor-pointer backdrop-blur-[2px] shadow-sm" aria-label="Foto Anterior">
+      <button type="button" id="vblGaleriaPrev" class="absolute left-4 sm:left-8 lg:left-12 xl:left-16 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 border border-white/70 text-white bg-black/15 hover:bg-white hover:text-[#0d5257] hover:border-white flex items-center justify-center transition-all duration-300 cursor-pointer backdrop-blur-[2px] shadow-sm" aria-label="<?php echo esc_attr( function_exists( 'vbl__' ) ? vbl__( 'Foto Anterior' ) : 'Foto Anterior' ); ?>">
         <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M19 12H5M12 19l-7-7 7-7" />
         </svg>
       </button>
 
       <!-- Seta Direita -->
-      <button type="button" id="vblGaleriaNext" class="absolute right-4 sm:right-8 lg:right-12 xl:right-16 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 border border-white/70 text-white bg-black/15 hover:bg-white hover:text-[#0d5257] hover:border-white flex items-center justify-center transition-all duration-300 cursor-pointer backdrop-blur-[2px] shadow-sm" aria-label="Próxima Foto">
+      <button type="button" id="vblGaleriaNext" class="absolute right-4 sm:right-8 lg:right-12 xl:right-16 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 border border-white/70 text-white bg-black/15 hover:bg-white hover:text-[#0d5257] hover:border-white flex items-center justify-center transition-all duration-300 cursor-pointer backdrop-blur-[2px] shadow-sm" aria-label="<?php echo esc_attr( function_exists( 'vbl__' ) ? vbl__( 'Próxima Foto' ) : 'Próxima Foto' ); ?>">
         <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M5 12h14M12 5l7 7-7 7" />
         </svg>
@@ -396,7 +432,7 @@ $frase_line3 = vbl_field( 'vbl_quarto_frase_line3', $post_id, 'LACUS EGET UT SIT
       <div class="flex items-center gap-4 mb-3">
         <div class="w-8 h-px bg-[#0da9a6] flex-shrink-0"></div>
         <span class="font-body text-[11px] xl:text-[12px] tracking-[2px] uppercase text-[#0da9a6] font-medium">
-          <?php echo esc_html( $comod_subtitle ); ?>
+          <?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( $comod_subtitle ) : $comod_subtitle ); ?>
         </span>
       </div>
 
@@ -424,9 +460,9 @@ $frase_line3 = vbl_field( 'vbl_quarto_frase_line3', $post_id, 'LACUS EGET UT SIT
               $c_icon_url = vbl_get_quarto_icon_url( $c_icone, $c_nome );
           ?>
           <div class="flex items-center gap-3.5">
-            <img src="<?php echo esc_url( $c_icon_url ); ?>" alt="<?php echo esc_attr( $c_nome ); ?>" class="w-7 h-7 sm:w-8 sm:h-8 flex-shrink-0 object-contain">
+            <img src="<?php echo esc_url( $c_icon_url ); ?>" alt="<?php echo esc_attr( function_exists( 'vbl__' ) ? vbl__( $c_nome ) : $c_nome ); ?>" class="w-7 h-7 sm:w-8 sm:h-8 flex-shrink-0 object-contain">
             <span class="font-body text-[11px] xl:text-[12px] tracking-[1.2px] uppercase text-[#0d5257] font-medium leading-tight">
-              <?php echo esc_html( $c_nome ); ?>
+              <?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( $c_nome ) : $c_nome ); ?>
             </span>
           </div>
           <?php endforeach; ?>
@@ -459,13 +495,13 @@ $frase_line3 = vbl_field( 'vbl_quarto_frase_line3', $post_id, 'LACUS EGET UT SIT
       <div class="mb-10">
         <div class="flex items-center gap-4 mb-2">
           <div class="w-8 h-px bg-[#0da9a6] flex-shrink-0"></div>
-          <span class="font-body text-[10px] xl:text-[11px] tracking-[2px] uppercase text-[#0da9a6] font-medium"><?php echo esc_html( $cta_subtitle ); ?></span>
+          <span class="font-body text-[10px] xl:text-[11px] tracking-[2px] uppercase text-[#0da9a6] font-medium"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( $cta_subtitle ) : $cta_subtitle ); ?></span>
         </div>
         <h2 class="font-display text-[36px] sm:text-[46px] lg:text-[56px] leading-tight uppercase text-[#0d5257] font-normal mb-3">
-          <?php echo wp_kses_post( $cta_title ); ?>
+          <?php echo wp_kses_post( function_exists( 'vbl__' ) ? vbl__( $cta_title ) : $cta_title ); ?>
         </h2>
         <p class="font-body font-light text-[13px] lg:text-[14px] text-black/70 max-w-[480px]">
-          <?php echo nl2br( esc_html( $cta_desc ) ); ?>
+          <?php echo nl2br( esc_html( function_exists( 'vbl__' ) ? vbl__( $cta_desc ) : $cta_desc ) ); ?>
         </p>
       </div>
 
@@ -691,13 +727,13 @@ $frase_line3 = vbl_field( 'vbl_quarto_frase_line3', $post_id, 'LACUS EGET UT SIT
       <!-- Cabeçalho Outros Quartos -->
       <div class="text-center mb-12 lg:mb-16 flex flex-col items-center">
         <span class="font-body text-[11px] xl:text-[12px] tracking-[2.5px] uppercase text-[#0da9a6] font-medium mb-3">
-          <?php echo esc_html( $rel_rooms_subtitle ); ?>
+          <?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( $rel_rooms_subtitle ) : $rel_rooms_subtitle ); ?>
         </span>
         <h2 class="font-display text-[40px] sm:text-[52px] lg:text-[64px] leading-[1.05] uppercase text-[#0d5257] font-normal mb-4">
-          <?php echo wp_kses_post( $rel_rooms_title ); ?>
+          <?php echo wp_kses_post( function_exists( 'vbl__' ) ? vbl__( $rel_rooms_title ) : $rel_rooms_title ); ?>
         </h2>
         <p class="font-body font-light text-[14px] text-black/70 max-w-[620px]">
-          <?php echo nl2br( esc_html( $rel_rooms_desc ) ); ?>
+          <?php echo nl2br( esc_html( function_exists( 'vbl__' ) ? vbl__( $rel_rooms_desc ) : $rel_rooms_desc ) ); ?>
         </p>
       </div>
 
@@ -705,14 +741,14 @@ $frase_line3 = vbl_field( 'vbl_quarto_frase_line3', $post_id, 'LACUS EGET UT SIT
       <div class="relative">
 
         <!-- Botão Seta Esquerda (Anterior) -->
-        <button type="button" id="vblOtherRoomsPrev" class="absolute left-0 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 border border-[#00B5B4] text-[#00B5B4] bg-transparent hover:bg-white hover:text-[#00B5B4] hover:border-[#00B5B4] flex items-center justify-center transition-all duration-300 cursor-pointer shadow-xs hover:shadow-sm" aria-label="Quarto Anterior">
+        <button type="button" id="vblOtherRoomsPrev" class="absolute left-0 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 border border-[#00B5B4] text-[#00B5B4] bg-transparent hover:bg-white hover:text-[#00B5B4] hover:border-[#00B5B4] flex items-center justify-center transition-all duration-300 cursor-pointer shadow-xs hover:shadow-sm" aria-label="<?php echo esc_attr( function_exists( 'vbl__' ) ? vbl__( 'Quarto Anterior' ) : 'Quarto Anterior' ); ?>">
           <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M19 12H5M12 19l-7-7 7-7" />
           </svg>
         </button>
 
         <!-- Botão Seta Direita (Seguinte) -->
-        <button type="button" id="vblOtherRoomsNext" class="absolute right-0 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 border border-[#00B5B4] text-[#00B5B4] bg-transparent hover:bg-white hover:text-[#00B5B4] hover:border-[#00B5B4] flex items-center justify-center transition-all duration-300 cursor-pointer shadow-xs hover:shadow-sm" aria-label="Próximo Quarto">
+        <button type="button" id="vblOtherRoomsNext" class="absolute right-0 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 border border-[#00B5B4] text-[#00B5B4] bg-transparent hover:bg-white hover:text-[#00B5B4] hover:border-[#00B5B4] flex items-center justify-center transition-all duration-300 cursor-pointer shadow-xs hover:shadow-sm" aria-label="<?php echo esc_attr( function_exists( 'vbl__' ) ? vbl__( 'Próximo Quarto' ) : 'Próximo Quarto' ); ?>">
           <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M5 12h14M12 5l7 7-7 7" />
           </svg>
@@ -734,7 +770,7 @@ $frase_line3 = vbl_field( 'vbl_quarto_frase_line3', $post_id, 'LACUS EGET UT SIT
               <div class="flex items-center gap-3 mb-2">
                 <div class="w-6 h-px bg-[#0da9a6]"></div>
                 <span class="font-body text-[10px] xl:text-[11px] tracking-[2px] uppercase text-[#0da9a6] font-medium">
-                  <?php echo esc_html( $o_room['cat'] ); ?>
+                  <?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( $o_room['cat'] ) : $o_room['cat'] ); ?>
                 </span>
               </div>
 
@@ -752,7 +788,7 @@ $frase_line3 = vbl_field( 'vbl_quarto_frase_line3', $post_id, 'LACUS EGET UT SIT
 
               <!-- Botão Ver Quarto -->
               <a href="<?php echo esc_url( $o_room['link'] ); ?>" class="vbl-btn-microsite group/btn">
-                <span>VER QUARTO</span>
+                <span><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( $rel_rooms_btn_label ) : $rel_rooms_btn_label ); ?></span>
                 <svg viewBox="0 0 12 12" fill="none">
                   <path d="M1 11L11 1H3.5M11 1V8.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
@@ -774,7 +810,7 @@ $frase_line3 = vbl_field( 'vbl_quarto_frase_line3', $post_id, 'LACUS EGET UT SIT
   =========================================== -->
   <section class="relative w-full py-28 lg:py-40 flex items-center justify-center overflow-hidden">
     <div class="absolute inset-0 w-full h-full">
-      <img src="<?php echo esc_url( $frase_bg ); ?>" alt="Vista Quarto" class="w-full h-full object-cover filter brightness-[0.75]">
+      <img src="<?php echo esc_url( $frase_bg ); ?>" alt="<?php echo esc_attr( function_exists( 'vbl__' ) ? vbl__( 'Vista Quarto' ) : 'Vista Quarto' ); ?>" class="w-full h-full object-cover filter brightness-[0.75]">
       <div class="absolute inset-0 bg-black/20"></div>
     </div>
     

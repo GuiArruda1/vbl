@@ -787,6 +787,14 @@ function vbl_register_acf_fields() {
             /* Tab: Lista de Quartos */
             array( 'key' => 'field_vbl_hrooms_tab_list', 'label' => 'Quartos & Suites', 'type' => 'tab' ),
             array(
+                'key'           => 'field_vbl_hrooms_btn_label',
+                'label'         => 'Texto do Botão dos Quartos',
+                'name'          => 'vbl_hrooms_btn_label',
+                'type'          => 'text',
+                'default_value' => 'VER QUARTO',
+                'instructions'  => 'Texto do botão no carrossel de quartos (ex: VER QUARTO ou VIEW ROOM).',
+            ),
+            array(
                 'key'     => 'field_vbl_hrooms_list_notice',
                 'label'   => 'Lista de Quartos / Suites / Apartamentos',
                 'name'    => '',
@@ -841,6 +849,14 @@ function vbl_register_acf_fields() {
                 'type'          => 'url',
                 'instructions'  => 'URL direto do motor de reservas para este quarto específico (opcional; usa o do hotel se vazio).',
             ),
+            array(
+                'key'           => 'field_vbl_quarto_btn_label',
+                'label'         => 'Texto do Botão Reservar (Hero)',
+                'name'          => 'vbl_quarto_btn_label',
+                'type'          => 'text',
+                'default_value' => 'RESERVAR',
+                'instructions'  => 'Texto do botão no topo do quarto (ex: RESERVAR ou BOOK NOW).',
+            ),
 
             /* Tab: Galeria & Apresentação */
             array( 'key' => 'field_vbl_q_tab_galeria', 'label' => 'Galeria & Fotos', 'type' => 'tab' ),
@@ -876,6 +892,70 @@ function vbl_register_acf_fields() {
                 'type'          => 'textarea',
                 'instructions'  => 'Adicione outras comodidades não listadas acima (uma por linha). O sistema detectará o ícone automaticamente.',
                 'rows'          => 3,
+            ),
+
+            /* Tab: Banner de Reserva (CTA) */
+            array( 'key' => 'field_vbl_q_tab_cta', 'label' => 'Banner Reserva (CTA)', 'type' => 'tab' ),
+            array(
+                'key'           => 'field_vbl_quarto_cta_subtitle',
+                'label'         => 'Subtítulo do Banner de Reserva',
+                'name'          => 'vbl_quarto_cta_subtitle',
+                'type'          => 'text',
+                'instructions'  => 'Ex: RESERVAR ESTADIA (se vazio, herda da página do hotel pai).',
+                'default_value' => 'RESERVAR ESTADIA',
+            ),
+            array(
+                'key'           => 'field_vbl_quarto_cta_title',
+                'label'         => 'Título do Banner de Reserva',
+                'name'          => 'vbl_quarto_cta_title',
+                'type'          => 'text',
+                'instructions'  => 'Ex: FAÇA JÁ A SUA RESERVA (se vazio, herda da página do hotel pai).',
+                'default_value' => 'FAÇA JÁ A SUA RESERVA',
+            ),
+            array(
+                'key'           => 'field_vbl_quarto_cta_desc',
+                'label'         => 'Descrição do Banner de Reserva',
+                'name'          => 'vbl_quarto_cta_desc',
+                'type'          => 'textarea',
+                'rows'          => 3,
+                'instructions'  => 'Texto explicativo do banner de reserva (se vazio, herda da página do hotel pai).',
+                'default_value' => 'Garanta a sua estadia com as melhores condições e tarifas exclusivas no site oficial.',
+            ),
+
+            /* Tab: Outros Quartos (Rodapé) */
+            array( 'key' => 'field_vbl_q_tab_rel_rooms', 'label' => 'Outros Quartos (Rodapé)', 'type' => 'tab' ),
+            array(
+                'key'           => 'field_vbl_quarto_rel_subtitle',
+                'label'         => 'Subtítulo do Carrossel',
+                'name'          => 'vbl_quarto_rel_subtitle',
+                'type'          => 'text',
+                'instructions'  => 'Ex: ROOMS & SUITES (se vazio, herda da página do hotel pai).',
+                'default_value' => 'ROOMS & SUITES',
+            ),
+            array(
+                'key'           => 'field_vbl_quarto_rel_title',
+                'label'         => 'Título do Carrossel',
+                'name'          => 'vbl_quarto_rel_title',
+                'type'          => 'text',
+                'instructions'  => 'Ex: OUTROS QUARTOS &amp; SUITES ou AMET ET LEO NEQUE (se vazio, herda do hotel).',
+                'default_value' => 'OUTROS QUARTOS & SUITES',
+            ),
+            array(
+                'key'           => 'field_vbl_quarto_rel_desc',
+                'label'         => 'Descrição do Carrossel',
+                'name'          => 'vbl_quarto_rel_desc',
+                'type'          => 'textarea',
+                'rows'          => 3,
+                'instructions'  => 'Texto explicativo antes dos cartões de outros quartos.',
+                'default_value' => 'Gravida turpis posuere in mauris. Eget placerat pretium tempus pellentesque amet venenatis est viverra. Sed id condimentum eget amet augue pretium et leo integer.',
+            ),
+            array(
+                'key'           => 'field_vbl_quarto_rel_btn_label',
+                'label'         => 'Texto do Botão nos Cartões',
+                'name'          => 'vbl_quarto_rel_btn_label',
+                'type'          => 'text',
+                'default_value' => 'VER QUARTO',
+                'instructions'  => 'Texto do botão em cada quarto do carrossel (ex: VER QUARTO ou VIEW ROOM).',
             ),
 
             /* Tab: Frase Banner Final */
