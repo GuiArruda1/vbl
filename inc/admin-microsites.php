@@ -512,7 +512,7 @@ function vbl_admin_editor_layout_assets( $hook ) {
     }
 
     $screen = get_current_screen();
-    if ( ! $screen || ! in_array( $screen->post_type, array( 'page', 'vbl_quarto' ), true ) ) {
+    if ( ! $screen || ! in_array( $screen->post_type, array( 'page', 'vbl_quarto', 'vbl_noticia', 'vbl_experiencia' ), true ) ) {
         return;
     }
 
@@ -616,4 +616,6 @@ function vbl_enforce_acf_tabs_first_metabox( $order ) {
 }
 add_filter( 'get_user_option_meta-box-order_page', 'vbl_enforce_acf_tabs_first_metabox', 999 );
 add_filter( 'get_user_option_meta-box-order_vbl_quarto', 'vbl_enforce_acf_tabs_first_metabox', 999 );
+add_filter( 'get_user_option_meta-box-order_vbl_noticia', 'vbl_enforce_acf_tabs_first_metabox', 999 );
+add_filter( 'get_user_option_meta-box-order_vbl_experiencia', 'vbl_enforce_acf_tabs_first_metabox', 999 );
 

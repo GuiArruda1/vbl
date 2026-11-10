@@ -8,11 +8,14 @@ get_header();
 
 <?php
 // ── HERO TÍTULO ──
-$hero_subtitle   = vbl_field( 'vbl_noticias_hero_subtitle', false, 'sit amet consectetur Lorem ipsum dolor' );
-$hero_title      = vbl_field( 'vbl_noticias_hero_title', false, 'Notícias' );
-$hero_desc       = vbl_field( 'vbl_noticias_hero_desc', false, 'Convallis odio massa pellentesque elit non eu fusce auctor mattis. Diam integer ultricies vitae. Lorem ipsum dolor sit amet consectetur.' );
+$hero_subtitle     = vbl_field( 'vbl_noticias_hero_subtitle', false, 'sit amet consectetur Lorem ipsum dolor' );
+$hero_title        = vbl_field( 'vbl_noticias_hero_title', false, 'Notícias' );
+$hero_desc         = vbl_field( 'vbl_noticias_hero_desc', false, 'Convallis odio massa pellentesque elit non eu fusce auctor mattis. Diam integer ultricies vitae. Lorem ipsum dolor sit amet consectetur.' );
 $hero_desc_desktop = vbl_field( 'vbl_noticias_hero_desc_desktop', false, 'Convallis odio massa pellentesque elit non eu fusce auctor mattis. Diam integer ultricies vitae. Lorem ipsum dolor sit amet consectetur. Convallis odio massa pellentesque elit non eu fusce auctor mattis.' );
-$flor_img        = vbl_img( 'noticias/flor.svg' );
+$flor_img          = vbl_field( 'vbl_noticias_hero_flor', false, vbl_img( 'noticias/flor.svg' ) );
+if ( empty( $flor_img ) ) $flor_img = vbl_img( 'noticias/flor.svg' );
+$posts_per_page    = (int) vbl_field( 'vbl_noticias_posts_per_page', false, 6 );
+if ( $posts_per_page < 1 ) $posts_per_page = 6;
 ?>
 
 <!-- ====== HERO TÍTULO — Mobile/Tablet ====== -->
@@ -20,11 +23,11 @@ $flor_img        = vbl_img( 'noticias/flor.svg' );
   <div class="relative py-10 md:py-14 flex flex-col items-center text-center">
     <div class="flex items-center gap-3 mb-3">
       <div class="w-8 h-px bg-[#BC945B]"></div>
-      <span class="font-body text-[11px] tracking-[1.1px] uppercase text-[#0d5257]"><?php echo esc_html( $hero_subtitle ); ?></span>
+      <span class="font-body text-[11px] tracking-[1.1px] uppercase text-[#0d5257]"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( $hero_subtitle ) : $hero_subtitle ); ?></span>
       <div class="w-8 h-px bg-[#BC945B]"></div>
     </div>
-    <h1 class="font-display text-[clamp(48px,12.8vw,72px)] leading-[clamp(52px,13.3vw,76px)] text-[#0d5257] uppercase mb-5"><?php echo wp_kses_post( $hero_title ); ?></h1>
-    <p class="font-body font-light text-[13px] leading-[19px] text-black/80 max-w-[400px]"><?php echo esc_html( $hero_desc ); ?></p>
+    <h1 class="font-display text-[clamp(48px,12.8vw,72px)] leading-[clamp(52px,13.3vw,76px)] text-[#0d5257] uppercase mb-5"><?php echo wp_kses_post( function_exists( 'vbl__' ) ? vbl__( $hero_title ) : $hero_title ); ?></h1>
+    <p class="font-body font-light text-[13px] leading-[19px] text-black/80 max-w-[400px]"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( $hero_desc ) : $hero_desc ); ?></p>
   </div>
 </section>
 
@@ -33,10 +36,10 @@ $flor_img        = vbl_img( 'noticias/flor.svg' );
   <div class="relative" style="padding:clamp(56px,5.21vw,100px) 16.67% clamp(24px,2.08vw,40px)">
     <div class="flex items-center gap-4">
       <div class="w-10 h-px bg-[#BC945B]"></div>
-      <span class="font-body text-[14px] tracking-[1.4px] uppercase text-[#0d5257]"><?php echo esc_html( $hero_subtitle ); ?></span>
+      <span class="font-body text-[14px] tracking-[1.4px] uppercase text-[#0d5257]"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( $hero_subtitle ) : $hero_subtitle ); ?></span>
     </div>
-    <h1 class="font-display text-[clamp(56px,5.21vw,100px)] leading-[clamp(56px,5.21vw,100px)] text-[#0d5257] uppercase mt-[24px]"><?php echo wp_kses_post( $hero_title ); ?></h1>
-    <p class="font-body font-light text-[clamp(13px,0.83vw,16px)] leading-[clamp(19px,1.25vw,24px)] mt-[clamp(16px,1.56vw,30px)] ml-[clamp(40px,4.17vw,80px)] max-w-[clamp(400px,33.33vw,640px)]"><?php echo esc_html( $hero_desc_desktop ); ?></p>
+    <h1 class="font-display text-[clamp(56px,5.21vw,100px)] leading-[clamp(56px,5.21vw,100px)] text-[#0d5257] uppercase mt-[24px]"><?php echo wp_kses_post( function_exists( 'vbl__' ) ? vbl__( $hero_title ) : $hero_title ); ?></h1>
+    <p class="font-body font-light text-[clamp(13px,0.83vw,16px)] leading-[clamp(19px,1.25vw,24px)] mt-[clamp(16px,1.56vw,30px)] ml-[clamp(40px,4.17vw,80px)] max-w-[clamp(400px,33.33vw,640px)]"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( $hero_desc_desktop ) : $hero_desc_desktop ); ?></p>
     <img src="<?php echo esc_url( $flor_img ); ?>" alt="" id="heroFlor" class="absolute pointer-events-none transition-transform duration-500 ease-out" style="right:clamp(40px,5.21vw,100px);bottom:clamp(-20px,-1.04vw,-40px);width:clamp(140px,11.04vw,212px);z-index:-1">
   </div>
 </section>
@@ -63,13 +66,20 @@ $fallback_imgs = array(
 
 // WP_Query for CPT vbl_noticia
 $paged = get_query_var( 'paged' ) ? get_query_var( 'paged' ) : 1;
-$noticias_query = new WP_Query( array(
+$query_args = array(
   'post_type'      => 'vbl_noticia',
-  'posts_per_page' => 6,
+  'posts_per_page' => $posts_per_page,
   'paged'          => $paged,
   'orderby'        => 'date',
   'order'          => 'DESC',
-) );
+);
+if ( function_exists( 'pll_current_language' ) ) {
+    $cur_lang = pll_current_language( 'slug' );
+    if ( ! empty( $cur_lang ) ) {
+        $query_args['lang'] = $cur_lang;
+    }
+}
+$noticias_query = new WP_Query( $query_args );
 
 // Build unified items: reais primeiro (com permalink), depois fallback (design mock)
 // Fallback link aponta para modelo-noticia (página de demonstração) para nunca ter "#"

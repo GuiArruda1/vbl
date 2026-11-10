@@ -1345,6 +1345,206 @@ function vbl_register_acf_fields() {
         'style'      => 'default',
         'active'     => true,
     ) );
+
+    /* ---- Notícias Page Fields (page-noticias.php) ---- */
+    acf_add_local_field_group( array(
+        'key'      => 'group_vbl_noticias_page',
+        'title'    => 'Página Notícias — Conteúdos e Cabeçalho',
+        'fields'   => array(
+            /* Tab: Cabeçalho & Títulos */
+            array( 'key' => 'field_vbl_noticias_tab_hero', 'label' => 'Cabeçalho & Títulos', 'type' => 'tab' ),
+            array(
+                'key'           => 'field_vbl_noticias_hero_subtitle',
+                'label'         => 'Subtítulo / Tagline Superior',
+                'name'          => 'vbl_noticias_hero_subtitle',
+                'type'          => 'text',
+                'default_value' => 'sit amet consectetur Lorem ipsum dolor',
+                'instructions'  => 'Texto pequeno acima do título principal (ex: NOTÍCIAS & ATUALIDADES ou LATEST UPDATES & NEWS).',
+            ),
+            array(
+                'key'           => 'field_vbl_noticias_hero_title',
+                'label'         => 'Título Principal',
+                'name'          => 'vbl_noticias_hero_title',
+                'type'          => 'text',
+                'default_value' => 'Notícias',
+                'instructions'  => 'Título em destaque da página (ex: Notícias ou News).',
+            ),
+            array(
+                'key'           => 'field_vbl_noticias_hero_desc',
+                'label'         => 'Descrição Curta (Mobile / Tablet)',
+                'name'          => 'vbl_noticias_hero_desc',
+                'type'          => 'textarea',
+                'rows'          => 3,
+                'default_value' => 'Convallis odio massa pellentesque elit non eu fusce auctor mattis. Diam integer ultricies vitae. Lorem ipsum dolor sit amet consectetur.',
+            ),
+            array(
+                'key'           => 'field_vbl_noticias_hero_desc_desktop',
+                'label'         => 'Descrição Expandida (Desktop)',
+                'name'          => 'vbl_noticias_hero_desc_desktop',
+                'type'          => 'textarea',
+                'rows'          => 4,
+                'default_value' => 'Convallis odio massa pellentesque elit non eu fusce auctor mattis. Diam integer ultricies vitae. Lorem ipsum dolor sit amet consectetur. Convallis odio massa pellentesque elit non eu fusce auctor mattis.',
+            ),
+            array(
+                'key'           => 'field_vbl_noticias_hero_flor',
+                'label'         => 'Elemento Decorativo (Flor SVG)',
+                'name'          => 'vbl_noticias_hero_flor',
+                'type'          => 'image',
+                'return_format' => 'url',
+                'preview_size'  => 'thumbnail',
+                'instructions'  => 'Flor decorativa exibida no canto inferior direito do cabeçalho.',
+            ),
+
+            /* Tab: Listagem de Notícias */
+            array( 'key' => 'field_vbl_noticias_tab_grid', 'label' => 'Grelha de Notícias', 'type' => 'tab' ),
+            array(
+                'key'           => 'field_vbl_noticias_posts_per_page',
+                'label'         => 'Notícias por Página',
+                'name'          => 'vbl_noticias_posts_per_page',
+                'type'          => 'number',
+                'default_value' => 6,
+                'min'           => 2,
+                'max'           => 24,
+                'instructions'  => 'Número de artigos exibidos por página antes da paginação (padrão: 6).',
+            ),
+
+            /* Tab: Newsletter */
+            array( 'key' => 'field_vbl_noticias_tab_nl', 'label' => 'Newsletter', 'type' => 'tab' ),
+            array(
+                'key'           => 'field_vbl_noticias_nl_subtitle',
+                'label'         => 'Subtítulo da Newsletter',
+                'name'          => 'vbl_noticias_nl_subtitle',
+                'type'          => 'text',
+                'default_value' => 'Subscreva a nossa',
+            ),
+            array(
+                'key'           => 'field_vbl_noticias_nl_title',
+                'label'         => 'Título da Newsletter',
+                'name'          => 'vbl_noticias_nl_title',
+                'type'          => 'text',
+                'default_value' => 'Newsletter',
+            ),
+            array(
+                'key'           => 'field_vbl_noticias_nl_desc',
+                'label'         => 'Descrição da Newsletter',
+                'name'          => 'vbl_noticias_nl_desc',
+                'type'          => 'textarea',
+                'rows'          => 2,
+                'default_value' => 'Seja o primeiro a receber as novidades sobre os nossos hotéis.',
+            ),
+        ),
+        'location' => array(
+            array( array( 'param' => 'page_template', 'operator' => '==', 'value' => 'page-templates/page-noticias.php' ) ),
+        ),
+        'menu_order' => -100,
+        'position'   => 'acf_after_title',
+        'style'      => 'default',
+        'active'     => true,
+    ) );
+
+    /* ---- Single Notícia / Modelo Notícia Fields ---- */
+    acf_add_local_field_group( array(
+        'key'      => 'group_vbl_single_noticia',
+        'title'    => 'Notícia — Conteúdo e Artigo',
+        'fields'   => array(
+            /* Tab: Artigo & Cabeçalho */
+            array( 'key' => 'field_vbl_snoticia_tab_artigo', 'label' => 'Artigo & Cabeçalho', 'type' => 'tab' ),
+            array(
+                'key'           => 'field_vbl_noticia_article_date',
+                'label'         => 'Data de Publicação Formatada',
+                'name'          => 'vbl_noticia_article_date',
+                'type'          => 'text',
+                'instructions'  => 'Ex: 20 de Maio de 2026 ou May 20, 2026. Se vazio, utiliza a data do post.',
+            ),
+            array(
+                'key'           => 'field_vbl_noticia_article_title',
+                'label'         => 'Título do Artigo (Personalizado)',
+                'name'          => 'vbl_noticia_article_title',
+                'type'          => 'text',
+                'instructions'  => 'Se vazio, utiliza o título do post.',
+            ),
+            array(
+                'key'           => 'field_vbl_noticia_article_hero_img',
+                'label'         => 'Imagem Principal do Artigo',
+                'name'          => 'vbl_noticia_article_hero_img',
+                'type'          => 'image',
+                'return_format' => 'url',
+                'preview_size'  => 'medium',
+                'instructions'  => 'Se vazio, utiliza a imagem de destaque do post.',
+            ),
+
+            /* Tab: Corpo do Artigo */
+            array( 'key' => 'field_vbl_snoticia_tab_body', 'label' => 'Corpo do Artigo', 'type' => 'tab' ),
+            array(
+                'key'           => 'field_vbl_noticia_body_text_1',
+                'label'         => 'Texto do Artigo — Parte 1',
+                'name'          => 'vbl_noticia_body_text_1',
+                'type'          => 'wysiwyg',
+                'instructions'  => 'Primeira parte do artigo (antes da imagem intermédia). Se vazio, utiliza o conteúdo padrão.',
+                'media_upload'  => 0,
+            ),
+            array(
+                'key'           => 'field_vbl_noticia_body_img',
+                'label'         => 'Imagem Intermédia do Artigo',
+                'name'          => 'vbl_noticia_body_img',
+                'type'          => 'image',
+                'return_format' => 'url',
+                'preview_size'  => 'medium',
+                'instructions'  => 'Imagem secundária apresentada no meio do artigo.',
+            ),
+            array(
+                'key'           => 'field_vbl_noticia_body_text_2',
+                'label'         => 'Texto do Artigo — Parte 2',
+                'name'          => 'vbl_noticia_body_text_2',
+                'type'          => 'wysiwyg',
+                'instructions'  => 'Segunda parte do artigo (após a imagem intermédia).',
+                'media_upload'  => 0,
+            ),
+
+            /* Tab: Navegação & Partilha */
+            array( 'key' => 'field_vbl_snoticia_tab_nav', 'label' => 'Navegação & Partilha', 'type' => 'tab' ),
+            array(
+                'key'           => 'field_vbl_noticia_nav_share',
+                'label'         => 'Texto do Botão Partilhar',
+                'name'          => 'vbl_noticia_nav_share',
+                'type'          => 'text',
+                'default_value' => 'Partilhar',
+            ),
+            array(
+                'key'           => 'field_vbl_noticia_nav_share_url',
+                'label'         => 'URL de Partilha',
+                'name'          => 'vbl_noticia_nav_share_url',
+                'type'          => 'url',
+                'instructions'  => 'Deixe vazio para usar o link permanente da notícia.',
+            ),
+            array(
+                'key'           => 'field_vbl_noticia_nav_prev_label',
+                'label'         => 'Texto do Link Anterior',
+                'name'          => 'vbl_noticia_nav_prev_label',
+                'type'          => 'text',
+                'instructions'  => 'Deixe vazio para usar o título do post anterior ou "Anterior".',
+            ),
+            array(
+                'key'           => 'field_vbl_noticia_nav_next_label',
+                'label'         => 'Texto do Link Seguinte',
+                'name'          => 'vbl_noticia_nav_next_label',
+                'type'          => 'text',
+                'instructions'  => 'Deixe vazio para usar o título do post seguinte ou "Seguinte".',
+            ),
+        ),
+        'location' => array(
+            array(
+                array( 'param' => 'post_type', 'operator' => '==', 'value' => 'vbl_noticia' ),
+            ),
+            array(
+                array( 'param' => 'page_template', 'operator' => '==', 'value' => 'page-templates/page-modelo-noticia.php' ),
+            ),
+        ),
+        'menu_order' => -100,
+        'position'   => 'acf_after_title',
+        'style'      => 'default',
+        'active'     => true,
+    ) );
 }
 add_action( 'acf/init', 'vbl_register_acf_fields' );
 

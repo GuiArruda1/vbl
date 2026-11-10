@@ -112,6 +112,10 @@ $nav_prev_label  = vbl_field( 'vbl_noticia_nav_prev_label', false, $prev_post ? 
 $nav_prev_url    = vbl_field( 'vbl_noticia_nav_prev_url',   false, $prev_post ? get_permalink( $prev_post ) : '#' );
 $nav_next_label  = vbl_field( 'vbl_noticia_nav_next_label', false, $next_post ? $next_post->post_title : 'Seguinte' );
 $nav_next_url    = vbl_field( 'vbl_noticia_nav_next_url',   false, $next_post ? get_permalink( $next_post ) : '#' );
+
+$nav_share_label = function_exists( 'vbl__' ) ? vbl__( $nav_share_label ) : $nav_share_label;
+$nav_prev_label  = function_exists( 'vbl__' ) ? vbl__( $nav_prev_label ) : $nav_prev_label;
+$nav_next_label  = function_exists( 'vbl__' ) ? vbl__( $nav_next_label ) : $nav_next_label;
 ?>
 
 <!-- ====== SECÇÃO 3: NAVEGAÇÃO — Mobile/Tablet ====== -->

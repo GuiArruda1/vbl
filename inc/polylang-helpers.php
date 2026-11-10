@@ -185,6 +185,8 @@ function vbl_get_default_translations( $lang = 'en' ) {
             // Footer Links
             'Carreiras'                         => 'Careers',
             'Notícias'                          => 'News',
+            'NOTÍCIAS'                          => 'NEWS',
+            'notícias'                          => 'news',
             'Eventos'                           => 'Events',
 
             // Legal Links
@@ -298,6 +300,14 @@ function vbl_get_default_translations( $lang = 'en' ) {
             'Obrigado pela subscrição!'          => 'Thank you for subscribing!',
             'Email subscrito com sucesso!'      => 'Successfully subscribed!',
             'Erro ao processar. Tente novamente.' => 'Error processing. Please try again.',
+
+            // Notícias Page & Single Notícia
+            'Partilhar'                         => 'Share',
+            'partilhar'                         => 'share',
+            'sit amet consectetur Lorem ipsum dolor' => 'Latest News & Updates',
+            'Convallis odio massa pellentesque elit non eu fusce auctor mattis. Diam integer ultricies vitae. Lorem ipsum dolor sit amet consectetur.' => 'Stay updated with the latest news, announcements, and events from Vila Baleira Hotels & Resorts.',
+            'Convallis odio massa pellentesque elit non eu fusce auctor mattis. Diam integer ultricies vitae. Lorem ipsum dolor sit amet consectetur. Convallis odio massa pellentesque elit non eu fusce auctor mattis.' => 'Stay updated with the latest news, announcements, and events from Vila Baleira Hotels & Resorts. Discover our upcoming milestones, awards, and exclusive highlights.',
+            'Exemplo de título para notícia ou um evento a acontecer em 2026' => 'Sample title for news or an upcoming event in 2026',
 
             // Single Quarto & CTA de Reservas
             'FAÇA JÁ A SUA RESERVA'             => 'BOOK YOUR STAY NOW',
