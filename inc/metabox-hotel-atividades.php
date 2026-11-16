@@ -348,14 +348,9 @@ function vbl_render_hotel_tratamentos_metabox( $post ) {
         </div>
 
         <div class="vbl-rep-footer">
-            <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
-                <button type="button" id="vbl-add-trat-btn" class="button button-primary">
-                    <span class="dashicons dashicons-plus-alt2" style="vertical-align: middle; margin-top: -2px;"></span> Adicionar Tratamento
-                </button>
-                <button type="button" id="vbl-copy-trat-to-prog-btn" class="button button-secondary" title="Copiar todos os itens acima (título e fotografia) para a caixa Programa Semanal abaixo">
-                    <span class="dashicons dashicons-migrate" style="vertical-align: middle; margin-top: -2px;"></span> Copiar para Programa Semanal
-                </button>
-            </div>
+            <button type="button" id="vbl-add-trat-btn" class="button button-primary">
+                <span class="dashicons dashicons-plus-alt2" style="vertical-align: middle; margin-top: -2px;"></span> Adicionar Tratamento
+            </button>
             <span class="description">As alterações serão gravadas ao clicar em <strong>Atualizar</strong> na página.</span>
         </div>
     </div>
@@ -444,49 +439,6 @@ function vbl_render_hotel_tratamentos_metabox( $post ) {
                     $(this).remove();
                     reindexTratRows();
                 });
-            }
-        });
-
-        $('#vbl-copy-trat-to-prog-btn').on('click', function(e) {
-            e.preventDefault();
-            var $progContainer = $('#vbl-prog-container');
-            var progTmpl = $('#vbl-prog-row-template').html();
-            if (!$progContainer.length || !progTmpl) {
-                return;
-            }
-
-            if (!confirm('Copiar todos os itens de Tratamentos (título e fotografia) para o Programa Semanal? Os itens atuais do Programa Semanal serão substituídos.')) {
-                return;
-            }
-
-            $progContainer.empty();
-
-            $tratContainer.children('.vbl-trat-row').each(function(idx) {
-                var $src = $(this);
-                var titleVal = $src.find('input[name*="[title]"]').val() || '';
-                var imgUrl = $src.find('.vbl-rep-img-url').val() || '';
-                var imgId = $src.find('.vbl-rep-img-id').val() || '';
-
-                var rowHtml = progTmpl.replace(/\{\{INDEX\}\}/g, idx).replace(/\{\{NUM\}\}/g, idx + 1);
-                var $newRow = $(rowHtml);
-
-                $newRow.find('input[name*="[title]"]').val(titleVal);
-                $newRow.find('.vbl-rep-img-url').val(imgUrl);
-                $newRow.find('.vbl-rep-img-id').val(imgId);
-
-                if (imgUrl) {
-                    $newRow.find('.vbl-rep-img-preview').attr('src', imgUrl).show();
-                    $newRow.find('.vbl-rep-no-img').hide();
-                    $newRow.find('.vbl-rep-remove-img-btn').show();
-                }
-
-                $progContainer.append($newRow);
-            });
-
-            var $progBox = $('#vbl_hotel_programa_metabox');
-            if ($progBox.length) {
-                $progBox.removeClass('closed');
-                $('html, body').animate({ scrollTop: $progBox.offset().top - 50 }, 400);
             }
         });
 
