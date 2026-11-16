@@ -140,7 +140,7 @@ $privacy_url = function_exists( 'vbl_get_privacy_policy_url' ) ? vbl_get_privacy
               </div>
               <div class="flex flex-col">
                 <span class="text-[10px] tracking-[1.5px] uppercase text-[#0da9a6] font-medium mb-1"><?php function_exists( 'vbl_e' ) ? vbl_e( 'TELEFONE' ) : _e( 'TELEFONE', 'vila-baleira' ); ?></span>
-                <a href="tel:<?php echo esc_attr( preg_replace( '/[^0-9+]/', '', $telefone ) ); ?>" class="font-light text-[13px] xl:text-[14px] text-[#333333] hover:text-[#0da9a6] transition-colors">
+                <a href="tel:<?php echo esc_attr( preg_replace( '/[^0-9+]/', '', $telefone ) ); ?>" class="font-light text-[13px] xl:text-[14px] text-[#333333] hover:text-[var(--vbl-hotel-accent)] transition-colors">
                   <?php echo esc_html( $telefone ); ?>
                 </a>
               </div>
@@ -155,7 +155,7 @@ $privacy_url = function_exists( 'vbl_get_privacy_policy_url' ) ? vbl_get_privacy
               </div>
               <div class="flex flex-col">
                 <span class="text-[10px] tracking-[1.5px] uppercase text-[#0da9a6] font-medium mb-1"><?php function_exists( 'vbl_e' ) ? vbl_e( 'EMAIL' ) : _e( 'EMAIL', 'vila-baleira' ); ?></span>
-                <a href="mailto:<?php echo esc_attr( $email ); ?>" class="font-light text-[13px] xl:text-[14px] text-[#333333] hover:text-[#0da9a6] transition-colors">
+                <a href="mailto:<?php echo esc_attr( $email ); ?>" class="font-light text-[13px] xl:text-[14px] text-[#333333] hover:text-[var(--vbl-hotel-accent)] transition-colors">
                   <?php echo esc_html( $email ); ?>
                 </a>
               </div>

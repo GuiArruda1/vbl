@@ -180,7 +180,7 @@ if ( empty( $restaurantes_list ) || ! is_array( $restaurantes_list ) ) {
             <!-- Miniatura com Seta Esquerda (Anterior) -->
             <div class="flex items-center gap-6 mb-8">
               <!-- Seta Esquerda -->
-              <button type="button" class="vbl-rest-prev w-12 h-12 border border-[#00B5B4] text-[#00B5B4] hover:bg-[#00B5B4] hover:text-white flex items-center justify-center transition-colors cursor-pointer flex-shrink-0" aria-label="Restaurante Anterior">
+              <button type="button" class="vbl-rest-prev w-12 h-12 border border-[var(--vbl-hotel-accent)] text-[var(--vbl-hotel-accent)] hover:bg-[var(--vbl-hotel-accent)] hover:text-white flex items-center justify-center transition-colors cursor-pointer flex-shrink-0" aria-label="Restaurante Anterior">
                 <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M28 15H1M1 15L14 2M1 15L14 28" />
                 </svg>
@@ -214,7 +214,7 @@ if ( empty( $restaurantes_list ) || ! is_array( $restaurantes_list ) ) {
             </div>
 
             <!-- Seta Direita (Seguinte) -->
-            <button type="button" class="vbl-rest-next absolute -right-3 sm:-right-5 top-1/2 -translate-y-1/2 z-10 w-12 h-12 border border-[#00B5B4] text-[#00B5B4] hover:bg-[#00B5B4] hover:text-white flex items-center justify-center transition-colors cursor-pointer shadow-sm" aria-label="Restaurante Seguinte">
+            <button type="button" class="vbl-rest-next absolute -right-3 sm:-right-5 top-1/2 -translate-y-1/2 z-10 w-12 h-12 border border-[var(--vbl-hotel-accent)] text-[var(--vbl-hotel-accent)] hover:bg-[var(--vbl-hotel-accent)] hover:text-white flex items-center justify-center transition-colors cursor-pointer shadow-sm" aria-label="Restaurante Seguinte">
               <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M1 15H28M28 15L15 2M28 15L15 28" />
               </svg>

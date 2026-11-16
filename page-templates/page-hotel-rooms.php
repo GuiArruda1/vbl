@@ -224,7 +224,7 @@ if ( empty( $rooms_list ) ) {
             </div>
 
             <!-- Título do Quarto Clicável -->
-            <h3 class="font-display text-[26px] sm:text-[30px] lg:text-[34px] leading-tight uppercase text-[#0d5257] mb-4 group-hover:text-[#0da9a6] transition-colors">
+            <h3 class="font-display text-[26px] sm:text-[30px] lg:text-[34px] leading-tight uppercase text-[#0d5257] mb-4 group-hover:text-[var(--vbl-hotel-accent)] transition-colors">
               <a href="<?php echo esc_url( $link ); ?>" class="hover:underline decoration-[#0da9a6] decoration-1 underline-offset-4">
                 <?php echo esc_html( $title ); ?>
               </a>

@@ -543,7 +543,7 @@ $frase_line3 = vbl_field( 'vbl_quarto_frase_line3', $post_id, 'LACUS EGET UT SIT
         </label>
 
         <!-- PESQUISAR -->
-        <button type="button" class="vbl-search-submit flex-1 max-w-full md:max-w-[240px] flex items-center justify-between py-4 px-6 xl:px-8 bg-white hover:bg-[#0da9a6] hover:text-white text-[#0d5257] cursor-pointer transition-colors group">
+        <button type="button" class="vbl-search-submit flex-1 max-w-full md:max-w-[240px] flex items-center justify-between py-4 px-6 xl:px-8 bg-white hover:bg-[var(--vbl-hotel-accent)] hover:text-white text-[#0d5257] cursor-pointer transition-colors group">
           <span class="text-[13px] xl:text-[14px] font-medium uppercase tracking-[1.4px]"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'PESQUISAR' ) : 'PESQUISAR' ); ?></span>
           <svg class="w-[10px] h-[10px] transition-transform duration-300 group-hover:rotate-45" viewBox="0 0 11 11" fill="none">
             <path d="M10.8535 10.5H9.85352V1.70703L0.707031 10.8535L0 10.1465L9.14648 1H0.353516V0H10.3535C10.6297 0 10.8535 0.223858 10.8535 0.5V10.5Z" fill="currentColor"/>
@@ -569,7 +569,7 @@ $frase_line3 = vbl_field( 'vbl_quarto_frase_line3', $post_id, 'LACUS EGET UT SIT
           </div>
           <div class="flex items-center justify-between pt-3 border-t border-[#0d5257]/20">
             <span class="vbl-nights-count text-[11px] uppercase tracking-[1px] text-[#0d5257] font-medium"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( '2 Noites' ) : '2 Noites' ); ?></span>
-            <button type="button" class="vbl-confirm-dates px-5 py-2 border border-[#0d5257] text-[#0d5257] hover:bg-[#0da9a6] hover:text-white hover:border-[#0da9a6] text-[11px] uppercase tracking-[1.2px] font-medium transition-colors cursor-pointer"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Confirmar' ) : 'Confirmar' ); ?></button>
+            <button type="button" class="vbl-confirm-dates px-5 py-2 border border-[#0d5257] text-[#0d5257] hover:bg-[var(--vbl-hotel-accent)] hover:text-white hover:border-[var(--vbl-hotel-accent)] text-[11px] uppercase tracking-[1.2px] font-medium transition-colors cursor-pointer"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Confirmar' ) : 'Confirmar' ); ?></button>
           </div>
         </div>
 
@@ -618,7 +618,7 @@ $frase_line3 = vbl_field( 'vbl_quarto_frase_line3', $post_id, 'LACUS EGET UT SIT
             </div>
           </div>
           <div class="flex justify-end pt-3 border-t border-[#0d5257]/20">
-            <button type="button" class="vbl-confirm-who px-5 py-2 border border-[#0d5257] text-[#0d5257] hover:bg-[#0da9a6] hover:text-white hover:border-[#0da9a6] text-[11px] uppercase tracking-[1.2px] font-medium transition-colors cursor-pointer"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Confirmar' ) : 'Confirmar' ); ?></button>
+            <button type="button" class="vbl-confirm-who px-5 py-2 border border-[#0d5257] text-[#0d5257] hover:bg-[var(--vbl-hotel-accent)] hover:text-white hover:border-[var(--vbl-hotel-accent)] text-[11px] uppercase tracking-[1.2px] font-medium transition-colors cursor-pointer"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Confirmar' ) : 'Confirmar' ); ?></button>
           </div>
         </div>
 
@@ -741,14 +741,14 @@ $frase_line3 = vbl_field( 'vbl_quarto_frase_line3', $post_id, 'LACUS EGET UT SIT
       <div class="relative">
 
         <!-- Botão Seta Esquerda (Anterior) -->
-        <button type="button" id="vblOtherRoomsPrev" class="absolute left-0 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 border border-[#00B5B4] text-[#00B5B4] bg-transparent hover:bg-white hover:text-[#00B5B4] hover:border-[#00B5B4] flex items-center justify-center transition-all duration-300 cursor-pointer shadow-xs hover:shadow-sm" aria-label="<?php echo esc_attr( function_exists( 'vbl__' ) ? vbl__( 'Quarto Anterior' ) : 'Quarto Anterior' ); ?>">
+        <button type="button" id="vblOtherRoomsPrev" class="absolute left-0 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 border border-[var(--vbl-hotel-accent)] text-[var(--vbl-hotel-accent)] bg-transparent hover:bg-[var(--vbl-hotel-accent)] hover:text-white hover:border-[var(--vbl-hotel-accent)] flex items-center justify-center transition-all duration-300 cursor-pointer shadow-xs hover:shadow-sm" aria-label="<?php echo esc_attr( function_exists( 'vbl__' ) ? vbl__( 'Quarto Anterior' ) : 'Quarto Anterior' ); ?>">
           <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M19 12H5M12 19l-7-7 7-7" />
           </svg>
         </button>
 
         <!-- Botão Seta Direita (Seguinte) -->
-        <button type="button" id="vblOtherRoomsNext" class="absolute right-0 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 border border-[#00B5B4] text-[#00B5B4] bg-transparent hover:bg-white hover:text-[#00B5B4] hover:border-[#00B5B4] flex items-center justify-center transition-all duration-300 cursor-pointer shadow-xs hover:shadow-sm" aria-label="<?php echo esc_attr( function_exists( 'vbl__' ) ? vbl__( 'Próximo Quarto' ) : 'Próximo Quarto' ); ?>">
+        <button type="button" id="vblOtherRoomsNext" class="absolute right-0 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 border border-[var(--vbl-hotel-accent)] text-[var(--vbl-hotel-accent)] bg-transparent hover:bg-[var(--vbl-hotel-accent)] hover:text-white hover:border-[var(--vbl-hotel-accent)] flex items-center justify-center transition-all duration-300 cursor-pointer shadow-xs hover:shadow-sm" aria-label="<?php echo esc_attr( function_exists( 'vbl__' ) ? vbl__( 'Próximo Quarto' ) : 'Próximo Quarto' ); ?>">
           <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M5 12h14M12 5l7 7-7 7" />
           </svg>
@@ -775,7 +775,7 @@ $frase_line3 = vbl_field( 'vbl_quarto_frase_line3', $post_id, 'LACUS EGET UT SIT
               </div>
 
               <!-- Título Clicável -->
-              <h3 class="font-display text-[26px] sm:text-[30px] leading-tight uppercase text-[#0d5257] mb-3 group-hover:text-[#0da9a6] transition-colors">
+              <h3 class="font-display text-[26px] sm:text-[30px] leading-tight uppercase text-[#0d5257] mb-3 group-hover:text-[var(--vbl-hotel-accent)] transition-colors">
                 <a href="<?php echo esc_url( $o_room['link'] ); ?>" class="hover:underline decoration-[#0da9a6] decoration-1 underline-offset-4">
                   <?php echo esc_html( $o_room['title'] ); ?>
                 </a>

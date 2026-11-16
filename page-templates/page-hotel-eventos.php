@@ -291,7 +291,7 @@ $privacy_url  = function_exists( 'vbl_get_privacy_policy_url' ) ? vbl_get_privac
           <div class="flex items-center gap-3 pt-2">
             <input type="checkbox" name="privacy" id="eventPrivacy" required class="w-4 h-4 bg-white border border-transparent rounded-xs accent-[#0da9a6]">
             <label for="eventPrivacy" class="font-body font-light text-[12px] text-black/80">
-              <?php function_exists( 'vbl_e' ) ? vbl_e( 'Li e aceito a' ) : _e( 'Li e aceito a', 'vila-baleira' ); ?> <a href="<?php echo esc_url( $privacy_url ); ?>" class="underline underline-offset-2 hover:text-[#0da9a6] transition-colors"><?php function_exists( 'vbl_e' ) ? vbl_e( 'Política de Privacidade' ) : _e( 'Política de Privacidade', 'vila-baleira' ); ?></a>.
+              <?php function_exists( 'vbl_e' ) ? vbl_e( 'Li e aceito a' ) : _e( 'Li e aceito a', 'vila-baleira' ); ?> <a href="<?php echo esc_url( $privacy_url ); ?>" class="underline underline-offset-2 hover:text-[var(--vbl-hotel-accent)] transition-colors"><?php function_exists( 'vbl_e' ) ? vbl_e( 'Política de Privacidade' ) : _e( 'Política de Privacidade', 'vila-baleira' ); ?></a>.
             </label>
           </div>
 

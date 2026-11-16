@@ -300,14 +300,14 @@ if ( empty( $tratamentos_list ) || ! is_array( $tratamentos_list ) ) {
       <!-- Setas Sobrepostas às Bordas da Foto Central (Posição como no Design) -->
       <div id="vblProgArrowsWrapper" class="pointer-events-none absolute left-1/2 -translate-x-1/2 z-20 flex items-center justify-between w-[82vw] sm:w-[480px] md:w-[540px] lg:w-[600px] xl:w-[650px]">
         <!-- Seta Esquerda -->
-        <button type="button" id="vblProgPrev" class="pointer-events-auto -translate-x-1/2 w-11 h-11 sm:w-12 sm:h-12 bg-transparent border border-[#00B5B4] text-[#00B5B4] hover:bg-white hover:text-[#00B5B4] hover:border-[#00B5B4] flex items-center justify-center transition-all duration-300 cursor-pointer shadow-xs hover:shadow-sm" aria-label="Atividade Anterior">
+        <button type="button" id="vblProgPrev" class="pointer-events-auto -translate-x-1/2 w-11 h-11 sm:w-12 sm:h-12 bg-transparent border border-[var(--vbl-hotel-accent)] text-[var(--vbl-hotel-accent)] hover:bg-[var(--vbl-hotel-accent)] hover:text-white hover:border-[var(--vbl-hotel-accent)] flex items-center justify-center transition-all duration-300 cursor-pointer shadow-xs hover:shadow-sm" aria-label="Atividade Anterior">
           <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M19 12H5M12 19l-7-7 7-7" />
           </svg>
         </button>
 
         <!-- Seta Direita -->
-        <button type="button" id="vblProgNext" class="pointer-events-auto translate-x-1/2 w-11 h-11 sm:w-12 sm:h-12 bg-transparent border border-[#00B5B4] text-[#00B5B4] hover:bg-white hover:text-[#00B5B4] hover:border-[#00B5B4] flex items-center justify-center transition-all duration-300 cursor-pointer shadow-xs hover:shadow-sm" aria-label="Próxima Atividade">
+        <button type="button" id="vblProgNext" class="pointer-events-auto translate-x-1/2 w-11 h-11 sm:w-12 sm:h-12 bg-transparent border border-[var(--vbl-hotel-accent)] text-[var(--vbl-hotel-accent)] hover:bg-[var(--vbl-hotel-accent)] hover:text-white hover:border-[var(--vbl-hotel-accent)] flex items-center justify-center transition-all duration-300 cursor-pointer shadow-xs hover:shadow-sm" aria-label="Próxima Atividade">
           <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M5 12h14M12 5l7 7-7 7" />
           </svg>
@@ -327,14 +327,14 @@ if ( empty( $tratamentos_list ) || ! is_array( $tratamentos_list ) ) {
       <div id="vblAnimSlider" class="relative px-6 sm:px-12 md:px-16 lg:px-20 xl:px-24">
         
         <!-- Seta Esquerda (Alinhada à margem esquerda, centrada verticalmente como no Figma) -->
-        <button type="button" id="vblAnimPrev" class="vbl-anim-prev absolute left-0 sm:left-2 lg:left-4 xl:left-6 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 bg-transparent border border-[#00B5B4] text-[#00B5B4] hover:bg-white hover:text-[#00B5B4] hover:border-[#00B5B4] flex items-center justify-center transition-all duration-300 cursor-pointer shadow-xs hover:shadow-sm" aria-label="Slide Anterior">
+        <button type="button" id="vblAnimPrev" class="vbl-anim-prev absolute left-0 sm:left-2 lg:left-4 xl:left-6 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 bg-transparent border border-[var(--vbl-hotel-accent)] text-[var(--vbl-hotel-accent)] hover:bg-[var(--vbl-hotel-accent)] hover:text-white hover:border-[var(--vbl-hotel-accent)] flex items-center justify-center transition-all duration-300 cursor-pointer shadow-xs hover:shadow-sm" aria-label="Slide Anterior">
           <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M19 12H5M12 19l-7-7 7-7" />
           </svg>
         </button>
 
         <!-- Seta Direita (Alinhada à margem direita, centrada verticalmente como no Figma) -->
-        <button type="button" id="vblAnimNext" class="vbl-anim-next absolute right-0 sm:right-2 lg:right-4 xl:right-6 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 bg-transparent border border-[#00B5B4] text-[#00B5B4] hover:bg-white hover:text-[#00B5B4] hover:border-[#00B5B4] flex items-center justify-center transition-all duration-300 cursor-pointer shadow-xs hover:shadow-sm" aria-label="Slide Seguinte">
+        <button type="button" id="vblAnimNext" class="vbl-anim-next absolute right-0 sm:right-2 lg:right-4 xl:right-6 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 bg-transparent border border-[var(--vbl-hotel-accent)] text-[var(--vbl-hotel-accent)] hover:bg-[var(--vbl-hotel-accent)] hover:text-white hover:border-[var(--vbl-hotel-accent)] flex items-center justify-center transition-all duration-300 cursor-pointer shadow-xs hover:shadow-sm" aria-label="Slide Seguinte">
           <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M5 12h14M12 5l7 7-7 7" />
           </svg>
@@ -466,7 +466,7 @@ if ( empty( $tratamentos_list ) || ! is_array( $tratamentos_list ) ) {
           <!-- Lado Esquerdo: Fotografia + Seta Esquerda -->
           <div class="w-full lg:w-[48%] relative flex items-center justify-start">
             <!-- Seta Esquerda -->
-            <button type="button" class="vbl-trat-prev absolute -left-3 sm:-left-5 lg:-left-6 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 bg-transparent border border-[#00B5B4] text-[#00B5B4] hover:bg-white hover:text-[#00B5B4] hover:border-[#00B5B4] flex items-center justify-center transition-all duration-300 cursor-pointer shadow-xs hover:shadow-sm" aria-label="Tratamento Anterior">
+            <button type="button" class="vbl-trat-prev absolute -left-3 sm:-left-5 lg:-left-6 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 bg-transparent border border-[var(--vbl-hotel-accent)] text-[var(--vbl-hotel-accent)] hover:bg-[var(--vbl-hotel-accent)] hover:text-white hover:border-[var(--vbl-hotel-accent)] flex items-center justify-center transition-all duration-300 cursor-pointer shadow-xs hover:shadow-sm" aria-label="Tratamento Anterior">
               <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M19 12H5M12 19l-7-7 7-7" />
               </svg>
@@ -499,7 +499,7 @@ if ( empty( $tratamentos_list ) || ! is_array( $tratamentos_list ) ) {
             </div>
 
             <!-- Seta Direita -->
-            <button type="button" class="vbl-trat-next absolute -right-3 sm:-right-5 lg:-right-6 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 bg-transparent border border-[#00B5B4] text-[#00B5B4] hover:bg-white hover:text-[#00B5B4] hover:border-[#00B5B4] flex items-center justify-center transition-all duration-300 cursor-pointer shadow-xs hover:shadow-sm" aria-label="Próximo Tratamento">
+            <button type="button" class="vbl-trat-next absolute -right-3 sm:-right-5 lg:-right-6 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 bg-transparent border border-[var(--vbl-hotel-accent)] text-[var(--vbl-hotel-accent)] hover:bg-[var(--vbl-hotel-accent)] hover:text-white hover:border-[var(--vbl-hotel-accent)] flex items-center justify-center transition-all duration-300 cursor-pointer shadow-xs hover:shadow-sm" aria-label="Próximo Tratamento">
               <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M5 12h14M12 5l7 7-7 7" />
               </svg>

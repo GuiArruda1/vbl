@@ -333,8 +333,8 @@ body.admin-bar .header-fixo {
     }
     .vbl-btn.hover\:bg-\[\#0da9a6\]:hover,
     .vbl-btn-teal:hover {
-      background-color: #0da9a6 !important;
-      border-color: #0da9a6 !important;
+      background-color: var(--vbl-hotel-accent, #0da9a6) !important;
+      border-color: var(--vbl-hotel-accent, #0da9a6) !important;
     }
     .vbl-btn svg,
     #carreiraSubmitBtn svg {
@@ -451,7 +451,7 @@ body.admin-bar .header-fixo {
 
 #headerHotel.is-scrolled .vbl-hotel-nav-link.is-active,
 #headerHotel.is-scrolled .vbl-hotel-nav-link.active {
-  color: #0da9a6 !important;
+  color: var(--vbl-hotel-accent, #0da9a6) !important;
   text-decoration: underline !important;
   text-underline-offset: 6px !important;
   text-decoration-thickness: 1px !important;
@@ -461,7 +461,7 @@ body.admin-bar .header-fixo {
 #headerHotel.is-scrolled .vbl-hotels-trigger:hover,
 #headerHotel.is-scrolled .vbl-lang-trigger:hover,
 #headerHotel.is-scrolled .vbl-hotel-lang-mobile:hover {
-  color: #0da9a6 !important;
+  color: var(--vbl-hotel-accent, #0da9a6) !important;
 }
 
 #headerHotel.is-scrolled nav svg,
@@ -472,20 +472,20 @@ body.admin-bar .header-fixo {
 }
 
 #headerHotel.is-scrolled .vbl-hotel-btn-reservar {
-  border-color: #0da9a6 !important;
-  color: #0da9a6 !important;
+  border-color: var(--vbl-hotel-accent, #0da9a6) !important;
+  color: var(--vbl-hotel-accent, #0da9a6) !important;
   background-color: transparent !important;
 }
 
 #headerHotel.is-scrolled .vbl-hotel-btn-reservar svg,
 #headerHotel.is-scrolled .vbl-hotel-btn-reservar svg path {
-  color: #0da9a6 !important;
-  fill: #0da9a6 !important;
+  color: var(--vbl-hotel-accent, #0da9a6) !important;
+  fill: var(--vbl-hotel-accent, #0da9a6) !important;
 }
 
 #headerHotel.is-scrolled .vbl-hotel-btn-reservar:hover {
-  background-color: #0da9a6 !important;
-  border-color: #0da9a6 !important;
+  background-color: var(--vbl-hotel-accent, #0da9a6) !important;
+  border-color: var(--vbl-hotel-accent, #0da9a6) !important;
   color: #ffffff !important;
 }
 

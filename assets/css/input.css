@@ -183,21 +183,27 @@
     @apply font-body inline-flex items-center gap-4 px-4 py-2 border border-white text-white text-[14px] tracking-[1.4px] uppercase transition-all duration-300 cursor-pointer;
   }
   .vbl-btn-microsite {
-    @apply relative inline-flex items-center justify-between w-[200px] border-t border-b border-[#00B5B4] py-2.5 px-4 transition-all duration-300 cursor-pointer text-[#00B5B4] bg-transparent;
+    @apply relative inline-flex items-center justify-between w-[200px] border-t border-b py-2.5 px-4 transition-all duration-300 cursor-pointer bg-transparent;
+    border-color: var(--vbl-hotel-accent, #00B5B4);
+    color: var(--vbl-hotel-accent, #00B5B4);
     border-left: none !important;
     border-right: none !important;
   }
   .vbl-btn-microsite:hover {
-    @apply bg-[#00B5B4] text-white border-[#00B5B4];
+    background-color: var(--vbl-hotel-accent, #00B5B4);
+    border-color: var(--vbl-hotel-accent, #00B5B4);
+    color: #ffffff;
   }
   .vbl-btn-microsite span {
-    @apply font-body text-[11px] xl:text-[12px] tracking-[2px] uppercase font-medium text-[#00B5B4] transition-colors duration-300;
+    @apply font-body text-[11px] xl:text-[12px] tracking-[2px] uppercase font-medium transition-colors duration-300;
+    color: var(--vbl-hotel-accent, #00B5B4);
   }
   .vbl-btn-microsite:hover span {
     @apply text-white;
   }
   .vbl-btn-microsite svg {
-    @apply w-3.5 h-3.5 text-[#00B5B4] transition-all duration-300;
+    @apply w-3.5 h-3.5 transition-all duration-300;
+    color: var(--vbl-hotel-accent, #00B5B4);
   }
   .vbl-btn-microsite:hover svg {
     @apply text-white rotate-45;

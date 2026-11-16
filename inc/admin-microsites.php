@@ -426,28 +426,37 @@ function vbl_get_hotel_accent_color( $post_id = null ) {
         }
     }
 
-    // 1. Campo customizado ACF explícito se preenchido
-    $custom_color = function_exists( 'vbl_field' ) ? vbl_field( 'vbl_hotel_accent_color', $post_id ) : get_field( 'vbl_hotel_accent_color', $post_id );
-    if ( ! empty( $custom_color ) ) {
-        return $custom_color;
-    }
-
-    // 2. Mapeamento padrão pela slug do hotel
-    $post_obj = get_post( $post_id );
+    // 1. Mapeamento oficial por slug do hotel (PT / EN)
+    $mapped_color = '';
+    $post_obj     = get_post( $post_id );
     if ( $post_obj ) {
-        $slug = str_replace( array( 'vila-baleira-', '-novo' ), '', $post_obj->post_name );
+        $slug = strtolower( (string) $post_obj->post_name );
         $color_map = array(
             'porto-santo' => '#00B5B4',
-            'suites'      => '#D7A584',
-            'village'     => '#658D72',
             'funchal'     => '#F0B85E',
             'madeira'     => '#F0B85E',
-            'residences'  => '#BC945B',
+            'suites'      => '#D7A584',
+            'village'     => '#658D72',
             'residence'   => '#BC945B',
         );
-        if ( isset( $color_map[ $slug ] ) ) {
-            return $color_map[ $slug ];
+        foreach ( $color_map as $key => $hex ) {
+            if ( false !== strpos( $slug, $key ) ) {
+                $mapped_color = $hex;
+                break;
+            }
         }
+    }
+
+    // 2. Campo customizado ACF explícito (ignora o antigo default #00B5B4 se o hotel tiver cor própria no mapa)
+    $custom_color = function_exists( 'vbl_field' ) ? vbl_field( 'vbl_hotel_accent_color', $post_id ) : get_field( 'vbl_hotel_accent_color', $post_id );
+    if ( ! empty( $custom_color ) ) {
+        if ( ! $mapped_color || '#00B5B4' === $mapped_color || strtoupper( $custom_color ) !== '#00B5B4' ) {
+            return $custom_color;
+        }
+    }
+
+    if ( $mapped_color ) {
+        return $mapped_color;
     }
 
     return '#00B5B4'; // Default Porto Santo Cyan

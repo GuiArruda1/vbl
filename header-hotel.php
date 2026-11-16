@@ -23,6 +23,7 @@ $hotel_booking_url = vbl_field('vbl_hotel_booking_url', $current_hotel_id, '#');
 $hotel_permalink = $current_hotel_id ? get_permalink($current_hotel_id) : get_permalink();
 $hotel_header_logo = vbl_field('vbl_hotel_header_logo', get_the_ID()) ?: vbl_field('vbl_hotel_header_logo', $current_hotel_id);
 $hotel_header_logo_scrolled = vbl_field('vbl_hotel_header_logo_scrolled', get_the_ID()) ?: vbl_field('vbl_hotel_header_logo_scrolled', $current_hotel_id);
+$hotel_accent_color = function_exists('vbl_get_hotel_accent_color') ? vbl_get_hotel_accent_color($current_hotel_id) : '#00B5B4';
 $lang_data = function_exists('vbl_get_languages') ? vbl_get_languages() : array('current' => 'PT', 'languages' => array());
 
 // Subpáginas reais do hotel criadas no WordPress (sem fallback para forçar a criação das páginas no backoffice)
@@ -74,6 +75,7 @@ $is_contactos_active    = (strpos($current_template, 'hotel-contactos') !== fals
   <meta charset="<?php bloginfo('charset'); ?>">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <?php wp_head(); ?>
+  <style>:root { --vbl-hotel-accent: <?php echo esc_attr($hotel_accent_color); ?>; }</style>
 </head>
 
 <body <?php body_class("font-display text-white bg-black overflow-x-hidden"); ?>>
@@ -135,7 +137,7 @@ $is_contactos_active    = (strpos($current_template, 'hotel-contactos') !== fals
 
                   <!-- Slider Arrows -->
                   <button
-                    class="absolute left-6 xl:left-[4%] top-[40%] z-10 w-10 h-10 border border-[#00B5B4] text-[#00B5B4] bg-transparent flex items-center justify-center hover:bg-[#00B5B4] hover:text-white transition-colors cursor-pointer"
+                    class="absolute left-6 xl:left-[4%] top-[40%] z-10 w-10 h-10 border border-[var(--vbl-hotel-accent)] text-[var(--vbl-hotel-accent)] bg-transparent flex items-center justify-center hover:bg-[var(--vbl-hotel-accent)] hover:text-white transition-colors cursor-pointer"
                     aria-label="<?php echo esc_attr( function_exists( 'vbl__' ) ? vbl__( 'Anterior' ) : 'Anterior' ); ?>">
                     <svg class="w-4 h-4 sm:w-5 sm:h-5" viewBox="0 0 30 30" fill="none" stroke="currentColor"
                       stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -144,7 +146,7 @@ $is_contactos_active    = (strpos($current_template, 'hotel-contactos') !== fals
                   </button>
 
                   <button
-                    class="absolute right-6 xl:right-[4%] top-[40%] z-10 w-10 h-10 border border-[#00B5B4] text-[#00B5B4] bg-transparent flex items-center justify-center hover:bg-[#00B5B4] hover:text-white transition-colors cursor-pointer"
+                    class="absolute right-6 xl:right-[4%] top-[40%] z-10 w-10 h-10 border border-[var(--vbl-hotel-accent)] text-[var(--vbl-hotel-accent)] bg-transparent flex items-center justify-center hover:bg-[var(--vbl-hotel-accent)] hover:text-white transition-colors cursor-pointer"
                     aria-label="<?php echo esc_attr( function_exists( 'vbl__' ) ? vbl__( 'Seguinte' ) : 'Seguinte' ); ?>">
                     <svg class="w-4 h-4 sm:w-5 sm:h-5" viewBox="0 0 30 30" fill="none" stroke="currentColor"
                       stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -254,7 +256,7 @@ $is_contactos_active    = (strpos($current_template, 'hotel-contactos') !== fals
             class="vbl-lang-dropdown absolute top-full right-0 hidden group-hover:flex flex-col bg-white border border-[#eee8e5] py-2 min-w-[90px] shadow-xl text-[#0d5257] z-50">
             <?php foreach ($lang_data['languages'] as $lang_item): ?>
               <a href="<?php echo esc_url($lang_item['url']); ?>"
-                class="px-4 py-1.5 text-[12px] uppercase <?php echo !empty($lang_item['is_current']) ? 'font-bold text-[#0da9a6]' : 'text-[#0d5257] hover:text-[#0da9a6] hover:bg-[#f8f6f4]'; ?> transition-colors">
+                class="px-4 py-1.5 text-[12px] uppercase <?php echo !empty($lang_item['is_current']) ? 'font-bold text-[var(--vbl-hotel-accent)]' : 'text-[#0d5257] hover:text-[var(--vbl-hotel-accent)] hover:bg-[#f8f6f4]'; ?> transition-colors">
                 <?php echo esc_html($lang_item['code']); ?>
               </a>
             <?php endforeach; ?>
@@ -263,7 +265,7 @@ $is_contactos_active    = (strpos($current_template, 'hotel-contactos') !== fals
 
         <!-- Botão Reservar -->
         <a href="<?php echo esc_url($hotel_booking_url); ?>"
-          class="vbl-hotel-btn-reservar group inline-flex items-center border border-white text-white text-[10.5px] xl:text-[11px] 2xl:text-[12px] [@media(min-width:1800px)]:text-[13px] tracking-[0.6px] xl:tracking-[0.8px] 2xl:tracking-[1px] [@media(min-width:1800px)]:tracking-[1.4px] uppercase px-3 xl:px-3.5 2xl:px-4 [@media(min-width:1800px)]:px-5 py-1.5 2xl:py-2 hover:bg-[#0da9a6] hover:border-[#0da9a6] hover:text-white transition-all duration-300 whitespace-nowrap">
+          class="vbl-hotel-btn-reservar group inline-flex items-center border border-white text-white text-[10.5px] xl:text-[11px] 2xl:text-[12px] [@media(min-width:1800px)]:text-[13px] tracking-[0.6px] xl:tracking-[0.8px] 2xl:tracking-[1px] [@media(min-width:1800px)]:tracking-[1.4px] uppercase px-3 xl:px-3.5 2xl:px-4 [@media(min-width:1800px)]:px-5 py-1.5 2xl:py-2 hover:bg-[var(--vbl-hotel-accent)] hover:border-[var(--vbl-hotel-accent)] hover:text-white transition-all duration-300 whitespace-nowrap">
           <span class="mr-1.5 2xl:mr-2.5"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Reservar' ) : 'Reservar' ); ?></span>
           <svg class="w-[9px] h-[9px] 2xl:w-[10px] 2xl:h-[10px] transition-transform duration-300 group-hover:rotate-45" viewBox="0 0 11 11"
             fill="none">
@@ -284,7 +286,7 @@ $is_contactos_active    = (strpos($current_template, 'hotel-contactos') !== fals
           </button>
           <div class="vbl-lang-dropdown absolute top-full right-0 hidden group-hover:flex flex-col bg-white border border-[#eee8e5] py-2 min-w-[80px] shadow-xl text-[#0d5257] z-50">
             <?php foreach ($lang_data['languages'] as $lang_item): ?>
-              <a href="<?php echo esc_url($lang_item['url']); ?>" class="px-4 py-1.5 text-[12px] uppercase <?php echo !empty($lang_item['is_current']) ? 'font-bold text-[#0da9a6]' : 'text-[#0d5257] hover:text-[#0da9a6] hover:bg-[#f8f6f4]'; ?> transition-colors">
+              <a href="<?php echo esc_url($lang_item['url']); ?>" class="px-4 py-1.5 text-[12px] uppercase <?php echo !empty($lang_item['is_current']) ? 'font-bold text-[var(--vbl-hotel-accent)]' : 'text-[#0d5257] hover:text-[var(--vbl-hotel-accent)] hover:bg-[#f8f6f4]'; ?> transition-colors">
                 <?php echo esc_html($lang_item['code']); ?>
               </a>
             <?php endforeach; ?>
@@ -516,7 +518,7 @@ $is_contactos_active    = (strpos($current_template, 'hotel-contactos') !== fals
         <div class="flex items-center gap-3">
           <?php foreach ($lang_data['languages'] as $lang_item): ?>
             <a href="<?php echo esc_url($lang_item['url']); ?>"
-              class="text-[13px] uppercase <?php echo !empty($lang_item['is_current']) ? 'font-bold text-[#0da9a6] border-b-2 border-[#0da9a6]' : 'text-[#0d5257] hover:text-[#0da9a6]'; ?> transition-colors pb-0.5">
+              class="text-[13px] uppercase <?php echo !empty($lang_item['is_current']) ? 'font-bold text-[var(--vbl-hotel-accent)] border-b-2 border-[var(--vbl-hotel-accent)]' : 'text-[#0d5257] hover:text-[var(--vbl-hotel-accent)]'; ?> transition-colors pb-0.5">
               <?php echo esc_html($lang_item['code']); ?>
             </a>
           <?php endforeach; ?>

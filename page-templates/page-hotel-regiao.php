@@ -182,7 +182,7 @@ if ( empty( $experiencias_list ) || ! is_array( $experiencias_list ) ) {
           <!-- Lado Esquerdo: Fotografia + Seta Esquerda -->
           <div class="w-full lg:w-[48%] relative flex items-center justify-start">
             <!-- Seta Esquerda -->
-            <button type="button" class="vbl-reg-prev absolute -left-3 sm:-left-5 top-1/2 -translate-y-1/2 z-10 w-12 h-12 border border-[#00B5B4] text-[#00B5B4] hover:bg-[#00B5B4] hover:text-white flex items-center justify-center transition-colors cursor-pointer shadow-sm" aria-label="Experiência Anterior">
+            <button type="button" class="vbl-reg-prev absolute -left-3 sm:-left-5 top-1/2 -translate-y-1/2 z-10 w-12 h-12 border border-[var(--vbl-hotel-accent)] text-[var(--vbl-hotel-accent)] hover:bg-[var(--vbl-hotel-accent)] hover:text-white flex items-center justify-center transition-colors cursor-pointer shadow-sm" aria-label="Experiência Anterior">
               <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M28 15H1M1 15L14 2M1 15L14 28" />
               </svg>
@@ -206,7 +206,7 @@ if ( empty( $experiencias_list ) || ! is_array( $experiencias_list ) ) {
             </div>
 
             <!-- Seta Direita -->
-            <button type="button" class="vbl-reg-next absolute -right-3 sm:-right-5 top-1/2 -translate-y-1/2 z-10 w-12 h-12 border border-[#00B5B4] text-[#00B5B4] hover:bg-[#00B5B4] hover:text-white flex items-center justify-center transition-colors cursor-pointer shadow-sm" aria-label="Próxima Experiência">
+            <button type="button" class="vbl-reg-next absolute -right-3 sm:-right-5 top-1/2 -translate-y-1/2 z-10 w-12 h-12 border border-[var(--vbl-hotel-accent)] text-[var(--vbl-hotel-accent)] hover:bg-[var(--vbl-hotel-accent)] hover:text-white flex items-center justify-center transition-colors cursor-pointer shadow-sm" aria-label="Próxima Experiência">
               <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M1 15H28M28 15L15 2M28 15L15 28" />
               </svg>

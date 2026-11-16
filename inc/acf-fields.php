@@ -342,8 +342,8 @@ function vbl_register_acf_fields() {
                 'label'        => 'Cor de Destaque do Hotel (Traço & Acentos)',
                 'name'         => 'vbl_hotel_accent_color',
                 'type'         => 'color_picker',
-                'instructions' => 'Cor de destaque usada nos traços decorativos, subtítulos e acentos deste hotel (ex: #00B5B4 para Porto Santo, #D7A584 para Suites, #658D72 para Village, #F0B85E para Funchal, #BC945B para Residence).',
-                'default_value'=> '#00B5B4',
+                'instructions' => 'Cor de destaque usada nos botões e efeitos hover deste hotel (deixe vazio para usar a cor oficial automática: #00B5B4 Porto Santo, #F0B85E Funchal, #D7A584 Suites, #658D72 Village).',
+                'default_value'=> '',
             ),
 
             /* Tab: Hero */
