@@ -363,10 +363,7 @@ function vbl_get_mega_menu_hotels() {
                 $tagline = $def['tagline'];
             }
 
-            $color = function_exists( 'get_field' ) ? get_field( 'vbl_hotel_accent_color', $p->ID ) : '';
-            if ( empty( $color ) ) {
-                $color = $def['color'];
-            }
+            $color = function_exists( 'vbl_get_hotel_accent_color' ) ? vbl_get_hotel_accent_color( $p->ID ) : $def['color'];
 
             $custom_name = function_exists( 'get_field' ) ? get_field( 'vbl_hotel_name', $p->ID ) : '';
             if ( empty( $custom_name ) ) {
