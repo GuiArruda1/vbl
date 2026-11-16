@@ -522,6 +522,14 @@ function vbl_admin_editor_layout_assets( $hook ) {
         array(),
         defined( 'VBL_VERSION' ) ? VBL_VERSION : '1.6.0'
     );
+
+    wp_enqueue_script(
+        'vbl-admin-editor-script',
+        get_template_directory_uri() . '/assets/js/admin-editor.js',
+        array( 'jquery' ),
+        defined( 'VBL_VERSION' ) ? VBL_VERSION : '1.6.0',
+        true
+    );
 }
 add_action( 'admin_enqueue_scripts', 'vbl_admin_editor_layout_assets' );
 

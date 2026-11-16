@@ -146,3 +146,35 @@ body.vbl-no-editor .edit-post-meta-boxes-main {
     font-size: 13.5px !important;
 }
 
+/* 6. Embedded Native Slider Meta Boxes Inside ACF Tabs */
+.acf-field-message .acf-input.vbl-has-embedded-metabox {
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    color: inherit !important;
+}
+
+.postbox.vbl-embedded-metabox {
+    margin: 0 !important;
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 8px !important;
+    box-shadow: none !important;
+    background: #f8fafc !important;
+}
+
+.postbox.vbl-embedded-metabox > .postbox-header {
+    background: #f1f5f9 !important;
+    border-bottom: 1px solid #cbd5e1 !important;
+    border-radius: 8px 8px 0 0 !important;
+    padding: 10px 14px !important;
+}
+
+.postbox.vbl-embedded-metabox > .postbox-header .handle-actions {
+    display: none !important;
+}
+
+.postbox.vbl-embedded-metabox > .inside {
+    padding: 14px !important;
+    margin: 0 !important;
+}
+
