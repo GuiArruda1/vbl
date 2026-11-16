@@ -309,6 +309,17 @@ function vbl_get_default_translations( $lang = 'en' ) {
             'Convallis odio massa pellentesque elit non eu fusce auctor mattis. Diam integer ultricies vitae. Lorem ipsum dolor sit amet consectetur. Convallis odio massa pellentesque elit non eu fusce auctor mattis.' => 'Stay updated with the latest news, announcements, and events from Vila Baleira Hotels & Resorts. Discover our upcoming milestones, awards, and exclusive highlights.',
             'Exemplo de título para notícia ou um evento a acontecer em 2026' => 'Sample title for news or an upcoming event in 2026',
 
+            // Homepage & CTAs
+            'Descobrir'                         => 'Discover',
+            'DESCOBRIR'                         => 'DISCOVER',
+            'Conhecer'                          => 'Explore',
+            'CONHECER'                          => 'EXPLORE',
+            'Acompanhar'                        => 'Follow',
+            'ACOMPANHAR'                        => 'FOLLOW',
+            'Destaques'                         => 'Highlights',
+            'DESTAQUES'                         => 'HIGHLIGHTS',
+            'Descubra o nosso grupo'            => 'Discover our group',
+
             // Single Quarto & CTA de Reservas
             'FAÇA JÁ A SUA RESERVA'             => 'BOOK YOUR STAY NOW',
             'Faça já a sua reserva'             => 'Book your stay now',

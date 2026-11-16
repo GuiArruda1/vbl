@@ -7,34 +7,41 @@
  */
 
 // Query latest news from CPT vbl_noticia
-$news_query = new WP_Query( array(
+$news_query_args = array(
     'post_type'      => 'vbl_noticia',
     'posts_per_page' => 3,
     'post_status'    => 'publish',
     'orderby'        => 'date',
     'order'          => 'DESC',
-) );
+);
+if ( function_exists( 'pll_current_language' ) ) {
+    $cur_lang = pll_current_language( 'slug' );
+    if ( ! empty( $cur_lang ) ) {
+        $news_query_args['lang'] = $cur_lang;
+    }
+}
+$news_query = new WP_Query( $news_query_args );
 
-// Fallback URL aponta para a listagem geral (user clica → vai para /noticias/)
-$noticias_archive_url = home_url( '/noticias' );
+// Fallback URL aponta para a listagem geral (user clica → vai para /noticias/ ou /en/news/)
+$noticias_archive_url = function_exists( 'vbl_resolve_url' ) ? vbl_resolve_url( '/noticias' ) : home_url( '/noticias' );
 
 // Fallback data when CPT has fewer than 3 posts
 $fallback_news = array(
     array(
         'image' => vbl_img( 'noticias-2.jpg' ),
-        'title' => 'Exemplo de título para notícia ou um evento a acontecer em 20261',
+        'title' => function_exists( 'vbl__' ) ? vbl__( 'Exemplo de título para notícia ou um evento a acontecer em 2026' ) : 'Exemplo de título para notícia ou um evento a acontecer em 2026',
         'desc'  => 'Lorem ipsum dolor sit amet consectetur. Penatibus posuere eget etiam viverra interdum ultricies enim.',
         'url'   => $noticias_archive_url,
     ),
     array(
         'image' => vbl_img( 'noticias-3.jpg' ),
-        'title' => 'Exemplo de título para notícia ou um evento a acontecer em 20262',
+        'title' => function_exists( 'vbl__' ) ? vbl__( 'Exemplo de título para notícia ou um evento a acontecer em 2026' ) : 'Exemplo de título para notícia ou um evento a acontecer em 2026',
         'desc'  => 'Lorem ipsum dolor sit amet consectetur. Penatibus posuere eget etiam viverra interdum ultricies enim.',
         'url'   => $noticias_archive_url,
     ),
     array(
         'image' => vbl_img( 'noticias-1.jpg' ),
-        'title' => 'Exemplo de título para notícia ou um evento a acontecer em 20263',
+        'title' => function_exists( 'vbl__' ) ? vbl__( 'Exemplo de título para notícia ou um evento a acontecer em 2026' ) : 'Exemplo de título para notícia ou um evento a acontecer em 2026',
         'desc'  => 'Lorem ipsum dolor sit amet consectetur. Penatibus posuere eget etiam viverra interdum ultricies enim.',
         'url'   => $noticias_archive_url,
     ),
@@ -66,6 +73,12 @@ while ( count( $news_items ) < 3 ) {
 $noticias_subtitle = vbl_field( 'vbl_noticias_subtitle', false, 'Destaques' );
 $noticias_title    = vbl_field( 'vbl_noticias_title', false, 'Notícias' );
 $noticias_text     = vbl_field( 'vbl_noticias_text', false, 'Convallis odio massa pellentesque elit non eu fusce auctor mattis. Diam integer ultricies vitae. Lorem ipsum dolor sit amet consectetur. Convallis odio massa pellentesque elit non eu fusce auctor mattis.' );
+
+if ( function_exists( 'vbl__' ) ) {
+    $noticias_subtitle = vbl__( $noticias_subtitle );
+    $noticias_title    = vbl__( $noticias_title );
+    $noticias_text     = vbl__( $noticias_text );
+}
 ?>
 
 <section class="max-w-[1920px] mx-auto py-16 xl:py-[100px] overflow-hidden">
@@ -81,8 +94,8 @@ $noticias_text     = vbl_field( 'vbl_noticias_text', false, 'Convallis odio mass
       </div>
       <div class="max-w-[488px] flex flex-col gap-6 ">
         <p class="font-body font-light text-[16px] leading-[24px]"><?php echo esc_html( $noticias_text ); ?></p>
-        <a href="<?php echo esc_url( home_url( '/noticias' ) ); ?>" class="group vbl-btn font-body inline-flex items-center gap-16 px-4 py-2 border-t border-b border-[#bc945b] text-[#bc945b] text-[14px] tracking-[1.4px] uppercase self-start transition-all duration-500 ease-in-out">
-			<span>Acompanhar</span>
+        <a href="<?php echo esc_url( $noticias_archive_url ); ?>" class="group vbl-btn font-body inline-flex items-center gap-16 px-4 py-2 border-t border-b border-[#bc945b] text-[#bc945b] text-[14px] tracking-[1.4px] uppercase self-start transition-all duration-500 ease-in-out">
+			<span><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Acompanhar' ) : 'Acompanhar' ); ?></span>
 			<svg class="w-[10px] h-[10px] transition-transform duration-300 group-hover:rotate-45 fill-none" viewBox="0 0 11 11" fill="none">
 					  <path d="M10.8535 10.5H9.85352V1.70703L0.707031 10.8535L0 10.1465L9.14648 1H0.353516V0H10.3535C10.6297 0 10.8535 0.223858 10.8535 0.5V10.5Z" fill="currentColor"/>
 			</svg>

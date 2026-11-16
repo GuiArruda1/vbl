@@ -351,29 +351,33 @@ $frase2_desc  = vbl_field( 'vbl_frase2_desc', false, 'Deixe-se envolver pela bel
         
 		<div class="flex flex-col gap-6 md:gap-8 max-w-[480px] [@media(min-width:1024px)_and_(max-width:1279px)]:max-w-full w-full">
 			<p class="font-body font-light text-[16px] leading-[24px] [@media(min-width:1024px)_and_(max-width:1279px)]:text-justify"><?php echo esc_html( $sobre_text ); ?></p>
-			<a href="<?php echo esc_url( home_url( $sobre_link ) ); ?>" class="inline-flex items-center gap-16 px-4 py-2 border-t border-b border-[#bc945b] text-[#bc945b] text-[14px] tracking-[1.4px] uppercase self-start"><span class="font-body">Descobrir</span><img src="<?php echo vbl_img( 'seta-dourada.svg' ); ?>" alt="" class="w-[10px] h-[10px]"></a>
+			<a href="<?php echo esc_url( function_exists( 'vbl_resolve_url' ) ? vbl_resolve_url( $sobre_link ) : home_url( $sobre_link ) ); ?>" class="inline-flex items-center gap-16 px-4 py-2 border-t border-b border-[#bc945b] text-[#bc945b] text-[14px] tracking-[1.4px] uppercase self-start"><span class="font-body"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Descobrir' ) : 'Descobrir' ); ?></span><img src="<?php echo vbl_img( 'seta-dourada.svg' ); ?>" alt="" class="w-[10px] h-[10px]"></a>
 		</div>
 		  
       </div>
     </div>
     <!-- Desktop -->
-    <div class="hidden xl:block relative" style="aspect-ratio: 1600/720;">
-      <img src="<?php echo esc_url( $sobre_img ); ?>" alt="Vila Baleira" class="absolute left-0 top-0 w-[40.8%] h-full object-cover">
-      <div class="absolute left-[45.8%] top-[11.1%] flex flex-col gap-[24px]">
-        <div class="flex items-center gap-4">
-          <div class="w-10 h-px bg-[#BC945B] flex-shrink-0"></div>
-          <span class="font-body text-[14px] tracking-[1.4px] uppercase text-[#0d5257]"><?php echo esc_html( $sobre_subtitle ); ?></span>
-        </div>
-        <h2 class="font-display text-[clamp(64px,5.21vw,100px)] [@media(min-width:1337px)]:text-[clamp(64px,4.21vw,100px)] leading-[clamp(64px,5.21vw,100px)] text-[#0d5257] uppercase whitespace-nowrap"><?php echo wp_kses_post( $sobre_title ); ?></h2>
+    <div class="hidden xl:flex relative items-stretch min-h-[600px]" style="aspect-ratio: 1600/720;">
+      <div class="w-[40.8%] flex-shrink-0 relative">
+        <img src="<?php echo esc_url( $sobre_img ); ?>" alt="Vila Baleira" class="w-full h-full object-cover">
       </div>
-      <div class="absolute left-[50.8%] top-[50.7%] [@media(min-width:1280px)_and_(max-width:1333px)]:top-[54.7%] w-[40%] [@media(min-width:1367px)]:w-[30%] flex flex-col gap-[40px]">
-        <p class="font-body font-light text-[16px] leading-[24px]"><?php echo esc_html( $sobre_text ); ?></p>
-        <a href="<?php echo esc_url( home_url( $sobre_link ) ); ?>" class="group vbl-btn font-body inline-flex items-center gap-16 px-4 py-2 border-t border-b border-[#bc945b] text-[#bc945b] text-[14px] tracking-[1.4px] uppercase self-start transition-all duration-500 ease-in-out">
-			<span>Descobrir</span>
+      <div class="w-[59.2%] pl-[5%] flex flex-col justify-center gap-8 xl:gap-12 py-8">
+        <div class="flex flex-col gap-[24px] max-w-full">
+          <div class="flex items-center gap-4">
+            <div class="w-10 h-px bg-[#BC945B] flex-shrink-0"></div>
+            <span class="font-body text-[14px] tracking-[1.4px] uppercase text-[#0d5257]"><?php echo esc_html( $sobre_subtitle ); ?></span>
+          </div>
+          <h2 class="font-display text-[clamp(44px,4.2vw,88px)] leading-[1.06] text-[#0d5257] uppercase break-words"><?php echo wp_kses_post( $sobre_title ); ?></h2>
+        </div>
+        <div class="pl-[8.5%] max-w-[540px] flex flex-col gap-[32px] xl:gap-[40px]">
+          <p class="font-body font-light text-[16px] leading-[24px]"><?php echo esc_html( $sobre_text ); ?></p>
+          <a href="<?php echo esc_url( function_exists( 'vbl_resolve_url' ) ? vbl_resolve_url( $sobre_link ) : home_url( $sobre_link ) ); ?>" class="group vbl-btn font-body inline-flex items-center gap-16 px-4 py-2 border-t border-b border-[#bc945b] text-[#bc945b] text-[14px] tracking-[1.4px] uppercase self-start transition-all duration-500 ease-in-out">
+			<span><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Descobrir' ) : 'Descobrir' ); ?></span>
 			<svg class="w-[10px] h-[10px] transition-transform duration-300 group-hover:rotate-45 fill-none" viewBox="0 0 11 11" fill="none">
 				<path d="M10.8535 10.5H9.85352V1.70703L0.707031 10.8535L0 10.1465L9.14648 1H0.353516V0H10.3535C10.6297 0 10.8535 0.223858 10.8535 0.5V10.5Z" fill="currentColor"/>
 			</svg>
 		</a>
+        </div>
       </div>
       <img src="<?php echo vbl_img( 'concha.svg' ); ?>" alt="" class="absolute left-[35.7%] top-[72.2%] w-[10.4%] h-auto pointer-events-none">
     </div>
@@ -433,7 +437,7 @@ $frase2_desc  = vbl_field( 'vbl_frase2_desc', false, 'Deixe-se envolver pela bel
         <button class="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 border border-[#bc945b] bg-white/80 backdrop-blur-sm flex items-center justify-center z-10" data-dir="prev"><img src="<?php echo vbl_img( 'arrow-left.svg' ); ?>" alt="" class="w-5 h-5"></button>
         <button class="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 border border-[#bc945b] bg-white/80 backdrop-blur-sm flex items-center justify-center z-10" data-dir="next"><img src="<?php echo vbl_img( 'arrow-right.svg' ); ?>" alt="" class="w-5 h-5"></button>
       </div>
-      <a href="<?php echo esc_url( home_url( $h_first['link'] ) ); ?>" class="font-body inline-flex items-center gap-16 px-4 py-2 border-t border-b border-[#bc945b] text-[#bc945b] text-[14px] tracking-[1.4px] uppercase self-start transition-opacity duration-300" id="mobileHotelLink"><span>Conhecer</span><img src="<?php echo vbl_img( 'seta-dourada.svg' ); ?>" alt="" class="w-[10px] h-[10px]"></a>
+      <a href="<?php echo esc_url( function_exists( 'vbl_resolve_url' ) ? vbl_resolve_url( $h_first['link'] ) : home_url( $h_first['link'] ) ); ?>" class="font-body inline-flex items-center gap-16 px-4 py-2 border-t border-b border-[#bc945b] text-[#bc945b] text-[14px] tracking-[1.4px] uppercase self-start transition-opacity duration-300" id="mobileHotelLink"><span><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Conhecer' ) : 'Conhecer' ); ?></span><img src="<?php echo vbl_img( 'seta-dourada.svg' ); ?>" alt="" class="w-[10px] h-[10px]"></a>
     </div>
     <!-- Desktop -->
     <div class="hidden xl:flex xl:justify-between relative" id="hotelSliderDesktop">
@@ -442,7 +446,7 @@ $frase2_desc  = vbl_field( 'vbl_frase2_desc', false, 'Deixe-se envolver pela bel
           <div class="w-10 h-px bg-[#BC945B] flex-shrink-0"></div>
           <span class="font-body text-[14px] tracking-[1.4px] uppercase text-[#0d5257]"><?php echo esc_html( $hoteis_subtitle ); ?></span>
         </div>
-        <h2 class="font-display text-[clamp(64px,5.21vw,100px)] [@media(min-width:1280px)_and_(max-width:1333px)]:text-[clamp(58px,4.21vw,100px)] leading-[clamp(64px,5.21vw,100px)] text-[#0d5257] uppercase whitespace-nowrap mt-[22px] transition-opacity duration-300" id="desktopHotelTitle"><?php echo esc_html( $h_first['title'] ); ?></h2>
+        <h2 class="font-display text-[clamp(44px,4.2vw,88px)] leading-[1.06] text-[#0d5257] uppercase break-words mt-[22px] transition-opacity duration-300" id="desktopHotelTitle"><?php echo esc_html( $h_first['title'] ); ?></h2>
         <p class="font-body font-light text-[16px] leading-[24px] ml-[12%] mt-[clamp(16px,2vw,40px)] max-w-[520px] transition-opacity duration-300" id="desktopHotelText"><?php echo esc_html( $h_first['text'] ); ?></p>
         <div class="relative flex-1 min-h-0 mt-6 ml-[12%] w-[80%] will-change-[opacity]" id="hotelSmallSlot">
           <?php $small_start_idx = count($hoteis_lista) > 1 ? 1 : 0; ?>
@@ -451,8 +455,8 @@ $frase2_desc  = vbl_field( 'vbl_frase2_desc', false, 'Deixe-se envolver pela bel
           <?php endforeach; ?>
         </div>
         <div class="ml-[12%] w-[80%] flex justify-end mt-6">
-          <a href="<?php echo esc_url( home_url( $h_first['link'] ) ); ?>" class="group vbl-btn font-body inline-flex items-center gap-16 px-4 py-2 border-t border-b border-[#bc945b] text-[#bc945b] text-[14px] tracking-[1.4px] uppercase transition-all duration-500 ease-in-out" id="desktopHotelLink">
-			  <span>Conhecer</span>
+          <a href="<?php echo esc_url( function_exists( 'vbl_resolve_url' ) ? vbl_resolve_url( $h_first['link'] ) : home_url( $h_first['link'] ) ); ?>" class="group vbl-btn font-body inline-flex items-center gap-16 px-4 py-2 border-t border-b border-[#bc945b] text-[#bc945b] text-[14px] tracking-[1.4px] uppercase transition-all duration-500 ease-in-out" id="desktopHotelLink">
+			  <span><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Conhecer' ) : 'Conhecer' ); ?></span>
 			  <svg class="w-[10px] h-[10px] transition-transform duration-300 group-hover:rotate-45 fill-none" viewBox="0 0 11 11" fill="none">
 				<path d="M10.8535 10.5H9.85352V1.70703L0.707031 10.8535L0 10.1465L9.14648 1H0.353516V0H10.3535C10.6297 0 10.8535 0.223858 10.8535 0.5V10.5Z" fill="currentColor"/>
 			</svg>
@@ -493,8 +497,8 @@ $frase2_desc  = vbl_field( 'vbl_frase2_desc', false, 'Deixe-se envolver pela bel
         </div>
       </div>
       <p class="font-body font-light text-[16px] leading-[24px]"><?php echo esc_html( $ilhas_text ); ?></p>
-      <a href="<?php echo esc_url( $ilhas_link ); ?>" class="font-body inline-flex items-center gap-16 px-4 py-2 border-t border-b border-[#bc945b] text-[#bc945b] text-[14px] tracking-[1.4px] uppercase self-start">
-		  <span>Descobrir</span>
+      <a href="<?php echo esc_url( function_exists( 'vbl_resolve_url' ) ? vbl_resolve_url( $ilhas_link ) : $ilhas_link ); ?>" class="font-body inline-flex items-center gap-16 px-4 py-2 border-t border-b border-[#bc945b] text-[#bc945b] text-[14px] tracking-[1.4px] uppercase self-start">
+		  <span><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Descobrir' ) : 'Descobrir' ); ?></span>
 		  <img src="<?php echo vbl_img( 'seta-dourada.svg' ); ?>" alt="" class="w-[10px] h-[10px]">
 	  </a>
     </div>
@@ -505,8 +509,8 @@ $frase2_desc  = vbl_field( 'vbl_frase2_desc', false, 'Deixe-se envolver pela bel
       <div class="w-10 h-px bg-[#BC945B] flex-shrink-0"></div>
       <span class="font-body text-[14px] tracking-[1.4px] uppercase text-[#0d5257]"><?php echo esc_html( $ilhas_subtitle ); ?></span>
     </div>
-    <div class="absolute right-[8.3%] top-[3.3%] text-right z-10">
-      <h2 class="font-display text-[clamp(64px,5.21vw,100px)] [@media(min-width:1280px)_and_(max-width:1333px)]:text-[clamp(64px,4.21vw,100px)] leading-[clamp(64px,5.21vw,100px)] text-[#0d5257] uppercase"><?php echo wp_kses_post( $ilhas_title ); ?></h2>
+    <div class="absolute right-[8.3%] top-[3.3%] max-w-[60%] text-right z-10">
+      <h2 class="font-display text-[clamp(48px,4.5vw,92px)] leading-[1.06] text-[#0d5257] uppercase break-words"><?php echo wp_kses_post( $ilhas_title ); ?></h2>
     </div>
     <img src="<?php echo vbl_img( 'estrela.svg' ); ?>" alt="" class="absolute left-[10.4%] top-[19.6%] w-[13.2%] h-auto pointer-events-none z-10">
     <img src="<?php echo esc_url( $ilhas_img_left ); ?>" alt="" class="absolute left-0 top-[40.7%] w-[21.7%] aspect-[416/480] object-cover">
@@ -516,8 +520,8 @@ $frase2_desc  = vbl_field( 'vbl_frase2_desc', false, 'Deixe-se envolver pela bel
         <p class="font-body font-light text-[16px] leading-[24px]"><?php echo esc_html( $ilhas_text ); ?></p>
         
 		  <div class="w-[80%] flex justify-start">
-			  <a href="<?php echo esc_url( $ilhas_link ); ?>" class="group vbl-btn font-body inline-flex items-center gap-16 px-4 py-2 border-t border-b border-[#bc945b] text-[#bc945b] text-[14px] tracking-[1.4px] uppercase transition-all duration-500 ease-in-out">
-				  <span>Descobrir</span>
+			  <a href="<?php echo esc_url( function_exists( 'vbl_resolve_url' ) ? vbl_resolve_url( $ilhas_link ) : $ilhas_link ); ?>" class="group vbl-btn font-body inline-flex items-center gap-16 px-4 py-2 border-t border-b border-[#bc945b] text-[#bc945b] text-[14px] tracking-[1.4px] uppercase transition-all duration-500 ease-in-out">
+				  <span><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Descobrir' ) : 'Descobrir' ); ?></span>
 				  <svg class="w-[10px] h-[10px] transition-transform duration-300 group-hover:rotate-45 fill-none" viewBox="0 0 11 11" fill="none">
 					  <path d="M10.8535 10.5H9.85352V1.70703L0.707031 10.8535L0 10.1465L9.14648 1H0.353516V0H10.3535C10.6297 0 10.8535 0.223858 10.8535 0.5V10.5Z" fill="currentColor"/>
 				  </svg>
