@@ -21,13 +21,13 @@ $is_microsite = is_page_template( array(
 ) ) || is_singular( 'vbl_quarto' );
 
 // Tailwind Classes completas para o compilador não quebrar
-$bg_section       = $is_microsite ? 'bg-[#E8F5F5]' : 'bg-[#EEE8E5]';
-$line_class       = $is_microsite ? 'bg-[#0da9a6]' : 'bg-[#bc945b]';
-$text_class       = $is_microsite ? 'text-[#0da9a6]' : 'text-[#bc945b]';
-$focus_class      = $is_microsite ? 'focus:border-[#0da9a6]' : 'focus:border-[#bc945b]';
-$accent_checkbox  = $is_microsite ? 'accent-[#0da9a6]' : 'accent-[#bc945b]';
-$hover_link_class = $is_microsite ? 'hover:text-[#0da9a6]' : 'hover:text-[#bc945b]';
-$btn_border_class = $is_microsite ? 'border-[#0da9a6]/60 hover:border-[#0da9a6]' : 'border-[#bc945b]/60 hover:border-[#bc945b]';
+$bg_section       = $is_microsite ? 'bg-[var(--vbl-hotel-accent-light)]' : 'bg-[#EEE8E5]';
+$line_class       = $is_microsite ? 'bg-[var(--vbl-hotel-accent)]' : 'bg-[#bc945b]';
+$text_class       = $is_microsite ? 'text-[var(--vbl-hotel-accent)]' : 'text-[#bc945b]';
+$focus_class      = $is_microsite ? 'focus:border-[var(--vbl-hotel-accent)]' : 'focus:border-[#bc945b]';
+$accent_checkbox  = $is_microsite ? 'accent-[var(--vbl-hotel-accent)]' : 'accent-[#bc945b]';
+$hover_link_class = $is_microsite ? 'hover:text-[var(--vbl-hotel-accent)]' : 'hover:text-[#bc945b]';
+$btn_border_class = $is_microsite ? 'border-[var(--vbl-hotel-accent-40)] hover:border-[var(--vbl-hotel-accent)]' : 'border-[#bc945b]/60 hover:border-[#bc945b]';
 
 $arvore_svg = $is_microsite ? vbl_img('hoteis/arvore-newsletter-porto-santo.svg') : vbl_img('hoteis/arvore-newsletter.svg');
 
@@ -114,7 +114,7 @@ if ( empty( $nl_btn ) )         $nl_btn         = function_exists( 'vbl__' ) ? v
           </div>
         </div>
         <button type="submit"
-          class="group vbl-btn font-body inline-flex items-center justify-between w-[220px] px-5 py-3.5 border-t border-b border-x-0 <?php echo esc_attr($btn_border_class); ?> <?php echo esc_attr($text_class); ?> hover:text-white <?php echo $is_microsite ? 'hover:bg-[#0da9a6]' : 'hover:bg-[#bc945b]'; ?> text-[11px] font-medium tracking-[2.5px] uppercase transition-all duration-300">
+          class="group vbl-btn font-body inline-flex items-center justify-between w-[220px] px-5 py-3.5 border-t border-b border-x-0 <?php echo esc_attr($btn_border_class); ?> <?php echo esc_attr($text_class); ?> hover:text-white <?php echo $is_microsite ? 'hover:bg-[var(--vbl-hotel-accent)]' : 'hover:bg-[#bc945b]'; ?> text-[11px] font-medium tracking-[2.5px] uppercase transition-all duration-300">
           <span><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( $nl_btn ) : $nl_btn ); ?></span>
           <svg class="w-3.5 h-3.5 <?php echo esc_attr($text_class); ?> group-hover:text-white transition-all duration-300 group-hover:rotate-45"
             viewBox="0 0 12 12" fill="none">
@@ -416,7 +416,7 @@ if ( empty( $nl_btn ) )         $nl_btn         = function_exists( 'vbl__' ) ? v
         </div>
 
         <button type="submit"
-          class="group vbl-btn font-body inline-flex items-center justify-between w-[220px] xl:w-[240px] px-5 py-3.5 border-t border-b border-x-0 <?php echo esc_attr($btn_border_class); ?> <?php echo esc_attr($text_class); ?> hover:text-white hover:bg-[#0da9a6] text-[11px] xl:text-[12px] font-medium tracking-[2.5px] uppercase transition-all duration-300">
+          class="group vbl-btn font-body inline-flex items-center justify-between w-[220px] xl:w-[240px] px-5 py-3.5 border-t border-b border-x-0 <?php echo esc_attr($btn_border_class); ?> <?php echo esc_attr($text_class); ?> hover:text-white hover:bg-[var(--vbl-hotel-accent)] text-[11px] xl:text-[12px] font-medium tracking-[2.5px] uppercase transition-all duration-300">
           <span><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( $nl_btn ) : $nl_btn ); ?></span>
           <svg class="w-3.5 h-3.5 <?php echo esc_attr($text_class); ?> group-hover:text-white transition-all duration-300 group-hover:rotate-45"
             viewBox="0 0 12 12" fill="none">
