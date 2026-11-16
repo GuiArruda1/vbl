@@ -989,7 +989,7 @@ function vbl_register_acf_fields() {
             array( 'key' => 'field_vbl_hativ_apres_title', 'label' => 'Título', 'name' => 'vbl_hativ_apres_title', 'type' => 'text', 'default_value' => 'DOLOR RISUS<br>QUAM VITAE' ),
             array( 'key' => 'field_vbl_hativ_apres_img', 'label' => 'Imagem Vertical', 'name' => 'vbl_hativ_apres_img', 'type' => 'image', 'return_format' => 'url', 'preview_size' => 'medium' ),
             array( 'key' => 'field_vbl_hativ_apres_p1', 'label' => 'Texto Parágrafo 1', 'name' => 'vbl_hativ_apres_p1', 'type' => 'textarea', 'rows' => 4, 'default_value' => 'Lorem ipsum dolor sit amet consectetur. Mi malesuada quisque adipiscing sed in tortor. Lorem quis sollicitudin quisque pellentesque risus. Diam elit faucibus enim pellentesque nisi orci neque leo. Aliquet dignissim dui tortor massa morbi scelerisque mi tincidunt.' ),
-            array( 'key' => 'field_vbl_hativ_apres_p2', 'label' => 'Texto Parágrafo 2', 'name' => 'vbl_hativ_apres_p2', 'type' => 'textarea', 'rows' => 4, 'default_value' => 'Elementum mauris dolor vitae at porttitor. Consequat sapien facilisi platea viverra. Facilisi a viverra sollicitudin euismod. Nisl ac ultricies augue ante tortor consequat quam porttitor. Lacus tempor venenatis hendrerit in.' ),
+            array( 'key' => 'field_vbl_hativ_apres_p2', 'label' => 'Texto Parágrafo 2', 'name' => 'vbl_hativ_apres_p2', 'type' => 'textarea', 'rows' => 4, 'default_value' => '' ),
 
             /* Tab: Programa Semanal */
             array( 'key' => 'field_vbl_hativ_tab_prog', 'label' => 'Programa Semanal', 'type' => 'tab' ),
@@ -1068,7 +1068,7 @@ function vbl_register_acf_fields() {
             array( 'key' => 'field_vbl_hrest_apres_title', 'label' => 'Título', 'name' => 'vbl_hrest_apres_title', 'type' => 'text', 'default_value' => 'MASSA EGET<br>DIAM ELIT UT' ),
             array( 'key' => 'field_vbl_hrest_apres_img', 'label' => 'Imagem Vertical', 'name' => 'vbl_hrest_apres_img', 'type' => 'image', 'return_format' => 'url', 'preview_size' => 'medium' ),
             array( 'key' => 'field_vbl_hrest_apres_p1', 'label' => 'Texto Parágrafo 1', 'name' => 'vbl_hrest_apres_p1', 'type' => 'textarea', 'rows' => 4, 'default_value' => 'Consequat sapien facilisi platea viverra. Facilisi a viverra sollicitudin euismod. Nisl ac ultricies augue ante tortor consequat quam porttitor. Lacus tempor venenatis hendrerit in. Elementum mauris dolor vitae at porttitor.' ),
-            array( 'key' => 'field_vbl_hrest_apres_p2', 'label' => 'Texto Parágrafo 2', 'name' => 'vbl_hrest_apres_p2', 'type' => 'textarea', 'rows' => 4, 'default_value' => 'Aliquet dignissim dui tortor massa morbi scelerisque mi tincidunt. Quam id morbi tincidunt turpis ut eget amet metus. Lacinia enim sem vitae turpis ornare convallis cras. Lorem ipsum dolor sit amet consectetur. Mi malesuada quisque adipiscing sed in tortor. Lorem quis sollicitudin quisque pellentesque risus. Diam elit faucibus enim pellentesque nisi orci neque leo.' ),
+            array( 'key' => 'field_vbl_hrest_apres_p2', 'label' => 'Texto Parágrafo 2', 'name' => 'vbl_hrest_apres_p2', 'type' => 'textarea', 'rows' => 4, 'default_value' => '' ),
 
             /* Tab: Banner Frase */
             array( 'key' => 'field_vbl_hrest_tab_frase', 'label' => 'Banner Frase Gastronomia', 'type' => 'tab' ),
@@ -1111,7 +1111,7 @@ function vbl_register_acf_fields() {
             array( 'key' => 'field_vbl_hreg_apres_title', 'label' => 'Título', 'name' => 'vbl_hreg_apres_title', 'type' => 'text', 'default_value' => 'EXPLORE<br>PORTO SANTO' ),
             array( 'key' => 'field_vbl_hreg_apres_img', 'label' => 'Imagem Vertical (Praia/Areal)', 'name' => 'vbl_hreg_apres_img', 'type' => 'image', 'return_format' => 'url', 'preview_size' => 'medium' ),
             array( 'key' => 'field_vbl_hreg_apres_p1', 'label' => 'Texto Parágrafo 1', 'name' => 'vbl_hreg_apres_p1', 'type' => 'textarea', 'rows' => 4, 'default_value' => 'Lorem ipsum dolor sit amet consectetur. Mi malesuada quisque adipiscing sed in tortor. Lorem quis sollicitudin quisque pellentesque risus. Diam elit faucibus enim pellentesque nisi orci neque leo. Aliquet dignissim dui tortor massa morbi scelerisque mi tincidunt.' ),
-            array( 'key' => 'field_vbl_hreg_apres_p2', 'label' => 'Texto Parágrafo 2', 'name' => 'vbl_hreg_apres_p2', 'type' => 'textarea', 'rows' => 4, 'default_value' => 'Elementum mauris dolor vitae at porttitor. Consequat sapien facilisi platea viverra. Facilisi a viverra sollicitudin euismod. Nisl ac ultricies augue ante tortor consequat quam porttitor. Lacus tempor venenatis hendrerit in.' ),
+            array( 'key' => 'field_vbl_hreg_apres_p2', 'label' => 'Texto Parágrafo 2', 'name' => 'vbl_hreg_apres_p2', 'type' => 'textarea', 'rows' => 4, 'default_value' => '' ),
 
             /* Tab: Banner Frase */
             array( 'key' => 'field_vbl_hreg_tab_frase', 'label' => 'Banner Frase Aéreo', 'type' => 'tab' ),
@@ -1154,7 +1154,7 @@ function vbl_register_acf_fields() {
             array( 'key' => 'field_vbl_hevent_apres_title', 'label' => 'Título', 'name' => 'vbl_hevent_apres_title', 'type' => 'text', 'default_value' => 'DIAM ELIT UT<br>MASSA EGET' ),
             array( 'key' => 'field_vbl_hevent_apres_img', 'label' => 'Imagem Vertical', 'name' => 'vbl_hevent_apres_img', 'type' => 'image', 'return_format' => 'url', 'preview_size' => 'medium' ),
             array( 'key' => 'field_vbl_hevent_apres_p1', 'label' => 'Texto Parágrafo 1', 'name' => 'vbl_hevent_apres_p1', 'type' => 'textarea', 'rows' => 4, 'default_value' => 'Consequat sapien facilisi platea viverra. Facilisi a viverra sollicitudin euismod. Nisl ac ultricies augue ante tortor consequat quam porttitor. Lacus tempor venenatis hendrerit in. Elementum mauris dolor vitae at porttitor.' ),
-            array( 'key' => 'field_vbl_hevent_apres_p2', 'label' => 'Texto Parágrafo 2', 'name' => 'vbl_hevent_apres_p2', 'type' => 'textarea', 'rows' => 4, 'default_value' => 'Aliquet dignissim dui tortor massa morbi scelerisque mi tincidunt. Quam id morbi tincidunt turpis ut eget amet metus. Lacinia enim sem vitae turpis ornare convallis cras. Lorem ipsum dolor sit amet consectetur. Mi malesuada quisque adipiscing sed in tortor.' ),
+            array( 'key' => 'field_vbl_hevent_apres_p2', 'label' => 'Texto Parágrafo 2', 'name' => 'vbl_hevent_apres_p2', 'type' => 'textarea', 'rows' => 4, 'default_value' => '' ),
 
             /* Tab: Banner Frase */
             array( 'key' => 'field_vbl_hevent_tab_frase', 'label' => 'Banner Frase Decorativo', 'type' => 'tab' ),

@@ -19,7 +19,7 @@ if ( empty( $hero_bg ) ) {
 $apres_subtitle = vbl_field( 'vbl_hrest_apres_subtitle', false, 'RESTAURANTES & BARES' );
 $apres_title    = vbl_field( 'vbl_hrest_apres_title', false, 'MASSA EGET<br>DIAM ELIT UT' );
 $apres_p1       = vbl_field( 'vbl_hrest_apres_p1', false, 'Consequat sapien facilisi platea viverra. Facilisi a viverra sollicitudin euismod. Nisl ac ultricies augue ante tortor consequat quam porttitor. Lacus tempor venenatis hendrerit in. Elementum mauris dolor vitae at porttitor.' );
-$apres_p2       = vbl_field( 'vbl_hrest_apres_p2', false, 'Aliquet dignissim dui tortor massa morbi scelerisque mi tincidunt. Quam id morbi tincidunt turpis ut eget amet metus. Lacinia enim sem vitae turpis ornare convallis cras. Lorem ipsum dolor sit amet consectetur. Mi malesuada quisque adipiscing sed in tortor. Lorem quis sollicitudin quisque pellentesque risus. Diam elit faucibus enim pellentesque nisi orci neque leo.' );
+$apres_p2       = vbl_field( 'vbl_hrest_apres_p2', false, '' );
 $apres_img      = vbl_field( 'vbl_hrest_apres_img', false, vbl_img( 'sobre-fotografia.jpg' ) );
 if ( empty( $apres_img ) ) {
     $apres_img = vbl_img( 'sobre-fotografia.jpg' );

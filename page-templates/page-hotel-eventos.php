@@ -19,7 +19,7 @@ if ( empty( $hero_bg ) ) {
 $apres_subtitle = vbl_field( 'vbl_hevent_apres_subtitle', false, 'EVENTOS & SALAS' );
 $apres_title    = vbl_field( 'vbl_hevent_apres_title', false, 'DIAM ELIT UT<br>MASSA EGET' );
 $apres_p1       = vbl_field( 'vbl_hevent_apres_p1', false, 'Consequat sapien facilisi platea viverra. Facilisi a viverra sollicitudin euismod. Nisl ac ultricies augue ante tortor consequat quam porttitor. Lacus tempor venenatis hendrerit in. Elementum mauris dolor vitae at porttitor.' );
-$apres_p2       = vbl_field( 'vbl_hevent_apres_p2', false, 'Aliquet dignissim dui tortor massa morbi scelerisque mi tincidunt. Quam id morbi tincidunt turpis ut eget amet metus. Lacinia enim sem vitae turpis ornare convallis cras. Lorem ipsum dolor sit amet consectetur. Mi malesuada quisque adipiscing sed in tortor.' );
+$apres_p2       = vbl_field( 'vbl_hevent_apres_p2', false, '' );
 $apres_img      = vbl_field( 'vbl_hevent_apres_img', false, vbl_img( 'noticias/noticias-3.jpg' ) );
 if ( empty( $apres_img ) ) {
     $apres_img = vbl_img( 'noticias/noticias-3.jpg' );

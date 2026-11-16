@@ -19,7 +19,7 @@ if ( empty( $hero_bg ) ) {
 $apres_subtitle = vbl_field( 'vbl_hreg_apres_subtitle', false, 'TINCIDUNT TURPIS UT QUAM ID MORBI' );
 $apres_title    = vbl_field( 'vbl_hreg_apres_title', false, 'EXPLORE<br>PORTO SANTO' );
 $apres_p1       = vbl_field( 'vbl_hreg_apres_p1', false, 'Lorem ipsum dolor sit amet consectetur. Mi malesuada quisque adipiscing sed in tortor. Lorem quis sollicitudin quisque pellentesque risus. Diam elit faucibus enim pellentesque nisi orci neque leo. Aliquet dignissim dui tortor massa morbi scelerisque mi tincidunt.' );
-$apres_p2       = vbl_field( 'vbl_hreg_apres_p2', false, 'Elementum mauris dolor vitae at porttitor. Consequat sapien facilisi platea viverra. Facilisi a viverra sollicitudin euismod. Nisl ac ultricies augue ante tortor consequat quam porttitor. Lacus tempor venenatis hendrerit in.' );
+$apres_p2       = vbl_field( 'vbl_hreg_apres_p2', false, '' );
 $apres_img      = vbl_field( 'vbl_hreg_apres_img', false, vbl_img( 'ilhas-416x480.jpg' ) );
 if ( empty( $apres_img ) ) {
     $apres_img = vbl_img( 'ilhas-416x480.jpg' );
