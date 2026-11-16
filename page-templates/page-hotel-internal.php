@@ -14,7 +14,7 @@ require_once VBL_DIR . '/header-hotel.php';
   
   <!-- Content Placeholder -->
   <div class="max-w-[1920px] mx-auto px-6 xl:px-[8.33%] py-12">
-    <h1 class="text-3xl font-medium text-[#0da9a6] mb-8">
+    <h1 class="text-3xl font-medium text-[var(--vbl-hotel-accent)] mb-8">
       <?php the_title(); ?>
     </h1>
     

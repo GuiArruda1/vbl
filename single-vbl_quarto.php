@@ -362,7 +362,7 @@ $frase_line3 = vbl_field( 'vbl_quarto_frase_line3', $post_id, 'LACUS EGET UT SIT
       
       <!-- Categoria / Tagline Superior -->
       <div class="flex items-center justify-center gap-3 mb-4">
-        <span class="font-body text-[11px] xl:text-[12px] tracking-[2.5px] uppercase text-[#0da9a6] font-medium">
+        <span class="font-body text-[11px] xl:text-[12px] tracking-[2.5px] uppercase text-[var(--vbl-hotel-accent)] font-medium">
           <?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( $categoria ) : $categoria ); ?>
         </span>
       </div>
@@ -430,8 +430,8 @@ $frase_line3 = vbl_field( 'vbl_quarto_frase_line3', $post_id, 'LACUS EGET UT SIT
       
       <!-- Subtítulo com Traço Ciano -->
       <div class="flex items-center gap-4 mb-3">
-        <div class="w-8 h-px bg-[#0da9a6] flex-shrink-0"></div>
-        <span class="font-body text-[11px] xl:text-[12px] tracking-[2px] uppercase text-[#0da9a6] font-medium">
+        <div class="w-8 h-px bg-[var(--vbl-hotel-accent)] flex-shrink-0"></div>
+        <span class="font-body text-[11px] xl:text-[12px] tracking-[2px] uppercase text-[var(--vbl-hotel-accent)] font-medium">
           <?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( $comod_subtitle ) : $comod_subtitle ); ?>
         </span>
       </div>
@@ -481,10 +481,10 @@ $frase_line3 = vbl_field( 'vbl_quarto_frase_line3', $post_id, 'LACUS EGET UT SIT
   <!-- ==========================================
        5. WIDGET DE RESERVA (Faça já a sua reserva)
   =========================================== -->
-  <section id="reservas" class="w-full py-16 lg:py-20 bg-[#E8F5F5] relative z-20">
+  <section id="reservas" class="w-full py-16 lg:py-20 bg-[var(--vbl-hotel-accent-light)] relative z-20">
     <!-- Estrela do mar decorativa em outline (com overflow isolado para não cortar popups da barra de reservas) -->
     <div class="absolute inset-0 pointer-events-none overflow-hidden z-0">
-      <div class="absolute right-0 top-1/2 -translate-y-1/2 w-64 lg:w-96 opacity-20 text-[#0da9a6]">
+      <div class="absolute right-0 top-1/2 -translate-y-1/2 w-64 lg:w-96 opacity-20 text-[var(--vbl-hotel-accent)]">
         <img src="<?php echo vbl_img( 'estrela.svg' ); ?>" alt="" class="w-full h-auto">
       </div>
     </div>
@@ -494,8 +494,8 @@ $frase_line3 = vbl_field( 'vbl_quarto_frase_line3', $post_id, 'LACUS EGET UT SIT
       <!-- Cabeçalho do Widget -->
       <div class="mb-10">
         <div class="flex items-center gap-4 mb-2">
-          <div class="w-8 h-px bg-[#0da9a6] flex-shrink-0"></div>
-          <span class="font-body text-[10px] xl:text-[11px] tracking-[2px] uppercase text-[#0da9a6] font-medium"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( $cta_subtitle ) : $cta_subtitle ); ?></span>
+          <div class="w-8 h-px bg-[var(--vbl-hotel-accent)] flex-shrink-0"></div>
+          <span class="font-body text-[10px] xl:text-[11px] tracking-[2px] uppercase text-[var(--vbl-hotel-accent)] font-medium"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( $cta_subtitle ) : $cta_subtitle ); ?></span>
         </div>
         <h2 class="font-display text-[36px] sm:text-[46px] lg:text-[56px] leading-tight uppercase text-[#0d5257] font-normal mb-3">
           <?php echo wp_kses_post( function_exists( 'vbl__' ) ? vbl__( $cta_title ) : $cta_title ); ?>
@@ -506,10 +506,10 @@ $frase_line3 = vbl_field( 'vbl_quarto_frase_line3', $post_id, 'LACUS EGET UT SIT
       </div>
 
       <!-- Barra de Pesquisa de Quartos (Motor Funcional com Hotel Fixo e Código Promocional) -->
-      <div class="vbl-booking-engine font-body relative w-full border border-[#0da9a6]/40 flex flex-col md:flex-row items-stretch bg-white/70 backdrop-blur-xs" data-fixed-hotel="true" data-chain-id="501671" data-chain-selector="<?php echo esc_attr( $mirai_hotel['chain_selector'] ); ?>" data-hotel-id="<?php echo esc_attr( $mirai_hotel['hotel_id'] ); ?>" data-hotel-name="<?php echo esc_attr( $mirai_hotel['name'] ); ?>">
+      <div class="vbl-booking-engine font-body relative w-full border border-[var(--vbl-hotel-accent-40)] flex flex-col md:flex-row items-stretch bg-white/70 backdrop-blur-xs" data-fixed-hotel="true" data-chain-id="501671" data-chain-selector="<?php echo esc_attr( $mirai_hotel['chain_selector'] ); ?>" data-hotel-id="<?php echo esc_attr( $mirai_hotel['hotel_id'] ); ?>" data-hotel-name="<?php echo esc_attr( $mirai_hotel['name'] ); ?>">
         
         <!-- ONDE (Hotel Fixo) -->
-        <div class="flex-1 flex flex-col justify-center gap-1 border-b md:border-b-0 md:border-r border-[#0da9a6]/40 py-4 px-6 xl:px-8 cursor-default select-none">
+        <div class="flex-1 flex flex-col justify-center gap-1 border-b md:border-b-0 md:border-r border-[var(--vbl-hotel-accent-40)] py-4 px-6 xl:px-8 cursor-default select-none">
           <span class="text-[9px] xl:text-[10px] tracking-[1px] uppercase text-[#0d5257]/70"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'ONDE' ) : 'ONDE' ); ?></span>
           <div class="flex items-center justify-between">
             <span class="vbl-selected-hotel text-[13px] xl:text-[14px] text-[#0d5257] font-medium uppercase tracking-[1px] truncate">
@@ -519,7 +519,7 @@ $frase_line3 = vbl_field( 'vbl_quarto_frase_line3', $post_id, 'LACUS EGET UT SIT
         </div>
         
         <!-- QUANDO -->
-        <div class="vbl-field-trigger flex-1 flex flex-col justify-center gap-1 border-b md:border-b-0 md:border-r border-[#0da9a6]/40 py-4 px-6 xl:px-8 cursor-pointer hover:bg-white/40 transition-colors" data-target="dropdownWhen">
+        <div class="vbl-field-trigger flex-1 flex flex-col justify-center gap-1 border-b md:border-b-0 md:border-r border-[var(--vbl-hotel-accent-40)] py-4 px-6 xl:px-8 cursor-pointer hover:bg-white/40 transition-colors" data-target="dropdownWhen">
           <span class="text-[9px] xl:text-[10px] tracking-[1px] uppercase text-[#0d5257]/70"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'QUANDO' ) : 'QUANDO' ); ?></span>
           <div class="flex items-center justify-between gap-2">
             <span class="vbl-selected-dates text-[13px] xl:text-[14px] text-[#0d5257] font-medium uppercase tracking-[1px] truncate"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Entrada · Saída' ) : 'Entrada · Saída' ); ?></span>
@@ -528,7 +528,7 @@ $frase_line3 = vbl_field( 'vbl_quarto_frase_line3', $post_id, 'LACUS EGET UT SIT
         </div>
         
         <!-- QUEM -->
-        <div class="vbl-field-trigger flex-1 flex flex-col justify-center gap-1 border-b md:border-b-0 md:border-r border-[#0da9a6]/40 py-4 px-6 xl:px-8 cursor-pointer hover:bg-white/40 transition-colors" data-target="dropdownWho">
+        <div class="vbl-field-trigger flex-1 flex flex-col justify-center gap-1 border-b md:border-b-0 md:border-r border-[var(--vbl-hotel-accent-40)] py-4 px-6 xl:px-8 cursor-pointer hover:bg-white/40 transition-colors" data-target="dropdownWho">
           <span class="text-[9px] xl:text-[10px] tracking-[1px] uppercase text-[#0d5257]/70"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'QUEM' ) : 'QUEM' ); ?></span>
           <div class="flex items-center justify-between gap-2">
             <span class="vbl-selected-guests text-[13px] xl:text-[14px] text-[#0d5257] font-medium uppercase tracking-[1px] truncate"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( '2 adultos · 1 quarto' ) : '2 adultos · 1 quarto' ); ?></span>
@@ -537,7 +537,7 @@ $frase_line3 = vbl_field( 'vbl_quarto_frase_line3', $post_id, 'LACUS EGET UT SIT
         </div>
         
         <!-- PROMOÇÃO -->
-        <label class="flex-1 flex flex-col justify-center gap-1 border-b md:border-b-0 md:border-r border-[#0da9a6]/40 py-4 px-6 xl:px-8 cursor-text hover:bg-white/40 transition-colors">
+        <label class="flex-1 flex flex-col justify-center gap-1 border-b md:border-b-0 md:border-r border-[var(--vbl-hotel-accent-40)] py-4 px-6 xl:px-8 cursor-text hover:bg-white/40 transition-colors">
           <span class="text-[9px] xl:text-[10px] tracking-[1px] uppercase text-[#0d5257]/70"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'PROMOÇÃO' ) : 'PROMOÇÃO' ); ?></span>
           <input type="text" name="promocode" class="vbl-promo-input w-full bg-transparent border-0 p-0 text-[13px] xl:text-[14px] tracking-[1px] uppercase text-[#0d5257] placeholder-[#0d5257]/50 font-medium focus:outline-none focus:ring-0" placeholder="<?php echo esc_attr( function_exists( 'vbl__' ) ? vbl__( 'CÓDIGO' ) : 'CÓDIGO' ); ?>" aria-label="<?php echo esc_attr( function_exists( 'vbl__' ) ? vbl__( 'Código promocional' ) : 'Código promocional' ); ?>" autocomplete="off" maxlength="40">
         </label>
@@ -552,7 +552,7 @@ $frase_line3 = vbl_field( 'vbl_quarto_frase_line3', $post_id, 'LACUS EGET UT SIT
 
         <!-- ====== DROPDOWNS POPUPS ====== -->
         <!-- Popups Quando (Datas) -->
-        <div class="vbl-popup-when vbl-booking-popup vbl-popup-light font-body hidden absolute top-[calc(100%+8px)] left-0 md:left-[15%] w-full sm:w-[400px] bg-white/95 backdrop-blur-md border border-[#0da9a6]/40 shadow-2xl p-5 text-[#0d5257] z-50 rounded-none">
+        <div class="vbl-popup-when vbl-booking-popup vbl-popup-light font-body hidden absolute top-[calc(100%+8px)] left-0 md:left-[15%] w-full sm:w-[400px] bg-white/95 backdrop-blur-md border border-[var(--vbl-hotel-accent-40)] shadow-2xl p-5 text-[#0d5257] z-50 rounded-none">
           <div class="flex items-center justify-between mb-4 pb-2 border-b border-[#0d5257]/20">
             <span class="text-[11px] uppercase tracking-[1px] text-[#0d5257] font-medium"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Selecione as Datas da Estadia' ) : 'Selecione as Datas da Estadia' ); ?></span>
             <button type="button" class="vbl-close-popup text-[#0d5257]/60 hover:text-[#0d5257] text-lg leading-none cursor-pointer" aria-label="<?php echo esc_attr( function_exists( 'vbl__' ) ? vbl__( 'Fechar' ) : 'Fechar' ); ?>">&times;</button>
@@ -560,11 +560,11 @@ $frase_line3 = vbl_field( 'vbl_quarto_frase_line3', $post_id, 'LACUS EGET UT SIT
           <div class="grid grid-cols-2 gap-3 mb-4">
             <div class="flex flex-col gap-1.5">
               <label class="text-[10px] uppercase tracking-[1px] text-[#0d5257]/80"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Check-in (Entrada)' ) : 'Check-in (Entrada)' ); ?></label>
-              <input type="date" class="vbl-checkin-input bg-[#E8F5F5] border border-[#0da9a6]/40 text-[#0d5257] text-[13px] px-3 py-2 rounded-none outline-none focus:border-[#0da9a6] transition-colors w-full cursor-pointer [color-scheme:light]">
+              <input type="date" class="vbl-checkin-input bg-[var(--vbl-hotel-accent-light)] border border-[var(--vbl-hotel-accent-40)] text-[#0d5257] text-[13px] px-3 py-2 rounded-none outline-none focus:border-[var(--vbl-hotel-accent)] transition-colors w-full cursor-pointer [color-scheme:light]">
             </div>
             <div class="flex flex-col gap-1.5">
               <label class="text-[10px] uppercase tracking-[1px] text-[#0d5257]/80"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Check-out (Saída)' ) : 'Check-out (Saída)' ); ?></label>
-              <input type="date" class="vbl-checkout-input bg-[#E8F5F5] border border-[#0da9a6]/40 text-[#0d5257] text-[13px] px-3 py-2 rounded-none outline-none focus:border-[#0da9a6] transition-colors w-full cursor-pointer [color-scheme:light]">
+              <input type="date" class="vbl-checkout-input bg-[var(--vbl-hotel-accent-light)] border border-[var(--vbl-hotel-accent-40)] text-[#0d5257] text-[13px] px-3 py-2 rounded-none outline-none focus:border-[var(--vbl-hotel-accent)] transition-colors w-full cursor-pointer [color-scheme:light]">
             </div>
           </div>
           <div class="flex items-center justify-between pt-3 border-t border-[#0d5257]/20">
@@ -574,7 +574,7 @@ $frase_line3 = vbl_field( 'vbl_quarto_frase_line3', $post_id, 'LACUS EGET UT SIT
         </div>
 
         <!-- Popups Quem (Hóspedes & Quartos) -->
-        <div class="vbl-popup-who vbl-booking-popup vbl-popup-light font-body hidden absolute top-[calc(100%+8px)] left-0 md:left-[35%] w-full sm:w-[360px] bg-white/95 backdrop-blur-md border border-[#0da9a6]/40 shadow-2xl p-5 text-[#0d5257] z-50 rounded-none">
+        <div class="vbl-popup-who vbl-booking-popup vbl-popup-light font-body hidden absolute top-[calc(100%+8px)] left-0 md:left-[35%] w-full sm:w-[360px] bg-white/95 backdrop-blur-md border border-[var(--vbl-hotel-accent-40)] shadow-2xl p-5 text-[#0d5257] z-50 rounded-none">
           <div class="flex items-center justify-between mb-4 pb-2 border-b border-[#0d5257]/20">
             <span class="text-[11px] uppercase tracking-[1px] text-[#0d5257] font-medium"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Hóspedes e Quartos' ) : 'Hóspedes e Quartos' ); ?></span>
             <button type="button" class="vbl-close-popup text-[#0d5257]/60 hover:text-[#0d5257] text-lg leading-none cursor-pointer" aria-label="<?php echo esc_attr( function_exists( 'vbl__' ) ? vbl__( 'Fechar' ) : 'Fechar' ); ?>">&times;</button>
@@ -587,9 +587,9 @@ $frase_line3 = vbl_field( 'vbl_quarto_frase_line3', $post_id, 'LACUS EGET UT SIT
                 <div class="text-[10px] text-[#0d5257]/70"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Idade 12+ anos' ) : 'Idade 12+ anos' ); ?></div>
               </div>
               <div class="flex items-center gap-3">
-                <button type="button" class="vbl-counter-btn w-8 h-8 rounded-none border border-[#0da9a6]/40 hover:border-[#0da9a6] hover:bg-[#E8F5F5] flex items-center justify-center text-[#0d5257] text-base transition-colors cursor-pointer select-none" data-action="dec" data-target="adults">−</button>
+                <button type="button" class="vbl-counter-btn w-8 h-8 rounded-none border border-[var(--vbl-hotel-accent-40)] hover:border-[var(--vbl-hotel-accent)] hover:bg-[var(--vbl-hotel-accent-light)] flex items-center justify-center text-[#0d5257] text-base transition-colors cursor-pointer select-none" data-action="dec" data-target="adults">−</button>
                 <span class="vbl-count-adults w-6 text-center text-[15px] font-medium text-[#0d5257]">2</span>
-                <button type="button" class="vbl-counter-btn w-8 h-8 rounded-none border border-[#0da9a6]/40 hover:border-[#0da9a6] hover:bg-[#E8F5F5] flex items-center justify-center text-[#0d5257] text-base transition-colors cursor-pointer select-none" data-action="inc" data-target="adults">+</button>
+                <button type="button" class="vbl-counter-btn w-8 h-8 rounded-none border border-[var(--vbl-hotel-accent-40)] hover:border-[var(--vbl-hotel-accent)] hover:bg-[var(--vbl-hotel-accent-light)] flex items-center justify-center text-[#0d5257] text-base transition-colors cursor-pointer select-none" data-action="inc" data-target="adults">+</button>
               </div>
             </div>
             <!-- Crianças -->
@@ -599,9 +599,9 @@ $frase_line3 = vbl_field( 'vbl_quarto_frase_line3', $post_id, 'LACUS EGET UT SIT
                 <div class="text-[10px] text-[#0d5257]/70"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( '0 aos 11 anos' ) : '0 aos 11 anos' ); ?></div>
               </div>
               <div class="flex items-center gap-3">
-                <button type="button" class="vbl-counter-btn w-8 h-8 rounded-none border border-[#0da9a6]/40 hover:border-[#0da9a6] hover:bg-[#E8F5F5] flex items-center justify-center text-[#0d5257] text-base transition-colors cursor-pointer select-none" data-action="dec" data-target="children">−</button>
+                <button type="button" class="vbl-counter-btn w-8 h-8 rounded-none border border-[var(--vbl-hotel-accent-40)] hover:border-[var(--vbl-hotel-accent)] hover:bg-[var(--vbl-hotel-accent-light)] flex items-center justify-center text-[#0d5257] text-base transition-colors cursor-pointer select-none" data-action="dec" data-target="children">−</button>
                 <span class="vbl-count-children w-6 text-center text-[15px] font-medium text-[#0d5257]">0</span>
-                <button type="button" class="vbl-counter-btn w-8 h-8 rounded-none border border-[#0da9a6]/40 hover:border-[#0da9a6] hover:bg-[#E8F5F5] flex items-center justify-center text-[#0d5257] text-base transition-colors cursor-pointer select-none" data-action="inc" data-target="children">+</button>
+                <button type="button" class="vbl-counter-btn w-8 h-8 rounded-none border border-[var(--vbl-hotel-accent-40)] hover:border-[var(--vbl-hotel-accent)] hover:bg-[var(--vbl-hotel-accent-light)] flex items-center justify-center text-[#0d5257] text-base transition-colors cursor-pointer select-none" data-action="inc" data-target="children">+</button>
               </div>
             </div>
             <!-- Quartos -->
@@ -611,9 +611,9 @@ $frase_line3 = vbl_field( 'vbl_quarto_frase_line3', $post_id, 'LACUS EGET UT SIT
                 <div class="text-[10px] text-[#0d5257]/70"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Quantidade' ) : 'Quantidade' ); ?></div>
               </div>
               <div class="flex items-center gap-3">
-                <button type="button" class="vbl-counter-btn w-8 h-8 rounded-none border border-[#0da9a6]/40 hover:border-[#0da9a6] hover:bg-[#E8F5F5] flex items-center justify-center text-[#0d5257] text-base transition-colors cursor-pointer select-none" data-action="dec" data-target="rooms">−</button>
+                <button type="button" class="vbl-counter-btn w-8 h-8 rounded-none border border-[var(--vbl-hotel-accent-40)] hover:border-[var(--vbl-hotel-accent)] hover:bg-[var(--vbl-hotel-accent-light)] flex items-center justify-center text-[#0d5257] text-base transition-colors cursor-pointer select-none" data-action="dec" data-target="rooms">−</button>
                 <span class="vbl-count-rooms w-6 text-center text-[15px] font-medium text-[#0d5257]">1</span>
-                <button type="button" class="vbl-counter-btn w-8 h-8 rounded-none border border-[#0da9a6]/40 hover:border-[#0da9a6] hover:bg-[#E8F5F5] flex items-center justify-center text-[#0d5257] text-base transition-colors cursor-pointer select-none" data-action="inc" data-target="rooms">+</button>
+                <button type="button" class="vbl-counter-btn w-8 h-8 rounded-none border border-[var(--vbl-hotel-accent-40)] hover:border-[var(--vbl-hotel-accent)] hover:bg-[var(--vbl-hotel-accent-light)] flex items-center justify-center text-[#0d5257] text-base transition-colors cursor-pointer select-none" data-action="inc" data-target="rooms">+</button>
               </div>
             </div>
           </div>
@@ -726,7 +726,7 @@ $frase_line3 = vbl_field( 'vbl_quarto_frase_line3', $post_id, 'LACUS EGET UT SIT
       
       <!-- Cabeçalho Outros Quartos -->
       <div class="text-center mb-12 lg:mb-16 flex flex-col items-center">
-        <span class="font-body text-[11px] xl:text-[12px] tracking-[2.5px] uppercase text-[#0da9a6] font-medium mb-3">
+        <span class="font-body text-[11px] xl:text-[12px] tracking-[2.5px] uppercase text-[var(--vbl-hotel-accent)] font-medium mb-3">
           <?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( $rel_rooms_subtitle ) : $rel_rooms_subtitle ); ?>
         </span>
         <h2 class="font-display text-[40px] sm:text-[52px] lg:text-[64px] leading-[1.05] uppercase text-[#0d5257] font-normal mb-4">
@@ -768,15 +768,15 @@ $frase_line3 = vbl_field( 'vbl_quarto_frase_line3', $post_id, 'LACUS EGET UT SIT
 
               <!-- Categoria -->
               <div class="flex items-center gap-3 mb-2">
-                <div class="w-6 h-px bg-[#0da9a6]"></div>
-                <span class="font-body text-[10px] xl:text-[11px] tracking-[2px] uppercase text-[#0da9a6] font-medium">
+                <div class="w-6 h-px bg-[var(--vbl-hotel-accent)]"></div>
+                <span class="font-body text-[10px] xl:text-[11px] tracking-[2px] uppercase text-[var(--vbl-hotel-accent)] font-medium">
                   <?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( $o_room['cat'] ) : $o_room['cat'] ); ?>
                 </span>
               </div>
 
               <!-- Título Clicável -->
               <h3 class="font-display text-[26px] sm:text-[30px] leading-tight uppercase text-[#0d5257] mb-3 group-hover:text-[var(--vbl-hotel-accent)] transition-colors">
-                <a href="<?php echo esc_url( $o_room['link'] ); ?>" class="hover:underline decoration-[#0da9a6] decoration-1 underline-offset-4">
+                <a href="<?php echo esc_url( $o_room['link'] ); ?>" class="hover:underline decoration-[var(--vbl-hotel-accent)] decoration-1 underline-offset-4">
                   <?php echo esc_html( $o_room['title'] ); ?>
                 </a>
               </h3>

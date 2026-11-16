@@ -53,7 +53,7 @@ $youtube   = vbl_opt( 'youtube', 'https://www.youtube.com/@VilaBaleiraHotels' );
         
         <!-- Morada (Container aumentado para 2 linhas) -->
         <div class="flex flex-col gap-6 max-w-[360px]">
-          <p class="font-medium text-[14px] tracking-[1.4px] uppercase text-[#0da9a6]"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'MORADA' ) : 'MORADA' ); ?></p>
+          <p class="font-medium text-[14px] tracking-[1.4px] uppercase text-[var(--vbl-hotel-accent)]"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'MORADA' ) : 'MORADA' ); ?></p>
           <p class="font-light text-[15px] xl:text-[16px] leading-[24px] text-black/80">
             <a href="https://maps.google.com/?q=<?php echo urlencode( strip_tags( $address ) ); ?>" target="_blank" rel="noopener" class="vbl-footer-hotel-link hover:underline hover:underline-offset-4 decoration-1 transition-all inline-block">
               <?php echo nl2br( esc_html( $address ) ); ?>
@@ -63,7 +63,7 @@ $youtube   = vbl_opt( 'youtube', 'https://www.youtube.com/@VilaBaleiraHotels' );
 
         <!-- Contactos -->
         <div class="flex flex-col gap-6">
-          <p class="font-medium text-[14px] tracking-[1.4px] uppercase text-[#0da9a6]"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'CONTACTOS' ) : 'CONTACTOS' ); ?></p>
+          <p class="font-medium text-[14px] tracking-[1.4px] uppercase text-[var(--vbl-hotel-accent)]"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'CONTACTOS' ) : 'CONTACTOS' ); ?></p>
           <div class="font-light text-[15px] xl:text-[16px] leading-[24px] text-black/80 flex flex-col gap-1">
             <p><a href="tel:<?php echo esc_html( $phone ); ?>" class="vbl-footer-hotel-link hover:underline hover:underline-offset-4 decoration-1 transition-all whitespace-nowrap"><?php echo esc_html( $phone ); ?></a></p>
             <p><a href="mailto:<?php echo esc_html( $email ); ?>" class="vbl-footer-hotel-link hover:underline hover:underline-offset-4 decoration-1 transition-all"><?php echo esc_html( $email ); ?></a></p>
@@ -72,7 +72,7 @@ $youtube   = vbl_opt( 'youtube', 'https://www.youtube.com/@VilaBaleiraHotels' );
 
         <!-- Siga-nos -->
         <div class="flex flex-col gap-6">
-          <p class="font-medium text-[14px] tracking-[1.4px] uppercase text-[#0da9a6]"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'SIGA-NOS' ) : 'SIGA-NOS' ); ?></p>
+          <p class="font-medium text-[14px] tracking-[1.4px] uppercase text-[var(--vbl-hotel-accent)]"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'SIGA-NOS' ) : 'SIGA-NOS' ); ?></p>
           <div class="flex items-center gap-5 text-[#0d5257]">
             <a href="<?php echo esc_url( $facebook ); ?>" target="_blank" rel="noopener" class="vbl-footer-social">
               <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
@@ -94,7 +94,7 @@ $youtube   = vbl_opt( 'youtube', 'https://www.youtube.com/@VilaBaleiraHotels' );
         
         <!-- Logo Institucional com "UM HOTEL DO GRUPO" -->
         <div class="flex flex-col gap-6">
-          <p class="font-medium text-[14px] tracking-[1.4px] uppercase text-[#0da9a6]"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'UM HOTEL DO GRUPO' ) : 'UM HOTEL DO GRUPO' ); ?></p>
+          <p class="font-medium text-[14px] tracking-[1.4px] uppercase text-[var(--vbl-hotel-accent)]"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'UM HOTEL DO GRUPO' ) : 'UM HOTEL DO GRUPO' ); ?></p>
           
           <a href="<?php echo esc_url( function_exists( 'pll_home_url' ) ? pll_home_url() : home_url( '/' ) ); ?>" title="Vila Baleira Hotels" class="flex items-center gap-4 lg:gap-5 flex-shrink-0 hover:opacity-80 transition-opacity">
             <img src="<?php echo vbl_img('footer-logo-icon.svg'); ?>" alt="" class="w-10 lg:w-[48px] h-auto">
@@ -108,7 +108,7 @@ $youtube   = vbl_opt( 'youtube', 'https://www.youtube.com/@VilaBaleiraHotels' );
       </div>
 
       <!-- Bottom bar -->
-      <div class="flex flex-col xl:flex-row items-start xl:items-center justify-between border-t border-[#0da9a6]/20 pt-6 gap-6 relative">
+      <div class="flex flex-col xl:flex-row items-start xl:items-center justify-between border-t border-[var(--vbl-hotel-accent-20)] pt-6 gap-6 relative">
         <div class="flex flex-wrap items-center gap-3 lg:gap-4 text-[9px] uppercase tracking-wider text-black/60 font-medium">
           <?php
           $legal_links = vbl_opt( 'legal_links', array(
@@ -125,16 +125,16 @@ $youtube   = vbl_opt( 'youtube', 'https://www.youtube.com/@VilaBaleiraHotels' );
               if ( ! empty( $llink['url'] ) && $llink['url'] !== '#' ) :
                   $resolved_url = function_exists( 'vbl_resolve_url' ) ? vbl_resolve_url( $llink['url'] ) : esc_url( $llink['url'] );
           ?>
-              <a href="<?php echo esc_url( $resolved_url ); ?>"<?php echo $target; ?> class="vbl-footer-hotel-link hover:underline hover:underline-offset-4 decoration-1 transition-all"><span class="whitespace-nowrap"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( $llink['label'] ) : $llink['label'] ); ?></span></a><span class="text-[#0da9a6] hidden lg:inline">|</span>
+              <a href="<?php echo esc_url( $resolved_url ); ?>"<?php echo $target; ?> class="vbl-footer-hotel-link hover:underline hover:underline-offset-4 decoration-1 transition-all"><span class="whitespace-nowrap"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( $llink['label'] ) : $llink['label'] ); ?></span></a><span class="text-[var(--vbl-hotel-accent)] hidden lg:inline">|</span>
           <?php else : ?>
-              <span class="whitespace-nowrap"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( $llink['label'] ) : $llink['label'] ); ?></span><span class="text-[#0da9a6] hidden lg:inline">|</span>
+              <span class="whitespace-nowrap"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( $llink['label'] ) : $llink['label'] ); ?></span><span class="text-[var(--vbl-hotel-accent)] hidden lg:inline">|</span>
           <?php
               endif;
           endforeach;
 
           if ( $nipc ) :
           ?>
-              <span class="whitespace-nowrap">N.I.P.C. <?php echo esc_html( $nipc ); ?></span><span class="text-[#0da9a6] hidden sm:inline">|</span>
+              <span class="whitespace-nowrap">N.I.P.C. <?php echo esc_html( $nipc ); ?></span><span class="text-[var(--vbl-hotel-accent)] hidden sm:inline">|</span>
           <?php endif;
           if ( $rnavt ) :
           ?>
@@ -142,7 +142,7 @@ $youtube   = vbl_opt( 'youtube', 'https://www.youtube.com/@VilaBaleiraHotels' );
           <?php endif; ?>
         </div>
         <div class="text-[9px] uppercase tracking-wider text-black/60 font-medium whitespace-nowrap">
-          VILA BALEIRA &copy; <?php echo date( 'Y' ); ?> <span class="mx-2 text-[#0da9a6]">|</span> <a href="https://www.sanzza.com" target="_blank" class="vbl-footer-hotel-link hover:underline hover:underline-offset-[3px] decoration-1 transition-all">DESIGNED BY SANZZA</a>
+          VILA BALEIRA &copy; <?php echo date( 'Y' ); ?> <span class="mx-2 text-[var(--vbl-hotel-accent)]">|</span> <a href="https://www.sanzza.com" target="_blank" class="vbl-footer-hotel-link hover:underline hover:underline-offset-[3px] decoration-1 transition-all">DESIGNED BY SANZZA</a>
         </div>
       </div>
     </div>

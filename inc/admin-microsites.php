@@ -460,6 +460,50 @@ function vbl_get_hotel_accent_color( $post_id = null ) {
 }
 
 /**
+ * Retorna a cor secundária (light color) do hotel atual ou especificado
+ *
+ * @param int|null $post_id
+ * @return string Cor em formato HEX (#E5F8F7, etc.)
+ */
+function vbl_get_hotel_secondary_color( $post_id = null ) {
+    if ( ! $post_id ) {
+        $post_id = get_the_ID();
+    }
+
+    if ( is_singular( 'vbl_quarto' ) ) {
+        $parent = function_exists( 'vbl_field' ) ? vbl_field( 'vbl_quarto_hotel', $post_id ) : get_field( 'vbl_quarto_hotel', $post_id );
+        if ( $parent ) {
+            $post_id = is_object( $parent ) ? $parent->ID : (int) $parent;
+        }
+    } else {
+        $parent_id = wp_get_post_parent_id( $post_id );
+        if ( $parent_id ) {
+            $post_id = $parent_id;
+        }
+    }
+
+    $post_obj = get_post( $post_id );
+    if ( $post_obj ) {
+        $slug = strtolower( (string) $post_obj->post_name );
+        $secondary_map = array(
+            'porto-santo' => '#E5F8F7',
+            'funchal'     => '#FBEDD7',
+            'madeira'     => '#FBEDD7',
+            'suites'      => '#F5E8DF',
+            'village'     => '#D9E3DC',
+            'residence'   => '#F5EFE6',
+        );
+        foreach ( $secondary_map as $key => $hex ) {
+            if ( false !== strpos( $slug, $key ) ) {
+                return $hex;
+            }
+        }
+    }
+
+    return '#E5F8F7'; // Default Porto Santo Secondary
+}
+
+/**
  * Retorna a imagem padrão/fallback de quarto do hotel especificado
  * 
  * @param int|null $post_id

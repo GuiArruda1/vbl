@@ -24,6 +24,7 @@ $hotel_permalink = $current_hotel_id ? get_permalink($current_hotel_id) : get_pe
 $hotel_header_logo = vbl_field('vbl_hotel_header_logo', get_the_ID()) ?: vbl_field('vbl_hotel_header_logo', $current_hotel_id);
 $hotel_header_logo_scrolled = vbl_field('vbl_hotel_header_logo_scrolled', get_the_ID()) ?: vbl_field('vbl_hotel_header_logo_scrolled', $current_hotel_id);
 $hotel_accent_color = function_exists('vbl_get_hotel_accent_color') ? vbl_get_hotel_accent_color($current_hotel_id) : '#00B5B4';
+$hotel_secondary_color = function_exists('vbl_get_hotel_secondary_color') ? vbl_get_hotel_secondary_color($current_hotel_id) : '#E5F8F7';
 $lang_data = function_exists('vbl_get_languages') ? vbl_get_languages() : array('current' => 'PT', 'languages' => array());
 
 // Subpáginas reais do hotel criadas no WordPress (sem fallback para forçar a criação das páginas no backoffice)
@@ -75,7 +76,13 @@ $is_contactos_active    = (strpos($current_template, 'hotel-contactos') !== fals
   <meta charset="<?php bloginfo('charset'); ?>">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <?php wp_head(); ?>
-  <style>:root { --vbl-hotel-accent: <?php echo esc_attr($hotel_accent_color); ?>; }</style>
+  <?php
+  $vbl_rgb = sscanf( ltrim( $hotel_accent_color, '#' ), '%02x%02x%02x' );
+  $vbl_r   = isset( $vbl_rgb[0] ) ? (int) $vbl_rgb[0] : 0;
+  $vbl_g   = isset( $vbl_rgb[1] ) ? (int) $vbl_rgb[1] : 181;
+  $vbl_b   = isset( $vbl_rgb[2] ) ? (int) $vbl_rgb[2] : 180;
+  ?>
+  <style>:root { --vbl-hotel-accent: <?php echo esc_attr($hotel_accent_color); ?>; --vbl-hotel-accent-light: <?php echo esc_attr($hotel_secondary_color); ?>; --vbl-hotel-accent-40: rgba(<?php echo "$vbl_r, $vbl_g, $vbl_b"; ?>, 0.4); --vbl-hotel-accent-20: rgba(<?php echo "$vbl_r, $vbl_g, $vbl_b"; ?>, 0.2); }</style>
 </head>
 
 <body <?php body_class("font-display text-white bg-black overflow-x-hidden"); ?>>
@@ -184,11 +191,11 @@ $is_contactos_active    = (strpos($current_template, 'hotel-contactos') !== fals
                           </div>
                           <div class="flex flex-col gap-1.5 mt-2">
                             <div class="flex items-center gap-3">
-                              <div class="w-6 h-px bg-[#0da9a6]"></div>
-                              <span class="font-body text-[8px] tracking-[1.5px] uppercase text-[#0da9a6]">QUARTO</span>
+                              <div class="w-6 h-px bg-[var(--vbl-hotel-accent)]"></div>
+                              <span class="font-body text-[8px] tracking-[1.5px] uppercase text-[var(--vbl-hotel-accent)]">QUARTO</span>
                             </div>
                             <h3
-                              class="font-display text-[15px] xl:text-[16px] text-[#0d5257] uppercase leading-tight group-hover/room:text-[#0da9a6] transition-colors">
+                              class="font-display text-[15px] xl:text-[16px] text-[#0d5257] uppercase leading-tight group-hover/room:text-[var(--vbl-hotel-accent)] transition-colors">
                               <?php echo esc_html(get_the_title($rpost->ID)); ?>
                             </h3>
                           </div>
@@ -419,14 +426,14 @@ $is_contactos_active    = (strpos($current_template, 'hotel-contactos') !== fals
       </div>
       <?php if (!empty($subpage_links['sobre'])): ?>
         <a href="<?php echo esc_url($subpage_links['sobre']['url']); ?>"
-          class="text-[16px] tracking-[1.6px] uppercase <?php echo $is_sobre_active ? 'text-[#0da9a6] font-bold underline underline-offset-4' : 'text-[#0d5257] font-medium'; ?>"><?php echo esc_html($subpage_links['sobre']['title']); ?></a>
+          class="text-[16px] tracking-[1.6px] uppercase <?php echo $is_sobre_active ? 'text-[var(--vbl-hotel-accent)] font-bold underline underline-offset-4' : 'text-[#0d5257] font-medium'; ?>"><?php echo esc_html($subpage_links['sobre']['title']); ?></a>
       <?php endif; ?>
       <?php if (!empty($subpage_links['rooms'])): ?>
         <!-- Rooms & Suites accordion trigger -->
         <button type="button" id="mobileRoomsToggle"
           class="flex items-center justify-between w-full text-left cursor-pointer">
           <span
-            class="text-[16px] tracking-[1.6px] uppercase <?php echo $is_rooms_active ? 'text-[#0da9a6] font-bold underline underline-offset-4' : 'text-[#0d5257] font-medium'; ?> pointer-events-none"><?php echo esc_html($subpage_links['rooms']['title']); ?></span>
+            class="text-[16px] tracking-[1.6px] uppercase <?php echo $is_rooms_active ? 'text-[var(--vbl-hotel-accent)] font-bold underline underline-offset-4' : 'text-[#0d5257] font-medium'; ?> pointer-events-none"><?php echo esc_html($subpage_links['rooms']['title']); ?></span>
           <svg class="w-3 h-2 text-[#0d5257] transition-transform duration-300 pointer-events-none" id="mobileRoomsArrow"
             viewBox="0 0 12 8" fill="none">
             <path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" stroke-width="1.5" />
@@ -464,9 +471,9 @@ $is_contactos_active    = (strpos($current_template, 'hotel-contactos') !== fals
                   </div>
                   <div class="flex flex-col gap-1.5 py-3 pr-4 min-w-0">
                     <div class="flex items-center gap-3">
-                      <div class="w-6 h-px bg-[#0da9a6]"></div>
+                      <div class="w-6 h-px bg-[var(--vbl-hotel-accent)]"></div>
                       <span
-                        class="font-body text-[8px] md:text-[9px] tracking-[1px] uppercase text-[#0da9a6] font-normal"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'QUARTO' ) : 'QUARTO' ); ?></span>
+                        class="font-body text-[8px] md:text-[9px] tracking-[1px] uppercase text-[var(--vbl-hotel-accent)] font-normal"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'QUARTO' ) : 'QUARTO' ); ?></span>
                     </div>
                     <span
                       class="font-display text-[15px] md:text-[17px] text-[#0d5257] uppercase leading-tight"><?php echo esc_html(get_the_title($mr_post->ID)); ?></span>
@@ -476,8 +483,8 @@ $is_contactos_active    = (strpos($current_template, 'hotel-contactos') !== fals
             endif; ?>
             <a href="<?php echo esc_url($subpage_links['rooms']['url']); ?>"
               class="flex items-center justify-center gap-3 py-3 mt-1 border-t border-[#eee8e5]">
-              <span class="text-[12px] tracking-[1.2px] uppercase text-[#0da9a6] font-medium"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Ver todos os quartos' ) : 'Ver todos os quartos' ); ?></span>
-              <svg class="w-[8px] h-[8px] text-[#0da9a6]" viewBox="0 0 11 11" fill="none">
+              <span class="text-[12px] tracking-[1.2px] uppercase text-[var(--vbl-hotel-accent)] font-medium"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Ver todos os quartos' ) : 'Ver todos os quartos' ); ?></span>
+              <svg class="w-[8px] h-[8px] text-[var(--vbl-hotel-accent)]" viewBox="0 0 11 11" fill="none">
                 <path d="M1 10L10 1M10 1H3M10 1V8" stroke="currentColor" stroke-width="1" />
               </svg>
             </a>
@@ -486,27 +493,27 @@ $is_contactos_active    = (strpos($current_template, 'hotel-contactos') !== fals
       <?php endif; ?>
       <?php if (!empty($subpage_links['atividades'])): ?>
         <a href="<?php echo esc_url($subpage_links['atividades']['url']); ?>"
-          class="text-[16px] tracking-[1.6px] uppercase <?php echo $is_atividades_active ? 'text-[#0da9a6] font-bold underline underline-offset-4' : 'text-[#0d5257] font-medium'; ?>"><?php echo esc_html($subpage_links['atividades']['title']); ?></a>
+          class="text-[16px] tracking-[1.6px] uppercase <?php echo $is_atividades_active ? 'text-[var(--vbl-hotel-accent)] font-bold underline underline-offset-4' : 'text-[#0d5257] font-medium'; ?>"><?php echo esc_html($subpage_links['atividades']['title']); ?></a>
       <?php endif; ?>
       <?php if (!empty($subpage_links['restaurantes'])): ?>
         <a href="<?php echo esc_url($subpage_links['restaurantes']['url']); ?>"
-          class="text-[16px] tracking-[1.6px] uppercase <?php echo $is_restaurantes_active ? 'text-[#0da9a6] font-bold underline underline-offset-4' : 'text-[#0d5257] font-medium'; ?>"><?php echo esc_html($subpage_links['restaurantes']['title']); ?></a>
+          class="text-[16px] tracking-[1.6px] uppercase <?php echo $is_restaurantes_active ? 'text-[var(--vbl-hotel-accent)] font-bold underline underline-offset-4' : 'text-[#0d5257] font-medium'; ?>"><?php echo esc_html($subpage_links['restaurantes']['title']); ?></a>
       <?php endif; ?>
       <?php if (!empty($subpage_links['regiao'])): ?>
         <a href="<?php echo esc_url($subpage_links['regiao']['url']); ?>"
-          class="text-[16px] tracking-[1.6px] uppercase <?php echo $is_regiao_active ? 'text-[#0da9a6] font-bold underline underline-offset-4' : 'text-[#0d5257] font-medium'; ?>"><?php echo esc_html($subpage_links['regiao']['title']); ?></a>
+          class="text-[16px] tracking-[1.6px] uppercase <?php echo $is_regiao_active ? 'text-[var(--vbl-hotel-accent)] font-bold underline underline-offset-4' : 'text-[#0d5257] font-medium'; ?>"><?php echo esc_html($subpage_links['regiao']['title']); ?></a>
       <?php endif; ?>
       <?php if (!empty($subpage_links['eventos'])): ?>
         <a href="<?php echo esc_url($subpage_links['eventos']['url']); ?>"
-          class="text-[16px] tracking-[1.6px] uppercase <?php echo $is_eventos_active ? 'text-[#0da9a6] font-bold underline underline-offset-4' : 'text-[#0d5257] font-medium'; ?>"><?php echo esc_html($subpage_links['eventos']['title']); ?></a>
+          class="text-[16px] tracking-[1.6px] uppercase <?php echo $is_eventos_active ? 'text-[var(--vbl-hotel-accent)] font-bold underline underline-offset-4' : 'text-[#0d5257] font-medium'; ?>"><?php echo esc_html($subpage_links['eventos']['title']); ?></a>
       <?php endif; ?>
       <?php if (!empty($subpage_links['contactos'])): ?>
         <a href="<?php echo esc_url($subpage_links['contactos']['url']); ?>"
-          class="text-[16px] tracking-[1.6px] uppercase <?php echo $is_contactos_active ? 'text-[#0da9a6] font-bold underline underline-offset-4' : 'text-[#0d5257] font-medium'; ?>"><?php echo esc_html($subpage_links['contactos']['title']); ?></a>
+          class="text-[16px] tracking-[1.6px] uppercase <?php echo $is_contactos_active ? 'text-[var(--vbl-hotel-accent)] font-bold underline underline-offset-4' : 'text-[#0d5257] font-medium'; ?>"><?php echo esc_html($subpage_links['contactos']['title']); ?></a>
       <?php endif; ?>
       <div class="h-px bg-[#eee8e5] my-2"></div>
       <a href="<?php echo esc_url($hotel_booking_url); ?>"
-        class="vbl-hotel-btn-reservar flex items-center justify-between w-full px-6 py-4 border border-[#0da9a6] text-[#0da9a6] text-[14px] tracking-[1.4px] uppercase my-2">
+        class="vbl-hotel-btn-reservar flex items-center justify-between w-full px-6 py-4 border border-[var(--vbl-hotel-accent)] text-[var(--vbl-hotel-accent)] text-[14px] tracking-[1.4px] uppercase my-2">
         <span><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Reservar' ) : 'Reservar' ); ?></span>
         <svg class="w-[10px] h-[10px]" viewBox="0 0 11 11" fill="none">
           <path d="M1 10L10 1M10 1H3M10 1V8" stroke="currentColor" stroke-width="1.2" />

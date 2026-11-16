@@ -155,11 +155,11 @@ if ( empty( $rooms_list ) ) {
       
       <!-- Tagline com Linhas Indicadoras Laterais -->
       <div class="flex items-center justify-center gap-4 mb-5">
-        <div class="w-10 h-px bg-[#0da9a6]"></div>
-        <span class="font-body text-[11px] xl:text-[12px] tracking-[2.5px] uppercase text-[#0da9a6] font-medium">
+        <div class="w-10 h-px bg-[var(--vbl-hotel-accent)]"></div>
+        <span class="font-body text-[11px] xl:text-[12px] tracking-[2.5px] uppercase text-[var(--vbl-hotel-accent)] font-medium">
           <?php echo esc_html( $intro_tagline ); ?>
         </span>
-        <div class="w-10 h-px bg-[#0da9a6]"></div>
+        <div class="w-10 h-px bg-[var(--vbl-hotel-accent)]"></div>
       </div>
 
       <!-- Título Principal Display Serif -->
@@ -180,18 +180,18 @@ if ( empty( $rooms_list ) ) {
   <!-- ==========================================
        3. CARROSSEL DE QUARTOS & SUITES (Fundo Suave)
   =========================================== -->
-  <section class="w-full py-20 lg:py-32 bg-[#E8F5F5] relative overflow-hidden">
+  <section class="w-full py-20 lg:py-32 bg-[var(--vbl-hotel-accent-light)] relative overflow-hidden">
     <div class="max-w-[1920px] mx-auto px-6 xl:px-[8.33%] relative">
 
       <!-- Botão Seta Esquerda (Anterior) -->
-      <button type="button" id="vblRoomsPrev" class="absolute left-0 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 border border-[#00B5B4] text-[#00B5B4] bg-transparent hover:bg-white hover:text-[#00B5B4] hover:border-[#00B5B4] flex items-center justify-center transition-all duration-300 cursor-pointer shadow-xs hover:shadow-sm" aria-label="Quarto Anterior">
+      <button type="button" id="vblRoomsPrev" class="absolute left-0 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 border border-[var(--vbl-hotel-accent)] text-[var(--vbl-hotel-accent)] bg-transparent hover:bg-white hover:text-[var(--vbl-hotel-accent)] hover:border-[var(--vbl-hotel-accent)] flex items-center justify-center transition-all duration-300 cursor-pointer shadow-xs hover:shadow-sm" aria-label="Quarto Anterior">
         <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M19 12H5M12 19l-7-7 7-7" />
         </svg>
       </button>
 
       <!-- Botão Seta Direita (Seguinte) -->
-      <button type="button" id="vblRoomsNext" class="absolute right-0 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 border border-[#00B5B4] text-[#00B5B4] bg-transparent hover:bg-white hover:text-[#00B5B4] hover:border-[#00B5B4] flex items-center justify-center transition-all duration-300 cursor-pointer shadow-xs hover:shadow-sm" aria-label="Próximo Quarto">
+      <button type="button" id="vblRoomsNext" class="absolute right-0 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 border border-[var(--vbl-hotel-accent)] text-[var(--vbl-hotel-accent)] bg-transparent hover:bg-white hover:text-[var(--vbl-hotel-accent)] hover:border-[var(--vbl-hotel-accent)] flex items-center justify-center transition-all duration-300 cursor-pointer shadow-xs hover:shadow-sm" aria-label="Próximo Quarto">
         <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M5 12h14M12 5l7 7-7 7" />
         </svg>
@@ -217,15 +217,15 @@ if ( empty( $rooms_list ) ) {
 
             <!-- Categoria com Traço Ciano -->
             <div class="flex items-center gap-3 mb-2">
-              <div class="w-6 h-px bg-[#0da9a6]"></div>
-              <span class="font-body text-[10px] xl:text-[11px] tracking-[2px] uppercase text-[#0da9a6] font-medium">
+              <div class="w-6 h-px bg-[var(--vbl-hotel-accent)]"></div>
+              <span class="font-body text-[10px] xl:text-[11px] tracking-[2px] uppercase text-[var(--vbl-hotel-accent)] font-medium">
                 <?php echo esc_html( $cat ); ?>
               </span>
             </div>
 
             <!-- Título do Quarto Clicável -->
             <h3 class="font-display text-[26px] sm:text-[30px] lg:text-[34px] leading-tight uppercase text-[#0d5257] mb-4 group-hover:text-[var(--vbl-hotel-accent)] transition-colors">
-              <a href="<?php echo esc_url( $link ); ?>" class="hover:underline decoration-[#0da9a6] decoration-1 underline-offset-4">
+              <a href="<?php echo esc_url( $link ); ?>" class="hover:underline decoration-[var(--vbl-hotel-accent)] decoration-1 underline-offset-4">
                 <?php echo esc_html( $title ); ?>
               </a>
             </h3>

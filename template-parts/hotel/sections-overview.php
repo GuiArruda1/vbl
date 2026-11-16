@@ -183,8 +183,8 @@ if ( empty( $exp_img_right ) ) {
     <div class="lg:col-span-5 flex flex-col items-start gap-8">
       <div class="flex flex-col gap-2">
         <div class="flex items-center gap-4">
-          <div class="w-8 h-px bg-[#0da9a6]"></div>
-          <span class="font-body text-[10px] xl:text-[11px] tracking-[1.5px] uppercase text-[#0da9a6] font-medium">
+          <div class="w-8 h-px bg-[var(--vbl-hotel-accent)]"></div>
+          <span class="font-body text-[10px] xl:text-[11px] tracking-[1.5px] uppercase text-[var(--vbl-hotel-accent)] font-medium">
             <?php echo esc_html( $sobre_subtitle ); ?>
           </span>
         </div>
@@ -213,7 +213,7 @@ if ( empty( $exp_img_right ) ) {
         <img src="<?php echo esc_url( $sobre_img ); ?>" alt="<?php echo esc_attr( strip_tags( $sobre_title ) ); ?>" class="w-full h-full object-cover">
         
         <!-- Decoration: Starfish SVG Overlay -->
-        <div class="absolute -bottom-16 -left-16 lg:-bottom-24 lg:-left-24 z-10 w-48 h-48 lg:w-64 lg:h-64 pointer-events-none text-[#0da9a6]">
+        <div class="absolute -bottom-16 -left-16 lg:-bottom-24 lg:-left-24 z-10 w-48 h-48 lg:w-64 lg:h-64 pointer-events-none text-[var(--vbl-hotel-accent)]">
           <img src="<?php echo vbl_img( 'estrela.svg' ); ?>" alt="Estrela do Mar" class="w-full h-full object-contain drop-shadow-sm">
         </div>
       </div>
@@ -251,14 +251,14 @@ if ( empty( $exp_img_right ) ) {
   <div class="max-w-[1426px] mx-auto px-4 sm:px-6 lg:px-8 relative">
     
     <!-- Left Navigation Arrow (64x64, floating over left picture border, centered on horizontal midline) -->
-    <button id="vblOverviewRoomsPrev" class="absolute left-4 sm:left-6 lg:left-8 -translate-x-1/2 top-1/2 -translate-y-1/2 z-20 w-16 h-16 border border-[#00B5B4] text-[#00B5B4] bg-transparent flex items-center justify-center hover:bg-white hover:text-[#00B5B4] hover:border-[#00B5B4] transition-all duration-300 cursor-pointer shadow-sm" aria-label="Quarto Anterior">
+    <button id="vblOverviewRoomsPrev" class="absolute left-4 sm:left-6 lg:left-8 -translate-x-1/2 top-1/2 -translate-y-1/2 z-20 w-16 h-16 border border-[var(--vbl-hotel-accent)] text-[var(--vbl-hotel-accent)] bg-transparent flex items-center justify-center hover:bg-white hover:text-[var(--vbl-hotel-accent)] hover:border-[var(--vbl-hotel-accent)] transition-all duration-300 cursor-pointer shadow-sm" aria-label="Quarto Anterior">
       <svg class="w-6 h-6 sm:w-7 sm:h-7" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
         <path d="M28 15H1M1 15L14 2M1 15L14 28" />
       </svg>
     </button>
 
     <!-- Right Navigation Arrow (64x64, floating over preview picture border, on exact same horizontal midline) -->
-    <button id="vblOverviewRoomsNext" class="absolute right-4 sm:right-6 lg:right-8 translate-x-1/2 top-1/2 -translate-y-1/2 z-20 w-16 h-16 border border-[#00B5B4] text-[#00B5B4] bg-transparent flex items-center justify-center hover:bg-white hover:text-[#00B5B4] hover:border-[#00B5B4] transition-all duration-300 cursor-pointer shadow-sm" aria-label="Próximo Quarto">
+    <button id="vblOverviewRoomsNext" class="absolute right-4 sm:right-6 lg:right-8 translate-x-1/2 top-1/2 -translate-y-1/2 z-20 w-16 h-16 border border-[var(--vbl-hotel-accent)] text-[var(--vbl-hotel-accent)] bg-transparent flex items-center justify-center hover:bg-white hover:text-[var(--vbl-hotel-accent)] hover:border-[var(--vbl-hotel-accent)] transition-all duration-300 cursor-pointer shadow-sm" aria-label="Próximo Quarto">
       <svg class="w-6 h-6 sm:w-7 sm:h-7" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
         <path d="M1 15H28M28 15L15 2M28 15L15 28" />
       </svg>
@@ -278,8 +278,8 @@ if ( empty( $exp_img_right ) ) {
         <div>
           <!-- Top Tagline -->
           <div class="flex items-center gap-4 mb-4">
-            <div class="w-8 h-px bg-[#0da9a6]"></div>
-            <span id="vblOverviewRoomSubtitle" class="font-body text-[10px] tracking-[2px] uppercase text-[#0da9a6]">
+            <div class="w-8 h-px bg-[var(--vbl-hotel-accent)]"></div>
+            <span id="vblOverviewRoomSubtitle" class="font-body text-[10px] tracking-[2px] uppercase text-[var(--vbl-hotel-accent)]">
               <?php echo esc_html( $initial_room['subtitle'] ); ?>
             </span>
           </div>

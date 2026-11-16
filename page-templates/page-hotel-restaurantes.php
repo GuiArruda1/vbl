@@ -84,8 +84,8 @@ if ( empty( $restaurantes_list ) || ! is_array( $restaurantes_list ) ) {
         
         <!-- Subtítulo com Traço Ciano -->
         <div class="flex items-center gap-4 mb-4">
-          <div class="w-10 h-px bg-[#0da9a6] flex-shrink-0"></div>
-          <span class="font-body text-[11px] xl:text-[12px] tracking-[2px] uppercase text-[#0da9a6] font-medium">
+          <div class="w-10 h-px bg-[var(--vbl-hotel-accent)] flex-shrink-0"></div>
+          <span class="font-body text-[11px] xl:text-[12px] tracking-[2px] uppercase text-[var(--vbl-hotel-accent)] font-medium">
             <?php echo esc_html( $apres_subtitle ); ?>
           </span>
         </div>
@@ -160,8 +160,8 @@ if ( empty( $restaurantes_list ) || ! is_array( $restaurantes_list ) ) {
             <div>
               <!-- Subtítulo com Traço Ciano -->
               <div class="flex items-center gap-4 mb-3">
-                <div class="w-8 h-px bg-[#0da9a6] flex-shrink-0"></div>
-                <span class="font-body text-[10px] xl:text-[11px] tracking-[2px] uppercase text-[#0da9a6] font-medium">
+                <div class="w-8 h-px bg-[var(--vbl-hotel-accent)] flex-shrink-0"></div>
+                <span class="font-body text-[10px] xl:text-[11px] tracking-[2px] uppercase text-[var(--vbl-hotel-accent)] font-medium">
                   <?php echo esc_html( $sub_label ); ?>
                 </span>
               </div>

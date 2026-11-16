@@ -161,8 +161,8 @@ if ( empty( $instalacoes ) ) {
         
         <!-- Subtítulo -->
         <div class="flex items-center gap-3 mb-4">
-          <div class="w-8 h-px bg-[#0da9a6] flex-shrink-0"></div>
-          <span class="font-body text-[11px] xl:text-[12px] tracking-[2px] uppercase text-[#0da9a6] font-medium">
+          <div class="w-8 h-px bg-[var(--vbl-hotel-accent)] flex-shrink-0"></div>
+          <span class="font-body text-[11px] xl:text-[12px] tracking-[2px] uppercase text-[var(--vbl-hotel-accent)] font-medium">
             <?php echo esc_html( $conheca_subtitle ); ?>
           </span>
         </div>
@@ -205,11 +205,11 @@ if ( empty( $instalacoes ) ) {
       <!-- Lado Esquerdo: Tagline e Título (Alinhados ao Centro) -->
       <div class="flex flex-col items-center text-center gap-4">
         <div class="flex items-center justify-center gap-4">
-          <div class="w-8 lg:w-10 h-px bg-[#0da9a6] flex-shrink-0"></div>
+          <div class="w-8 lg:w-10 h-px bg-[var(--vbl-hotel-accent)] flex-shrink-0"></div>
           <span class="font-body text-[11px] xl:text-[13px] tracking-[2px] uppercase text-white/90 font-light text-center">
             <?php echo esc_html( $video_tagline ); ?>
           </span>
-          <div class="w-8 lg:w-10 h-px bg-[#0da9a6] flex-shrink-0"></div>
+          <div class="w-8 lg:w-10 h-px bg-[var(--vbl-hotel-accent)] flex-shrink-0"></div>
         </div>
         <h2 class="font-display text-[40px] sm:text-[54px] md:text-[64px] lg:text-[76px] xl:text-[88px] uppercase tracking-[2px] text-white leading-[1.05] drop-shadow-md text-center">
           <?php echo wp_kses_post( $video_title ); ?>
@@ -266,8 +266,8 @@ if ( empty( $instalacoes ) ) {
               <div>
                 <!-- Subtítulo -->
                 <div class="flex items-center gap-3 mb-3">
-                  <div class="w-8 h-px bg-[#0da9a6] flex-shrink-0"></div>
-                  <span class="font-body text-[10px] xl:text-[11px] tracking-[2px] uppercase text-[#0da9a6] font-medium">
+                  <div class="w-8 h-px bg-[var(--vbl-hotel-accent)] flex-shrink-0"></div>
+                  <span class="font-body text-[10px] xl:text-[11px] tracking-[2px] uppercase text-[var(--vbl-hotel-accent)] font-medium">
                     <?php echo esc_html( $inst_subtitle ); ?>
                   </span>
                 </div>

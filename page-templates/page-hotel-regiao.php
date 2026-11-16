@@ -85,7 +85,7 @@ if ( empty( $experiencias_list ) || ! is_array( $experiencias_list ) ) {
           <img src="<?php echo esc_url( $apres_img ); ?>" alt="<?php echo esc_attr( strip_tags( $apres_title ) ); ?>" class="w-full h-full object-cover">
           
           <!-- Estrela do mar decorativa em outline ciano sobreposta -->
-          <div class="absolute -bottom-8 -right-8 lg:-bottom-12 lg:-right-12 z-10 w-44 h-44 lg:w-60 lg:h-60 pointer-events-none text-[#0da9a6]">
+          <div class="absolute -bottom-8 -right-8 lg:-bottom-12 lg:-right-12 z-10 w-44 h-44 lg:w-60 lg:h-60 pointer-events-none text-[var(--vbl-hotel-accent)]">
             <img src="<?php echo vbl_img( 'estrela.svg' ); ?>" alt="" class="w-full h-full object-contain">
           </div>
         </div>
@@ -96,8 +96,8 @@ if ( empty( $experiencias_list ) || ! is_array( $experiencias_list ) ) {
         
         <!-- Subtítulo com Traço Ciano -->
         <div class="flex items-center gap-4 mb-4">
-          <div class="w-10 h-px bg-[#0da9a6] flex-shrink-0"></div>
-          <span class="font-body text-[11px] xl:text-[12px] tracking-[2px] uppercase text-[#0da9a6] font-medium">
+          <div class="w-10 h-px bg-[var(--vbl-hotel-accent)] flex-shrink-0"></div>
+          <span class="font-body text-[11px] xl:text-[12px] tracking-[2px] uppercase text-[var(--vbl-hotel-accent)] font-medium">
             <?php echo esc_html( $apres_subtitle ); ?>
           </span>
         </div>
@@ -153,11 +153,11 @@ if ( empty( $experiencias_list ) || ! is_array( $experiencias_list ) ) {
       <!-- Cabeçalho Central -->
       <div class="text-center mb-16 flex flex-col items-center">
         <div class="flex items-center justify-center gap-4 mb-3">
-          <div class="w-10 h-px bg-[#0da9a6]"></div>
-          <span class="font-body text-[11px] xl:text-[12px] tracking-[2.5px] uppercase text-[#0da9a6] font-medium">
+          <div class="w-10 h-px bg-[var(--vbl-hotel-accent)]"></div>
+          <span class="font-body text-[11px] xl:text-[12px] tracking-[2.5px] uppercase text-[var(--vbl-hotel-accent)] font-medium">
             <?php echo esc_html( $exp_tagline ); ?>
           </span>
-          <div class="w-10 h-px bg-[#0da9a6]"></div>
+          <div class="w-10 h-px bg-[var(--vbl-hotel-accent)]"></div>
         </div>
 
         <h2 class="font-display text-[42px] sm:text-[54px] lg:text-[68px] leading-[1.02] uppercase text-[#0d5257] font-normal mb-5">

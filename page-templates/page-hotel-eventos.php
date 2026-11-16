@@ -94,8 +94,8 @@ $privacy_url  = function_exists( 'vbl_get_privacy_policy_url' ) ? vbl_get_privac
         
         <!-- Subtítulo com Traço Ciano -->
         <div class="flex items-center gap-4 mb-4">
-          <div class="w-10 h-px bg-[#0da9a6] flex-shrink-0"></div>
-          <span class="font-body text-[11px] xl:text-[12px] tracking-[2px] uppercase text-[#0da9a6] font-medium">
+          <div class="w-10 h-px bg-[var(--vbl-hotel-accent)] flex-shrink-0"></div>
+          <span class="font-body text-[11px] xl:text-[12px] tracking-[2px] uppercase text-[var(--vbl-hotel-accent)] font-medium">
             <?php echo esc_html( $apres_subtitle ); ?>
           </span>
         </div>
@@ -158,8 +158,8 @@ $privacy_url  = function_exists( 'vbl_get_privacy_policy_url' ) ? vbl_get_privac
         
         <!-- Subtítulo com Traço Ciano -->
         <div class="flex items-center gap-4 mb-4">
-          <div class="w-10 h-px bg-[#0da9a6] flex-shrink-0"></div>
-          <span class="font-body text-[11px] xl:text-[12px] tracking-[2px] uppercase text-[#0da9a6] font-medium">
+          <div class="w-10 h-px bg-[var(--vbl-hotel-accent)] flex-shrink-0"></div>
+          <span class="font-body text-[11px] xl:text-[12px] tracking-[2px] uppercase text-[var(--vbl-hotel-accent)] font-medium">
             <?php echo esc_html( $planta_subtitle ); ?>
           </span>
         </div>
@@ -195,7 +195,7 @@ $privacy_url  = function_exists( 'vbl_get_privacy_policy_url' ) ? vbl_get_privac
         ?>
         <div class="flex items-start gap-5">
           <!-- Ícone Geométrico Elegante Ciano -->
-          <div class="w-7 h-7 rounded-full border border-[#0da9a6] flex items-center justify-center flex-shrink-0 mt-1 text-[#0da9a6]">
+          <div class="w-7 h-7 rounded-full border border-[var(--vbl-hotel-accent)] flex items-center justify-center flex-shrink-0 mt-1 text-[var(--vbl-hotel-accent)]">
             <svg class="w-3.5 h-3.5" viewBox="0 0 16 16" fill="currentColor">
               <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
             </svg>
@@ -221,9 +221,9 @@ $privacy_url  = function_exists( 'vbl_get_privacy_policy_url' ) ? vbl_get_privac
   <!-- ==========================================
        5. PEDIDO DE ORÇAMENTO (Bloco Ciano Suave)
   =========================================== -->
-  <section class="w-full py-24 lg:py-36 bg-[#E8F5F5] relative overflow-hidden">
+  <section class="w-full py-24 lg:py-36 bg-[var(--vbl-hotel-accent-light)] relative overflow-hidden">
     <!-- Estrela do mar decorativa em outline ciano -->
-    <div class="absolute right-0 bottom-0 w-72 lg:w-[420px] pointer-events-none opacity-20 text-[#0da9a6]">
+    <div class="absolute right-0 bottom-0 w-72 lg:w-[420px] pointer-events-none opacity-20 text-[var(--vbl-hotel-accent)]">
       <img src="<?php echo vbl_img( 'estrela.svg' ); ?>" alt="" class="w-full h-auto">
     </div>
 
@@ -233,8 +233,8 @@ $privacy_url  = function_exists( 'vbl_get_privacy_policy_url' ) ? vbl_get_privac
       <div class="lg:col-span-5 flex flex-col items-start justify-center">
         <!-- Subtítulo -->
         <div class="flex items-center gap-4 mb-3">
-          <div class="w-10 h-px bg-[#0da9a6] flex-shrink-0"></div>
-          <span class="font-body text-[10px] xl:text-[11px] tracking-[2px] uppercase text-[#0da9a6] font-medium">
+          <div class="w-10 h-px bg-[var(--vbl-hotel-accent)] flex-shrink-0"></div>
+          <span class="font-body text-[10px] xl:text-[11px] tracking-[2px] uppercase text-[var(--vbl-hotel-accent)] font-medium">
             <?php echo esc_html( $orc_subtitle ); ?>
           </span>
         </div>
@@ -261,35 +261,35 @@ $privacy_url  = function_exists( 'vbl_get_privacy_policy_url' ) ? vbl_get_privac
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <!-- Nome -->
             <div>
-              <input type="text" name="nome" placeholder="<?php function_exists( 'vbl_attr_e' ) ? vbl_attr_e( 'NOME' ) : _e( 'NOME', 'vila-baleira' ); ?>" required class="w-full px-1 py-3 border-b border-black/30 bg-transparent text-[13px] tracking-[1.5px] uppercase outline-none focus:border-[#0da9a6] placeholder:text-black/60 transition-colors font-body">
+              <input type="text" name="nome" placeholder="<?php function_exists( 'vbl_attr_e' ) ? vbl_attr_e( 'NOME' ) : _e( 'NOME', 'vila-baleira' ); ?>" required class="w-full px-1 py-3 border-b border-black/30 bg-transparent text-[13px] tracking-[1.5px] uppercase outline-none focus:border-[var(--vbl-hotel-accent)] placeholder:text-black/60 transition-colors font-body">
             </div>
 
             <!-- Email -->
             <div>
-              <input type="email" name="email" placeholder="<?php function_exists( 'vbl_attr_e' ) ? vbl_attr_e( 'EMAIL' ) : _e( 'EMAIL', 'vila-baleira' ); ?>" required class="w-full px-1 py-3 border-b border-black/30 bg-transparent text-[13px] tracking-[1.5px] uppercase outline-none focus:border-[#0da9a6] placeholder:text-black/60 transition-colors font-body">
+              <input type="email" name="email" placeholder="<?php function_exists( 'vbl_attr_e' ) ? vbl_attr_e( 'EMAIL' ) : _e( 'EMAIL', 'vila-baleira' ); ?>" required class="w-full px-1 py-3 border-b border-black/30 bg-transparent text-[13px] tracking-[1.5px] uppercase outline-none focus:border-[var(--vbl-hotel-accent)] placeholder:text-black/60 transition-colors font-body">
             </div>
           </div>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <!-- Telefone -->
             <div>
-              <input type="tel" name="telefone" placeholder="<?php function_exists( 'vbl_attr_e' ) ? vbl_attr_e( 'CONTACTO TELEFÓNICO' ) : _e( 'CONTACTO TELEFÓNICO', 'vila-baleira' ); ?>" required class="w-full px-1 py-3 border-b border-black/30 bg-transparent text-[13px] tracking-[1.5px] uppercase outline-none focus:border-[#0da9a6] placeholder:text-black/60 transition-colors font-body">
+              <input type="tel" name="telefone" placeholder="<?php function_exists( 'vbl_attr_e' ) ? vbl_attr_e( 'CONTACTO TELEFÓNICO' ) : _e( 'CONTACTO TELEFÓNICO', 'vila-baleira' ); ?>" required class="w-full px-1 py-3 border-b border-black/30 bg-transparent text-[13px] tracking-[1.5px] uppercase outline-none focus:border-[var(--vbl-hotel-accent)] placeholder:text-black/60 transition-colors font-body">
             </div>
 
             <!-- Empresa / Tipo de Evento -->
             <div>
-              <input type="text" name="empresa" placeholder="<?php function_exists( 'vbl_attr_e' ) ? vbl_attr_e( 'EMPRESA / TIPO DE EVENTO' ) : _e( 'EMPRESA / TIPO DE EVENTO', 'vila-baleira' ); ?>" class="w-full px-1 py-3 border-b border-black/30 bg-transparent text-[13px] tracking-[1.5px] uppercase outline-none focus:border-[#0da9a6] placeholder:text-black/60 transition-colors font-body">
+              <input type="text" name="empresa" placeholder="<?php function_exists( 'vbl_attr_e' ) ? vbl_attr_e( 'EMPRESA / TIPO DE EVENTO' ) : _e( 'EMPRESA / TIPO DE EVENTO', 'vila-baleira' ); ?>" class="w-full px-1 py-3 border-b border-black/30 bg-transparent text-[13px] tracking-[1.5px] uppercase outline-none focus:border-[var(--vbl-hotel-accent)] placeholder:text-black/60 transition-colors font-body">
             </div>
           </div>
 
           <!-- Mensagem -->
           <div>
-            <textarea name="mensagem" rows="3" placeholder="<?php function_exists( 'vbl_attr_e' ) ? vbl_attr_e( 'MENSAGEM / DETALHES DO EVENTO' ) : _e( 'MENSAGEM / DETALHES DO EVENTO', 'vila-baleira' ); ?>" required class="w-full px-1 py-3 border-b border-black/30 bg-transparent text-[13px] tracking-[1.5px] uppercase outline-none focus:border-[#0da9a6] placeholder:text-black/60 transition-colors font-body resize-none"></textarea>
+            <textarea name="mensagem" rows="3" placeholder="<?php function_exists( 'vbl_attr_e' ) ? vbl_attr_e( 'MENSAGEM / DETALHES DO EVENTO' ) : _e( 'MENSAGEM / DETALHES DO EVENTO', 'vila-baleira' ); ?>" required class="w-full px-1 py-3 border-b border-black/30 bg-transparent text-[13px] tracking-[1.5px] uppercase outline-none focus:border-[var(--vbl-hotel-accent)] placeholder:text-black/60 transition-colors font-body resize-none"></textarea>
           </div>
 
           <!-- Checkbox Privacidade -->
           <div class="flex items-center gap-3 pt-2">
-            <input type="checkbox" name="privacy" id="eventPrivacy" required class="w-4 h-4 bg-white border border-transparent rounded-xs accent-[#0da9a6]">
+            <input type="checkbox" name="privacy" id="eventPrivacy" required class="w-4 h-4 bg-white border border-transparent rounded-xs accent-[var(--vbl-hotel-accent)]">
             <label for="eventPrivacy" class="font-body font-light text-[12px] text-black/80">
               <?php function_exists( 'vbl_e' ) ? vbl_e( 'Li e aceito a' ) : _e( 'Li e aceito a', 'vila-baleira' ); ?> <a href="<?php echo esc_url( $privacy_url ); ?>" class="underline underline-offset-2 hover:text-[var(--vbl-hotel-accent)] transition-colors"><?php function_exists( 'vbl_e' ) ? vbl_e( 'Política de Privacidade' ) : _e( 'Política de Privacidade', 'vila-baleira' ); ?></a>.
             </label>

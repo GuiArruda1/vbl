@@ -150,8 +150,8 @@ if ( empty( $tratamentos_list ) || ! is_array( $tratamentos_list ) ) {
         
         <!-- Subtítulo com Traço Ciano -->
         <div class="flex items-center gap-4 mb-4">
-          <div class="w-10 h-px bg-[#0da9a6] flex-shrink-0"></div>
-          <span class="font-body text-[11px] xl:text-[12px] tracking-[2px] uppercase text-[#0da9a6] font-medium">
+          <div class="w-10 h-px bg-[var(--vbl-hotel-accent)] flex-shrink-0"></div>
+          <span class="font-body text-[11px] xl:text-[12px] tracking-[2px] uppercase text-[var(--vbl-hotel-accent)] font-medium">
             <?php echo esc_html( $apres_subtitle ); ?>
           </span>
         </div>
@@ -186,15 +186,15 @@ if ( empty( $tratamentos_list ) || ! is_array( $tratamentos_list ) ) {
   $show_prog_semanal = vbl_field( 'vbl_hativ_show_programa', false, false );
   if ( ! empty( $show_prog_semanal ) ) : 
   ?>
-  <section class="w-full py-20 lg:py-32 bg-[#E8F5F5] relative overflow-hidden">
+  <section class="w-full py-20 lg:py-32 bg-[var(--vbl-hotel-accent-light)] relative overflow-hidden">
     
     <!-- Cabeçalho Alinhado à Esquerda (Como no Design) -->
     <div class="max-w-[1920px] mx-auto px-6 xl:px-[8.33%]">
       
       <!-- Subtítulo com Traço Ciano à Esquerda -->
       <div class="flex items-center gap-4 mb-4">
-        <div class="w-8 lg:w-10 h-px bg-[#0da9a6] flex-shrink-0"></div>
-        <span class="font-body text-[11px] xl:text-[12px] tracking-[2.5px] uppercase text-[#0da9a6] font-medium">
+        <div class="w-8 lg:w-10 h-px bg-[var(--vbl-hotel-accent)] flex-shrink-0"></div>
+        <span class="font-body text-[11px] xl:text-[12px] tracking-[2.5px] uppercase text-[var(--vbl-hotel-accent)] font-medium">
           <?php echo esc_html( $prog_tagline ); ?>
         </span>
       </div>
@@ -259,7 +259,7 @@ if ( empty( $tratamentos_list ) || ! is_array( $tratamentos_list ) ) {
               
               <?php if ( ! empty( $p_days ) ) : ?>
               <div class="flex items-center gap-2">
-                <svg class="w-3.5 h-3.5 text-[#00B5B4] flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+                <svg class="w-3.5 h-3.5 text-[var(--vbl-hotel-accent)] flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
                   <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
                   <line x1="16" y1="2" x2="16" y2="6"></line>
                   <line x1="8" y1="2" x2="8" y2="6"></line>
@@ -271,7 +271,7 @@ if ( empty( $tratamentos_list ) || ! is_array( $tratamentos_list ) ) {
 
               <?php if ( ! empty( $p_hours ) ) : ?>
               <div class="flex items-center gap-2">
-                <svg class="w-3.5 h-3.5 text-[#00B5B4] flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+                <svg class="w-3.5 h-3.5 text-[var(--vbl-hotel-accent)] flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
                   <circle cx="12" cy="12" r="10"></circle>
                   <polyline points="12 6 12 12 16 14"></polyline>
                 </svg>
@@ -281,7 +281,7 @@ if ( empty( $tratamentos_list ) || ! is_array( $tratamentos_list ) ) {
 
               <?php if ( ! empty( $p_location ) ) : ?>
               <div class="flex items-center gap-2">
-                <svg class="w-3.5 h-3.5 text-[#00B5B4] flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+                <svg class="w-3.5 h-3.5 text-[var(--vbl-hotel-accent)] flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
                   <circle cx="12" cy="10" r="3"></circle>
                 </svg>
@@ -352,8 +352,8 @@ if ( empty( $tratamentos_list ) || ! is_array( $tratamentos_list ) ) {
               
               <!-- Subtítulo com Traço Ciano -->
               <div class="flex items-center gap-3 mb-4">
-                <div class="w-8 h-px bg-[#0da9a6] flex-shrink-0"></div>
-                <span class="font-body text-[10px] sm:text-[11px] xl:text-[12px] tracking-[2px] uppercase text-[#0da9a6] font-medium">
+                <div class="w-8 h-px bg-[var(--vbl-hotel-accent)] flex-shrink-0"></div>
+                <span class="font-body text-[10px] sm:text-[11px] xl:text-[12px] tracking-[2px] uppercase text-[var(--vbl-hotel-accent)] font-medium">
                   <?php echo esc_html( $anim_subtitle ); ?>
                 </span>
               </div>
@@ -402,11 +402,11 @@ if ( empty( $tratamentos_list ) || ! is_array( $tratamentos_list ) ) {
       <!-- Lado Esquerdo: Tagline e Título (Alinhados ao Centro) -->
       <div class="flex flex-col items-center text-center gap-2.5 sm:gap-3 w-full md:w-1/2">
         <div class="flex items-center justify-center gap-4">
-          <div class="w-8 sm:w-10 h-px bg-[#0da9a6] flex-shrink-0"></div>
+          <div class="w-8 sm:w-10 h-px bg-[var(--vbl-hotel-accent)] flex-shrink-0"></div>
           <span class="font-body text-[11px] sm:text-[12px] xl:text-[13px] tracking-[2px] uppercase text-white/95 font-light text-center drop-shadow-sm">
             <?php echo esc_html( $spa_tagline ); ?>
           </span>
-          <div class="w-8 sm:w-10 h-px bg-[#0da9a6] flex-shrink-0"></div>
+          <div class="w-8 sm:w-10 h-px bg-[var(--vbl-hotel-accent)] flex-shrink-0"></div>
         </div>
         <h2 class="font-display text-[44px] sm:text-[56px] md:text-[68px] lg:text-[80px] xl:text-[92px] uppercase tracking-[2px] text-white leading-[1.04] text-center [&_em]:italic [&_em]:font-normal" style="text-shadow: 0 2px 24px rgba(0,0,0,0.35);">
           <?php echo wp_kses_post( $spa_title ); ?>
@@ -437,11 +437,11 @@ if ( empty( $tratamentos_list ) || ! is_array( $tratamentos_list ) ) {
       <!-- Cabeçalho Central -->
       <div class="text-center mb-16 flex flex-col items-center">
         <div class="flex items-center justify-center gap-4 mb-3">
-          <div class="w-10 h-px bg-[#0da9a6]"></div>
-          <span class="font-body text-[11px] xl:text-[12px] tracking-[2.5px] uppercase text-[#0da9a6] font-medium">
+          <div class="w-10 h-px bg-[var(--vbl-hotel-accent)]"></div>
+          <span class="font-body text-[11px] xl:text-[12px] tracking-[2.5px] uppercase text-[var(--vbl-hotel-accent)] font-medium">
             <?php echo esc_html( $trat_tagline ); ?>
           </span>
-          <div class="w-10 h-px bg-[#0da9a6]"></div>
+          <div class="w-10 h-px bg-[var(--vbl-hotel-accent)]"></div>
         </div>
 
         <h2 class="font-display text-[42px] sm:text-[54px] lg:text-[68px] leading-[1.02] uppercase text-[#0d5257] font-normal mb-5">
