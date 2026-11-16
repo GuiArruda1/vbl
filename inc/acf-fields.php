@@ -740,7 +740,7 @@ function vbl_register_acf_fields() {
             array( 'key' => 'field_vbl_hhotel_conheca_title', 'label' => 'Título', 'name' => 'vbl_hhotel_conheca_title', 'type' => 'text', 'default_value' => 'CONHEÇA<br>O HOTEL' ),
             array( 'key' => 'field_vbl_hhotel_conheca_img', 'label' => 'Imagem Vertical', 'name' => 'vbl_hhotel_conheca_img', 'type' => 'image', 'return_format' => 'url', 'preview_size' => 'medium' ),
             array( 'key' => 'field_vbl_hhotel_conheca_p1', 'label' => 'Texto Parágrafo 1', 'name' => 'vbl_hhotel_conheca_p1', 'type' => 'textarea', 'rows' => 4, 'default_value' => 'Lorem ipsum dolor sit amet consectetur. Mi malesuada quisque adipiscing sed in tortor. Lorem quis sollicitudin quisque pellentesque risus. Diam elit faucibus enim pellentesque nisi orci neque leo. Aliquet dignissim dui tortor massa morbi scelerisque mi tincidunt. Quam id morbi tincidunt turpis ut eget amet metus. Lacinia enim sem vitae turpis ornare convallis cras.' ),
-            array( 'key' => 'field_vbl_hhotel_conheca_p2', 'label' => 'Texto Parágrafo 2', 'name' => 'vbl_hhotel_conheca_p2', 'type' => 'textarea', 'rows' => 4, 'default_value' => 'Elementum mauris dolor vitae at porttitor. Consequat sapien facilisi platea viverra. Facilisi a viverra sollicitudin euismod. Nisl ac ultricies augue ante tortor consequat quam porttitor. Lacus tempor venenatis hendrerit in.' ),
+            array( 'key' => 'field_vbl_hhotel_conheca_p2', 'label' => 'Texto Parágrafo 2', 'name' => 'vbl_hhotel_conheca_p2', 'type' => 'textarea', 'rows' => 4, 'default_value' => '' ),
 
             /* Tab: Vídeo Banner */
             array( 'key' => 'field_vbl_hhotel_tab_video', 'label' => 'Vídeo Banner', 'type' => 'tab' ),
