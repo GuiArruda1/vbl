@@ -576,21 +576,25 @@ function vbl_disable_block_editor_for_microsite_pages( $screen ) {
 add_action( 'current_screen', 'vbl_disable_block_editor_for_microsite_pages' );
 
 /**
- * 4. Forçar a secção mestre de abas (ACF) no TOPO por defeito, antes de qualquer outra meta box
+ * 4. Forçar a secção mestre de abas (ACF) no TOPO da coluna principal (acf_after_title),
+ *    impedindo que fique presa na barra lateral direita ("side") ou abaixo de outras meta boxes.
  */
 function vbl_enforce_acf_tabs_first_metabox( $order ) {
     if ( ! is_array( $order ) ) {
         return $order;
     }
 
-    foreach ( array( 'normal', 'advanced', 'side' ) as $context ) {
+    $acf_top_boxes = array();
+    $contexts      = array( 'acf_after_title', 'normal', 'advanced', 'side' );
+
+    foreach ( $contexts as $context ) {
         if ( empty( $order[ $context ] ) ) {
             continue;
         }
 
-        $boxes = is_array( $order[ $context ] ) ? $order[ $context ] : explode( ',', $order[ $context ] );
-        $acf_top_boxes = array();
-        $other_boxes   = array();
+        $was_array   = is_array( $order[ $context ] );
+        $boxes       = $was_array ? $order[ $context ] : explode( ',', $order[ $context ] );
+        $other_boxes = array();
 
         foreach ( $boxes as $box_id ) {
             $box_id = trim( $box_id );
@@ -598,18 +602,28 @@ function vbl_enforce_acf_tabs_first_metabox( $order ) {
                 continue;
             }
 
-            // Se for o grupo principal com abas de hotel, quartos ou páginas
             if ( strpos( $box_id, 'acf-group_vbl_' ) !== false ) {
-                $acf_top_boxes[] = $box_id;
+                if ( ! in_array( $box_id, $acf_top_boxes, true ) ) {
+                    $acf_top_boxes[] = $box_id;
+                }
             } else {
                 $other_boxes[] = $box_id;
             }
         }
 
-        if ( ! empty( $acf_top_boxes ) ) {
-            $sorted = array_merge( $acf_top_boxes, $other_boxes );
-            $order[ $context ] = is_array( $order[ $context ] ) ? $sorted : implode( ',', $sorted );
+        $order[ $context ] = $was_array ? $other_boxes : implode( ',', $other_boxes );
+    }
+
+    if ( ! empty( $acf_top_boxes ) ) {
+        $existing_after_title = array();
+        $after_title_is_array = isset( $order['acf_after_title'] ) && is_array( $order['acf_after_title'] );
+
+        if ( ! empty( $order['acf_after_title'] ) ) {
+            $existing_after_title = $after_title_is_array ? $order['acf_after_title'] : array_filter( array_map( 'trim', explode( ',', $order['acf_after_title'] ) ) );
         }
+
+        $merged = array_merge( $acf_top_boxes, $existing_after_title );
+        $order['acf_after_title'] = $after_title_is_array ? $merged : implode( ',', $merged );
     }
 
     return $order;

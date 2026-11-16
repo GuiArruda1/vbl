@@ -72,6 +72,23 @@ body.vbl-no-editor .edit-post-meta-boxes-main {
     box-shadow: 0 4px 14px rgba(13, 82, 87, 0.08) !important;
 }
 
+/* Classic Editor: offset sticky tabs below WP Admin Bar */
+@media screen and (min-width: 783px) {
+    body:not(.block-editor-page) .acf-postbox > .inside > .acf-tab-wrap,
+    body:not(.block-editor-page) .postbox .acf-tab-wrap {
+        top: 32px !important;
+    }
+}
+
+/* Defensive: never allow sticky/negative margin overflow inside narrow right sidebar */
+#side-sortables .acf-postbox > .inside > .acf-tab-wrap,
+#side-sortables .postbox .acf-tab-wrap {
+    position: static !important;
+    margin: 0 0 12px 0 !important;
+    padding: 8px !important;
+    box-shadow: none !important;
+}
+
 /* Modern Tab Group */
 .acf-tab-group {
     border-bottom: none !important;
