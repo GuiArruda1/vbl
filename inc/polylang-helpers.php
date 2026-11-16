@@ -604,3 +604,32 @@ add_action( 'init', function() {
         pll_register_string( 'vbl_form_politica_priv', 'Política de Privacidade', 'Vila Baleira - Formulários' );
     }
 } );
+
+/**
+ * Partilhar a Biblioteca de Media globalmente entre todos os idiomas e microsites.
+ * Impede que o Polylang filtre/isole imagens por idioma ao abrir o seletor de media
+ * em páginas, microsites, quartos, experiências ou notícias.
+ */
+add_filter( 'pll_get_post_types', function( $post_types, $is_settings ) {
+    if ( ! $is_settings && isset( $post_types['attachment'] ) ) {
+        unset( $post_types['attachment'] );
+    }
+    return $post_types;
+}, 999, 2 );
+
+add_filter( 'ajax_query_attachments_args', function( $query ) {
+    $query['lang'] = '';
+    return $query;
+}, 999 );
+
+add_action( 'pre_get_posts', function( $query ) {
+    if ( ! is_admin() ) {
+        return;
+    }
+    $post_type = $query->get( 'post_type' );
+    if ( 'attachment' === $post_type || ( is_array( $post_type ) && in_array( 'attachment', $post_type, true ) ) ) {
+        if ( ! isset( $_REQUEST['lang'] ) || 'all' === $_REQUEST['lang'] || defined( 'DOING_AJAX' ) && DOING_AJAX ) {
+            $query->set( 'lang', '' );
+        }
+    }
+}, 999 );
