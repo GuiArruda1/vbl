@@ -520,7 +520,7 @@ if ( empty( $exp_img_right ) ) {
       
       <!-- Concha Decorativa Sobreposta no canto superior esquerdo da foto -->
       <div class="absolute -top-20 xl:-top-28 -left-14 xl:-left-20 2xl:-left-24 z-20 w-44 xl:w-56 2xl:w-64 pointer-events-none mix-blend-multiply">
-        <img src="<?php echo vbl_img('concha-cyan.svg'); ?>" alt="Shell Decoration" class="w-full h-auto drop-shadow-md">
+        <?php vbl_render_tinted_svg( vbl_img( 'concha-cyan.svg' ), 'block w-full drop-shadow-md', 'aspect-ratio: 166 / 160;' ); ?>
       </div>
       
       <!-- Imagem Direita (vai até ao limite da página) -->
