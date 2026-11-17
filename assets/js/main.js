@@ -1330,7 +1330,10 @@
             url += '&clientCode=' + encodeURIComponent(promoCode);
           }
 
-          window.location.href = url;
+          var win = window.open(url, '_blank', 'noopener,noreferrer');
+          if (!win) {
+            window.location.href = url;
+          }
         });
       });
     }
