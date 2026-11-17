@@ -176,7 +176,7 @@ $privacy_url = function_exists( 'vbl_get_privacy_policy_url' ) ? vbl_get_privacy
   <section class="w-full py-24 lg:py-36 bg-[var(--vbl-hotel-accent-light)] relative overflow-hidden">
     <!-- Concha decorativa em outline ciano sobreposta no canto inferior direito -->
     <div class="absolute -right-12 -bottom-16 w-80 lg:w-[480px] pointer-events-none opacity-20">
-      <img src="<?php echo vbl_img( 'concha-cyan.svg' ); ?>" alt="" class="w-full h-auto">
+      <?php vbl_render_tinted_svg( vbl_img( 'concha-cyan.svg' ), 'block w-full', 'aspect-ratio: 166 / 160;' ); ?>
     </div>
 
     <div class="max-w-[1920px] mx-auto px-6 xl:px-[8.33%] grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-start relative z-10">

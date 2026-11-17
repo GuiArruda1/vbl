@@ -460,7 +460,7 @@ $frase_line3 = vbl_field( 'vbl_quarto_frase_line3', $post_id, 'LACUS EGET UT SIT
               $c_icon_url = vbl_get_quarto_icon_url( $c_icone, $c_nome );
           ?>
           <div class="flex items-center gap-3.5">
-            <img src="<?php echo esc_url( $c_icon_url ); ?>" alt="<?php echo esc_attr( function_exists( 'vbl__' ) ? vbl__( $c_nome ) : $c_nome ); ?>" class="w-7 h-7 sm:w-8 sm:h-8 flex-shrink-0 object-contain">
+            <?php vbl_render_tinted_svg( $c_icon_url, 'w-7 h-7 sm:w-8 sm:h-8 flex-shrink-0' ); ?>
             <span class="font-body text-[11px] xl:text-[12px] tracking-[1.2px] uppercase text-[#0d5257] font-medium leading-tight">
               <?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( $c_nome ) : $c_nome ); ?>
             </span>
@@ -474,7 +474,7 @@ $frase_line3 = vbl_field( 'vbl_quarto_frase_line3', $post_id, 'LACUS EGET UT SIT
 
     <!-- Concha Decorativa em Outline Ciano (Canto inferior direito como no design) -->
     <div class="absolute -bottom-8 sm:-bottom-12 lg:-bottom-16 right-4 sm:right-8 lg:right-16 z-0 w-36 sm:w-48 lg:w-60 pointer-events-none opacity-25">
-      <img src="<?php echo vbl_img( 'concha-cyan.svg' ); ?>" alt="" class="w-full h-auto object-contain">
+      <?php vbl_render_tinted_svg( vbl_img( 'concha-cyan.svg' ), 'block w-full', 'aspect-ratio: 166 / 160;' ); ?>
     </div>
   </section>
 
@@ -485,7 +485,7 @@ $frase_line3 = vbl_field( 'vbl_quarto_frase_line3', $post_id, 'LACUS EGET UT SIT
     <!-- Estrela do mar decorativa em outline (com overflow isolado para não cortar popups da barra de reservas) -->
     <div class="absolute inset-0 pointer-events-none overflow-hidden z-0">
       <div class="absolute right-0 top-1/2 -translate-y-1/2 w-64 lg:w-96 opacity-20 text-[var(--vbl-hotel-accent)]">
-        <img src="<?php echo vbl_img( 'estrela.svg' ); ?>" alt="" class="w-full h-auto">
+        <?php vbl_render_tinted_svg( vbl_img( 'estrela.svg' ), 'block w-full', 'aspect-ratio: 253 / 280;' ); ?>
       </div>
     </div>
 

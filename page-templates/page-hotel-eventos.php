@@ -224,7 +224,7 @@ $privacy_url  = function_exists( 'vbl_get_privacy_policy_url' ) ? vbl_get_privac
   <section class="w-full py-24 lg:py-36 bg-[var(--vbl-hotel-accent-light)] relative overflow-hidden">
     <!-- Estrela do mar decorativa em outline ciano -->
     <div class="absolute right-0 bottom-0 w-72 lg:w-[420px] pointer-events-none opacity-20 text-[var(--vbl-hotel-accent)]">
-      <img src="<?php echo vbl_img( 'estrela.svg' ); ?>" alt="" class="w-full h-auto">
+      <?php vbl_render_tinted_svg( vbl_img( 'estrela.svg' ), 'block w-full', 'aspect-ratio: 253 / 280;' ); ?>
     </div>
 
     <div class="max-w-[1920px] mx-auto px-6 xl:px-[8.33%] grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-start relative z-10">

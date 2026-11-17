@@ -81,9 +81,13 @@ if ( empty( $nl_btn ) )         $nl_btn         = function_exists( 'vbl__' ) ? v
 <!-- Mobile/Tablet -->
 <section class="lg:hidden <?php echo esc_attr($bg_section); ?> relative overflow-hidden">
   <div class="relative px-6 py-14 sm:py-16">
-    <img src="<?php echo esc_url($arvore_svg); ?>" alt=""
-      class="absolute <?php echo esc_attr($tree_mobile_class); ?> top-1/2 -translate-y-1/2 w-auto pointer-events-none select-none"
-      style="height: 130%; opacity: <?php echo esc_attr($tree_mobile_opacity); ?>;">
+    <?php if ( $is_microsite ) : ?>
+      <?php vbl_render_tinted_svg( $arvore_svg, 'absolute ' . $tree_mobile_class . ' top-1/2 -translate-y-1/2 pointer-events-none select-none', 'height: 130%; aspect-ratio: 507 / 600; opacity: ' . $tree_mobile_opacity . ';' ); ?>
+    <?php else : ?>
+      <img src="<?php echo esc_url($arvore_svg); ?>" alt=""
+        class="absolute <?php echo esc_attr($tree_mobile_class); ?> top-1/2 -translate-y-1/2 w-auto pointer-events-none select-none"
+        style="height: 130%; opacity: <?php echo esc_attr($tree_mobile_opacity); ?>;">
+    <?php endif; ?>
     <div class="relative z-10 flex flex-col gap-8">
       <div class="flex flex-col gap-3">
         <div class="flex items-center gap-3">
@@ -371,9 +375,7 @@ if ( empty( $nl_btn ) )         $nl_btn         = function_exists( 'vbl__' ) ? v
 <section class="hidden lg:block w-full <?php echo esc_attr($bg_section); ?> relative overflow-hidden">
   <div class="relative max-w-[1440px] 2xl:max-w-[1600px] mx-auto px-8 lg:px-12 xl:px-20 py-16 xl:py-20 flex items-center justify-between min-h-[320px] xl:min-h-[350px]">
     <!-- Árvore de fundo -->
-    <img src="<?php echo esc_url($arvore_svg); ?>" alt=""
-      class="absolute top-1/2 -translate-y-1/2 w-auto pointer-events-none select-none z-0 <?php echo esc_attr($tree_desktop_class); ?>"
-      style="height: 150%; opacity: 0.20;">
+    <?php vbl_render_tinted_svg( $arvore_svg, 'absolute top-1/2 -translate-y-1/2 pointer-events-none select-none z-0 ' . $tree_desktop_class, 'height: 150%; aspect-ratio: 507 / 600; opacity: 0.20;' ); ?>
 
     <!-- Left Column: Pretitle, Title, Subtitle -->
     <div class="relative z-10 flex flex-col justify-center max-w-[560px] xl:max-w-[620px]">

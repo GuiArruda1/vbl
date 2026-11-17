@@ -151,7 +151,7 @@ if ( empty( $instalacoes ) ) {
           
           <!-- Concha Decorativa em Outline Ciano Sobreposta (Canto inferior direito) -->
           <div class="absolute bottom-2 lg:bottom-4 -right-10 sm:-right-14 lg:-right-16 xl:-right-20 z-10 w-36 sm:w-44 lg:w-48 xl:w-56 pointer-events-none">
-            <img src="<?php echo vbl_img( 'concha-cyan.svg' ); ?>" alt="" class="w-full h-auto object-contain">
+            <?php vbl_render_tinted_svg( vbl_img( 'concha-cyan.svg' ), 'block w-full', 'aspect-ratio: 166 / 160;' ); ?>
           </div>
         </div>
       </div>

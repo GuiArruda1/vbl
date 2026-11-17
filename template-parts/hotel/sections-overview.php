@@ -214,7 +214,7 @@ if ( empty( $exp_img_right ) ) {
         
         <!-- Decoration: Starfish SVG Overlay -->
         <div class="absolute -bottom-16 -left-16 lg:-bottom-24 lg:-left-24 z-10 w-48 h-48 lg:w-64 lg:h-64 pointer-events-none text-[var(--vbl-hotel-accent)]">
-          <img src="<?php echo vbl_img( 'estrela.svg' ); ?>" alt="Estrela do Mar" class="w-full h-full object-contain drop-shadow-sm">
+          <?php vbl_render_tinted_svg( vbl_img( 'estrela.svg' ), 'block w-full h-full drop-shadow-sm', 'aspect-ratio: 253 / 280;' ); ?>
         </div>
       </div>
     </div>
@@ -471,7 +471,7 @@ if ( empty( $exp_img_right ) ) {
       </div>
       <div class="relative w-full aspect-[3/4] bg-gray-100 overflow-hidden shadow-sm">
         <div class="absolute -top-12 -left-8 z-10 w-28 pointer-events-none mix-blend-multiply">
-          <img src="<?php echo vbl_img('concha-cyan.svg'); ?>" alt="Shell Decoration" class="w-full h-auto drop-shadow-md">
+          <?php vbl_render_tinted_svg( vbl_img( 'concha-cyan.svg' ), 'block w-full drop-shadow-md', 'aspect-ratio: 166 / 160;' ); ?>
         </div>
         <img src="<?php echo esc_url( $exp_img_right ); ?>" class="w-full h-full object-cover" alt="Piscina interior">
       </div>

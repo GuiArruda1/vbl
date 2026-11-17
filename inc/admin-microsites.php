@@ -504,6 +504,27 @@ function vbl_get_hotel_secondary_color( $post_id = null ) {
 }
 
 /**
+ * Renderiza um SVG monocromático tingido dinamicamente com a cor tema do hotel via CSS mask-image.
+ *
+ * @param string $url     URL completo do ficheiro SVG.
+ * @param string $classes Classes CSS adicionais.
+ * @param string $style   Estilos CSS inline adicionais (ex: aspect-ratio).
+ */
+function vbl_render_tinted_svg( $url, $classes = '', $style = '' ) {
+    if ( empty( $url ) ) {
+        return;
+    }
+    $esc_url = esc_url( $url );
+    $mask    = "background-color: var(--vbl-hotel-accent, #00B5B4); -webkit-mask-image: url('{$esc_url}'); mask-image: url('{$esc_url}'); -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; -webkit-mask-position: center; mask-position: center; -webkit-mask-size: contain; mask-size: contain;";
+    printf(
+        '<span class="inline-block %s" style="%s %s" aria-hidden="true"></span>',
+        esc_attr( $classes ),
+        $mask,
+        esc_attr( $style )
+    );
+}
+
+/**
  * Retorna a imagem padrão/fallback de quarto do hotel especificado
  * 
  * @param int|null $post_id

@@ -86,7 +86,7 @@ if ( empty( $experiencias_list ) || ! is_array( $experiencias_list ) ) {
           
           <!-- Estrela do mar decorativa em outline ciano sobreposta -->
           <div class="absolute -bottom-8 -right-8 lg:-bottom-12 lg:-right-12 z-10 w-44 h-44 lg:w-60 lg:h-60 pointer-events-none text-[var(--vbl-hotel-accent)]">
-            <img src="<?php echo vbl_img( 'estrela.svg' ); ?>" alt="" class="w-full h-full object-contain">
+            <?php vbl_render_tinted_svg( vbl_img( 'estrela.svg' ), 'block w-full h-full', 'aspect-ratio: 253 / 280;' ); ?>
           </div>
         </div>
       </div>
