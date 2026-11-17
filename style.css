@@ -332,6 +332,7 @@ body.admin-bar .header-fixo {
       border-color: #bc945b; 
     }
     .vbl-btn.hover\:bg-\[\#0da9a6\]:hover,
+    .vbl-btn.hover\:bg-\[var\(--vbl-hotel-accent\)\]:hover,
     .vbl-btn-teal:hover {
       background-color: var(--vbl-hotel-accent, #0da9a6) !important;
       border-color: var(--vbl-hotel-accent, #0da9a6) !important;
