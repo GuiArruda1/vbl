@@ -14,7 +14,23 @@ $sobre_subtitle  = vbl_field( 'vbl_hhome_sobre_subtitle', false, 'SOBRE O HOTEL'
 $sobre_title     = vbl_field( 'vbl_hhome_sobre_title', false, 'SIT SED LOREM<br>IPSUM DOLOR' );
 $sobre_desc      = vbl_field( 'vbl_hhome_sobre_desc', false, 'Mi lectus elit at adipiscing euismod gravida libero duis. Bibendum fusce imperdiet egestas amet nec. Sed ullamcorper eget euismod morbi ut egestas id proin posuere. In faucibus nec pellentesque interdum mauris sed tellus. Lorem ipsum dolor sit amet consectetur, lectus elit at adipiscing euismod gravida libero duis.' );
 $sobre_btn_label = vbl_field( 'vbl_hhome_sobre_btn_label', false, 'CONHECER' );
-$sobre_btn_url   = vbl_field( 'vbl_hhome_sobre_btn_url', false, '#quartos' );
+$sobre_btn_url   = vbl_field( 'vbl_hhome_sobre_btn_url', false, '' );
+if ( empty( $sobre_btn_url ) || in_array( trim( (string) $sobre_btn_url ), array( '#', '#o-hotel', '#quartos', '#the-hotel' ), true ) ) {
+    $sobre_children = get_pages( array(
+        'child_of'    => $hotel_id,
+        'parent'      => $hotel_id,
+        'post_status' => 'publish',
+        'meta_key'    => '_wp_page_template',
+        'meta_value'  => 'page-templates/page-hotel-sobre.php',
+        'number'      => 1,
+    ) );
+    if ( ! empty( $sobre_children ) ) {
+        $sobre_btn_url = get_permalink( $sobre_children[0]->ID );
+    } else {
+        $cur_lang = function_exists( 'pll_current_language' ) ? pll_current_language( 'slug' ) : '';
+        $sobre_btn_url = trailingslashit( get_permalink( $hotel_id ) ) . ( 'en' === $cur_lang ? 'the-hotel/' : 'o-hotel/' );
+    }
+}
 $sobre_img       = vbl_field( 'vbl_hhome_sobre_img', false, vbl_img( 'hoteis/porto-santo-520x400.jpg' ) );
 if ( empty( $sobre_img ) ) {
     $sobre_img = vbl_img( 'hoteis/porto-santo-520x400.jpg' );

@@ -361,7 +361,7 @@ function vbl_register_acf_fields() {
             array( 'key' => 'field_vbl_hhome_sobre_title', 'label' => 'Título Principal', 'name' => 'vbl_hhome_sobre_title', 'type' => 'text', 'default_value' => 'SIT SED LOREM<br>IPSUM DOLOR' ),
             array( 'key' => 'field_vbl_hhome_sobre_desc', 'label' => 'Texto de Apresentação', 'name' => 'vbl_hhome_sobre_desc', 'type' => 'textarea', 'rows' => 4, 'default_value' => 'Mi lectus elit at adipiscing euismod gravida libero duis. Bibendum fusce imperdiet egestas amet nec. Sed ullamcorper eget euismod morbi ut egestas id proin posuere. In faucibus nec pellentesque interdum mauris sed tellus. Lorem ipsum dolor sit amet consectetur, lectus elit at adipiscing euismod gravida libero duis.' ),
             array( 'key' => 'field_vbl_hhome_sobre_btn_label', 'label' => 'Texto do Botão', 'name' => 'vbl_hhome_sobre_btn_label', 'type' => 'text', 'default_value' => 'CONHECER' ),
-            array( 'key' => 'field_vbl_hhome_sobre_btn_url', 'label' => 'Link do Botão', 'name' => 'vbl_hhome_sobre_btn_url', 'type' => 'text', 'default_value' => '#o-hotel' ),
+            array( 'key' => 'field_vbl_hhome_sobre_btn_url', 'label' => 'Link do Botão', 'name' => 'vbl_hhome_sobre_btn_url', 'type' => 'text', 'default_value' => '', 'instructions' => 'Se vazio, aponta automaticamente para a página "O Hotel / The Hotel" deste microsite.' ),
             array( 'key' => 'field_vbl_hhome_sobre_img', 'label' => 'Imagem de Destaque', 'name' => 'vbl_hhome_sobre_img', 'type' => 'image', 'return_format' => 'url', 'preview_size' => 'large' ),
 
             /* Tab: Frase Panorâmica */
