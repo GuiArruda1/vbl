@@ -25,14 +25,8 @@ if ( $hotel_id && function_exists( 'pll_get_post' ) ) {
 
 $hotel_name = $hotel_id ? vbl_field( 'vbl_hotel_name', $hotel_id, 'Porto Santo' ) : 'Porto Santo';
 $hotel_booking_url = vbl_field( 'vbl_quarto_cta_url', $post_id );
-if ( empty( $hotel_booking_url ) ) {
-    $hotel_booking_url = vbl_field( 'vbl_quarto_booking_url', $post_id );
-}
 if ( empty( $hotel_booking_url ) && $hotel_id ) {
     $hotel_booking_url = vbl_field( 'vbl_hhotel_cta_url', $hotel_id );
-}
-if ( empty( $hotel_booking_url ) ) {
-    $hotel_booking_url = vbl_field( 'vbl_hotel_booking_url', $hotel_id, '#reservas' );
 }
 if ( empty( $hotel_booking_url ) || '#' === trim( (string) $hotel_booking_url ) ) {
     $hotel_booking_url = '#reservas';
