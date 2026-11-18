@@ -433,6 +433,13 @@ function vbl_register_acf_fields() {
                 'instructions'  => 'Texto explicativo do banner de reserva exibido nos quartos deste hotel.',
                 'default_value' => 'Garanta a sua estadia com as melhores condições e tarifas exclusivas no site oficial.',
             ),
+            array(
+                'key'           => 'field_vbl_hhotel_cta_url',
+                'label'         => '04. Link do Botão CTA (Reservar)',
+                'name'          => 'vbl_hhotel_cta_url',
+                'type'          => 'url',
+                'instructions'  => 'URL de destino do botão CTA/Reservar nos quartos deste hotel (se vazio, usa o Link de Reserva geral do hotel).',
+            ),
 
             // Secção 2: Carrossel Outros Quartos
             array(
@@ -920,6 +927,13 @@ function vbl_register_acf_fields() {
                 'rows'          => 3,
                 'instructions'  => 'Texto explicativo do banner de reserva (se vazio, herda da página do hotel pai).',
                 'default_value' => 'Garanta a sua estadia com as melhores condições e tarifas exclusivas no site oficial.',
+            ),
+            array(
+                'key'           => 'field_vbl_quarto_cta_url',
+                'label'         => 'URL do Botão CTA (Reservar)',
+                'name'          => 'vbl_quarto_cta_url',
+                'type'          => 'url',
+                'instructions'  => 'Link do botão de reserva/CTA deste quarto (se vazio, herda do hotel pai).',
             ),
 
             /* Tab: Outros Quartos (Rodapé) */
