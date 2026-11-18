@@ -32,8 +32,12 @@ if ( empty( $hotel_booking_url ) && $hotel_id ) {
     $hotel_booking_url = vbl_field( 'vbl_hhotel_cta_url', $hotel_id );
 }
 if ( empty( $hotel_booking_url ) ) {
-    $hotel_booking_url = vbl_field( 'vbl_hotel_booking_url', $hotel_id, '#' );
+    $hotel_booking_url = vbl_field( 'vbl_hotel_booking_url', $hotel_id, '#reservas' );
 }
+if ( empty( $hotel_booking_url ) || '#' === trim( (string) $hotel_booking_url ) ) {
+    $hotel_booking_url = '#reservas';
+}
+$is_external_cta = ( 0 === strpos( $hotel_booking_url, 'http' ) );
 $btn_reservar_label = vbl_field( 'vbl_quarto_btn_label', $post_id, 'RESERVAR' );
 if ( empty( $btn_reservar_label ) ) {
     $btn_reservar_label = 'RESERVAR';
@@ -384,7 +388,7 @@ $frase_line3 = vbl_field( 'vbl_quarto_frase_line3', $post_id, 'LACUS EGET UT SIT
       </p>
 
       <!-- Botão Reservar -->
-      <a href="<?php echo esc_url( $hotel_booking_url ); ?>" class="vbl-btn-microsite w-[180px]">
+      <a href="<?php echo esc_url( $hotel_booking_url ); ?>"<?php echo $is_external_cta ? ' target="_blank" rel="noopener noreferrer"' : ''; ?> class="vbl-btn-microsite w-[180px]">
         <span><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( $btn_reservar_label ) : $btn_reservar_label ); ?></span>
         <svg viewBox="0 0 12 12" fill="none">
           <path d="M1 11L11 1H3.5M11 1V8.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
@@ -487,7 +491,7 @@ $frase_line3 = vbl_field( 'vbl_quarto_frase_line3', $post_id, 'LACUS EGET UT SIT
   <!-- ==========================================
        5. WIDGET DE RESERVA (Faça já a sua reserva)
   =========================================== -->
-  <section id="reservas" class="w-full py-16 lg:py-20 bg-[var(--vbl-hotel-accent-light)] relative z-20">
+  <section id="reservas" class="scroll-mt-24 w-full py-16 lg:py-20 bg-[var(--vbl-hotel-accent-light)] relative z-20">
     <!-- Estrela do mar decorativa em outline (com overflow isolado para não cortar popups da barra de reservas) -->
     <div class="absolute inset-0 pointer-events-none overflow-hidden z-0">
       <div class="absolute right-0 top-1/2 -translate-y-1/2 w-64 lg:w-96 opacity-20 text-[var(--vbl-hotel-accent)]">

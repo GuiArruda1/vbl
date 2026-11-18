@@ -437,8 +437,8 @@ function vbl_register_acf_fields() {
                 'key'           => 'field_vbl_hhotel_cta_url',
                 'label'         => '04. Link do Botão CTA (Reservar)',
                 'name'          => 'vbl_hhotel_cta_url',
-                'type'          => 'url',
-                'instructions'  => 'URL de destino do botão CTA/Reservar nos quartos deste hotel (se vazio, usa o Link de Reserva geral do hotel).',
+                'type'          => 'text',
+                'instructions'  => 'Ex: #reservas (scroll até à barra de pesquisa) ou URL completo https://... (se vazio, usa #reservas).',
             ),
 
             // Secção 2: Carrossel Outros Quartos
@@ -932,8 +932,9 @@ function vbl_register_acf_fields() {
                 'key'           => 'field_vbl_quarto_cta_url',
                 'label'         => 'URL do Botão CTA (Reservar)',
                 'name'          => 'vbl_quarto_cta_url',
-                'type'          => 'url',
-                'instructions'  => 'Link do botão de reserva/CTA deste quarto (se vazio, herda do hotel pai).',
+                'type'          => 'text',
+                'default_value' => '#reservas',
+                'instructions'  => 'Ex: #reservas (faz scroll até ao motor de reservas deste quarto) ou URL completo https://...',
             ),
 
             /* Tab: Outros Quartos (Rodapé) */
