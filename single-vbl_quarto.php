@@ -73,24 +73,24 @@ $rel_rooms_subtitle = vbl_field( 'vbl_quarto_rel_subtitle', $post_id );
 if ( empty( $rel_rooms_subtitle ) && $hotel_id ) {
     $rel_rooms_subtitle = vbl_field( 'vbl_hhotel_rel_rooms_subtitle', $hotel_id );
 }
-if ( empty( $rel_rooms_subtitle ) || ! is_string( $rel_rooms_subtitle ) ) {
-    $rel_rooms_subtitle = 'ROOMS & SUITES';
+if ( empty( $rel_rooms_subtitle ) || ! is_string( $rel_rooms_subtitle ) || 'ROOMS & SUITES' === trim( $rel_rooms_subtitle ) ) {
+    $rel_rooms_subtitle = 'Explore Mais Tipologias';
 }
 
 $rel_rooms_title = vbl_field( 'vbl_quarto_rel_title', $post_id );
 if ( empty( $rel_rooms_title ) && $hotel_id ) {
     $rel_rooms_title = vbl_field( 'vbl_hhotel_rel_rooms_title', $hotel_id );
 }
-if ( empty( $rel_rooms_title ) || ! is_string( $rel_rooms_title ) ) {
-    $rel_rooms_title = 'OUTROS QUARTOS & SUITES';
+if ( empty( $rel_rooms_title ) || ! is_string( $rel_rooms_title ) || false !== stripos( $rel_rooms_title, 'AMET ET LEO' ) || false !== stripos( $rel_rooms_title, 'LOREM IPSUM' ) ) {
+    $rel_rooms_title = 'Encontre o Quarto Perfeito Para Si';
 }
 
 $rel_rooms_desc = vbl_field( 'vbl_quarto_rel_desc', $post_id );
 if ( empty( $rel_rooms_desc ) && $hotel_id ) {
     $rel_rooms_desc = vbl_field( 'vbl_hhotel_rel_rooms_desc', $hotel_id );
 }
-if ( empty( $rel_rooms_desc ) || ! is_string( $rel_rooms_desc ) ) {
-    $rel_rooms_desc = 'Gravida turpis posuere in mauris. Eget placerat pretium tempus pellentesque amet venenatis est viverra. Sed id condimentum eget amet augue pretium et leo integer. Neque eu ut vulputate nisi sed. Lorem ipsum dolor sit amet consectetur.';
+if ( empty( $rel_rooms_desc ) || ! is_string( $rel_rooms_desc ) || false !== stripos( $rel_rooms_desc, 'Gravida turpis posuere' ) ) {
+    $rel_rooms_desc = 'Descubra outras tipologias disponíveis no Vila Baleira Porto Santo e escolha o cenário perfeito, com ou sem vista mar, para a sua próxima estadia na ilha.';
 }
 
 $rel_rooms_btn_label = vbl_field( 'vbl_quarto_rel_btn_label', $post_id );
