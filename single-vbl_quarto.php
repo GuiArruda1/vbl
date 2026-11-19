@@ -125,9 +125,23 @@ if ( empty( $galeria ) || ! is_array( $galeria ) ) {
 }
 
 // Comodidades
-$comod_subtitle = vbl_field( 'vbl_quarto_comod_subtitle', $post_id, 'SERVIÇOS / COMODIDADES' );
-$comod_title    = vbl_field( 'vbl_quarto_comod_title', $post_id, 'NISI ORCI LEO SED IN' );
-$comod_text     = vbl_field( 'vbl_quarto_comod_text', $post_id, 'Diam elit faucibus enim pellentesque nisi orci neque leo, aliquet dignissim dui tortor massa. Mi malesuada quisque adipiscing sed in tortor. Lorem quis sollicitudin quisque pellentesque risus.' );
+$is_en_quarto   = ( function_exists( 'pll_current_language' ) && 'en' === pll_current_language( 'slug' ) );
+$comod_subtitle = vbl_field( 'vbl_quarto_comod_subtitle', $post_id );
+if ( empty( $comod_subtitle ) || ( $is_en_quarto && in_array( strtoupper( trim( (string) $comod_subtitle ) ), array( 'COMODIDADES DO QUARTO', 'SERVIÇOS / COMODIDADES', 'SERVICES / AMENITIES' ), true ) ) ) {
+    $comod_subtitle = $is_en_quarto ? 'Facilities' : 'COMODIDADES DO QUARTO';
+}
+
+$comod_title = vbl_field( 'vbl_quarto_comod_title', $post_id );
+if ( empty( $comod_title ) || false !== stripos( (string) $comod_title, 'NISI ORCI' ) ) {
+    $comod_title = $is_en_quarto ? 'What You Can Enjoy' : 'O Que Pode Desfrutar';
+}
+
+$comod_text = vbl_field( 'vbl_quarto_comod_text', $post_id );
+if ( empty( $comod_text ) || false !== stripos( (string) $comod_text, 'Diam elit faucibus' ) || false !== stripos( (string) $comod_text, 'Mi lectus elit' ) ) {
+    $comod_text = $is_en_quarto
+        ? 'Unwind in modern, cozy rooms and villas designed in detail to guarantee maximum comfort during your holiday in Porto Santo.'
+        : 'Relaxe em quartos e villas modernos e acolhedores, pensados ao detalhe para garantir o máximo conforto durante as suas férias.';
+}
 
 if ( ! function_exists( 'vbl_get_quarto_icon_url' ) ) {
     function vbl_get_quarto_icon_url( $icone_key = '', $nome = '' ) {
@@ -442,7 +456,7 @@ $frase_line3 = vbl_field( 'vbl_quarto_frase_line3', $post_id, 'LACUS EGET UT SIT
 
       <!-- Título Display Serif -->
       <h2 class="font-display text-[40px] sm:text-[52px] lg:text-[64px] leading-[1.02] tracking-[1.5px] uppercase text-[#0d5257] mb-8 lg:mb-10 font-normal">
-        <?php echo esc_html( $comod_title ); ?>
+        <?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( $comod_title ) : $comod_title ); ?>
       </h2>
 
       <!-- Conteúdo Indentado à Direita: Descrição e Grelha de Comodidades (Alinhado à 2ª Coluna como no Figma) -->
@@ -451,7 +465,7 @@ $frase_line3 = vbl_field( 'vbl_quarto_frase_line3', $post_id, 'LACUS EGET UT SIT
         <!-- Texto Introdutório Indentado -->
         <?php if ( ! empty( $comod_text ) ) : ?>
         <p class="font-body font-light text-[13px] sm:text-[14px] lg:text-[15px] leading-relaxed text-[#4a4a4a] max-w-[540px] mb-12 lg:mb-14">
-          <?php echo nl2br( esc_html( $comod_text ) ); ?>
+          <?php echo nl2br( esc_html( function_exists( 'vbl__' ) ? vbl__( $comod_text ) : $comod_text ) ); ?>
         </p>
         <?php endif; ?>
 

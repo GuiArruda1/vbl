@@ -877,9 +877,9 @@ function vbl_register_acf_fields() {
 
             /* Tab: Comodidades */
             array( 'key' => 'field_vbl_q_tab_comodidades', 'label' => 'Comodidades & Características', 'type' => 'tab' ),
-            array( 'key' => 'field_vbl_quarto_comod_subtitle', 'label' => 'Subtítulo Comodidades', 'name' => 'vbl_quarto_comod_subtitle', 'type' => 'text', 'default_value' => 'COMODIDADES DO QUARTO' ),
-            array( 'key' => 'field_vbl_quarto_comod_title', 'label' => 'Título Comodidades', 'name' => 'vbl_quarto_comod_title', 'type' => 'text', 'default_value' => 'NISI ORCI LEO SED IN' ),
-            array( 'key' => 'field_vbl_quarto_comod_text', 'label' => 'Texto Explicativo', 'name' => 'vbl_quarto_comod_text', 'type' => 'textarea', 'rows' => 3, 'default_value' => 'Mi lectus elit at adipiscing euismod gravida libero duis. Bibendum fusce imperdiet egestas amet nec. Sed ullamcorper eget euismod morbi ut egestas id proin posuere. In faucibus nec pellentesque interdum mauris sed tellus.' ),
+            array( 'key' => 'field_vbl_quarto_comod_subtitle', 'label' => 'Subtítulo Comodidades', 'name' => 'vbl_quarto_comod_subtitle', 'type' => 'text', 'default_value' => '', 'instructions' => 'Se vazio, usa "COMODIDADES DO QUARTO" (PT) ou "Facilities" (EN).' ),
+            array( 'key' => 'field_vbl_quarto_comod_title', 'label' => 'Título Comodidades', 'name' => 'vbl_quarto_comod_title', 'type' => 'text', 'default_value' => '', 'instructions' => 'Se vazio, usa o título padrão do idioma ("What You Can Enjoy" em EN).' ),
+            array( 'key' => 'field_vbl_quarto_comod_text', 'label' => 'Texto Explicativo', 'name' => 'vbl_quarto_comod_text', 'type' => 'textarea', 'rows' => 3, 'default_value' => '', 'instructions' => 'Se vazio, usa o texto descritivo padrão do idioma.' ),
             array(
                 'key'           => 'field_vbl_quarto_amenities',
                 'label'         => 'Comodidades do Quarto (Assinale as incluídas)',
