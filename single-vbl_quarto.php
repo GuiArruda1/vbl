@@ -58,7 +58,8 @@ $cta_title = vbl_field( 'vbl_quarto_cta_title', $post_id );
 if ( empty( $cta_title ) && $hotel_id ) {
     $cta_title = vbl_field( 'vbl_hhotel_cta_title', $hotel_id );
 }
-if ( empty( $cta_title ) || ! is_string( $cta_title ) || ( $is_en_quarto && ( false !== stripos( $cta_title, 'FAÇA JÁ' ) || false !== stripos( $cta_title, 'FAÇA AQUI' ) ) ) ) {
+$cta_title_lower = function_exists( 'mb_strtolower' ) ? mb_strtolower( trim( (string) $cta_title ), 'UTF-8' ) : strtolower( trim( (string) $cta_title ) );
+if ( empty( $cta_title ) || ! is_string( $cta_title ) || ( $is_en_quarto && ( false !== strpos( $cta_title_lower, 'faça já' ) || false !== strpos( $cta_title_lower, 'faça aqui' ) ) ) ) {
     $cta_title = $is_en_quarto ? 'Make Your Reservation Here' : 'FAÇA JÁ A SUA RESERVA';
 }
 
@@ -66,7 +67,8 @@ $cta_desc = vbl_field( 'vbl_quarto_cta_desc', $post_id );
 if ( empty( $cta_desc ) && $hotel_id ) {
     $cta_desc = vbl_field( 'vbl_hhotel_cta_desc', $hotel_id );
 }
-if ( empty( $cta_desc ) || ! is_string( $cta_desc ) || ( $is_en_quarto && ( false !== stripos( $cta_desc, 'Garanta a sua estadia' ) || false !== stripos( $cta_desc, 'Convallis odio' ) ) ) ) {
+$cta_desc_lower = function_exists( 'mb_strtolower' ) ? mb_strtolower( trim( (string) $cta_desc ), 'UTF-8' ) : strtolower( trim( (string) $cta_desc ) );
+if ( empty( $cta_desc ) || ! is_string( $cta_desc ) || ( $is_en_quarto && ( false !== strpos( $cta_desc_lower, 'garanta a sua estadia' ) || false !== strpos( $cta_desc_lower, 'convallis odio' ) ) ) ) {
     $cta_desc = $is_en_quarto
         ? 'Secure your stay at Vila Baleira Village with the best advantages. Book directly on our official website and enjoy exclusive rates and instant confirmation.'
         : 'Garanta a sua estadia com as melhores condições e tarifas exclusivas no site oficial.';
