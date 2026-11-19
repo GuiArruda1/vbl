@@ -321,9 +321,10 @@ function vbl_get_default_translations( $lang = 'en' ) {
             'Descubra o nosso grupo'            => 'Discover our group',
 
             // Single Quarto & CTA de Reservas
-            'FAÇA JÁ A SUA RESERVA'             => 'BOOK YOUR STAY NOW',
-            'Faça já a sua reserva'             => 'Book your stay now',
-            'Garanta a sua estadia com as melhores condições e tarifas exclusivas no site oficial.' => 'Book your stay with the best conditions and exclusive rates on the official website.',
+            'RESERVAR ESTADIA'                  => 'Book Now',
+            'FAÇA JÁ A SUA RESERVA'             => 'Make Your Reservation Here',
+            'Faça já a sua reserva'             => 'Make Your Reservation Here',
+            'Garanta a sua estadia com as melhores condições e tarifas exclusivas no site oficial.' => 'Secure your stay at Vila Baleira Village with the best advantages. Book directly on our official website and enjoy exclusive rates and instant confirmation.',
             'OUTROS QUARTOS & SUITES'           => 'OTHER ROOMS & SUITES',
             'Outros quartos & suites'           => 'Other rooms & suites',
             'Explore Mais Tipologias'           => 'Explore More Room Types',

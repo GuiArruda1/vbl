@@ -44,28 +44,32 @@ $mirai_hotel = function_exists( 'vbl_resolve_hotel_mirai' ) ? vbl_resolve_hotel_
 );
 
 // CTA de Reservas (Configurado no Quarto via ACF ou herdado do Hotel Pai)
+$is_en_quarto = ( function_exists( 'pll_current_language' ) && 'en' === pll_current_language( 'slug' ) );
+
 $cta_subtitle = vbl_field( 'vbl_quarto_cta_subtitle', $post_id );
 if ( empty( $cta_subtitle ) && $hotel_id ) {
     $cta_subtitle = vbl_field( 'vbl_hhotel_cta_subtitle', $hotel_id );
 }
-if ( empty( $cta_subtitle ) || ! is_string( $cta_subtitle ) ) {
-    $cta_subtitle = 'RESERVAR ESTADIA';
+if ( empty( $cta_subtitle ) || ! is_string( $cta_subtitle ) || ( $is_en_quarto && in_array( strtoupper( trim( $cta_subtitle ) ), array( 'RESERVAR ESTADIA', 'CALL TO ACTION', 'RESERVAR' ), true ) ) ) {
+    $cta_subtitle = $is_en_quarto ? 'Book Now' : 'RESERVAR ESTADIA';
 }
 
 $cta_title = vbl_field( 'vbl_quarto_cta_title', $post_id );
 if ( empty( $cta_title ) && $hotel_id ) {
     $cta_title = vbl_field( 'vbl_hhotel_cta_title', $hotel_id );
 }
-if ( empty( $cta_title ) || ! is_string( $cta_title ) ) {
-    $cta_title = 'FAÇA JÁ A SUA RESERVA';
+if ( empty( $cta_title ) || ! is_string( $cta_title ) || ( $is_en_quarto && ( false !== stripos( $cta_title, 'FAÇA JÁ' ) || false !== stripos( $cta_title, 'FAÇA AQUI' ) ) ) ) {
+    $cta_title = $is_en_quarto ? 'Make Your Reservation Here' : 'FAÇA JÁ A SUA RESERVA';
 }
 
 $cta_desc = vbl_field( 'vbl_quarto_cta_desc', $post_id );
 if ( empty( $cta_desc ) && $hotel_id ) {
     $cta_desc = vbl_field( 'vbl_hhotel_cta_desc', $hotel_id );
 }
-if ( empty( $cta_desc ) || ! is_string( $cta_desc ) ) {
-    $cta_desc = 'Garanta a sua estadia com as melhores condições e tarifas exclusivas no site oficial.';
+if ( empty( $cta_desc ) || ! is_string( $cta_desc ) || ( $is_en_quarto && ( false !== stripos( $cta_desc, 'Garanta a sua estadia' ) || false !== stripos( $cta_desc, 'Convallis odio' ) ) ) ) {
+    $cta_desc = $is_en_quarto
+        ? 'Secure your stay at Vila Baleira Village with the best advantages. Book directly on our official website and enjoy exclusive rates and instant confirmation.'
+        : 'Garanta a sua estadia com as melhores condições e tarifas exclusivas no site oficial.';
 }
 
 // Carrossel de Outros Quartos (Configurado no Quarto via ACF ou herdado do Hotel Pai)
