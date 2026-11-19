@@ -77,7 +77,7 @@ $ilhas_link       = vbl_field( 'vbl_ilhas_link', false, '#' );
 $frase2_line1 = vbl_field( 'vbl_frase2_line1', false, 'Descubra um' );
 $frase2_line2 = vbl_field( 'vbl_frase2_line2', false, 'mundo de' );
 $frase2_line3 = vbl_field( 'vbl_frase2_line3', false, 'paraísos.' );
-$frase2_desc  = vbl_field( 'vbl_frase2_desc', false, 'Deixe-se envolver pela beleza natural das ilhas da Madeira e do Porto Santo e encontre o seu refúgio de bem-estar num dos nossos hotéis.' );
+$frase2_desc  = vbl_field( 'vbl_frase2_desc', false, '' );
 ?>
 
   <!-- ====== BANNER ====== -->
@@ -545,7 +545,9 @@ $frase2_desc  = vbl_field( 'vbl_frase2_desc', false, 'Deixe-se envolver pela bel
 		  <p class="font-display text-[32px] leading-[40px] md:text-[44px] md:leading-[52px] text-[#0d5257] uppercase"><?php echo esc_html( $frase2_line1 ); ?></p>
 		  <p class="font-display text-[32px] leading-[40px] md:text-[44px] md:leading-[52px] text-[#0d5257] uppercase italic"><?php echo esc_html( $frase2_line2 ); ?></p>
 		  <p class="font-display text-[32px] leading-[40px] md:text-[44px] md:leading-[52px] text-[#0d5257] uppercase italic"><?php echo esc_html( $frase2_line3 ); ?></p>
+		  <?php if ( ! empty( $frase2_desc ) ) : ?>
 		  <p class="font-body text-[12px] tracking-[1.2px] uppercase leading-[18px] mt-6 max-w-[450px] text-center"><?php echo esc_html( $frase2_desc ); ?></p>
+		  <?php endif; ?>
 		</div>
   </section>
   <!-- Desktop -->
@@ -553,7 +555,9 @@ $frase2_desc  = vbl_field( 'vbl_frase2_desc', false, 'Deixe-se envolver pela bel
     <img src="<?php echo vbl_img( 'arvore.svg' ); ?>" alt="" class="absolute left-[-17.6%] top-[-4.3%] w-[35.2%] h-auto pointer-events-none">
     <p class="absolute left-[32.2%] top-[28.9%] font-display text-[clamp(48px,5.21vw,100px)] leading-[clamp(48px,5.21vw,100px)] text-[#0d5257] uppercase" style="white-space:nowrap"><?php echo esc_html( $frase2_line1 ); ?></p>
     <p class="absolute left-[25.8%] top-[44.5%] font-display text-[clamp(48px,5.21vw,100px)] leading-[clamp(48px,5.21vw,100px)] text-[#0d5257] uppercase italic" style="white-space:nowrap"><?php echo esc_html( $frase2_line2 ); ?></p>
+    <?php if ( ! empty( $frase2_desc ) ) : ?>
     <p class="font-body absolute left-[66%] top-[46%] w-[22%] max-w-[304px] text-[12px] tracking-[1.2px] uppercase leading-[15px]"><?php echo esc_html( $frase2_desc ); ?></p>
+    <?php endif; ?>
     <p class="absolute left-[38.5%] top-[60.2%] font-display text-[clamp(48px,5.21vw,100px)] leading-[clamp(48px,5.21vw,100px)] text-[#0d5257] uppercase italic" style="white-space:nowrap"><?php echo esc_html( $frase2_line3 ); ?></p>
   </section>
 
