@@ -46,6 +46,52 @@ function vbl_register_cpt_quartos() {
 add_action( 'init', 'vbl_register_cpt_quartos' );
 
 /**
+ * Traduzir o slug do CPT vbl_quarto em Inglês de /en/quarto/... para /en/room/...
+ * mesmo na versão gratuita do Polylang (com rewrite rule, permalink, hreflang e redirect 301).
+ */
+add_action( 'init', function() {
+    add_rewrite_rule(
+        '^en/room/([^/]+)/?$',
+        'index.php?vbl_quarto=$matches[1]&lang=en',
+        'top'
+    );
+
+    if ( ! get_option( 'vbl_room_rewrite_v1' ) ) {
+        flush_rewrite_rules( false );
+        update_option( 'vbl_room_rewrite_v1', '1', true );
+    }
+}, 20 );
+
+add_filter( 'post_type_link', function( $post_link, $post ) {
+    if ( ! ( $post instanceof WP_Post ) || 'vbl_quarto' !== $post->post_type ) {
+        return $post_link;
+    }
+
+    if ( function_exists( 'pll_get_post_language' ) && 'en' === pll_get_post_language( $post->ID, 'slug' ) ) {
+        $post_link = str_replace( '/en/quarto/', '/en/room/', $post_link );
+    }
+
+    return $post_link;
+}, 20, 2 );
+
+add_action( 'template_redirect', function() {
+    if ( is_admin() || ! is_singular( 'vbl_quarto' ) ) {
+        return;
+    }
+
+    if ( function_exists( 'pll_current_language' ) && 'en' === pll_current_language( 'slug' ) ) {
+        $req_uri = isset( $_SERVER['REQUEST_URI'] ) ? wp_unslash( $_SERVER['REQUEST_URI'] ) : '';
+        if ( false !== strpos( $req_uri, '/en/quarto/' ) ) {
+            $target = get_permalink( get_queried_object_id() );
+            if ( $target && false !== strpos( $target, '/en/room/' ) ) {
+                wp_safe_redirect( $target, 301 );
+                exit;
+            }
+        }
+    }
+} );
+
+/**
  * Coluna "Hotel Pai" na listagem administrativa de Quartos & Suites
  */
 add_filter( 'manage_vbl_quarto_posts_columns', function( $columns ) {
