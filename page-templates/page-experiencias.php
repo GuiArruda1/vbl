@@ -27,13 +27,23 @@ $exp_title       = vbl_field( 'vbl_experiencias_carousel_title', false, 'TÍTULO
 $exp_desc        = vbl_field( 'vbl_experiencias_carousel_desc', false, 'Lacus eget parturient non ut semper donec nunc eget. Quis netus diam ullamcorper purus. Lorem ipsum dolor sit amet consectetur. Lacus eget parturient non ut semper donec nunc eget.' );
 
 $exp_posts = array();
-$exp_query = new WP_Query( array(
-    'post_type'      => 'vbl_experiencia',
-    'posts_per_page' => -1,
-    'post_status'    => 'publish',
-    'orderby'        => 'menu_order title',
-    'order'          => 'ASC',
-) );
+$exp_query_args = array(
+    'post_type'        => 'vbl_experiencia',
+    'posts_per_page'   => -1,
+    'post_status'      => 'publish',
+    'orderby'          => 'menu_order title',
+    'order'            => 'ASC',
+    'suppress_filters' => false,
+);
+
+if ( function_exists( 'pll_current_language' ) ) {
+    $current_lang = pll_current_language( 'slug' );
+    if ( ! empty( $current_lang ) ) {
+        $exp_query_args['lang'] = $current_lang;
+    }
+}
+
+$exp_query = new WP_Query( $exp_query_args );
 
 if ( $exp_query->have_posts() ) {
     while ( $exp_query->have_posts() ) {
