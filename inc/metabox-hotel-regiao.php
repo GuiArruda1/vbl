@@ -751,6 +751,9 @@ add_action( 'init', function() {
     if ( ! get_option( 'vbl_seeded_suites_regiao_pt_v1' ) ) {
         vbl_seed_suites_regiao_pt( false );
     }
+    if ( ! get_option( 'vbl_seeded_suites_regiao_en_v1' ) ) {
+        vbl_seed_suites_regiao_en( false );
+    }
 }, 30 );
 
 /**
@@ -932,6 +935,228 @@ function vbl_seed_suites_regiao_pt( $force = false ) {
     delete_post_meta( $page_id, '_vbl_hreg_exp_list' );
 
     update_option( 'vbl_seeded_suites_regiao_pt_v1', '1', true );
+
+    return array(
+        'hotel_id' => $hotel_id,
+        'page_id'  => $page_id,
+        'items'    => $slides,
+    );
+}
+
+/**
+ * Localiza a página "Region" (page-templates/page-hotel-regiao.php)
+ * pertencente ao Hotel "Vila Baleira Suites" em Inglês (EN).
+ *
+ * @return array{hotel_id:int, page_id:int}
+ */
+function vbl_find_suites_regiao_en_page() {
+    // 1. Tentar obter via tradução Polylang a partir da página PT
+    $pt_found = vbl_find_suites_regiao_pt_page();
+    if ( ! empty( $pt_found['page_id'] ) && function_exists( 'pll_get_post' ) ) {
+        $en_id = (int) pll_get_post( $pt_found['page_id'], 'en' );
+        if ( $en_id > 0 && $en_id !== (int) $pt_found['page_id'] ) {
+            return array(
+                'hotel_id' => (int) get_post_field( 'post_parent', $en_id ),
+                'page_id'  => $en_id,
+            );
+        }
+    }
+
+    $pages = get_posts( array(
+        'post_type'        => 'page',
+        'post_status'      => array( 'publish', 'draft', 'private' ),
+        'posts_per_page'   => -1,
+        'suppress_filters' => true,
+    ) );
+
+    // 2. Procurar página do Hotel Suites em Inglês (EN)
+    $suites_en_hotel_id = 0;
+    foreach ( $pages as $p ) {
+        $slug     = strtolower( (string) $p->post_name );
+        $title    = strtolower( (string) $p->post_title );
+        $template = (string) get_post_meta( $p->ID, '_wp_page_template', true );
+        $lang     = function_exists( 'pll_get_post_language' ) ? pll_get_post_language( $p->ID, 'slug' ) : '';
+
+        $is_suites = (
+            false !== strpos( $slug, 'suite' ) ||
+            false !== strpos( $title, 'suites' )
+        );
+
+        if ( $is_suites && ( 'en' === $lang || false !== strpos( $slug, '-en' ) || false !== strpos( $title, '(en)' ) ) ) {
+            if ( false !== strpos( $template, 'page-hotel-home.php' ) || 0 === (int) $p->post_parent ) {
+                $suites_en_hotel_id = (int) $p->ID;
+                break;
+            }
+        }
+    }
+
+    // 3. Procurar a subpágina Região filha do hotel Suites EN
+    if ( $suites_en_hotel_id > 0 ) {
+        foreach ( $pages as $p ) {
+            if ( (int) $p->post_parent !== $suites_en_hotel_id ) {
+                continue;
+            }
+            $template = (string) get_post_meta( $p->ID, '_wp_page_template', true );
+            $slug     = strtolower( (string) $p->post_name );
+            $title    = strtolower( (string) $p->post_title );
+
+            if (
+                false !== strpos( $template, 'page-hotel-regiao.php' ) ||
+                false !== strpos( $slug, 'region' ) ||
+                false !== strpos( $slug, 'regiao' ) ||
+                false !== strpos( $title, 'region' ) ||
+                false !== strpos( $title, 'regi' )
+            ) {
+                return array(
+                    'hotel_id' => $suites_en_hotel_id,
+                    'page_id'  => (int) $p->ID,
+                );
+            }
+        }
+    }
+
+    // 4. Fallback: procurar qualquer página com template hotel-regiao em EN associada a Suites
+    foreach ( $pages as $p ) {
+        $template = (string) get_post_meta( $p->ID, '_wp_page_template', true );
+        if ( false === strpos( $template, 'page-hotel-regiao.php' ) ) {
+            continue;
+        }
+        $lang        = function_exists( 'pll_get_post_language' ) ? pll_get_post_language( $p->ID, 'slug' ) : '';
+        $slug        = strtolower( (string) $p->post_name );
+        $title       = strtolower( (string) $p->post_title );
+        $parent_id   = (int) $p->post_parent;
+        $parent_slug = $parent_id ? strtolower( (string) get_post_field( 'post_name', $parent_id ) ) : '';
+
+        if ( 'en' === $lang && ( false !== strpos( $parent_slug, 'suite' ) || false !== strpos( $slug, 'suite' ) ) ) {
+            return array(
+                'hotel_id' => $parent_id,
+                'page_id'  => (int) $p->ID,
+            );
+        }
+    }
+
+    return array(
+        'hotel_id' => $suites_en_hotel_id,
+        'page_id'  => 0,
+    );
+}
+
+/**
+ * Preenche o carrossel de Experiências da Região do Hotel Vila Baleira Suites (EN)
+ * com as 10 experiências oficiais em Inglês.
+ *
+ * @param bool $force Se true, executa mesmo que a flag já exista.
+ * @return array|WP_Error
+ */
+function vbl_seed_suites_regiao_en( $force = false ) {
+    if ( ! $force && get_option( 'vbl_seeded_suites_regiao_en_v1' ) ) {
+        return array( 'skipped' => true );
+    }
+
+    $found    = vbl_find_suites_regiao_en_page();
+    $hotel_id = (int) $found['hotel_id'];
+    $page_id  = (int) $found['page_id'];
+
+    if ( ! $page_id ) {
+        return new WP_Error( 'page_not_found', 'Página de Region do Hotel Vila Baleira Suites (EN) não encontrada.' );
+    }
+
+    $existing_list = get_post_meta( $page_id, 'vbl_hreg_exp_list', true );
+    if ( ! is_array( $existing_list ) ) {
+        $existing_list = array();
+    }
+
+    // Tentar herdar fotografias da página PT equivalente se as do EN estiverem vazias
+    $pt_found = vbl_find_suites_regiao_pt_page();
+    $pt_list  = ! empty( $pt_found['page_id'] ) ? get_post_meta( $pt_found['page_id'], 'vbl_hreg_exp_list', true ) : array();
+    if ( ! is_array( $pt_list ) ) {
+        $pt_list = array();
+    }
+
+    $fallback_imgs = array(
+        function_exists( 'vbl_img' ) ? vbl_img( 'ilhas-432x240-2.jpg' ) : '',
+        function_exists( 'vbl_img' ) ? vbl_img( 'ilhas-432x240-1.jpg' ) : '',
+        function_exists( 'vbl_img' ) ? vbl_img( 'ilhas-800x720.jpg' ) : '',
+    );
+
+    $raw_experiences = array(
+        array(
+            'title'       => 'Maritime Expeditions',
+            'description' => 'Embark on an unforgettable aquatic adventure with our conventional or glass-bottom boat tours. Explore neighboring Cal and Farol islets, marvel at stunning landscapes and crystal-clear waters, while discovering Porto Santo\'s fascinating geological and historical maritime heritage.',
+        ),
+        array(
+            'title'       => '4x4 Jeep Adventures',
+            'description' => 'Venturing through exciting trails, discover Porto Santo\'s most breathtaking landscapes aboard a jeep. Travel along exclusive routes that take you to Ponta da Canavieira Viewpoint, pass by Fonte de Areia, and explore other iconic landmarks across the island.',
+        ),
+        array(
+            'title'       => 'Horseback Riding',
+            'description' => 'Feel the magic of Porto Santo with an unforgettable horseback ride up to Flores Viewpoint. Explore picturesque trails and breathtaking landscapes, crossing golden sand beaches, green hills, and quiet paths that convey absolute peace and a unique connection to nature.',
+        ),
+        array(
+            'title'       => 'Twizy Routes',
+            'description' => 'Explore the island easily, funly, and completely eco-friendly behind the wheel of a Twizy. Discover Porto Santo\'s most beautiful viewpoints and famous golden beaches with this sustainable vehicle, perfect for those seeking an independent and environment-friendly adventure.',
+        ),
+        array(
+            'title'       => 'Buggy Adventure',
+            'description' => 'Awaken your adventurous side and explore Porto Santo\'s unique landscapes on an off-road trip. Drive a buggy through hidden trails and stunning natural paths, enjoying an exciting and adrenaline-filled experience that allows you to discover the island from a completely new perspective.',
+        ),
+        array(
+            'title'       => 'Golf Lessons',
+            'description' => 'Take the opportunity to enjoy exclusive golf lessons with a certified professional at Porto Santo\'s prestigious golf course. Improve your swing, master advanced techniques and relax in a breathtaking setting surrounded by unique natural beauty and incredible ocean views.',
+        ),
+        array(
+            'title'       => 'Kayak Tours',
+            'description' => 'Explore the sea coast through a relaxing and immersive kayaking adventure. A unique opportunity to connect with nature, discover hidden coves and admire stunning landscapes while paddling along crystal-clear waters in an unforgettable setting.',
+        ),
+        array(
+            'title'       => 'Intro Dive',
+            'description' => 'Experience scuba diving for the first time with a safe introductory dive in the pool. In a controlled environment accompanied by a certified instructor, take your first breaths underwater and feel the true magic of diving before venturing into the ocean.',
+        ),
+        array(
+            'title'       => 'Wine Experience',
+            'description' => 'Visit local vineyards and discover the unique history of Porto Santo wine. Learn about the historical context of the region and explore the distinct grape varieties produced on the island through detailed and enriching tastings that celebrate this winemaking tradition.',
+        ),
+        array(
+            'title'       => 'Cultural Route',
+            'description' => 'Explore the island in total comfort and convenience on a panoramic bus tour. This route takes you to the most significant monuments and landmarks of Porto Santo, allowing you to discover its natural charms, historical secrets and cultural traditions in a relaxing journey.',
+        ),
+    );
+
+    $slides = array();
+    foreach ( $raw_experiences as $idx => $exp ) {
+        $prev         = isset( $existing_list[ $idx ] ) && is_array( $existing_list[ $idx ] ) ? $existing_list[ $idx ] : array();
+        $pt_prev      = isset( $pt_list[ $idx ] ) && is_array( $pt_list[ $idx ] ) ? $pt_list[ $idx ] : array();
+        $fallback_img = $fallback_imgs[ $idx % count( $fallback_imgs ) ];
+
+        $image    = '';
+        $image_id = '';
+        if ( ! empty( $prev['image'] ) ) {
+            $image    = $prev['image'];
+            $image_id = ! empty( $prev['image_id'] ) ? $prev['image_id'] : '';
+        } elseif ( ! empty( $pt_prev['image'] ) ) {
+            $image    = $pt_prev['image'];
+            $image_id = ! empty( $pt_prev['image_id'] ) ? $pt_prev['image_id'] : '';
+        } else {
+            $image = $fallback_img;
+        }
+
+        $slides[] = array(
+            'title'       => $exp['title'],
+            'description' => $exp['description'],
+            'image'       => $image,
+            'image_id'    => $image_id,
+        );
+    }
+
+    // Atualizar cabeçalhos da secção em Inglês
+    update_post_meta( $page_id, 'vbl_hreg_exp_tagline', 'Pack Experience' );
+    update_post_meta( $page_id, 'vbl_hreg_exp_title', 'Atlantic Experiences' );
+    update_post_meta( $page_id, 'vbl_hreg_exp_desc', 'Live unforgettable experiences: jeeps, horseback riding, golf, kayaking or scuba diving. Discover incredible landscapes on unique routes, ideal for romantic moments or family fun.' );
+
+    update_post_meta( $page_id, 'vbl_hreg_exp_list', $slides );
+    delete_post_meta( $page_id, '_vbl_hreg_exp_list' );
+
+    update_option( 'vbl_seeded_suites_regiao_en_v1', '1', true );
 
     return array(
         'hotel_id' => $hotel_id,
