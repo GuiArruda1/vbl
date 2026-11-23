@@ -79,11 +79,19 @@ if ( ! empty( $saved_slider ) && is_array( $saved_slider ) ) {
 if ( empty( $rooms_slides ) ) {
     $current_page_id = get_the_ID();
     $target_hotel_ids = array_values( array_unique( array_filter( array( $hotel_id, $current_page_id, ( isset( $post->post_parent ) ? $post->post_parent : 0 ) ) ) ) );
+    if ( $hotel_id && function_exists( 'pll_get_post_translations' ) ) {
+        $translated_hotels = pll_get_post_translations( $hotel_id );
+        if ( is_array( $translated_hotels ) ) {
+            $target_hotel_ids = array_values( array_unique( array_merge( $target_hotel_ids, array_map( 'intval', array_values( $translated_hotels ) ) ) ) );
+        }
+    }
 
-    $cpt_rooms = get_posts( array(
-        'post_type'      => 'vbl_quarto',
-        'posts_per_page' => 10,
-        'meta_query'     => array(
+    $cpt_room_args = array(
+        'post_type'        => 'vbl_quarto',
+        'post_status'      => 'publish',
+        'posts_per_page'   => 10,
+        'suppress_filters' => false,
+        'meta_query'       => array(
             'relation' => 'OR',
             array(
                 'key'     => 'vbl_quarto_hotel',
@@ -96,9 +104,18 @@ if ( empty( $rooms_slides ) ) {
                 'compare' => 'IN',
             ),
         ),
-        'orderby'        => 'menu_order title',
-        'order'          => 'ASC',
-    ) );
+        'orderby'          => 'menu_order title',
+        'order'            => 'ASC',
+    );
+
+    if ( function_exists( 'pll_current_language' ) ) {
+        $current_lang = pll_current_language( 'slug' );
+        if ( ! empty( $current_lang ) ) {
+            $cpt_room_args['lang'] = $current_lang;
+        }
+    }
+
+    $cpt_rooms = get_posts( $cpt_room_args );
 
     if ( ! empty( $cpt_rooms ) ) {
         foreach ( $cpt_rooms as $r_post ) {
