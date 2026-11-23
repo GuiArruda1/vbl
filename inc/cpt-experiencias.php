@@ -300,7 +300,24 @@ function vbl_seed_main_experiences_en( $force = false ) {
         );
     }
 
-    update_option( 'vbl_seeded_main_exp_en_v1', '1', true );
+    // Atualizar cabeçalhos da página Experiências em Inglês (ex: post 745 / slug experiences)
+    $exp_pages = get_posts( array(
+        'post_type'        => 'page',
+        'meta_key'         => '_wp_page_template',
+        'meta_value'       => 'page-templates/page-experiencias.php',
+        'posts_per_page'   => -1,
+        'suppress_filters' => true,
+    ) );
+    foreach ( $exp_pages as $ep ) {
+        $clang = function_exists( 'pll_get_post_language' ) ? pll_get_post_language( $ep->ID, 'slug' ) : '';
+        if ( 'en' === $clang || 745 === (int) $ep->ID || 'experiences' === $ep->post_name ) {
+            update_post_meta( $ep->ID, 'vbl_experiencias_carousel_subtitle', 'UNIQUE ADVENTURES IN EVERY CORNER' );
+            update_post_meta( $ep->ID, 'vbl_experiencias_carousel_title', 'EXPERIENCES THAT SHAPE A LIFETIME' );
+            update_post_meta( $ep->ID, 'vbl_experiencias_carousel_desc', "Explore Madeira's levadas, dive into the waters of Porto Santo and taste local gastronomy. Let yourself be captivated by stunning, authentic and unforgettable landscapes at every moment of the journey." );
+        }
+    }
+
+    update_option( 'vbl_seeded_main_exp_en_v2', '1', true );
 
     return array(
         'items' => $processed,
@@ -308,7 +325,7 @@ function vbl_seed_main_experiences_en( $force = false ) {
 }
 
 add_action( 'init', function() {
-    if ( ! get_option( 'vbl_seeded_main_exp_en_v1' ) ) {
+    if ( ! get_option( 'vbl_seeded_main_exp_en_v2' ) ) {
         vbl_seed_main_experiences_en( false );
     }
 }, 30 );

@@ -671,6 +671,15 @@ function vbl_register_acf_fields() {
 
             /* Tab: Carrossel (Textos) */
             array( 'key' => 'field_vbl_expp_tab_carousel', 'label' => 'Carrossel (Cabeçalho)', 'type' => 'tab' ),
+            array(
+                'key'     => 'field_vbl_expp_carousel_notice',
+                'label'   => 'Slides do Carrossel (Carregados Automaticamente)',
+                'name'    => '',
+                'type'    => 'message',
+                'message' => 'ℹ️ <strong>Os slides deste carrossel não são geridos nesta página.</strong><br>Eles são carregados automaticamente a partir do Custom Post Type <strong><a href="' . admin_url( 'edit.php?post_type=vbl_experiencia' ) . '" target="_blank">Experiências</a></strong> (no menu lateral do WordPress), com suporte a tradução de idiomas (PT/EN) através do Polylang.<br>Os 3 campos abaixo controlam exclusivamente o título e texto introdutório que surgem acima do carrossel.',
+                'new_lines' => 'wpautop',
+                'esc_html'  => 0,
+            ),
             array( 'key' => 'field_vbl_expp_carousel_subtitle', 'label' => 'Subtítulo do Carrossel', 'name' => 'vbl_experiencias_carousel_subtitle', 'type' => 'text', 'default_value' => 'ALIQUET DIGNISSIM DUI TORTOR DIAM ELIT' ),
             array( 'key' => 'field_vbl_expp_carousel_title', 'label' => 'Título do Carrossel', 'name' => 'vbl_experiencias_carousel_title', 'type' => 'text', 'default_value' => 'TÍTULO PARA AS EXPERIÊNCIAS' ),
             array( 'key' => 'field_vbl_expp_carousel_desc', 'label' => 'Descrição do Carrossel', 'name' => 'vbl_experiencias_carousel_desc', 'type' => 'textarea', 'rows' => 3, 'default_value' => 'Lacus eget parturient non ut semper donec nunc eget. Quis netus diam ullamcorper purus. Lorem ipsum dolor sit amet consectetur. Lacus eget parturient non ut semper donec nunc eget.' ),
