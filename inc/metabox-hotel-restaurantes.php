@@ -650,3 +650,185 @@ function vbl_save_hotel_restaurantes_metabox( $post_id ) {
     }
 }
 add_action( 'save_post', 'vbl_save_hotel_restaurantes_metabox' );
+
+/**
+ * Localiza a página "Restaurantes" (page-templates/page-hotel-restaurantes.php)
+ * pertencente ao Hotel "Vila Baleira Suites" em Português (PT).
+ *
+ * @return array{hotel_id:int, page_id:int}
+ */
+function vbl_find_suites_restaurantes_pt_page() {
+    $pages = get_posts( array(
+        'post_type'        => 'page',
+        'post_status'      => array( 'publish', 'draft', 'private' ),
+        'posts_per_page'   => -1,
+        'suppress_filters' => true,
+    ) );
+
+    // 1. Encontrar a página-mãe do Hotel Vila Baleira Suites (PT)
+    $hotel_candidates = array();
+    foreach ( $pages as $p ) {
+        $slug     = strtolower( (string) $p->post_name );
+        $title    = strtolower( (string) $p->post_title );
+        $template = (string) get_post_meta( $p->ID, '_wp_page_template', true );
+
+        $is_suites = (
+            'suites' === $slug ||
+            'vila-baleira-suites' === $slug ||
+            false !== strpos( $slug, 'vila-baleira-suites' ) ||
+            ( 0 === (int) $p->post_parent && false !== strpos( $slug, 'suite' ) && false === strpos( $slug, 'room' ) && false === strpos( $slug, 'quarto' ) ) ||
+            false !== strpos( $title, 'vila baleira suites' )
+        );
+
+        if ( $is_suites && ( false !== strpos( $template, 'page-hotel-home.php' ) || 0 === (int) $p->post_parent ) ) {
+            $hotel_candidates[] = $p;
+        }
+    }
+
+    $hotel_id = 0;
+    if ( ! empty( $hotel_candidates ) ) {
+        if ( function_exists( 'pll_get_post_language' ) ) {
+            foreach ( $hotel_candidates as $cand ) {
+                if ( 'pt' === pll_get_post_language( $cand->ID, 'slug' ) ) {
+                    $hotel_id = (int) $cand->ID;
+                    break;
+                }
+            }
+            if ( ! $hotel_id && function_exists( 'pll_get_post' ) ) {
+                foreach ( $hotel_candidates as $cand ) {
+                    $pt_id = (int) pll_get_post( $cand->ID, 'pt' );
+                    if ( $pt_id > 0 ) {
+                        $hotel_id = $pt_id;
+                        break;
+                    }
+                }
+            }
+        }
+        if ( ! $hotel_id ) {
+            $hotel_id = (int) $hotel_candidates[0]->ID;
+        }
+    }
+
+    if ( ! $hotel_id ) {
+        return array( 'hotel_id' => 0, 'page_id' => 0 );
+    }
+
+    // 2. Encontrar a subpágina Restaurantes filha deste Hotel Suites (PT)
+    $rest_page_id = 0;
+    foreach ( $pages as $p ) {
+        if ( (int) $p->post_parent !== $hotel_id ) {
+            continue;
+        }
+        $template = (string) get_post_meta( $p->ID, '_wp_page_template', true );
+        $slug     = strtolower( (string) $p->post_name );
+        $title    = strtolower( (string) $p->post_title );
+
+        if (
+            false !== strpos( $template, 'page-hotel-restaurantes.php' ) ||
+            false !== strpos( $slug, 'restaurante' ) ||
+            false !== strpos( $title, 'restaurante' )
+        ) {
+            $rest_page_id = (int) $p->ID;
+            break;
+        }
+    }
+
+    return array(
+        'hotel_id' => $hotel_id,
+        'page_id'  => $rest_page_id,
+    );
+}
+
+/**
+ * Preenche o carrossel de Restaurantes & Bares do Hotel Vila Baleira Suites (PT):
+ *  - Subtítulo: os nossos restaurantes & bares
+ *  - Slides:
+ *    1. Restaurante Grão d'Areia
+ *    2. Restaurante Búzio
+ *    3. Restaurante Ilhéu
+ *    4. Bar Oceano
+ *    5. Bar Grão d'Areia
+ *
+ * @param bool $force Se true, executa mesmo que a flag já exista.
+ * @return array|WP_Error
+ */
+function vbl_seed_suites_restaurantes_pt( $force = false ) {
+    if ( ! $force && get_option( 'vbl_seeded_suites_restaurantes_pt_v1' ) ) {
+        return array( 'skipped' => true );
+    }
+
+    $found    = vbl_find_suites_restaurantes_pt_page();
+    $hotel_id = (int) $found['hotel_id'];
+    $page_id  = (int) $found['page_id'];
+
+    if ( ! $hotel_id || ! $page_id ) {
+        return new WP_Error( 'page_not_found', 'Página de Restaurantes do Hotel Vila Baleira Suites (PT) não encontrada.' );
+    }
+
+    $existing_list = get_post_meta( $page_id, 'vbl_hrest_list', true );
+    if ( ! is_array( $existing_list ) ) {
+        $existing_list = array();
+    }
+
+    $default_img   = function_exists( 'vbl_img' ) ? vbl_img( 'hoteis/suites-680x400.jpg' ) : '';
+    $default_thumb = function_exists( 'vbl_img' ) ? vbl_img( 'hoteis/porto-santo-520x400.jpg' ) : '';
+    $subtitle_text = 'os nossos restaurantes & bares';
+
+    $raw_slides = array(
+        array(
+            'title'       => "Restaurante Grão d'Areia",
+            'description' => 'Num ambiente tranquilo, o restaurante oferece experiências gastronómicas exclusivas através de um menu diário em quatro momentos.',
+        ),
+        array(
+            'title'       => 'Restaurante Búzio',
+            'description' => 'O Restaurante Búzio é ideal para começar o dia com deliciosos pequenos-almoços, confecionados sempre com os ingredientes mais frescos.',
+        ),
+        array(
+            'title'       => 'Restaurante Ilhéu',
+            'description' => 'Junto à piscina com vista em Porto Santo, o Restaurante Ilhéu serve excelentes grills de peixe e carne.',
+        ),
+        array(
+            'title'       => 'Bar Oceano',
+            'description' => 'O Bar de Praia Oceano, no Vila Baleira Suites, oferece espreguiçadeiras e colmos perfeitos para relaxar à beira-mar.',
+        ),
+        array(
+            'title'       => "Bar Grão d'Areia",
+            'description' => "O Bar Grão d' Areia oferece cocktails refrescantes e um ambiente descontraído, perfeito para relaxar com vista para a praia.",
+        ),
+    );
+
+    $slides = array();
+    foreach ( $raw_slides as $idx => $s ) {
+        $prev = isset( $existing_list[ $idx ] ) && is_array( $existing_list[ $idx ] ) ? $existing_list[ $idx ] : array();
+
+        $slides[] = array(
+            'subtitle'    => $subtitle_text,
+            'title'       => $s['title'],
+            'description' => $s['description'],
+            'image'       => ! empty( $prev['image'] ) ? $prev['image'] : $default_img,
+            'image_id'    => ! empty( $prev['image_id'] ) ? $prev['image_id'] : '',
+            'thumb'       => ! empty( $prev['thumb'] ) ? $prev['thumb'] : $default_thumb,
+            'thumb_id'    => ! empty( $prev['thumb_id'] ) ? $prev['thumb_id'] : '',
+            'menu_url'    => ! empty( $prev['menu_url'] ) ? $prev['menu_url'] : '#',
+            'menu_label'  => 'CONSULTAR MENU',
+        );
+    }
+
+    update_post_meta( $page_id, 'vbl_hrest_slider_subtitle', $subtitle_text );
+    update_post_meta( $page_id, 'vbl_hrest_list', $slides );
+    delete_post_meta( $page_id, '_vbl_hrest_list' );
+
+    update_option( 'vbl_seeded_suites_restaurantes_pt_v1', '1', true );
+
+    return array(
+        'hotel_id' => $hotel_id,
+        'page_id'  => $page_id,
+        'items'    => $slides,
+    );
+}
+
+add_action( 'init', function() {
+    if ( ! get_option( 'vbl_seeded_suites_restaurantes_pt_v1' ) ) {
+        vbl_seed_suites_restaurantes_pt( false );
+    }
+}, 30 );
