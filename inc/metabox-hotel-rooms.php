@@ -26,10 +26,9 @@ function vbl_add_hotel_rooms_metabox( $post_type, $post ) {
         $template = get_page_template_slug( $post->ID );
     }
 
-    $is_hotel_home  = ( 'page-templates/page-hotel-home.php' === $template || strpos( (string) $template, 'page-hotel-home.php' ) !== false );
-    $is_hotel_rooms = ( 'page-templates/page-hotel-rooms.php' === $template || strpos( (string) $template, 'page-hotel-rooms.php' ) !== false );
+    $is_hotel_home = ( 'page-templates/page-hotel-home.php' === $template || strpos( (string) $template, 'page-hotel-home.php' ) !== false );
 
-    if ( $is_hotel_home || $is_hotel_rooms ) {
+    if ( $is_hotel_home ) {
         add_meta_box(
             'vbl_hotel_rooms_slider_metabox',
             '⭐ Slider de Quartos & Suites deste Hotel',

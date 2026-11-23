@@ -10,7 +10,6 @@
         'field_vbl_ct_hoteis_notice': '#vbl_contactos_hoteis_metabox',
         'field_vbl_hhome_rooms_notice': '#vbl_hotel_rooms_slider_metabox',
         'field_vbl_hhotel_inst_notice': '#vbl_hotel_instalacoes_metabox',
-        'field_vbl_hrooms_list_notice': '#vbl_hotel_rooms_slider_metabox',
         'field_vbl_quarto_galeria_notice': '#vbl_quarto_galeria_metabox',
         'field_vbl_hativ_prog_notice': '#vbl_hotel_programa_metabox',
         'field_vbl_hativ_anim_notice': '#vbl_hotel_animacao_metabox',

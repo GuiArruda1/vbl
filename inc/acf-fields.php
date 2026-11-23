@@ -803,10 +803,10 @@ function vbl_register_acf_fields() {
             ),
             array(
                 'key'     => 'field_vbl_hrooms_list_notice',
-                'label'   => 'Lista de Quartos / Suites / Apartamentos',
+                'label'   => 'Lista de Quartos / Suites / Apartamentos (Automática)',
                 'name'    => '',
                 'type'    => 'message',
-                'message' => 'A gestão da lista e carrossel de quartos deste hotel é feita na caixa nativa <strong>"⭐ Slider de Quartos & Suites deste Hotel"</strong> logo abaixo nesta página, com suporte a adicionar, reordenar por arrasto, escolher quartos e carregar thumbnails sem necessidade de licença do ACF Pro.',
+                'message' => 'Os quartos apresentados nesta página são carregados <strong>automaticamente</strong> a partir do Custom Post Type <strong>Quartos</strong> (<code>vbl_quarto</code>), filtrados pelo hotel pai e idioma atual.<br>Para adicionar, editar, traduzir ou reordenar quartos, aceda ao menu <strong>Quartos</strong> na barra lateral do WordPress.',
             ),
         ),
         'location' => array(

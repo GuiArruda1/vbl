@@ -24,80 +24,68 @@ if ( empty( $rooms_btn_label ) ) {
     $rooms_btn_label = 'VER QUARTO';
 }
 
-// 1. Tenta carregar do Meta Box nativo de Quartos do Hotel (da página atual ou do Hotel Pai)
+// Carrega automaticamente os quartos do CPT vbl_quarto associados a este Hotel (ou às suas traduções Polylang)
 $current_page_id = get_the_ID();
 $parent_hotel_id = ! empty( $post->post_parent ) ? $post->post_parent : 0;
 
-$saved_slider = get_post_meta( $current_page_id, '_vbl_hotel_rooms_slider', true );
-if ( empty( $saved_slider ) && $parent_hotel_id ) {
-    $saved_slider = get_post_meta( $parent_hotel_id, '_vbl_hotel_rooms_slider', true );
-}
-if ( empty( $saved_slider ) ) {
-    $saved_slider = vbl_field( 'vbl_hrooms_list', false, array() );
+$target_hotel_ids = array_values( array_unique( array_filter( array( $current_page_id, $parent_hotel_id ) ) ) );
+if ( $parent_hotel_id && function_exists( 'pll_get_post_translations' ) ) {
+    $translated_hotels = pll_get_post_translations( $parent_hotel_id );
+    if ( is_array( $translated_hotels ) ) {
+        $target_hotel_ids = array_values( array_unique( array_merge( $target_hotel_ids, array_map( 'intval', array_values( $translated_hotels ) ) ) ) );
+    }
 }
 
 $rooms_list = array();
-if ( ! empty( $saved_slider ) && is_array( $saved_slider ) ) {
-    foreach ( $saved_slider as $item ) {
-        if ( ! empty( $item['title'] ) || ! empty( $item['image'] ) || ! empty( $item['room_id'] ) ) {
-            $cat   = ! empty( $item['category'] ) ? $item['category'] : ( ! empty( $item['subtitle'] ) ? $item['subtitle'] : 'QUARTO' );
-            $title = ! empty( $item['title'] ) ? $item['title'] : ( ! empty( $item['room_id'] ) ? get_the_title( $item['room_id'] ) : 'ROOM' );
-            $desc  = ! empty( $item['description'] ) ? $item['description'] : '';
-            $img   = ! empty( $item['image'] ) ? $item['image'] : ( ! empty( $item['room_id'] ) ? get_the_post_thumbnail_url( (int) $item['room_id'], 'large' ) : vbl_img( 'hoteis/porto-santo-520x400.jpg' ) );
-            $link  = ! empty( $item['link'] ) ? $item['link'] : ( ! empty( $item['url'] ) ? $item['url'] : ( ! empty( $item['room_id'] ) ? get_permalink( $item['room_id'] ) : '#' ) );
 
-            $rooms_list[] = array(
-                'category'    => $cat,
-                'title'       => $title,
-                'description' => $desc,
-                'image'       => $img,
-                'link'        => $link,
-            );
-        }
+$cpt_query_args = array(
+    'post_type'      => 'vbl_quarto',
+    'post_status'    => 'publish',
+    'posts_per_page' => -1,
+    'meta_query'     => array(
+        'relation' => 'OR',
+        array(
+            'key'     => 'vbl_quarto_hotel',
+            'value'   => $target_hotel_ids,
+            'compare' => 'IN',
+        ),
+        array(
+            'key'     => 'vbl_quarto_hotel',
+            'value'   => array_map( 'strval', $target_hotel_ids ),
+            'compare' => 'IN',
+        ),
+    ),
+    'orderby'        => 'menu_order title',
+    'order'          => 'ASC',
+);
+
+if ( function_exists( 'pll_current_language' ) ) {
+    $current_lang = pll_current_language( 'slug' );
+    if ( ! empty( $current_lang ) ) {
+        $cpt_query_args['lang'] = $current_lang;
     }
 }
 
-// 2. Se não houver configuração salva no metabox, carrega automaticamente os quartos CPT deste hotel
-if ( empty( $rooms_list ) ) {
-    $target_hotel_ids = array_values( array_unique( array_filter( array( $current_page_id, $parent_hotel_id ) ) ) );
+$cpt_rooms_query = new WP_Query( $cpt_query_args );
 
-    $cpt_rooms_query = new WP_Query( array(
-        'post_type'      => 'vbl_quarto',
-        'posts_per_page' => -1,
-        'meta_query'     => array(
-            'relation' => 'OR',
-            array(
-                'key'     => 'vbl_quarto_hotel',
-                'value'   => $target_hotel_ids,
-                'compare' => 'IN',
-            ),
-            array(
-                'key'     => 'vbl_quarto_hotel',
-                'value'   => array_map( 'strval', $target_hotel_ids ),
-                'compare' => 'IN',
-            ),
-        ),
-        'orderby'        => 'menu_order title',
-        'order'          => 'ASC',
-    ) );
-
-    if ( $cpt_rooms_query->have_posts() ) {
-        while ( $cpt_rooms_query->have_posts() ) {
-            $cpt_rooms_query->the_post();
-            $q_id = get_the_ID();
-            $q_thumb = get_the_post_thumbnail_url( $q_id, 'medium_large' );
-            if ( empty( $q_thumb ) ) $q_thumb = vbl_img( 'hoteis/porto-santo-520x400.jpg' );
-            
-            $rooms_list[] = array(
-                'category'    => vbl_field( 'vbl_quarto_categoria', $q_id, 'QUARTO' ),
-                'title'       => get_the_title( $q_id ),
-                'description' => get_the_excerpt( $q_id ),
-                'image'       => $q_thumb,
-                'link'        => get_permalink( $q_id ),
-            );
+if ( $cpt_rooms_query->have_posts() ) {
+    while ( $cpt_rooms_query->have_posts() ) {
+        $cpt_rooms_query->the_post();
+        $q_id = get_the_ID();
+        $q_thumb = get_the_post_thumbnail_url( $q_id, 'medium_large' );
+        if ( empty( $q_thumb ) ) {
+            $q_thumb = vbl_img( 'hoteis/porto-santo-520x400.jpg' );
         }
-        wp_reset_postdata();
+
+        $rooms_list[] = array(
+            'category'    => vbl_field( 'vbl_quarto_categoria', $q_id, 'QUARTO' ),
+            'title'       => get_the_title( $q_id ),
+            'description' => get_the_excerpt( $q_id ),
+            'image'       => $q_thumb,
+            'link'        => get_permalink( $q_id ),
+        );
     }
+    wp_reset_postdata();
 }
 
 // 3. Fallback visual caso o hotel ainda não tenha quartos
