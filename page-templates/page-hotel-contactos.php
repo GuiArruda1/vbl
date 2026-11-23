@@ -32,8 +32,14 @@ $mapa_embed = vbl_field( 'vbl_hct_mapa_embed', false, '' );
 // ACF Fields: Formulário
 $form_sub    = vbl_field( 'vbl_hct_form_sub', false, 'LOREM IPSUM DOLOR SIT AMET CONSECTETUR' );
 $form_tit    = vbl_field( 'vbl_hct_form_tit', false, 'FAUCIBUS SIT<br>DIAM ELIT' );
-$form_p1     = vbl_field( 'vbl_hct_form_p1', false, 'Convallis odio massa pellentesque elit non eu fusce auctor mattis. Diam integer ultricies vitae. Lorem ipsum dolor sit amet consectetur.' );
-$form_p2     = vbl_field( 'vbl_hct_form_p2', false, 'Convallis odio massa pellentesque elit non eu fusce auctor mattis. Diam integer ultricies vitae. Lorem ipsum dolor sit amet consectetur.' );
+$form_p1     = vbl_field( 'vbl_hct_form_p1', false, '' );
+if ( false !== stripos( (string) $form_p1, 'Convallis odio massa' ) || false !== stripos( (string) $form_p1, 'Lorem ipsum dolor sit amet' ) ) {
+    $form_p1 = '';
+}
+$form_p2     = vbl_field( 'vbl_hct_form_p2', false, '' );
+if ( false !== stripos( (string) $form_p2, 'Convallis odio massa' ) || false !== stripos( (string) $form_p2, 'Lorem ipsum' ) ) {
+    $form_p2 = '';
+}
 $privacy_url = function_exists( 'vbl_get_privacy_policy_url' ) ? vbl_get_privacy_policy_url() : ( function_exists( 'vbl_field' ) ? vbl_field( 'vbl_privacy_url', false, home_url( '/politica-de-privacidade' ) ) : home_url( '/politica-de-privacidade' ) );
 ?>
 
@@ -256,7 +262,9 @@ $privacy_url = function_exists( 'vbl_get_privacy_policy_url' ) ? vbl_get_privacy
 
         <!-- Parágrafos -->
         <div class="flex flex-col gap-5 max-w-[440px] font-body font-light text-[13px] xl:text-[14px] leading-relaxed text-[#333333]">
-          <p><?php echo nl2br( esc_html( $form_p1 ) ); ?></p>
+          <?php if ( ! empty( $form_p1 ) ) : ?>
+            <p><?php echo nl2br( esc_html( $form_p1 ) ); ?></p>
+          <?php endif; ?>
           <?php if ( ! empty( $form_p2 ) ) : ?>
             <p><?php echo nl2br( esc_html( $form_p2 ) ); ?></p>
           <?php endif; ?>

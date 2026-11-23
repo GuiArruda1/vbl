@@ -430,6 +430,19 @@ function vbl_resolve_hotel_mirai( $hotel_ref = 0 ) {
     return $hotels['porto-santo'];
 }
 
+/**
+ * Remove qualquer resíduo de Lorem Ipsum do campo vbl_hct_form_p2 nos contactos de hotéis
+ */
+add_action( 'init', function() {
+    if ( ! get_option( 'vbl_cleaned_hct_lorem_ipsum_v1' ) ) {
+        global $wpdb;
+        if ( isset( $wpdb->postmeta ) ) {
+            $wpdb->query( "DELETE FROM {$wpdb->postmeta} WHERE meta_key = 'vbl_hct_form_p2' AND (meta_value LIKE '%Convallis odio massa%' OR meta_value LIKE '%Lorem ipsum%')" );
+        }
+        update_option( 'vbl_cleaned_hct_lorem_ipsum_v1', '1', true );
+    }
+}, 20 );
+
 
 
 

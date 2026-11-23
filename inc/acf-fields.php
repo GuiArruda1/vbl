@@ -1247,8 +1247,8 @@ function vbl_register_acf_fields() {
             array( 'key' => 'field_vbl_hct_tab_form', 'label' => 'Formulário de Contacto', 'type' => 'tab' ),
             array( 'key' => 'field_vbl_hct_form_sub', 'label' => 'Subtítulo', 'name' => 'vbl_hct_form_sub', 'type' => 'text', 'default_value' => 'LOREM IPSUM DOLOR SIT AMET CONSECTETUR' ),
             array( 'key' => 'field_vbl_hct_form_tit', 'label' => 'Título', 'name' => 'vbl_hct_form_tit', 'type' => 'text', 'default_value' => 'FAUCIBUS SIT<br>DIAM ELIT' ),
-            array( 'key' => 'field_vbl_hct_form_p1', 'label' => 'Texto Parágrafo 1', 'name' => 'vbl_hct_form_p1', 'type' => 'textarea', 'rows' => 3, 'default_value' => 'Convallis odio massa pellentesque elit non eu fusce auctor mattis. Diam integer ultricies vitae. Lorem ipsum dolor sit amet consectetur.' ),
-            array( 'key' => 'field_vbl_hct_form_p2', 'label' => 'Texto Parágrafo 2', 'name' => 'vbl_hct_form_p2', 'type' => 'textarea', 'rows' => 3, 'default_value' => 'Convallis odio massa pellentesque elit non eu fusce auctor mattis. Diam integer ultricies vitae. Lorem ipsum dolor sit amet consectetur.' ),
+            array( 'key' => 'field_vbl_hct_form_p1', 'label' => 'Texto Parágrafo 1', 'name' => 'vbl_hct_form_p1', 'type' => 'textarea', 'rows' => 3, 'default_value' => 'Envie-nos as suas questões, pedidos de informação ou sugestões através deste formulário. A nossa equipa responderá com a máxima brevidade.' ),
+            array( 'key' => 'field_vbl_hct_form_p2', 'label' => 'Texto Parágrafo 2 (Opcional)', 'name' => 'vbl_hct_form_p2', 'type' => 'textarea', 'rows' => 3, 'default_value' => '' ),
         ),
         'location' => array(
             array( array( 'param' => 'page_template', 'operator' => '==', 'value' => 'page-templates/page-hotel-contactos.php' ) ),
