@@ -530,12 +530,294 @@ function vbl_seed_hotel_suites_pt_quartos( $force = false ) {
 }
 
 /**
- * Executa automaticamente o seeder dos 4 quartos de Vila Baleira Suites (PT) uma vez,
- * e permite reexecução manual via /wp-admin/edit.php?post_type=vbl_quarto&vbl_seed_suites_pt=1
+ * Localiza o ID da página do Hotel "Vila Baleira Suites" em Inglês (EN).
+ *
+ * @return int ID da página do hotel em EN (ou fallback para PT) ou 0 se não encontrada.
+ */
+function vbl_find_suites_en_hotel_id() {
+    $pt_hotel_id = vbl_find_suites_pt_hotel_id();
+    if ( $pt_hotel_id && function_exists( 'pll_get_post' ) ) {
+        $en_id = (int) pll_get_post( $pt_hotel_id, 'en' );
+        if ( $en_id > 0 ) {
+            return $en_id;
+        }
+    }
+
+    $pages = get_posts( array(
+        'post_type'        => 'page',
+        'post_status'      => array( 'publish', 'draft', 'private' ),
+        'posts_per_page'   => -1,
+        'suppress_filters' => true,
+    ) );
+
+    foreach ( $pages as $p ) {
+        $slug     = strtolower( (string) $p->post_name );
+        $title    = strtolower( (string) $p->post_title );
+        $template = (string) get_post_meta( $p->ID, '_wp_page_template', true );
+
+        $is_suites_name = (
+            'suites' === $slug ||
+            'vila-baleira-suites' === $slug ||
+            false !== strpos( $slug, 'vila-baleira-suites' ) ||
+            ( 0 === (int) $p->post_parent && false !== strpos( $slug, 'suite' ) && false === strpos( $slug, 'room' ) && false === strpos( $slug, 'quarto' ) ) ||
+            false !== strpos( $title, 'vila baleira suites' )
+        );
+
+        if ( ! $is_suites_name ) {
+            continue;
+        }
+
+        $is_hotel_home = ( false !== strpos( $template, 'page-hotel-home.php' ) || 0 === (int) $p->post_parent );
+        if ( ! $is_hotel_home ) {
+            continue;
+        }
+
+        if ( function_exists( 'pll_get_post_language' ) ) {
+            if ( 'en' === pll_get_post_language( $p->ID, 'slug' ) ) {
+                return (int) $p->ID;
+            }
+        }
+    }
+
+    return $pt_hotel_id;
+}
+
+/**
+ * Cria ou atualiza os 3 quartos (CPT vbl_quarto) em Inglês (EN) para o Hotel Vila Baleira Suites:
+ *  1. Comfort Suite
+ *  2. Partial Sea View Comfort Suite
+ *  3. Front Sea View Comfort Suite
+ *
+ * Também vincula automaticamente cada quarto EN ao seu par PT no Polylang.
+ *
+ * @param bool $force Se true, executa mesmo que a flag já exista.
+ * @return array|WP_Error Resultado da criação/atualização.
+ */
+function vbl_seed_hotel_suites_en_quartos( $force = false ) {
+    if ( ! $force && get_option( 'vbl_seeded_suites_en_v1' ) ) {
+        return array( 'skipped' => true );
+    }
+
+    // Garantir que os quartos PT existem antes de criar/vincular os EN
+    if ( ! get_option( 'vbl_seeded_suites_pt_v1' ) ) {
+        vbl_seed_hotel_suites_pt_quartos( false );
+    }
+
+    $pt_hotel_id = vbl_find_suites_pt_hotel_id();
+    $en_hotel_id = vbl_find_suites_en_hotel_id();
+    if ( ! $en_hotel_id ) {
+        return new WP_Error( 'hotel_not_found', 'Página do Hotel Vila Baleira Suites (EN) não encontrada.' );
+    }
+
+    $suites_en_rooms = array(
+        array(
+            'title'       => 'Comfort Suite',
+            'slug'        => 'comfort-suite',
+            'pt_title'    => 'Suite Comfort',
+            'category'    => 'SUITE',
+            'menu_order'  => 1,
+            'description' => "Spacious and functional suites, fully equipped to provide a relaxing stay with direct access to the island's beach.",
+        ),
+        array(
+            'title'       => 'Partial Sea View Comfort Suite',
+            'slug'        => 'partial-sea-view-comfort-suite',
+            'pt_title'    => 'Suite Comfort Vista Parcial Mar',
+            'category'    => 'SUITE',
+            'menu_order'  => 2,
+            'description' => 'Accommodations with lateral ocean views, where modern design and comfort unite to create lasting memories.',
+        ),
+        array(
+            'title'       => 'Front Sea View Comfort Suite',
+            'slug'        => 'front-sea-view-comfort-suite',
+            'pt_title'    => 'Suite Comfort Vista Mar',
+            'category'    => 'SUITE',
+            'menu_order'  => 3,
+            'description' => 'Premium experience in front-facing sea suites, offering stunning panoramic views over the ocean blue and exceptional comfort.',
+        ),
+    );
+
+    $default_amenities = array(
+        'varanda_equipada',
+        'sala_de_estar',
+        'duas_camas',
+        'sofa_cama',
+        'ar_condicionado',
+        'wifi_tv',
+        'mini_frigo_fervedor',
+        'chuveiro',
+        'secador_telefone',
+    );
+
+    $target_hotel_ids = array_values( array_unique( array_filter( array( $en_hotel_id, $pt_hotel_id ) ) ) );
+
+    $all_suites_rooms = get_posts( array(
+        'post_type'        => 'vbl_quarto',
+        'post_status'      => array( 'publish', 'draft', 'private', 'pending' ),
+        'posts_per_page'   => -1,
+        'suppress_filters' => true,
+        'meta_query'       => array(
+            'relation' => 'OR',
+            array(
+                'key'     => 'vbl_quarto_hotel',
+                'value'   => $target_hotel_ids,
+                'compare' => 'IN',
+            ),
+            array(
+                'key'     => 'vbl_quarto_hotel',
+                'value'   => array_map( 'strval', $target_hotel_ids ),
+                'compare' => 'IN',
+            ),
+        ),
+    ) );
+
+    $pt_rooms_by_title = array();
+    $en_rooms_by_title = array();
+
+    foreach ( $all_suites_rooms as $sr ) {
+        $lang = function_exists( 'pll_get_post_language' ) ? pll_get_post_language( $sr->ID, 'slug' ) : '';
+        $norm = function_exists( 'mb_strtolower' )
+            ? mb_strtolower( trim( $sr->post_title ), 'UTF-8' )
+            : strtolower( trim( $sr->post_title ) );
+
+        if ( 'en' === $lang ) {
+            $en_rooms_by_title[ $norm ] = $sr;
+        } else {
+            $pt_rooms_by_title[ $norm ] = $sr;
+        }
+    }
+
+    $hotel_thumb_id     = (int) get_post_thumbnail_id( $en_hotel_id );
+    if ( ! $hotel_thumb_id && $pt_hotel_id ) {
+        $hotel_thumb_id = (int) get_post_thumbnail_id( $pt_hotel_id );
+    }
+    $created_or_updated = array();
+
+    foreach ( $suites_en_rooms as $room_data ) {
+        $norm_en = function_exists( 'mb_strtolower' )
+            ? mb_strtolower( trim( $room_data['title'] ), 'UTF-8' )
+            : strtolower( trim( $room_data['title'] ) );
+        $norm_pt = function_exists( 'mb_strtolower' )
+            ? mb_strtolower( trim( $room_data['pt_title'] ), 'UTF-8' )
+            : strtolower( trim( $room_data['pt_title'] ) );
+
+        $pt_room_id = isset( $pt_rooms_by_title[ $norm_pt ] ) ? (int) $pt_rooms_by_title[ $norm_pt ]->ID : 0;
+        $en_room_id = 0;
+        $action     = 'created';
+
+        // 1. Verificar se já existe quarto EN com este título
+        if ( isset( $en_rooms_by_title[ $norm_en ] ) ) {
+            $en_room_id = (int) $en_rooms_by_title[ $norm_en ]->ID;
+            $action     = 'updated';
+        } elseif ( $pt_room_id && function_exists( 'pll_get_post' ) ) {
+            // 2. Verificar se o quarto PT correspondente já possui uma tradução EN associada
+            $linked_en = (int) pll_get_post( $pt_room_id, 'en' );
+            if ( $linked_en > 0 && $linked_en !== $pt_room_id ) {
+                $en_room_id = $linked_en;
+                $action     = 'updated';
+            }
+        }
+
+        if ( $en_room_id > 0 ) {
+            wp_update_post( array(
+                'ID'           => $en_room_id,
+                'post_title'   => $room_data['title'],
+                'post_name'    => $room_data['slug'],
+                'post_excerpt' => $room_data['description'],
+                'post_content' => $room_data['description'],
+                'post_status'  => 'publish',
+                'menu_order'   => $room_data['menu_order'],
+            ) );
+        } else {
+            $inserted = wp_insert_post( array(
+                'post_type'    => 'vbl_quarto',
+                'post_title'   => $room_data['title'],
+                'post_name'    => $room_data['slug'],
+                'post_excerpt' => $room_data['description'],
+                'post_content' => $room_data['description'],
+                'post_status'  => 'publish',
+                'menu_order'   => $room_data['menu_order'],
+            ), true );
+
+            if ( is_wp_error( $inserted ) ) {
+                continue;
+            }
+            $en_room_id = (int) $inserted;
+        }
+
+        if ( ! $en_room_id ) {
+            continue;
+        }
+
+        // Definir idioma Inglês no Polylang e vincular ao quarto PT correspondente
+        if ( function_exists( 'pll_set_post_language' ) ) {
+            pll_set_post_language( $en_room_id, 'en' );
+        }
+        if ( $pt_room_id && function_exists( 'pll_save_post_translations' ) ) {
+            $translations = function_exists( 'pll_get_post_translations' ) ? pll_get_post_translations( $pt_room_id ) : array();
+            if ( ! is_array( $translations ) ) {
+                $translations = array();
+            }
+            $translations['pt'] = $pt_room_id;
+            $translations['en'] = $en_room_id;
+            pll_save_post_translations( $translations );
+        }
+
+        // Guardar campos ACF / Post Meta do quarto EN
+        update_post_meta( $en_room_id, 'vbl_quarto_hotel', $en_hotel_id );
+        update_post_meta( $en_room_id, '_vbl_quarto_hotel', 'field_vbl_quarto_hotel' );
+
+        update_post_meta( $en_room_id, 'vbl_quarto_categoria', $room_data['category'] );
+        update_post_meta( $en_room_id, '_vbl_quarto_categoria', 'field_vbl_quarto_categoria' );
+
+        update_post_meta( $en_room_id, 'vbl_quarto_btn_label', 'BOOK NOW' );
+        update_post_meta( $en_room_id, '_vbl_quarto_btn_label', 'field_vbl_quarto_btn_label' );
+
+        if ( ! get_post_meta( $en_room_id, 'vbl_quarto_cta_url', true ) ) {
+            update_post_meta( $en_room_id, 'vbl_quarto_cta_url', '#reservas' );
+            update_post_meta( $en_room_id, '_vbl_quarto_cta_url', 'field_vbl_quarto_cta_url' );
+        }
+
+        $curr_amenities = get_post_meta( $en_room_id, 'vbl_quarto_amenities', true );
+        if ( empty( $curr_amenities ) ) {
+            update_post_meta( $en_room_id, 'vbl_quarto_amenities', $default_amenities );
+            update_post_meta( $en_room_id, '_vbl_quarto_amenities', 'field_vbl_quarto_amenities' );
+        }
+
+        // Herdar imagem de destaque do quarto PT ou do Hotel Suites se ainda não tiver
+        $pt_thumb_id = $pt_room_id ? (int) get_post_thumbnail_id( $pt_room_id ) : 0;
+        $thumb_to_use = $pt_thumb_id ?: $hotel_thumb_id;
+        if ( $thumb_to_use && ! has_post_thumbnail( $en_room_id ) ) {
+            set_post_thumbnail( $en_room_id, $thumb_to_use );
+        }
+
+        $created_or_updated[] = array(
+            'id'     => $en_room_id,
+            'title'  => $room_data['title'],
+            'action' => $action,
+        );
+    }
+
+    // Limpar eventual slider manual legado do Hotel Suites EN
+    delete_post_meta( $en_hotel_id, '_vbl_hotel_rooms_slider' );
+
+    update_option( 'vbl_seeded_suites_en_v1', '1', true );
+
+    return array(
+        'hotel_id' => $en_hotel_id,
+        'rooms'    => $created_or_updated,
+    );
+}
+
+/**
+ * Executa automaticamente o seeder dos quartos de Vila Baleira Suites (PT e EN) uma vez,
+ * e permite reexecução manual via /wp-admin/edit.php?post_type=vbl_quarto&vbl_seed_suites_pt=1 ou vbl_seed_suites_en=1
  */
 add_action( 'init', function() {
     if ( ! get_option( 'vbl_seeded_suites_pt_v1' ) ) {
         vbl_seed_hotel_suites_pt_quartos( false );
+    }
+    if ( ! get_option( 'vbl_seeded_suites_en_v1' ) ) {
+        vbl_seed_hotel_suites_en_quartos( false );
     }
 
     if ( is_admin() && isset( $_GET['vbl_seed_suites_pt'] ) && current_user_can( 'edit_posts' ) ) {
@@ -544,8 +826,23 @@ add_action( 'init', function() {
             vbl_seed_hotel_suites_pt_quartos( true );
             wp_safe_redirect( add_query_arg(
                 array(
-                    'post_type'           => 'vbl_quarto',
-                    'vbl_suites_pt_seeded'=> '1',
+                    'post_type'            => 'vbl_quarto',
+                    'vbl_suites_pt_seeded' => '1',
+                ),
+                admin_url( 'edit.php' )
+            ) );
+            exit;
+        }
+    }
+
+    if ( is_admin() && isset( $_GET['vbl_seed_suites_en'] ) && current_user_can( 'edit_posts' ) ) {
+        $nonce = isset( $_GET['_wpnonce'] ) ? sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ) ) : '';
+        if ( wp_verify_nonce( $nonce, 'vbl_seed_suites_en_action' ) ) {
+            vbl_seed_hotel_suites_en_quartos( true );
+            wp_safe_redirect( add_query_arg(
+                array(
+                    'post_type'            => 'vbl_quarto',
+                    'vbl_suites_en_seeded' => '1',
                 ),
                 admin_url( 'edit.php' )
             ) );
