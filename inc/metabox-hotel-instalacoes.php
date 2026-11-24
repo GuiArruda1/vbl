@@ -574,3 +574,149 @@ function vbl_save_hotel_instalacoes_metabox( $post_id ) {
     }
 }
 add_action( 'save_post', 'vbl_save_hotel_instalacoes_metabox' );
+
+/**
+ * Localiza a página "The Hotel" (page-templates/page-hotel-sobre.php)
+ * do Hotel "Vila Baleira Village" em Inglês (EN).
+ *
+ * @return int ID da página ou 0.
+ */
+function vbl_find_village_sobre_en_page() {
+    $pages = get_posts( array(
+        'post_type'        => 'page',
+        'post_status'      => array( 'publish', 'draft', 'private' ),
+        'posts_per_page'   => -1,
+        'suppress_filters' => true,
+    ) );
+
+    foreach ( $pages as $p ) {
+        $template = (string) get_post_meta( $p->ID, '_wp_page_template', true );
+        if ( false === strpos( $template, 'page-hotel-sobre.php' ) ) {
+            continue;
+        }
+        $lang         = function_exists( 'pll_get_post_language' ) ? pll_get_post_language( $p->ID, 'slug' ) : '';
+        $parent_id    = (int) $p->post_parent;
+        $parent_slug  = $parent_id ? strtolower( (string) get_post_field( 'post_name', $parent_id ) ) : '';
+        $parent_title = $parent_id ? strtolower( (string) get_the_title( $parent_id ) ) : '';
+
+        $is_village = ( false !== strpos( $parent_slug, 'village' ) || false !== strpos( $parent_title, 'village' ) );
+        $is_en      = ( 'en' === $lang || false !== strpos( strtolower( (string) $p->post_name ), 'the-hotel' ) );
+
+        if ( $is_village && $is_en ) {
+            return (int) $p->ID;
+        }
+    }
+
+    return 0;
+}
+
+/**
+ * Preenche as 5 Instalações & Áreas Comuns (EN) do Hotel Vila Baleira Village.
+ *
+ * @param bool $force            Se true, executa mesmo que a flag já exista.
+ * @param int  $explicit_page_id Opcional: ID explícito da página (ex: $_GET['post']).
+ * @return array|WP_Error
+ */
+function vbl_seed_village_instalacoes_en( $force = false, $explicit_page_id = 0 ) {
+    if ( ! $force && get_option( 'vbl_seeded_village_inst_en_v1' ) ) {
+        return array( 'skipped' => true );
+    }
+
+    $page_id = $explicit_page_id > 0 ? (int) $explicit_page_id : vbl_find_village_sobre_en_page();
+    if ( ! $page_id ) {
+        return new WP_Error( 'page_not_found', 'Página "The Hotel" de Vila Baleira Village (EN) não encontrada.' );
+    }
+
+    $existing_list = get_post_meta( $page_id, 'vbl_hhotel_instalacoes', true );
+    if ( ! is_array( $existing_list ) ) {
+        $existing_list = array();
+    }
+
+    $pt_list = array();
+    if ( function_exists( 'pll_get_post' ) ) {
+        $pt_id = (int) pll_get_post( $page_id, 'pt' );
+        if ( $pt_id > 0 && $pt_id !== $page_id ) {
+            $pt_meta = get_post_meta( $pt_id, 'vbl_hhotel_instalacoes', true );
+            if ( is_array( $pt_meta ) ) {
+                $pt_list = $pt_meta;
+            }
+        }
+    }
+
+    $fallback_imgs = array(
+        function_exists( 'vbl_img' ) ? vbl_img( 'sobre-fotografia.jpg' ) : '',
+        function_exists( 'vbl_img' ) ? vbl_img( 'hoteis/village-680x400.jpg' ) : '',
+        function_exists( 'vbl_img' ) ? vbl_img( 'hoteis/porto-santo-760x760.jpg' ) : '',
+        function_exists( 'vbl_img' ) ? vbl_img( 'hoteis/porto-santo-520x400.jpg' ) : '',
+        function_exists( 'vbl_img' ) ? vbl_img( 'hoteis/suites-680x400.jpg' ) : '',
+    );
+
+    $raw_items = array(
+        array(
+            'title'       => 'Reception',
+            'description' => 'Open 24 hours a day, the Village reception provides professional assistance throughout your stay. The team is ready to handle requests, from local information to reservation management, ensuring your island experience is seamless and worry-free.',
+        ),
+        array(
+            'title'       => 'Restaurant',
+            'description' => 'At Ortus Restaurant, explore breakfast buffets and à la carte menus for lunch and dinner. Ortus Lobby Bar offers snacks and drinks in a quiet environment with a terrace. We provide vegetarian and vegan alternatives, tailored to your preferences and needs.',
+        ),
+        array(
+            'title'       => 'Bar',
+            'description' => 'Enjoy refreshing drinks and light snacks in a peaceful and sophisticated ambiance, perfect for unwinding after a day under the sun.',
+        ),
+        array(
+            'title'       => 'Swimming Pool',
+            'description' => 'Vila Baleira Village features aquatic leisure areas with outdoor pools set in a serene environment. Surrounded by sun loungers and parasols, they are the ideal spot to enjoy the Porto Santo sun and relax in total comfort and quietness.',
+        ),
+        array(
+            'title'       => 'Beach',
+            'description' => 'Enjoy our exclusive concession with 100 meters of reserved sand on Porto Santo Beach. Equipped with thatched umbrellas and sun loungers, it offers the necessary comfort for a perfect day. With the Summer Bliss Pack, relax and enjoy the crystal-clear waters.',
+        ),
+    );
+
+    $slides = array();
+    foreach ( $raw_items as $idx => $item ) {
+        $prev    = isset( $existing_list[ $idx ] ) && is_array( $existing_list[ $idx ] ) ? $existing_list[ $idx ] : array();
+        $pt_prev = isset( $pt_list[ $idx ] ) && is_array( $pt_list[ $idx ] ) ? $pt_list[ $idx ] : array();
+        $fb_img  = $fallback_imgs[ $idx % count( $fallback_imgs ) ];
+
+        $image    = ! empty( $prev['image'] ) ? $prev['image'] : ( ! empty( $pt_prev['image'] ) ? $pt_prev['image'] : $fb_img );
+        $image_id = ! empty( $prev['image_id'] ) ? $prev['image_id'] : ( ! empty( $pt_prev['image_id'] ) ? $pt_prev['image_id'] : '' );
+        $thumb    = ! empty( $prev['thumb'] ) ? $prev['thumb'] : ( ! empty( $pt_prev['thumb'] ) ? $pt_prev['thumb'] : '' );
+        $thumb_id = ! empty( $prev['thumb_id'] ) ? $prev['thumb_id'] : ( ! empty( $pt_prev['thumb_id'] ) ? $pt_prev['thumb_id'] : '' );
+
+        $slides[] = array(
+            'title'       => $item['title'],
+            'description' => $item['description'],
+            'image'       => $image,
+            'image_id'    => $image_id,
+            'thumb'       => $thumb,
+            'thumb_id'    => $thumb_id,
+        );
+    }
+
+    $cur_sub = (string) get_post_meta( $page_id, 'vbl_hhotel_inst_subtitle', true );
+    if ( empty( $cur_sub ) || false !== stripos( $cur_sub, 'Instala' ) ) {
+        update_post_meta( $page_id, 'vbl_hhotel_inst_subtitle', 'Facilities' );
+    }
+
+    update_post_meta( $page_id, 'vbl_hhotel_instalacoes', $slides );
+    delete_post_meta( $page_id, '_vbl_hhotel_instalacoes' );
+
+    update_option( 'vbl_seeded_village_inst_en_v1', '1', true );
+
+    return array(
+        'page_id' => $page_id,
+        'items'   => $slides,
+    );
+}
+
+add_action( 'init', function() {
+    if ( ! get_option( 'vbl_seeded_village_inst_en_v1' ) ) {
+        vbl_seed_village_instalacoes_en( false );
+    }
+    if ( is_admin() && isset( $_GET['vbl_seed_village_inst_en'] ) && current_user_can( 'edit_pages' ) ) {
+        $explicit_id = isset( $_GET['post'] ) ? absint( $_GET['post'] ) : 0;
+        vbl_seed_village_instalacoes_en( true, $explicit_id );
+    }
+}, 30 );
