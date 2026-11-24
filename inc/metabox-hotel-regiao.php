@@ -754,6 +754,9 @@ add_action( 'init', function() {
     if ( ! get_option( 'vbl_seeded_suites_regiao_en_v1' ) ) {
         vbl_seed_suites_regiao_en( false );
     }
+    if ( ! get_option( 'vbl_seeded_funchal_regiao_en_v1' ) ) {
+        vbl_seed_funchal_regiao_en( false );
+    }
 }, 30 );
 
 /**
@@ -1157,6 +1160,240 @@ function vbl_seed_suites_regiao_en( $force = false ) {
     delete_post_meta( $page_id, '_vbl_hreg_exp_list' );
 
     update_option( 'vbl_seeded_suites_regiao_en_v1', '1', true );
+
+    return array(
+        'hotel_id' => $hotel_id,
+        'page_id'  => $page_id,
+        'items'    => $slides,
+    );
+}
+
+/**
+ * Localiza a página "Region" (page-templates/page-hotel-regiao.php)
+ * pertencente ao Hotel "Vila Baleira Funchal" em Inglês (EN).
+ *
+ * @return array{hotel_id:int, page_id:int}
+ */
+function vbl_find_funchal_regiao_en_page() {
+    // 1. Verificação direta caso a página ID 770 seja a subpágina Region de Funchal (EN)
+    $direct_post = get_post( 770 );
+    if ( $direct_post instanceof WP_Post && 'page' === $direct_post->post_type ) {
+        $tpl = (string) get_post_meta( 770, '_wp_page_template', true );
+        if ( false !== strpos( $tpl, 'page-hotel-regiao.php' ) ) {
+            return array(
+                'hotel_id' => (int) $direct_post->post_parent,
+                'page_id'  => 770,
+            );
+        }
+    }
+
+    $pages = get_posts( array(
+        'post_type'        => 'page',
+        'post_status'      => array( 'publish', 'draft', 'private' ),
+        'posts_per_page'   => -1,
+        'suppress_filters' => true,
+    ) );
+
+    // 2. Procurar página-mãe do Hotel Vila Baleira Funchal em Inglês (EN)
+    $funchal_en_hotel_id = 0;
+    foreach ( $pages as $p ) {
+        $slug     = strtolower( (string) $p->post_name );
+        $title    = strtolower( (string) $p->post_title );
+        $template = (string) get_post_meta( $p->ID, '_wp_page_template', true );
+        $lang     = function_exists( 'pll_get_post_language' ) ? pll_get_post_language( $p->ID, 'slug' ) : '';
+
+        $is_funchal = (
+            false !== strpos( $slug, 'funchal' ) ||
+            false !== strpos( $title, 'funchal' )
+        );
+
+        if ( $is_funchal && 'en' === $lang && ( false !== strpos( $template, 'page-hotel-home.php' ) || 0 === (int) $p->post_parent ) ) {
+            $funchal_en_hotel_id = (int) $p->ID;
+            break;
+        }
+    }
+
+    // 3. Procurar a subpágina Region filha do Hotel Funchal EN
+    if ( $funchal_en_hotel_id > 0 ) {
+        foreach ( $pages as $p ) {
+            if ( (int) $p->post_parent !== $funchal_en_hotel_id ) {
+                continue;
+            }
+            $template = (string) get_post_meta( $p->ID, '_wp_page_template', true );
+            $slug     = strtolower( (string) $p->post_name );
+            $title    = strtolower( (string) $p->post_title );
+
+            if (
+                false !== strpos( $template, 'page-hotel-regiao.php' ) ||
+                false !== strpos( $slug, 'region' ) ||
+                false !== strpos( $slug, 'regiao' ) ||
+                false !== strpos( $title, 'region' ) ||
+                false !== strpos( $title, 'regi' )
+            ) {
+                return array(
+                    'hotel_id' => $funchal_en_hotel_id,
+                    'page_id'  => (int) $p->ID,
+                );
+            }
+        }
+    }
+
+    // 4. Fallback: procurar qualquer página com template page-hotel-regiao.php em EN associada a Funchal
+    foreach ( $pages as $p ) {
+        $template = (string) get_post_meta( $p->ID, '_wp_page_template', true );
+        if ( false === strpos( $template, 'page-hotel-regiao.php' ) ) {
+            continue;
+        }
+        $lang        = function_exists( 'pll_get_post_language' ) ? pll_get_post_language( $p->ID, 'slug' ) : '';
+        $slug        = strtolower( (string) $p->post_name );
+        $parent_id   = (int) $p->post_parent;
+        $parent_slug = $parent_id ? strtolower( (string) get_post_field( 'post_name', $parent_id ) ) : '';
+
+        if ( 'en' === $lang && ( false !== strpos( $parent_slug, 'funchal' ) || false !== strpos( $slug, 'funchal' ) ) ) {
+            return array(
+                'hotel_id' => $parent_id,
+                'page_id'  => (int) $p->ID,
+            );
+        }
+    }
+
+    return array(
+        'hotel_id' => $funchal_en_hotel_id,
+        'page_id'  => 0,
+    );
+}
+
+/**
+ * Preenche o carrossel de Experiências da Região do Hotel Vila Baleira Funchal (EN)
+ * com as 10 experiências oficiais em Inglês.
+ *
+ * @param bool $force Se true, executa mesmo que a flag já exista.
+ * @return array|WP_Error
+ */
+function vbl_seed_funchal_regiao_en( $force = false ) {
+    if ( ! $force && get_option( 'vbl_seeded_funchal_regiao_en_v1' ) ) {
+        return array( 'skipped' => true );
+    }
+
+    $found    = vbl_find_funchal_regiao_en_page();
+    $hotel_id = (int) $found['hotel_id'];
+    $page_id  = (int) $found['page_id'];
+
+    if ( ! $page_id ) {
+        return new WP_Error( 'page_not_found', 'Página de Region do Hotel Vila Baleira Funchal (EN) não encontrada.' );
+    }
+
+    $existing_list = get_post_meta( $page_id, 'vbl_hreg_exp_list', true );
+    if ( ! is_array( $existing_list ) ) {
+        $existing_list = array();
+    }
+
+    // Tentar herdar fotografias da página PT equivalente se as do EN estiverem vazias
+    $pt_list = array();
+    if ( function_exists( 'pll_get_post' ) ) {
+        $pt_page_id = (int) pll_get_post( $page_id, 'pt' );
+        if ( $pt_page_id > 0 && $pt_page_id !== $page_id ) {
+            $pt_meta = get_post_meta( $pt_page_id, 'vbl_hreg_exp_list', true );
+            if ( is_array( $pt_meta ) ) {
+                $pt_list = $pt_meta;
+            }
+        }
+    }
+
+    $fallback_imgs = array(
+        function_exists( 'vbl_img' ) ? vbl_img( 'ilhas-432x240-2.jpg' ) : '',
+        function_exists( 'vbl_img' ) ? vbl_img( 'ilhas-432x240-1.jpg' ) : '',
+        function_exists( 'vbl_img' ) ? vbl_img( 'ilhas-800x720.jpg' ) : '',
+    );
+
+    $raw_experiences = array(
+        array(
+            'title'       => 'Maritime Expeditions and Tours',
+            'description' => "Embark on an unforgettable aquatic adventure with our conventional or glass-bottom boat tours. Explore neighboring islets, marvel at stunning landscapes and crystal-clear waters, while discovering Madeira's fascinating geological and historical maritime heritage along the Atlantic coast.",
+        ),
+        array(
+            'title'       => '4x4 Jeep Adventures',
+            'description' => "Venturing through exciting trails, discover Madeira's most breathtaking landscapes aboard a jeep. Travel along exclusive routes that take you to stunning viewpoints, pass by lush valleys, and explore other iconic landmarks across the island.",
+        ),
+        array(
+            'title'       => 'Horseback Riding',
+            'description' => 'Feel the magic of Madeira with an unforgettable horseback ride up to scenic viewpoints. Explore picturesque trails and breathtaking landscapes, crossing green hills and quiet paths that convey absolute peace and a unique connection to nature.',
+        ),
+        array(
+            'title'       => 'Twizy Ecological Routes',
+            'description' => "Explore the region easily, funly, and completely eco-friendly behind the wheel of a Twizy. Discover Funchal's most beautiful surroundings and scenic roads with this sustainable vehicle, perfect for those seeking an independent and environment-friendly adventure.",
+        ),
+        array(
+            'title'       => 'Nature Buggy Adventure',
+            'description' => "Awaken your adventurous side and explore Madeira's unique landscapes on an off-road trip. Drive a buggy through hidden trails and stunning natural paths, enjoying an exciting, adrenaline-filled experience that will let you see the island from a brand-new perspective.",
+        ),
+        array(
+            'title'       => 'Golf Academy Lessons',
+            'description' => 'Enjoy exclusive golf lessons with a professional instructor at prestigious golf courses in Madeira. Master advanced techniques, improve your handicap, and relax in a stunning setting surrounded by unique natural beauty and incredible views over the Atlantic Ocean.',
+        ),
+        array(
+            'title'       => 'Coastal Kayak Tours',
+            'description' => 'Explore the coastal waters through a relaxing and immersive kayaking adventure. This is a unique opportunity to connect directly with nature, discover hidden coves, and admire stunning scenery while paddling along crystal-clear waters in a memorable setting.',
+        ),
+        array(
+            'title'       => 'Introductory Scuba Dive',
+            'description' => 'Experience autonomous scuba diving for the first time with a safe introduction in the pool. In a controlled environment accompanied by a certified instructor, enjoy your first underwater breaths and feel the true magic of this sport before exploring the ocean.',
+        ),
+        array(
+            'title'       => 'Wine and Vineyards Experience',
+            'description' => "Visit local vineyards and discover the unique history of Madeira wine. Learn about the region's historical context and explore the different grape varieties produced on the island through detailed and enriching explanations that elevate this traditional winemaking legacy.",
+        ),
+        array(
+            'title'       => 'Historical and Cultural Route',
+            'description' => "Explore the island with total convenience and comfort through a panoramic bus tour. This route takes you to Madeira's most important monuments and landmarks, allowing you to discover all its natural charms, historical secrets, and cultural traditions in a relaxing way.",
+        ),
+    );
+
+    $slides = array();
+    foreach ( $raw_experiences as $idx => $exp ) {
+        $prev         = isset( $existing_list[ $idx ] ) && is_array( $existing_list[ $idx ] ) ? $existing_list[ $idx ] : array();
+        $pt_prev      = isset( $pt_list[ $idx ] ) && is_array( $pt_list[ $idx ] ) ? $pt_list[ $idx ] : array();
+        $fallback_img = $fallback_imgs[ $idx % count( $fallback_imgs ) ];
+
+        $image    = '';
+        $image_id = '';
+        if ( ! empty( $prev['image'] ) ) {
+            $image    = $prev['image'];
+            $image_id = ! empty( $prev['image_id'] ) ? $prev['image_id'] : '';
+        } elseif ( ! empty( $pt_prev['image'] ) ) {
+            $image    = $pt_prev['image'];
+            $image_id = ! empty( $pt_prev['image_id'] ) ? $pt_prev['image_id'] : '';
+        } else {
+            $image = $fallback_img;
+        }
+
+        $slides[] = array(
+            'title'       => $exp['title'],
+            'description' => $exp['description'],
+            'image'       => $image,
+            'image_id'    => $image_id,
+        );
+    }
+
+    // Atualizar cabeçalhos da secção em Inglês caso ainda tenham texto placeholder
+    $cur_tagline = (string) get_post_meta( $page_id, 'vbl_hreg_exp_tagline', true );
+    $cur_title   = (string) get_post_meta( $page_id, 'vbl_hreg_exp_title', true );
+    $cur_desc    = (string) get_post_meta( $page_id, 'vbl_hreg_exp_desc', true );
+
+    if ( empty( $cur_tagline ) || false !== stripos( $cur_tagline, 'FAUCIBUS' ) ) {
+        update_post_meta( $page_id, 'vbl_hreg_exp_tagline', 'Pack Experience' );
+    }
+    if ( empty( $cur_title ) || false !== stripos( $cur_title, 'TÍTULO PARA AS' ) ) {
+        update_post_meta( $page_id, 'vbl_hreg_exp_title', 'Atlantic Experiences' );
+    }
+    if ( empty( $cur_desc ) || false !== stripos( $cur_desc, 'faucibus' ) ) {
+        update_post_meta( $page_id, 'vbl_hreg_exp_desc', 'Live unforgettable experiences: jeeps, horseback riding, golf, kayaking or scuba diving. Discover incredible landscapes on unique routes, ideal for romantic moments or family fun.' );
+    }
+
+    update_post_meta( $page_id, 'vbl_hreg_exp_list', $slides );
+    delete_post_meta( $page_id, '_vbl_hreg_exp_list' );
+
+    update_option( 'vbl_seeded_funchal_regiao_en_v1', '1', true );
 
     return array(
         'hotel_id' => $hotel_id,
