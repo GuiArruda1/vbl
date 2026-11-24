@@ -333,7 +333,7 @@ function vbl_register_acf_fields() {
                 'label'        => 'Logótipo do Rodapé do Hotel',
                 'name'         => 'vbl_hotel_footer_logo',
                 'type'         => 'image',
-                'instructions' => 'Logótipo a exibir na secção "Um Hotel do Grupo" do rodapé deste microsite. Se vazio, é usado automaticamente o logótipo padrão dos microsites (<code>uploads/2026/11/logo_microsites.png</code>, com domínio dinâmico).',
+                'instructions' => 'Logótipo a exibir na secção "Um Hotel do Grupo" do rodapé deste microsite. Se vazio, usa o campo "Logo do Rodapé (Microsites)" definido em Aparência → Personalizar → Rodapé (Footer).',
                 'return_format'=> 'url',
                 'preview_size' => 'medium',
             ),

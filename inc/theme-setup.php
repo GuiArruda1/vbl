@@ -431,20 +431,6 @@ function vbl_resolve_hotel_mirai( $hotel_ref = 0 ) {
 }
 
 /**
- * Retorna o URL dinâmico do logótipo padrão para todos os microsites de hotéis.
- * Usa wp_upload_dir() / content_url() para acompanhar automaticamente mudanças de domínio.
- *
- * @return string
- */
-function vbl_get_default_microsite_logo_url() {
-    $uploads = wp_upload_dir();
-    if ( ! empty( $uploads['baseurl'] ) ) {
-        return trailingslashit( $uploads['baseurl'] ) . '2026/11/logo_microsites.png';
-    }
-    return content_url( '/uploads/2026/11/logo_microsites.png' );
-}
-
-/**
  * Remove qualquer resíduo de Lorem Ipsum do campo vbl_hct_form_p2 nos contactos de hotéis
  */
 add_action( 'init', function() {
