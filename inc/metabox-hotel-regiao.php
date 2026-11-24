@@ -760,6 +760,12 @@ add_action( 'init', function() {
     if ( is_admin() && isset( $_GET['vbl_seed_funchal_regiao_en'] ) && current_user_can( 'edit_pages' ) ) {
         vbl_seed_funchal_regiao_en( true );
     }
+    if ( ! get_option( 'vbl_seeded_residences_regiao_pt_v1' ) ) {
+        vbl_seed_residences_regiao_pt( false );
+    }
+    if ( is_admin() && isset( $_GET['vbl_seed_residences_regiao_pt'] ) && current_user_can( 'edit_pages' ) ) {
+        vbl_seed_residences_regiao_pt( true );
+    }
 }, 30 );
 
 /**
@@ -1397,6 +1403,201 @@ function vbl_seed_funchal_regiao_en( $force = false ) {
     delete_post_meta( $page_id, '_vbl_hreg_exp_list' );
 
     update_option( 'vbl_seeded_funchal_regiao_en_v2', '1', true );
+
+    return array(
+        'hotel_id' => $hotel_id,
+        'page_id'  => $page_id,
+        'items'    => $slides,
+    );
+}
+
+/**
+ * Localiza a página "Região" (page-templates/page-hotel-regiao.php)
+ * pertencente ao Hotel "Vila Baleira Residences" em Português (PT).
+ *
+ * @return array{hotel_id:int, page_id:int}
+ */
+function vbl_find_residences_regiao_pt_page() {
+    // 1. Verificação direta pelo path /residences/regiao/
+    $by_path = get_page_by_path( 'residences/regiao', OBJECT, 'page' );
+    if ( $by_path instanceof WP_Post ) {
+        return array(
+            'hotel_id' => (int) $by_path->post_parent,
+            'page_id'  => (int) $by_path->ID,
+        );
+    }
+
+    $pages = get_posts( array(
+        'post_type'        => 'page',
+        'post_status'      => array( 'publish', 'draft', 'private' ),
+        'posts_per_page'   => -1,
+        'suppress_filters' => true,
+    ) );
+
+    // 2. Encontrar a página-mãe do Hotel Vila Baleira Residences (PT)
+    $hotel_candidates = array();
+    foreach ( $pages as $p ) {
+        $slug     = strtolower( (string) $p->post_name );
+        $title    = strtolower( (string) $p->post_title );
+        $template = (string) get_post_meta( $p->ID, '_wp_page_template', true );
+
+        $is_residences = (
+            'residences' === $slug ||
+            'residence' === $slug ||
+            false !== strpos( $slug, 'residence' ) ||
+            false !== strpos( $title, 'residence' )
+        );
+
+        if ( $is_residences && ( false !== strpos( $template, 'page-hotel-home.php' ) || 0 === (int) $p->post_parent ) ) {
+            $hotel_candidates[] = $p;
+        }
+    }
+
+    $hotel_id = 0;
+    if ( ! empty( $hotel_candidates ) ) {
+        if ( function_exists( 'pll_get_post_language' ) ) {
+            foreach ( $hotel_candidates as $cand ) {
+                if ( 'pt' === pll_get_post_language( $cand->ID, 'slug' ) ) {
+                    $hotel_id = (int) $cand->ID;
+                    break;
+                }
+            }
+            if ( ! $hotel_id && function_exists( 'pll_get_post' ) ) {
+                foreach ( $hotel_candidates as $cand ) {
+                    $pt_id = (int) pll_get_post( $cand->ID, 'pt' );
+                    if ( $pt_id > 0 ) {
+                        $hotel_id = $pt_id;
+                        break;
+                    }
+                }
+            }
+        }
+        if ( ! $hotel_id ) {
+            $hotel_id = (int) $hotel_candidates[0]->ID;
+        }
+    }
+
+    if ( ! $hotel_id ) {
+        return array( 'hotel_id' => 0, 'page_id' => 0 );
+    }
+
+    // 3. Encontrar a subpágina Região filha deste Hotel Residences (PT)
+    $reg_page_id = 0;
+    foreach ( $pages as $p ) {
+        if ( (int) $p->post_parent !== $hotel_id ) {
+            continue;
+        }
+        $template = (string) get_post_meta( $p->ID, '_wp_page_template', true );
+        $slug     = strtolower( (string) $p->post_name );
+        $title    = strtolower( (string) $p->post_title );
+
+        if (
+            false !== strpos( $template, 'page-hotel-regiao.php' ) ||
+            false !== strpos( $slug, 'regiao' ) ||
+            false !== strpos( $title, 'regi' )
+        ) {
+            $reg_page_id = (int) $p->ID;
+            break;
+        }
+    }
+
+    return array(
+        'hotel_id' => $hotel_id,
+        'page_id'  => $reg_page_id,
+    );
+}
+
+/**
+ * Preenche o carrossel de Experiências da Região do Hotel Vila Baleira Residences (PT)
+ * com as 10 experiências oficiais.
+ *
+ * @param bool $force Se true, executa mesmo que a flag já exista.
+ * @return array|WP_Error
+ */
+function vbl_seed_residences_regiao_pt( $force = false ) {
+    if ( ! $force && get_option( 'vbl_seeded_residences_regiao_pt_v1' ) ) {
+        return array( 'skipped' => true );
+    }
+
+    $found    = vbl_find_residences_regiao_pt_page();
+    $hotel_id = (int) $found['hotel_id'];
+    $page_id  = (int) $found['page_id'];
+
+    if ( ! $page_id ) {
+        return new WP_Error( 'page_not_found', 'Página de Região do Hotel Vila Baleira Residences (PT) não encontrada.' );
+    }
+
+    $existing_list = get_post_meta( $page_id, 'vbl_hreg_exp_list', true );
+    if ( ! is_array( $existing_list ) ) {
+        $existing_list = array();
+    }
+
+    $fallback_imgs = array(
+        function_exists( 'vbl_img' ) ? vbl_img( 'ilhas-432x240-2.jpg' ) : '',
+        function_exists( 'vbl_img' ) ? vbl_img( 'ilhas-432x240-1.jpg' ) : '',
+        function_exists( 'vbl_img' ) ? vbl_img( 'ilhas-800x720.jpg' ) : '',
+    );
+
+    $raw_experiences = array(
+        array(
+            'title'       => 'Expedições Marítimas e Passeios',
+            'description' => 'Embarque numa aventura aquática inesquecível com os nossos passeios de barco convencionais ou com fundo de vidro. Explore os ilhéus vizinhos da Cal e do Farol, deslumbre-se com paisagens deslumbrantes e águas cristalinas, enquanto descobre a fascinante herança geológica e histórica de Porto Santo.',
+        ),
+        array(
+            'title'       => 'Aventuras de Jipe 4x4',
+            'description' => 'Aventure-se por trilhos emocionantes e descubra as paisagens mais arrebatadoras de Porto Santo a bordo de um jipe. Percorra rotas exclusivas que o levam até ao Miradouro da Ponta da Canavieira, passe pela Fonte de Areia e explore outros pontos de referência emblemáticos da ilha.',
+        ),
+        array(
+            'title'       => 'Passeios a Cavalo',
+            'description' => 'Sinta a magia de Porto Santo com um passeio a cavalo inesquecível até ao Miradouro das Flores. Explore trilhos pitorescos e paisagens de cortar a respiração, cruzando praias de areia dourada, colinas verdejantes e caminhos tranquilos que transmitem uma paz absoluta e uma ligação única à natureza.',
+        ),
+        array(
+            'title'       => 'Rotas Ecológicas em Twizy',
+            'description' => 'Explore a ilha de forma fácil, divertida e totalmente ecológica ao volante de um Twizy. Descubra os miradouros mais bonitos de Porto Santo e as famosas praias douradas com este veículo sustentável, perfeito para quem procura uma aventura independente e amiga do ambiente.',
+        ),
+        array(
+            'title'       => 'Aventura de Buggy na Natureza',
+            'description' => 'Desperte o seu lado aventureiro e explore as paisagens únicas de Porto Santo numa viagem todo-o-terreno. Conduza um buggy por trilhos escondidos e caminhos naturais deslumbrantes, desfrutando de uma experiência emocionante e cheia de adrenalina que lhe permitirá conhecer a ilha de uma perspetiva totalmente nova.',
+        ),
+        array(
+            'title'       => 'Aulas na Academia de Golfe',
+            'description' => 'Desfrute de aulas de golfe exclusivas com um instrutor profissional no prestigiado Campo de Golfe de Porto Santo. Domine técnicas avançadas, melhore o seu handicap e relaxe num cenário deslumbrante, rodeado por uma beleza natural única e vistas incríveis sobre o oceano Atlântico.',
+        ),
+        array(
+            'title'       => 'Passeios de Caiaque na Costa',
+            'description' => 'Explore a costa marítima através de uma aventura de caiaque relaxante e imersiva. Esta é uma oportunidade única para se conectar diretamente com a natureza, descobrir baías escondidas e admirar paisagens deslumbrantes enquanto rema ao longo de águas cristalinas num cenário memorável.',
+        ),
+        array(
+            'title'       => 'Batismo de Mergulho de Introdução',
+            'description' => 'Experimente o mergulho autónomo pela primeira vez com um batismo seguro na piscina. Num ambiente controlado e acompanhado por um instrutor credenciado, desfrute das suas primeiras respirações debaixo de água e sinta a verdadeira magia desta modalidade antes de explorar o oceano.',
+        ),
+        array(
+            'title'       => 'Experiência de Vinho e Vinhas',
+            'description' => 'Visite as vinhas locais e descubra a história única do vinho de Porto Santo. Aprenda sobre o contexto histórico da região e explore as diferentes castas produzidas na ilha, através de explicações detalhadas e enriquecedoras que elevam esta tradição vitivinícola.',
+        ),
+        array(
+            'title'       => 'Rota Histórica e Cultural',
+            'description' => 'Explore a ilha com total conveniência e conforto através de um passeio de autocarro panorâmico. Esta rota leva-o aos monumentos e pontos de referência mais importantes de Porto Santo, permitindo-lhe descobrir todos os seus encantos naturais, segredos históricos e tradições culturais de forma relaxante.',
+        ),
+    );
+
+    $slides = array();
+    foreach ( $raw_experiences as $idx => $exp ) {
+        $prev         = isset( $existing_list[ $idx ] ) && is_array( $existing_list[ $idx ] ) ? $existing_list[ $idx ] : array();
+        $fallback_img = $fallback_imgs[ $idx % count( $fallback_imgs ) ];
+
+        $slides[] = array(
+            'title'       => $exp['title'],
+            'description' => $exp['description'],
+            'image'       => ! empty( $prev['image'] ) ? $prev['image'] : $fallback_img,
+            'image_id'    => ! empty( $prev['image_id'] ) ? $prev['image_id'] : '',
+        );
+    }
+
+    update_post_meta( $page_id, 'vbl_hreg_exp_list', $slides );
+    delete_post_meta( $page_id, '_vbl_hreg_exp_list' );
+
+    update_option( 'vbl_seeded_residences_regiao_pt_v1', '1', true );
 
     return array(
         'hotel_id' => $hotel_id,
