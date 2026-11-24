@@ -766,11 +766,12 @@ add_action( 'init', function() {
     if ( is_admin() && isset( $_GET['vbl_seed_residences_regiao_pt'] ) && current_user_can( 'edit_pages' ) ) {
         vbl_seed_residences_regiao_pt( true );
     }
-    if ( ! get_option( 'vbl_seeded_residences_regiao_en_v1' ) ) {
+    if ( ! get_option( 'vbl_seeded_residences_regiao_en_v2' ) ) {
         vbl_seed_residences_regiao_en( false );
     }
     if ( is_admin() && isset( $_GET['vbl_seed_residences_regiao_en'] ) && current_user_can( 'edit_pages' ) ) {
-        vbl_seed_residences_regiao_en( true );
+        $explicit_id = isset( $_GET['post'] ) ? absint( $_GET['post'] ) : 0;
+        vbl_seed_residences_regiao_en( true, $explicit_id );
     }
 }, 30 );
 
@@ -1700,12 +1701,17 @@ function vbl_find_residences_regiao_en_page() {
         if ( false === strpos( $template, 'page-hotel-regiao.php' ) ) {
             continue;
         }
-        $lang        = function_exists( 'pll_get_post_language' ) ? pll_get_post_language( $p->ID, 'slug' ) : '';
-        $slug        = strtolower( (string) $p->post_name );
-        $parent_id   = (int) $p->post_parent;
-        $parent_slug = $parent_id ? strtolower( (string) get_post_field( 'post_name', $parent_id ) ) : '';
+        $lang         = function_exists( 'pll_get_post_language' ) ? pll_get_post_language( $p->ID, 'slug' ) : '';
+        $slug         = strtolower( (string) $p->post_name );
+        $title        = strtolower( (string) $p->post_title );
+        $parent_id    = (int) $p->post_parent;
+        $parent_slug  = $parent_id ? strtolower( (string) get_post_field( 'post_name', $parent_id ) ) : '';
+        $parent_title = $parent_id ? strtolower( (string) get_post_field( 'post_title', $parent_id ) ) : '';
 
-        if ( 'en' === $lang && ( false !== strpos( $parent_slug, 'residence' ) || false !== strpos( $slug, 'residence' ) ) ) {
+        $is_res = ( false !== strpos( $parent_slug, 'residen' ) || false !== strpos( $parent_title, 'residen' ) || false !== strpos( $slug, 'residen' ) );
+        $is_en  = ( 'en' === $lang || 'region' === $slug || 'region' === $title || false !== strpos( $slug, 'region' ) );
+
+        if ( $is_res && $is_en ) {
             return array(
                 'hotel_id' => $parent_id,
                 'page_id'  => (int) $p->ID,
@@ -1723,17 +1729,23 @@ function vbl_find_residences_regiao_en_page() {
  * Preenche o carrossel de Experiências da Região do Hotel Vila Baleira Residences (EN)
  * com as 10 experiências oficiais em Inglês.
  *
- * @param bool $force Se true, executa mesmo que a flag já exista.
+ * @param bool $force            Se true, executa mesmo que a flag já exista.
+ * @param int  $explicit_page_id Opcional: ID explícito da página (ex: vindo de $_GET['post']).
  * @return array|WP_Error
  */
-function vbl_seed_residences_regiao_en( $force = false ) {
-    if ( ! $force && get_option( 'vbl_seeded_residences_regiao_en_v1' ) ) {
+function vbl_seed_residences_regiao_en( $force = false, $explicit_page_id = 0 ) {
+    if ( ! $force && get_option( 'vbl_seeded_residences_regiao_en_v2' ) ) {
         return array( 'skipped' => true );
     }
 
-    $found    = vbl_find_residences_regiao_en_page();
-    $hotel_id = (int) $found['hotel_id'];
-    $page_id  = (int) $found['page_id'];
+    if ( $explicit_page_id > 0 ) {
+        $page_id  = (int) $explicit_page_id;
+        $hotel_id = (int) get_post_field( 'post_parent', $page_id );
+    } else {
+        $found    = vbl_find_residences_regiao_en_page();
+        $hotel_id = (int) $found['hotel_id'];
+        $page_id  = (int) $found['page_id'];
+    }
 
     if ( ! $page_id ) {
         return new WP_Error( 'page_not_found', 'Página de Region do Hotel Vila Baleira Residences (EN) não encontrada.' );
@@ -1844,7 +1856,7 @@ function vbl_seed_residences_regiao_en( $force = false ) {
     update_post_meta( $page_id, 'vbl_hreg_exp_list', $slides );
     delete_post_meta( $page_id, '_vbl_hreg_exp_list' );
 
-    update_option( 'vbl_seeded_residences_regiao_en_v1', '1', true );
+    update_option( 'vbl_seeded_residences_regiao_en_v2', '1', true );
 
     return array(
         'hotel_id' => $hotel_id,
