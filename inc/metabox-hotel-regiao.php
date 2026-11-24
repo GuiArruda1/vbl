@@ -760,7 +760,7 @@ add_action( 'init', function() {
     if ( is_admin() && isset( $_GET['vbl_seed_funchal_regiao_en'] ) && current_user_can( 'edit_pages' ) ) {
         vbl_seed_funchal_regiao_en( true );
     }
-    if ( ! get_option( 'vbl_seeded_residences_regiao_pt_v1' ) ) {
+    if ( ! get_option( 'vbl_seeded_residences_regiao_pt_v2' ) ) {
         vbl_seed_residences_regiao_pt( false );
     }
     if ( is_admin() && isset( $_GET['vbl_seed_residences_regiao_pt'] ) && current_user_can( 'edit_pages' ) ) {
@@ -1418,7 +1418,19 @@ function vbl_seed_funchal_regiao_en( $force = false ) {
  * @return array{hotel_id:int, page_id:int}
  */
 function vbl_find_residences_regiao_pt_page() {
-    // 1. Verificação direta pelo path /residences/regiao/
+    // 1. Verificação direta caso a página ID 560 seja a subpágina Região de Residences (PT)
+    $direct_post = get_post( 560 );
+    if ( $direct_post instanceof WP_Post && 'page' === $direct_post->post_type ) {
+        $tpl = (string) get_post_meta( 560, '_wp_page_template', true );
+        if ( false !== strpos( $tpl, 'page-hotel-regiao.php' ) ) {
+            return array(
+                'hotel_id' => (int) $direct_post->post_parent,
+                'page_id'  => 560,
+            );
+        }
+    }
+
+    // 2. Verificação pelo path /residences/regiao/
     $by_path = get_page_by_path( 'residences/regiao', OBJECT, 'page' );
     if ( $by_path instanceof WP_Post ) {
         return array(
@@ -1515,7 +1527,7 @@ function vbl_find_residences_regiao_pt_page() {
  * @return array|WP_Error
  */
 function vbl_seed_residences_regiao_pt( $force = false ) {
-    if ( ! $force && get_option( 'vbl_seeded_residences_regiao_pt_v1' ) ) {
+    if ( ! $force && get_option( 'vbl_seeded_residences_regiao_pt_v2' ) ) {
         return array( 'skipped' => true );
     }
 
@@ -1597,7 +1609,7 @@ function vbl_seed_residences_regiao_pt( $force = false ) {
     update_post_meta( $page_id, 'vbl_hreg_exp_list', $slides );
     delete_post_meta( $page_id, '_vbl_hreg_exp_list' );
 
-    update_option( 'vbl_seeded_residences_regiao_pt_v1', '1', true );
+    update_option( 'vbl_seeded_residences_regiao_pt_v2', '1', true );
 
     return array(
         'hotel_id' => $hotel_id,
