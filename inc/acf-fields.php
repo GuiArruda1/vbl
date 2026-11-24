@@ -315,7 +315,7 @@ function vbl_register_acf_fields() {
                 'label'        => 'Logótipo do Header (Branco / Transparente)',
                 'name'         => 'vbl_hotel_header_logo',
                 'type'         => 'image',
-                'instructions' => 'Logótipo a exibir no topo do header transparente. Se vazio, é mantido o formato padrão SVG Vila Baleira + Nome do Hotel.',
+                'instructions' => 'Logótipo a exibir no topo do header transparente. Se vazio, é usado automaticamente o logótipo padrão dos microsites (<code>uploads/2026/11/logo_microsites.png</code>, com domínio dinâmico).',
                 'return_format'=> 'url',
                 'preview_size' => 'medium',
             ),

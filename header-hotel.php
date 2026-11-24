@@ -21,7 +21,13 @@ if (is_singular('vbl_quarto')) {
 $hotel_name = vbl_field('vbl_hotel_name', $current_hotel_id, 'Porto Santo');
 $hotel_booking_url = vbl_field('vbl_hotel_booking_url', $current_hotel_id, '#');
 $hotel_permalink = $current_hotel_id ? get_permalink($current_hotel_id) : get_permalink();
+$default_microsite_logo = function_exists('vbl_get_default_microsite_logo_url')
+  ? vbl_get_default_microsite_logo_url()
+  : content_url('/uploads/2026/11/logo_microsites.png');
 $hotel_header_logo = vbl_field('vbl_hotel_header_logo', get_the_ID()) ?: vbl_field('vbl_hotel_header_logo', $current_hotel_id);
+if (empty($hotel_header_logo)) {
+  $hotel_header_logo = $default_microsite_logo;
+}
 $hotel_header_logo_scrolled = vbl_field('vbl_hotel_header_logo_scrolled', get_the_ID()) ?: vbl_field('vbl_hotel_header_logo_scrolled', $current_hotel_id);
 $hotel_accent_color = function_exists('vbl_get_hotel_accent_color') ? vbl_get_hotel_accent_color($current_hotel_id) : '#00B5B4';
 $hotel_secondary_color = function_exists('vbl_get_hotel_secondary_color') ? vbl_get_hotel_secondary_color($current_hotel_id) : '#E5F8F7';
