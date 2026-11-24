@@ -754,8 +754,11 @@ add_action( 'init', function() {
     if ( ! get_option( 'vbl_seeded_suites_regiao_en_v1' ) ) {
         vbl_seed_suites_regiao_en( false );
     }
-    if ( ! get_option( 'vbl_seeded_funchal_regiao_en_v1' ) ) {
+    if ( ! get_option( 'vbl_seeded_funchal_regiao_en_v2' ) ) {
         vbl_seed_funchal_regiao_en( false );
+    }
+    if ( is_admin() && isset( $_GET['vbl_seed_funchal_regiao_en'] ) && current_user_can( 'edit_pages' ) ) {
+        vbl_seed_funchal_regiao_en( true );
     }
 }, 30 );
 
@@ -1271,7 +1274,7 @@ function vbl_find_funchal_regiao_en_page() {
  * @return array|WP_Error
  */
 function vbl_seed_funchal_regiao_en( $force = false ) {
-    if ( ! $force && get_option( 'vbl_seeded_funchal_regiao_en_v1' ) ) {
+    if ( ! $force && get_option( 'vbl_seeded_funchal_regiao_en_v2' ) ) {
         return array( 'skipped' => true );
     }
 
@@ -1393,7 +1396,7 @@ function vbl_seed_funchal_regiao_en( $force = false ) {
     update_post_meta( $page_id, 'vbl_hreg_exp_list', $slides );
     delete_post_meta( $page_id, '_vbl_hreg_exp_list' );
 
-    update_option( 'vbl_seeded_funchal_regiao_en_v1', '1', true );
+    update_option( 'vbl_seeded_funchal_regiao_en_v2', '1', true );
 
     return array(
         'hotel_id' => $hotel_id,
