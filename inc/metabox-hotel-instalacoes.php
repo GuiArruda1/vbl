@@ -59,48 +59,11 @@ function vbl_render_hotel_instalacoes_metabox( $post ) {
 
     $post_id       = $post->ID;
     $hotel_title   = get_the_title( $post_id );
-    $inst_subtitle = get_post_meta( $post_id, 'vbl_hhotel_inst_subtitle', true );
-    if ( empty( $inst_subtitle ) ) {
-        $inst_subtitle = 'INSTALAÇÕES & ÁREAS COMUNS';
-    }
+    $inst_subtitle = (string) get_post_meta( $post_id, 'vbl_hhotel_inst_subtitle', true );
 
     $instalacoes = get_post_meta( $post_id, 'vbl_hhotel_instalacoes', true );
-
-    // Se estiver vazio, pré-carrega os 3 itens padrão para facilitar a edição
-    if ( empty( $instalacoes ) || ! is_array( $instalacoes ) ) {
-        $default_img_1 = function_exists( 'vbl_img' ) ? vbl_img( 'sobre-fotografia.jpg' ) : '';
-        $default_th_1  = function_exists( 'vbl_img' ) ? vbl_img( 'hoteis/village-680x400.jpg' ) : '';
-        $default_img_2 = function_exists( 'vbl_img' ) ? vbl_img( 'hoteis/porto-santo-760x760.jpg' ) : '';
-        $default_th_2  = function_exists( 'vbl_img' ) ? vbl_img( 'hoteis/porto-santo-520x400.jpg' ) : '';
-        $default_img_3 = function_exists( 'vbl_img' ) ? vbl_img( 'hoteis/suites-680x400.jpg' ) : '';
-        $default_th_3  = function_exists( 'vbl_img' ) ? vbl_img( 'hoteis/funchal-680x400.jpg' ) : '';
-
-        $instalacoes = array(
-            array(
-                'title'       => 'RECEÇÃO',
-                'description' => 'Quam consectetur sodales mattis id commodo urna. In non vitae amet enim. Ipsum vitae felis at purus nam nibh tincidunt. Lorem ipsum dolor sit amet consectetur. Habitasse elementum quam ullamcorper id euismod amet. Nisl ac ultricies augue ante tortor consequat.',
-                'image'       => $default_img_1,
-                'image_id'    => '',
-                'thumb'       => $default_th_1,
-                'thumb_id'    => '',
-            ),
-            array(
-                'title'       => 'PISCINAS & EXTERIORES',
-                'description' => 'Aliquet dignissim dui tortor massa morbi scelerisque mi tincidunt. Quam id morbi tincidunt turpis ut eget amet metus. Lacinia enim sem vitae turpis ornare convallis cras.',
-                'image'       => $default_img_2,
-                'image_id'    => '',
-                'thumb'       => $default_th_2,
-                'thumb_id'    => '',
-            ),
-            array(
-                'title'       => 'SPA & BEM-ESTAR',
-                'description' => 'Elementum mauris dolor vitae at porttitor. Consequat sapien facilisi platea viverra. Facilisi a viverra sollicitudin euismod. Nisl ac ultricies augue ante tortor consequat quam porttitor.',
-                'image'       => $default_img_3,
-                'image_id'    => '',
-                'thumb'       => $default_th_3,
-                'thumb_id'    => '',
-            ),
-        );
+    if ( ! is_array( $instalacoes ) ) {
+        $instalacoes = array();
     }
     ?>
     <style>
@@ -320,7 +283,7 @@ function vbl_render_hotel_instalacoes_metabox( $post ) {
             <div class="vbl-inst-fields">
                 <div>
                     <label>Nome da Instalação (Ex: RECEÇÃO, PISCINAS & EXTERIORES, SPA & BEM-ESTAR)</label>
-                    <input type="text" name="vbl_hhotel_instalacoes[{{INDEX}}][title]" value="" placeholder="Ex: SPA & BEM-ESTAR" required>
+                    <input type="text" name="vbl_hhotel_instalacoes[{{INDEX}}][title]" value="" placeholder="Ex: SPA & BEM-ESTAR">
                 </div>
                 <div>
                     <label>Descrição</label>
@@ -376,7 +339,7 @@ function vbl_render_hotel_instalacoes_metabox( $post ) {
                 <div class="vbl-inst-fields">
                     <div>
                         <label>Nome da Instalação (Ex: RECEÇÃO, PISCINAS & EXTERIORES, SPA & BEM-ESTAR)</label>
-                        <input type="text" name="vbl_hhotel_instalacoes[<?php echo esc_attr( $i ); ?>][title]" value="<?php echo esc_attr( $title ); ?>" placeholder="Ex: SPA & BEM-ESTAR" required>
+                        <input type="text" name="vbl_hhotel_instalacoes[<?php echo esc_attr( $i ); ?>][title]" value="<?php echo esc_attr( $title ); ?>" placeholder="Ex: SPA & BEM-ESTAR">
                     </div>
                     <div>
                         <label>Descrição</label>

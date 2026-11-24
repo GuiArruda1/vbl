@@ -326,7 +326,7 @@ function vbl_render_hotel_rooms_metabox( $post ) {
 
                 <div>
                     <label>Título do Quarto</label>
-                    <input type="text" name="vbl_hotel_rooms_slider[{{INDEX}}][title]" value="" placeholder="Ex: STUDIOS" required>
+                    <input type="text" name="vbl_hotel_rooms_slider[{{INDEX}}][title]" value="" placeholder="Ex: STUDIOS">
                 </div>
 
                 <div>
@@ -427,7 +427,7 @@ function vbl_render_hotel_rooms_metabox( $post ) {
 
                     <div>
                         <label>Título do Quarto</label>
-                        <input type="text" name="vbl_hotel_rooms_slider[<?php echo $i; ?>][title]" value="<?php echo esc_attr( $slide['title'] ); ?>" placeholder="Ex: STUDIOS" required>
+                        <input type="text" name="vbl_hotel_rooms_slider[<?php echo $i; ?>][title]" value="<?php echo esc_attr( $slide['title'] ); ?>" placeholder="Ex: STUDIOS">
                     </div>
 
                     <div>

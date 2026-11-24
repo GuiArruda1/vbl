@@ -164,7 +164,7 @@ function vbl_render_contactos_hoteis_metabox( $post ) {
                 <div class="vbl-ht-grid">
                     <div class="vbl-ht-field">
                         <label>Nome do Hotel (Ex: PORTO SANTO)</label>
-                        <input type="text" class="vbl-ht-title-input" name="vbl_contactos_hoteis[<?php echo $i; ?>][title]" value="<?php echo esc_attr( $title ); ?>" placeholder="Ex: PORTO SANTO" required />
+                        <input type="text" class="vbl-ht-title-input" name="vbl_contactos_hoteis[<?php echo $i; ?>][title]" value="<?php echo esc_attr( $title ); ?>" placeholder="Ex: PORTO SANTO" />
                     </div>
 
                     <div class="vbl-ht-field">
@@ -272,7 +272,7 @@ function vbl_render_contactos_hoteis_metabox( $post ) {
                 '<div class="vbl-ht-grid">' +
                     '<div class="vbl-ht-field">' +
                         '<label>Nome do Hotel (Ex: PORTO SANTO)</label>' +
-                        '<input type="text" class="vbl-ht-title-input" name="vbl_contactos_hoteis[' + rowCount + '][title]" value="" placeholder="Ex: PORTO SANTO" required />' +
+                        '<input type="text" class="vbl-ht-title-input" name="vbl_contactos_hoteis[' + rowCount + '][title]" value="" placeholder="Ex: PORTO SANTO" />' +
                     '</div>' +
                     '<div class="vbl-ht-field">' +
                         '<label>Subtítulo (Ex: VILA BALEIRA)</label>' +

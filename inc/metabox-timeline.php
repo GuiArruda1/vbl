@@ -89,15 +89,15 @@ function vbl_render_timeline_metabox( $post ) {
                 <span class="vbl-drag-handle" title="Arraste para reordenar">☰</span>
                 <div class="vbl-tl-col vbl-tl-col-year">
                     <label>Ano</label>
-                    <input type="text" name="vbl_timeline[<?php echo $i; ?>][year]" value="<?php echo esc_attr( $slide['year'] ); ?>" placeholder="Ex: 2024" required />
+                    <input type="text" name="vbl_timeline[<?php echo $i; ?>][year]" value="<?php echo esc_attr( $slide['year'] ); ?>" placeholder="Ex: 2024" />
                 </div>
                 <div class="vbl-tl-col vbl-tl-col-label">
                     <label>Label</label>
-                    <input type="text" name="vbl_timeline[<?php echo $i; ?>][label]" value="<?php echo esc_attr( $slide['label'] ); ?>" placeholder="Ex: Vila Baleira Funchal" required />
+                    <input type="text" name="vbl_timeline[<?php echo $i; ?>][label]" value="<?php echo esc_attr( $slide['label'] ); ?>" placeholder="Ex: Vila Baleira Funchal" />
                 </div>
                 <div class="vbl-tl-col vbl-tl-col-desc">
                     <label>Descrição</label>
-                    <textarea name="vbl_timeline[<?php echo $i; ?>][desc]" rows="3" required><?php echo esc_textarea( $slide['desc'] ); ?></textarea>
+                    <textarea name="vbl_timeline[<?php echo $i; ?>][desc]" rows="3"><?php echo esc_textarea( $slide['desc'] ); ?></textarea>
                 </div>
                 <button type="button" class="vbl-tl-remove">Remover</button>
             </div>
@@ -139,15 +139,15 @@ function vbl_render_timeline_metabox( $post ) {
                 '<span class="vbl-drag-handle" title="Arraste para reordenar">☰</span>' +
                 '<div class="vbl-tl-col vbl-tl-col-year">' +
                     '<label>Ano</label>' +
-                    '<input type="text" name="vbl_timeline[' + rowCount + '][year]" value="" placeholder="Ex: 2024" required />' +
+                    '<input type="text" name="vbl_timeline[' + rowCount + '][year]" value="" placeholder="Ex: 2024" />' +
                 '</div>' +
                 '<div class="vbl-tl-col vbl-tl-col-label">' +
                     '<label>Label</label>' +
-                    '<input type="text" name="vbl_timeline[' + rowCount + '][label]" value="" placeholder="Ex: Vila Baleira Funchal" required />' +
+                    '<input type="text" name="vbl_timeline[' + rowCount + '][label]" value="" placeholder="Ex: Vila Baleira Funchal" />' +
                 '</div>' +
                 '<div class="vbl-tl-col vbl-tl-col-desc">' +
                     '<label>Descrição</label>' +
-                    '<textarea name="vbl_timeline[' + rowCount + '][desc]" rows="3" required></textarea>' +
+                    '<textarea name="vbl_timeline[' + rowCount + '][desc]" rows="3"></textarea>' +
                 '</div>' +
                 '<button type="button" class="vbl-tl-remove">Remover</button>' +
             '</div>';

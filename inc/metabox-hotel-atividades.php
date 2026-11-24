@@ -279,26 +279,8 @@ function vbl_render_hotel_tratamentos_metabox( $post ) {
 
     $post_id     = $post->ID;
     $tratamentos = get_post_meta( $post_id, 'vbl_hativ_tratamentos_list', true );
-
-    // Se vazio, carrega os padrões da descrição / Figma
-    if ( empty( $tratamentos ) || ! is_array( $tratamentos ) ) {
-        $default_img_1 = function_exists( 'vbl_img' ) ? vbl_img( 'hoteis/porto-santo-520x400.jpg' ) : '';
-        $default_img_2 = function_exists( 'vbl_img' ) ? vbl_img( 'hoteis/suites-680x400.jpg' ) : '';
-
-        $tratamentos = array(
-            array(
-                'title'       => 'PURUS SIT EU<br>RHONCUS FAUCIBUS',
-                'description' => "Aliquet dignissim dui tortor massa morbi scelerisque mi tincidunt. Quam id morbi tincidunt turpis ut eget amet metus.\n\nGravida turpis posuere in mauris. Eget placerat pretium tempus pellentesque amet venenatis enim est. Sed id condimentum eget amet augue pretium et leo integer. Neque eu ut vulputate nisi sed.",
-                'image'       => $default_img_1,
-                'image_id'    => '',
-            ),
-            array(
-                'title'       => 'MASSAGEM DE ASSINATURA<br>VILA BALEIRA',
-                'description' => 'Técnica exclusiva desenvolvida para libertar tensões musculares, aliando óleos essenciais naturais à envolvência do clima calmo das ilhas.',
-                'image'       => $default_img_2,
-                'image_id'    => '',
-            ),
-        );
+    if ( ! is_array( $tratamentos ) ) {
+        $tratamentos = array();
     }
     ?>
     <div class="vbl-rep-wrap">
@@ -320,7 +302,7 @@ function vbl_render_hotel_tratamentos_metabox( $post ) {
                 <div class="vbl-rep-fields">
                     <div>
                         <label>Nome / Título do Tratamento (aceita &lt;br&gt; para quebra de linha):</label>
-                        <input type="text" name="vbl_hativ_tratamentos_list[<?php echo esc_attr( $index ); ?>][title]" value="<?php echo esc_attr( $title ); ?>" placeholder="Ex: PURUS SIT EU<br>RHONCUS FAUCIBUS" required />
+                        <input type="text" name="vbl_hativ_tratamentos_list[<?php echo esc_attr( $index ); ?>][title]" value="<?php echo esc_attr( $title ); ?>" placeholder="Ex: PURUS SIT EU<br>RHONCUS FAUCIBUS" />
                     </div>
                     <div>
                         <label>Descrição do Tratamento (parágrafos separados por linha em branco):</label>
@@ -364,7 +346,7 @@ function vbl_render_hotel_tratamentos_metabox( $post ) {
         <div class="vbl-rep-fields">
             <div>
                 <label>Nome / Título do Tratamento (aceita &lt;br&gt; para quebra de linha):</label>
-                <input type="text" name="vbl_hativ_tratamentos_list[{{INDEX}}][title]" value="" placeholder="Ex: PURUS SIT EU<br>RHONCUS FAUCIBUS" required />
+                <input type="text" name="vbl_hativ_tratamentos_list[{{INDEX}}][title]" value="" placeholder="Ex: PURUS SIT EU<br>RHONCUS FAUCIBUS" />
             </div>
             <div>
                 <label>Descrição do Tratamento (parágrafos separados por linha em branco):</label>
@@ -454,22 +436,8 @@ function vbl_render_hotel_animacao_metabox( $post ) {
     vbl_hotel_atividades_shared_styles();
     $post_id = $post->ID;
     $slides  = get_post_meta( $post_id, 'vbl_hativ_anim_slides', true );
-
-    if ( empty( $slides ) || ! is_array( $slides ) ) {
-        $slides = array(
-            array(
-                'title'       => 'FELIS NAM',
-                'description' => "Quis amet velit cursus etiam ipsum semper augue. Quam consectetur sodales mattis id commodo urna. In non vitae amet enim. Habitasse elementum quam ullamcorper id euismod amet. Ipsum vitae felis at purus nam nibh tincidunt. Lorem ipsum dolor sit amet consectetur.\n\nRhoncus faucibus eu purus quis vitae aliquam vitae. Nunc diam tempus accumsan nulla commodo sagittis.",
-                'image'       => function_exists( 'vbl_img' ) ? vbl_img( 'noticias/noticias-1.jpg' ) : '',
-                'image_id'    => '',
-            ),
-            array(
-                'title'       => 'ESPETÁCULOS NOTURNOS',
-                'description' => "Momentos únicos de celebração com música, teatro e animação para toda a família num palco ao ar livre com vista para o mar.\n\nNisl ac ultricies augue ante tortor consequat quam porttitor. Lacus tempor venenatis hendrerit in.",
-                'image'       => function_exists( 'vbl_img' ) ? vbl_img( 'noticias/noticias-2.jpg' ) : '',
-                'image_id'    => '',
-            ),
-        );
+    if ( ! is_array( $slides ) ) {
+        $slides = array();
     }
     ?>
     <div class="vbl-rep-wrap">
@@ -491,7 +459,7 @@ function vbl_render_hotel_animacao_metabox( $post ) {
                 <div class="vbl-rep-fields">
                     <div>
                         <label>Título do Espaço / Animação:</label>
-                        <input type="text" name="vbl_hativ_anim_slides[<?php echo esc_attr( $index ); ?>][title]" value="<?php echo esc_attr( $title ); ?>" placeholder="Ex: FELIS NAM" required />
+                        <input type="text" name="vbl_hativ_anim_slides[<?php echo esc_attr( $index ); ?>][title]" value="<?php echo esc_attr( $title ); ?>" placeholder="Ex: FELIS NAM" />
                     </div>
                     <div>
                         <label>Descrição:</label>
@@ -534,7 +502,7 @@ function vbl_render_hotel_animacao_metabox( $post ) {
         <div class="vbl-rep-fields">
             <div>
                 <label>Título do Espaço / Animação:</label>
-                <input type="text" name="vbl_hativ_anim_slides[{{INDEX}}][title]" value="" placeholder="Ex: FELIS NAM" required />
+                <input type="text" name="vbl_hativ_anim_slides[{{INDEX}}][title]" value="" placeholder="Ex: FELIS NAM" />
             </div>
             <div>
                 <label>Descrição:</label>
@@ -678,7 +646,7 @@ function vbl_render_hotel_programa_metabox( $post ) {
                 <div class="vbl-rep-fields">
                     <div>
                         <label>Nome / Título da Atividade:</label>
-                        <input type="text" name="vbl_hativ_programa_list[<?php echo esc_attr( $index ); ?>][title]" value="<?php echo esc_attr( $title ); ?>" placeholder="Ex: AQUAGYM & FITNESS" required />
+                        <input type="text" name="vbl_hativ_programa_list[<?php echo esc_attr( $index ); ?>][title]" value="<?php echo esc_attr( $title ); ?>" placeholder="Ex: AQUAGYM & FITNESS" />
                     </div>
                     <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px;">
                         <div>
@@ -731,7 +699,7 @@ function vbl_render_hotel_programa_metabox( $post ) {
         <div class="vbl-rep-fields">
             <div>
                 <label>Nome / Título da Atividade:</label>
-                <input type="text" name="vbl_hativ_programa_list[{{INDEX}}][title]" value="" placeholder="Ex: AQUAGYM & FITNESS" required />
+                <input type="text" name="vbl_hativ_programa_list[{{INDEX}}][title]" value="" placeholder="Ex: AQUAGYM & FITNESS" />
             </div>
             <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px;">
                 <div>
