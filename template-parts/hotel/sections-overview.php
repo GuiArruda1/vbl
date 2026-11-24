@@ -45,108 +45,81 @@ if ( empty( $frase_bg ) ) {
     $frase_bg = vbl_img( 'hoteis/frase-ilhas-bg.jpg' );
 }
 
-// 3. Quartos & Suites
+// 3. Quartos & Suites — carregados automaticamente do CPT vbl_quarto associados a este Hotel
 $rooms_slides = array();
 $hotel_default_img = function_exists( 'vbl_get_hotel_fallback_image' ) 
     ? vbl_get_hotel_fallback_image( $hotel_id ) 
     : ( function_exists( 'vbl_img' ) ? vbl_img( 'hoteis/porto-santo-520x400.jpg' ) : '' );
 
-// 1. Tenta carregar do Meta Box nativo de Quartos do Hotel (WordPress Meta Box API)
-$saved_slider = get_post_meta( $hotel_id, '_vbl_hotel_rooms_slider', true );
-if ( ! empty( $saved_slider ) && is_array( $saved_slider ) ) {
-    foreach ( $saved_slider as $item ) {
-        if ( ! empty( $item['title'] ) || ! empty( $item['image'] ) || ! empty( $item['room_id'] ) ) {
-            $slide_img = ! empty( $item['image'] ) ? $item['image'] : '';
-            if ( empty( $slide_img ) && ! empty( $item['room_id'] ) ) {
-                $slide_img = get_the_post_thumbnail_url( (int) $item['room_id'], 'large' );
-            }
-            if ( empty( $slide_img ) ) {
-                $slide_img = $hotel_default_img;
-            }
-
-            $rooms_slides[] = array(
-                'title'       => ! empty( $item['title'] ) ? $item['title'] : ( ! empty( $item['room_id'] ) ? get_the_title( $item['room_id'] ) : 'ROOM' ),
-                'subtitle'    => ! empty( $item['subtitle'] ) ? $item['subtitle'] : 'ROOMS & SUITES',
-                'description' => ! empty( $item['description'] ) ? $item['description'] : '',
-                'image'       => $slide_img,
-                'url'         => ! empty( $item['url'] ) ? $item['url'] : ( ! empty( $item['room_id'] ) ? get_permalink( $item['room_id'] ) : '#' ),
-            );
-        }
+$current_page_id  = get_the_ID();
+$target_hotel_ids = array_values( array_unique( array_filter( array( $hotel_id, $current_page_id, ( isset( $post->post_parent ) ? $post->post_parent : 0 ) ) ) ) );
+if ( $hotel_id && function_exists( 'pll_get_post_translations' ) ) {
+    $translated_hotels = pll_get_post_translations( $hotel_id );
+    if ( is_array( $translated_hotels ) ) {
+        $target_hotel_ids = array_values( array_unique( array_merge( $target_hotel_ids, array_map( 'intval', array_values( $translated_hotels ) ) ) ) );
     }
 }
 
-// 2. Se o repeater não estiver preenchido, carrega diretamente do CPT vbl_quarto deste hotel
-if ( empty( $rooms_slides ) ) {
-    $current_page_id = get_the_ID();
-    $target_hotel_ids = array_values( array_unique( array_filter( array( $hotel_id, $current_page_id, ( isset( $post->post_parent ) ? $post->post_parent : 0 ) ) ) ) );
-    if ( $hotel_id && function_exists( 'pll_get_post_translations' ) ) {
-        $translated_hotels = pll_get_post_translations( $hotel_id );
-        if ( is_array( $translated_hotels ) ) {
-            $target_hotel_ids = array_values( array_unique( array_merge( $target_hotel_ids, array_map( 'intval', array_values( $translated_hotels ) ) ) ) );
-        }
-    }
-
-    $cpt_room_args = array(
-        'post_type'        => 'vbl_quarto',
-        'post_status'      => 'publish',
-        'posts_per_page'   => 10,
-        'suppress_filters' => false,
-        'meta_query'       => array(
-            'relation' => 'OR',
-            array(
-                'key'     => 'vbl_quarto_hotel',
-                'value'   => $target_hotel_ids,
-                'compare' => 'IN',
-            ),
-            array(
-                'key'     => 'vbl_quarto_hotel',
-                'value'   => array_map( 'strval', $target_hotel_ids ),
-                'compare' => 'IN',
-            ),
+$cpt_room_args = array(
+    'post_type'        => 'vbl_quarto',
+    'post_status'      => 'publish',
+    'posts_per_page'   => -1,
+    'suppress_filters' => false,
+    'meta_query'       => array(
+        'relation' => 'OR',
+        array(
+            'key'     => 'vbl_quarto_hotel',
+            'value'   => $target_hotel_ids,
+            'compare' => 'IN',
         ),
-        'orderby'          => 'menu_order title',
-        'order'            => 'ASC',
-    );
+        array(
+            'key'     => 'vbl_quarto_hotel',
+            'value'   => array_map( 'strval', $target_hotel_ids ),
+            'compare' => 'IN',
+        ),
+    ),
+    'orderby'          => 'menu_order title',
+    'order'            => 'ASC',
+);
 
-    if ( function_exists( 'pll_current_language' ) ) {
-        $current_lang = pll_current_language( 'slug' );
-        if ( ! empty( $current_lang ) ) {
-            $cpt_room_args['lang'] = $current_lang;
-        }
-    }
-
-    $cpt_rooms = get_posts( $cpt_room_args );
-
-    if ( ! empty( $cpt_rooms ) ) {
-        foreach ( $cpt_rooms as $r_post ) {
-            $q_id    = $r_post->ID;
-            $q_thumb = get_the_post_thumbnail_url( $q_id, 'large' );
-            if ( empty( $q_thumb ) ) {
-                $q_thumb = $hotel_default_img;
-            }
-            
-            $desc = function_exists( 'vbl_field' ) ? vbl_field( 'vbl_quarto_capacidade', $q_id ) : '';
-            if ( empty( $desc ) ) {
-                $desc = get_the_excerpt( $q_id );
-            }
-            if ( empty( $desc ) ) {
-                $desc = 'Quartos amplos, com varanda privada e uma decoração descontraída em cores vivas e muita luz.';
-            }
-
-            $rooms_slides[] = array(
-                'title'       => get_the_title( $q_id ),
-                'subtitle'    => ( function_exists( 'vbl_field' ) ? vbl_field( 'vbl_quarto_categoria', $q_id, 'ROOMS & SUITES' ) : 'ROOMS & SUITES' ) ?: 'ROOMS & SUITES',
-                'description' => wp_strip_all_tags( $desc ),
-                'image'       => $q_thumb,
-                'url'         => get_permalink( $q_id ),
-            );
-        }
+if ( function_exists( 'pll_current_language' ) ) {
+    $current_lang = pll_current_language( 'slug' );
+    if ( ! empty( $current_lang ) ) {
+        $cpt_room_args['lang'] = $current_lang;
     }
 }
 
-// Fallbacks se não houver quartos suficientes
-if ( count( $rooms_slides ) < 2 ) {
-    $fallback_rooms = array(
+$cpt_rooms = get_posts( $cpt_room_args );
+
+if ( ! empty( $cpt_rooms ) ) {
+    foreach ( $cpt_rooms as $r_post ) {
+        $q_id    = $r_post->ID;
+        $q_thumb = get_the_post_thumbnail_url( $q_id, 'large' );
+        if ( empty( $q_thumb ) ) {
+            $q_thumb = $hotel_default_img;
+        }
+
+        $desc = function_exists( 'vbl_field' ) ? vbl_field( 'vbl_quarto_capacidade', $q_id ) : '';
+        if ( empty( $desc ) ) {
+            $desc = get_the_excerpt( $q_id );
+        }
+        if ( empty( $desc ) ) {
+            $desc = 'Quartos amplos, com varanda privada e uma decoração descontraída em cores vivas e muita luz.';
+        }
+
+        $rooms_slides[] = array(
+            'title'       => get_the_title( $q_id ),
+            'subtitle'    => ( function_exists( 'vbl_field' ) ? vbl_field( 'vbl_quarto_categoria', $q_id, 'ROOMS & SUITES' ) : 'ROOMS & SUITES' ) ?: 'ROOMS & SUITES',
+            'description' => wp_strip_all_tags( $desc ),
+            'image'       => $q_thumb,
+            'url'         => get_permalink( $q_id ),
+        );
+    }
+}
+
+// Fallbacks apenas se o hotel ainda não tiver nenhum quarto publicado no CPT
+if ( empty( $rooms_slides ) ) {
+    $rooms_slides = array(
         array(
             'title'       => 'TWIN DELUXE<br>VISTA MAR',
             'subtitle'    => 'ROOMS & SUITES',
@@ -169,13 +142,6 @@ if ( count( $rooms_slides ) < 2 ) {
             'url'         => '#',
         ),
     );
-    if ( empty( $rooms_slides ) ) {
-        $rooms_slides = $fallback_rooms;
-    } else {
-        foreach ( $fallback_rooms as $fb ) {
-            $rooms_slides[] = $fb;
-        }
-    }
 }
 
 $rooms_btn_label = vbl_field( 'vbl_hhome_rooms_btn_label', false, 'DESCOBRIR' );

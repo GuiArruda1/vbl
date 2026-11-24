@@ -14,30 +14,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * 1. Registar a Meta Box
+ * 1. Registar a Meta Box (desativado — os quartos da Homepage e da página Rooms & Suites
+ *    são carregados automaticamente a partir do CPT vbl_quarto filtrados por Hotel Pai e idioma)
  */
 function vbl_add_hotel_rooms_metabox( $post_type, $post ) {
-    if ( 'page' !== $post_type || ! ( $post instanceof WP_Post ) ) {
-        return;
-    }
-    
-    $template = get_post_meta( $post->ID, '_wp_page_template', true );
-    if ( empty( $template ) ) {
-        $template = get_page_template_slug( $post->ID );
-    }
-
-    $is_hotel_home = ( 'page-templates/page-hotel-home.php' === $template || strpos( (string) $template, 'page-hotel-home.php' ) !== false );
-
-    if ( $is_hotel_home ) {
-        add_meta_box(
-            'vbl_hotel_rooms_slider_metabox',
-            '⭐ Slider de Quartos & Suites deste Hotel',
-            'vbl_render_hotel_rooms_metabox',
-            'page',
-            'normal',
-            'default'
-        );
-    }
+    return;
 }
 add_action( 'add_meta_boxes', 'vbl_add_hotel_rooms_metabox', 10, 2 );
 

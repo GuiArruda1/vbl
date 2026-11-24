@@ -373,7 +373,7 @@ function vbl_register_acf_fields() {
 
             /* Tab: Quartos & Suites */
             array( 'key' => 'field_vbl_hhome_tab_rooms', 'label' => 'Destaque Quartos', 'name' => '', 'type' => 'tab' ),
-            array( 'key' => 'field_vbl_hhome_rooms_notice', 'label' => 'Slider de Quartos & Suites', 'name' => '', 'type' => 'message', 'message' => 'A gestão dos quartos que surgem no slider é feita na caixa <strong>"⭐ Slider de Quartos & Suites (Microsite)"</strong> (Meta Box nativa do WordPress) abaixo nesta página, onde pode puxar automaticamente os quartos deste hotel, fotos e reordenar.' ),
+            array( 'key' => 'field_vbl_hhome_rooms_notice', 'label' => 'Slider de Quartos & Suites (Automático)', 'name' => '', 'type' => 'message', 'message' => 'Os quartos apresentados neste slider são carregados <strong>automaticamente</strong> a partir do Custom Post Type <strong><a href="' . admin_url( 'edit.php?post_type=vbl_quarto' ) . '">Quartos</a></strong> (<code>vbl_quarto</code>), filtrados pelo hotel pai e idioma atual.<br>Para adicionar, editar, traduzir ou reordenar quartos, aceda ao menu <strong>Quartos</strong> na barra lateral do WordPress.' ),
             array( 'key' => 'field_vbl_hhome_rooms_btn_label', 'label' => 'Texto do Link (Padrão)', 'name' => 'vbl_hhome_rooms_btn_label', 'type' => 'text', 'default_value' => 'DESCOBRIR' ),
 
             /* Tab: Instalações & Experiências */
