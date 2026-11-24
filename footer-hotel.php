@@ -18,7 +18,12 @@ if ( is_singular( 'vbl_quarto' ) ) {
 }
 
 $hotel_name        = vbl_field( 'vbl_hotel_name', $current_hotel_id, 'Porto Santo' );
-$hotel_footer_logo = vbl_field( 'vbl_hotel_footer_logo', $current_hotel_id );
+$hotel_footer_logo = vbl_field( 'vbl_hotel_footer_logo', get_the_ID() ) ?: vbl_field( 'vbl_hotel_footer_logo', $current_hotel_id );
+if ( empty( $hotel_footer_logo ) ) {
+    $hotel_footer_logo = function_exists( 'vbl_get_default_microsite_logo_url' )
+        ? vbl_get_default_microsite_logo_url()
+        : content_url( '/uploads/2026/11/logo_microsites.png' );
+}
 $hotel_color       = function_exists( 'vbl_get_hotel_accent_color' ) ? vbl_get_hotel_accent_color( $current_hotel_id ) : '#00B5B4';
 
 $address   = vbl_opt( 'address', "Sítio do Cabeço da Ponta, Apartado 243,\n9401-909 Porto Santo" );
@@ -97,11 +102,15 @@ $youtube   = vbl_opt( 'youtube', 'https://www.youtube.com/@VilaBaleiraHotels' );
           <p class="font-medium text-[14px] tracking-[1.4px] uppercase text-[var(--vbl-hotel-accent)]"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'UM HOTEL DO GRUPO' ) : 'UM HOTEL DO GRUPO' ); ?></p>
           
           <a href="<?php echo esc_url( function_exists( 'pll_home_url' ) ? pll_home_url() : home_url( '/' ) ); ?>" title="Vila Baleira Hotels" class="flex items-center gap-4 lg:gap-5 flex-shrink-0 hover:opacity-80 transition-opacity">
-            <img src="<?php echo vbl_img('footer-logo-icon.svg'); ?>" alt="" class="w-10 lg:w-[48px] h-auto">
-            <div class="flex flex-col gap-1 lg:gap-1.5">
-              <img src="<?php echo vbl_img('footer-logo-text.svg'); ?>" alt="Vila Baleira" class="h-[10px] lg:h-[12px] w-auto">
-              <img src="<?php echo vbl_img('footer-logo-subtitle.svg'); ?>" alt="The Essence of Hospitality" class="h-[4px] lg:h-[5px] w-auto">
-            </div>
+            <?php if ( ! empty( $hotel_footer_logo ) ) : ?>
+              <img src="<?php echo esc_url( $hotel_footer_logo ); ?>" alt="Vila Baleira" class="h-12 lg:h-14 w-auto max-w-[240px] object-contain">
+            <?php else : ?>
+              <img src="<?php echo vbl_img('footer-logo-icon.svg'); ?>" alt="" class="w-10 lg:w-[48px] h-auto">
+              <div class="flex flex-col gap-1 lg:gap-1.5">
+                <img src="<?php echo vbl_img('footer-logo-text.svg'); ?>" alt="Vila Baleira" class="h-[10px] lg:h-[12px] w-auto">
+                <img src="<?php echo vbl_img('footer-logo-subtitle.svg'); ?>" alt="The Essence of Hospitality" class="h-[4px] lg:h-[5px] w-auto">
+              </div>
+            <?php endif; ?>
           </a>
         </div>
         
