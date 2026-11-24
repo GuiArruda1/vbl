@@ -361,9 +361,32 @@ $frase_bg    = vbl_field( 'vbl_quarto_frase_bg', $post_id, vbl_img( 'hoteis/fras
 if ( empty( $frase_bg ) ) {
     $frase_bg = vbl_img( 'hoteis/frase-ilhas-bg.jpg' );
 }
-$frase_line1 = vbl_field( 'vbl_quarto_frase_line1', $post_id, 'LOREM IPSUM DOLOR' );
-$frase_line2 = vbl_field( 'vbl_quarto_frase_line2', $post_id, 'ENIM VITAE TURPIS' );
-$frase_line3 = vbl_field( 'vbl_quarto_frase_line3', $post_id, 'LACUS EGET UT SIT.' );
+
+$is_en_room = ( function_exists( 'pll_get_post_language' ) && 'en' === pll_get_post_language( $post_id, 'slug' ) )
+    || ( function_exists( 'pll_current_language' ) && 'en' === pll_current_language( 'slug' ) );
+$is_ps_room = ( isset( $mirai_hotel['slug'] ) && 'porto-santo' === $mirai_hotel['slug'] )
+    || ( false !== stripos( (string) $hotel_name, 'porto santo' ) )
+    || ( false !== stripos( (string) get_post_field( 'post_name', $post_id ), '-ps' ) );
+
+$default_frase_l1 = ( $is_en_room && $is_ps_room ) ? 'Your ultimate' : 'LOREM IPSUM DOLOR';
+$default_frase_l2 = ( $is_en_room && $is_ps_room ) ? 'Atlantic ocean-view' : 'ENIM VITAE TURPIS';
+$default_frase_l3 = ( $is_en_room && $is_ps_room ) ? 'sanctuary.' : 'LACUS EGET UT SIT.';
+
+$frase_line1 = vbl_field( 'vbl_quarto_frase_line1', $post_id, $default_frase_l1 );
+$frase_line2 = vbl_field( 'vbl_quarto_frase_line2', $post_id, $default_frase_l2 );
+$frase_line3 = vbl_field( 'vbl_quarto_frase_line3', $post_id, $default_frase_l3 );
+
+if ( $is_en_room && $is_ps_room ) {
+    if ( empty( $frase_line1 ) || false !== stripos( $frase_line1, 'LOREM IPSUM' ) ) {
+        $frase_line1 = $default_frase_l1;
+    }
+    if ( empty( $frase_line2 ) || false !== stripos( $frase_line2, 'ENIM VITAE TURPIS' ) ) {
+        $frase_line2 = $default_frase_l2;
+    }
+    if ( empty( $frase_line3 ) || false !== stripos( $frase_line3, 'LACUS EGET' ) ) {
+        $frase_line3 = $default_frase_l3;
+    }
+}
 ?>
 
 <main class="w-full bg-white text-black overflow-hidden">

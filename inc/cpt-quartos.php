@@ -641,4 +641,83 @@ add_action( 'init', function() {
     if ( ! get_option( 'vbl_seeded_funchal_en_v1' ) ) {
         vbl_seed_hotel_funchal_en_quartos( false );
     }
+    if ( ! get_option( 'vbl_seeded_ps_en_frase_v1' ) ) {
+        vbl_seed_porto_santo_en_rooms_frase( false );
+    }
+    if ( is_admin() && isset( $_GET['vbl_seed_ps_en_frase'] ) && current_user_can( 'edit_posts' ) ) {
+        vbl_seed_porto_santo_en_rooms_frase( true );
+    }
 }, 30 );
+
+/**
+ * Define a frase padrão "Your ultimate / Atlantic ocean-view / sanctuary."
+ * no separador "Banner Frase Final" de todos os quartos em Inglês (EN) de Vila Baleira Porto Santo
+ * que ainda tenham o texto placeholder Lorem Ipsum ou estejam vazios.
+ *
+ * @param bool $force Se true, executa mesmo que a flag já exista.
+ * @return int Número de quartos atualizados.
+ */
+function vbl_seed_porto_santo_en_rooms_frase( $force = false ) {
+    if ( ! $force && get_option( 'vbl_seeded_ps_en_frase_v1' ) ) {
+        return 0;
+    }
+
+    $rooms = get_posts( array(
+        'post_type'        => 'vbl_quarto',
+        'post_status'      => array( 'publish', 'draft', 'private', 'pending' ),
+        'posts_per_page'   => -1,
+        'suppress_filters' => true,
+    ) );
+
+    $updated = 0;
+
+    foreach ( $rooms as $room ) {
+        $lang = function_exists( 'pll_get_post_language' ) ? pll_get_post_language( $room->ID, 'slug' ) : '';
+        if ( 'en' !== $lang ) {
+            continue;
+        }
+
+        $hotel_id = (int) get_post_meta( $room->ID, 'vbl_quarto_hotel', true );
+        $hotel_slug  = $hotel_id ? strtolower( (string) get_post_field( 'post_name', $hotel_id ) ) : '';
+        $hotel_title = $hotel_id ? strtolower( (string) get_the_title( $hotel_id ) ) : '';
+        $room_slug   = strtolower( (string) $room->post_name );
+
+        $is_porto_santo = (
+            false !== strpos( $hotel_slug, 'porto-santo' ) ||
+            false !== strpos( $hotel_title, 'porto santo' ) ||
+            ( '-ps' === substr( $room_slug, -3 ) )
+        );
+
+        if ( ! $is_porto_santo ) {
+            continue;
+        }
+
+        $l1 = (string) get_post_meta( $room->ID, 'vbl_quarto_frase_line1', true );
+        $l2 = (string) get_post_meta( $room->ID, 'vbl_quarto_frase_line2', true );
+        $l3 = (string) get_post_meta( $room->ID, 'vbl_quarto_frase_line3', true );
+
+        $changed = false;
+        if ( empty( $l1 ) || false !== stripos( $l1, 'LOREM IPSUM' ) ) {
+            update_post_meta( $room->ID, 'vbl_quarto_frase_line1', 'Your ultimate' );
+            update_post_meta( $room->ID, '_vbl_quarto_frase_line1', 'field_vbl_quarto_frase_line1' );
+            $changed = true;
+        }
+        if ( empty( $l2 ) || false !== stripos( $l2, 'ENIM VITAE TURPIS' ) ) {
+            update_post_meta( $room->ID, 'vbl_quarto_frase_line2', 'Atlantic ocean-view' );
+            update_post_meta( $room->ID, '_vbl_quarto_frase_line2', 'field_vbl_quarto_frase_line2' );
+            $changed = true;
+        }
+        if ( empty( $l3 ) || false !== stripos( $l3, 'LACUS EGET' ) ) {
+            update_post_meta( $room->ID, 'vbl_quarto_frase_line3', 'sanctuary.' );
+            update_post_meta( $room->ID, '_vbl_quarto_frase_line3', 'field_vbl_quarto_frase_line3' );
+            $changed = true;
+        }
+
+        if ( $changed ) {
+            $updated++;
+        }
+    }
+
+    update_option( 'vbl_seeded_ps_en_frase_v1', '1', true );
+    return $updated;
+}
