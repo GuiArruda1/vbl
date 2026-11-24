@@ -649,3 +649,14 @@ add_action( 'pre_get_posts', function( $query ) {
         }
     }
 }, 999 );
+
+/**
+ * Impedir que a sincronização de "Custom fields" do Polylang sobrescreva campos ACF
+ * ou sliders traduzíveis entre PT e EN ao gravar uma página.
+ */
+add_filter( 'pll_copy_post_metas', function( $metas, $sync ) {
+    if ( $sync ) {
+        return array();
+    }
+    return $metas;
+}, 999, 2 );

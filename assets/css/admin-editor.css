@@ -155,6 +155,7 @@ body.vbl-no-editor .edit-post-meta-boxes-main {
 }
 
 .postbox.vbl-embedded-metabox {
+    display: block !important;
     margin: 0 !important;
     border: 1px solid #cbd5e1 !important;
     border-radius: 8px !important;

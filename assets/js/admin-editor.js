@@ -37,7 +37,7 @@
                 return;
             }
 
-            $metabox.removeClass('closed').addClass('vbl-embedded-metabox');
+            $metabox.removeClass('closed hide-if-js').show().addClass('vbl-embedded-metabox');
             $input.addClass('vbl-has-embedded-metabox').empty().append($metabox);
             movedAny = true;
         });
