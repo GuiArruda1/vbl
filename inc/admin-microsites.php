@@ -373,6 +373,8 @@ function vbl_get_mega_menu_hotels() {
                 $clean_title = stripos( $custom_name, 'Vila Baleira' ) === false ? 'Vila Baleira ' . $custom_name : $custom_name;
             }
 
+            $clean_title = preg_replace( '/\bResidences\b/i', 'Residence', $clean_title );
+
             $hotels[] = array(
                 'id'        => $p->ID,
                 'name'      => $clean_title,
@@ -392,7 +394,7 @@ function vbl_get_mega_menu_hotels() {
             array( 'color' => '#D7A584', 'slug' => 'suites', 'tagline' => 'The essence of Tranquility', 'name' => 'Vila Baleira Suites', 'short_name' => 'Suites', 'img' => vbl_img( 'hoteis/suites-680x400.jpg' ), 'url' => home_url( '/suites/' ) ),
             array( 'color' => '#658D72', 'slug' => 'village', 'tagline' => 'The essence of Exclusivity', 'name' => 'Vila Baleira Village', 'short_name' => 'Village', 'img' => vbl_img( 'hoteis/village-680x400.jpg' ), 'url' => home_url( '/village/' ) ),
             array( 'color' => '#F0B85E', 'slug' => 'funchal', 'tagline' => 'The essence of Discovery', 'name' => 'Vila Baleira Funchal', 'short_name' => 'Funchal', 'img' => vbl_img( 'hoteis/funchal-680x400.jpg' ), 'url' => home_url( '/funchal/' ) ),
-            array( 'color' => '#BC945B', 'slug' => 'residences', 'tagline' => 'The essence of Comfort', 'name' => 'Vila Baleira Residence', 'short_name' => 'Residence', 'img' => vbl_img( 'hoteis/residence-680x400.jpg' ), 'url' => home_url( '/residences/' ) ),
+            array( 'color' => '#BC945B', 'slug' => 'residence', 'tagline' => 'The essence of Comfort', 'name' => 'Vila Baleira Residence', 'short_name' => 'Residence', 'img' => vbl_img( 'hoteis/residence-680x400.jpg' ), 'url' => home_url( '/residence/' ) ),
         );
     }
 
@@ -711,4 +713,113 @@ add_filter( 'get_user_option_meta-box-order_page', 'vbl_enforce_acf_tabs_first_m
 add_filter( 'get_user_option_meta-box-order_vbl_quarto', 'vbl_enforce_acf_tabs_first_metabox', 999 );
 add_filter( 'get_user_option_meta-box-order_vbl_noticia', 'vbl_enforce_acf_tabs_first_metabox', 999 );
 add_filter( 'get_user_option_meta-box-order_vbl_experiencia', 'vbl_enforce_acf_tabs_first_metabox', 999 );
+
+/**
+ * 7. Migração: Retificar "Residences" (plural) para "Residence" (singular)
+ *    em slugs (/residences/ -> /residence/), títulos, menus e links ACF,
+ *    com redirect 301 automático de /residences/... para /residence/...
+ */
+function vbl_fix_residence_singular_migration( $force = false ) {
+    if ( ! $force && get_option( 'vbl_fixed_residence_singular_v1' ) ) {
+        return;
+    }
+
+    global $wpdb;
+
+    // 1. Atualizar páginas e itens de menu com slug ou título "Residences"
+    $posts = get_posts( array(
+        'post_type'        => array( 'page', 'nav_menu_item' ),
+        'post_status'      => array( 'publish', 'draft', 'private', 'pending' ),
+        'posts_per_page'   => -1,
+        'suppress_filters' => true,
+    ) );
+
+    $did_slug_change = false;
+
+    foreach ( $posts as $p ) {
+        $new_title = preg_replace( '/\bResidences\b/', 'Residence', $p->post_title );
+        $new_title = preg_replace( '/\bRESIDENCES\b/', 'RESIDENCE', $new_title );
+        $new_title = preg_replace( '/\bresidences\b/', 'residence', $new_title );
+
+        $new_slug = $p->post_name;
+        if ( 'page' === $p->post_type ) {
+            if ( 'residences' === $p->post_name ) {
+                $new_slug = 'residence';
+            } elseif ( 'vila-baleira-residences' === $p->post_name ) {
+                $new_slug = 'vila-baleira-residence';
+            } elseif ( preg_match( '/^residences(-\d+)?$/', $p->post_name ) ) {
+                $new_slug = preg_replace( '/^residences/', 'residence', $p->post_name );
+            }
+        }
+
+        if ( $new_title !== $p->post_title || $new_slug !== $p->post_name ) {
+            $update_args = array( 'ID' => $p->ID );
+            if ( $new_title !== $p->post_title ) {
+                $update_args['post_title'] = $new_title;
+            }
+            if ( $new_slug !== $p->post_name ) {
+                $update_args['post_name'] = $new_slug;
+                $did_slug_change = true;
+            }
+            wp_update_post( $update_args );
+        }
+    }
+
+    // 2. Atualizar metadados ACF e links de menu com "Residences" ou "/residences/"
+    if ( isset( $wpdb->postmeta ) ) {
+        $meta_rows = $wpdb->get_results(
+            "SELECT meta_id, post_id, meta_key, meta_value FROM {$wpdb->postmeta}
+             WHERE meta_key IN ('vbl_hotel_name', 'vbl_hoteis_residence_title', 'vbl_hoteis_residence_link', '_menu_item_url')
+             AND (meta_value LIKE '%residences%' OR meta_value LIKE '%Residences%' OR meta_value LIKE '%RESIDENCES%')"
+        );
+
+        if ( ! empty( $meta_rows ) ) {
+            foreach ( $meta_rows as $row ) {
+                $val = (string) $row->meta_value;
+                if ( in_array( $row->meta_key, array( 'vbl_hoteis_residence_link', '_menu_item_url' ), true ) ) {
+                    $new_val = str_ireplace( '/residences/', '/residence/', $val );
+                    $new_val = preg_replace( '#/residences$#i', '/residence', $new_val );
+                } else {
+                    $new_val = preg_replace( '/\bResidences\b/', 'Residence', $val );
+                    $new_val = preg_replace( '/\bRESIDENCES\b/', 'RESIDENCE', $new_val );
+                    $new_val = preg_replace( '/\bresidences\b/', 'residence', $new_val );
+                }
+
+                if ( $new_val !== $val ) {
+                    update_post_meta( (int) $row->post_id, $row->meta_key, $new_val );
+                }
+            }
+        }
+    }
+
+    if ( $did_slug_change ) {
+        flush_rewrite_rules( false );
+    }
+
+    update_option( 'vbl_fixed_residence_singular_v1', '1', true );
+}
+add_action( 'init', function() {
+    if ( ! get_option( 'vbl_fixed_residence_singular_v1' ) ) {
+        vbl_fix_residence_singular_migration( false );
+    }
+    if ( is_admin() && isset( $_GET['vbl_fix_residence_singular'] ) && current_user_can( 'manage_options' ) ) {
+        vbl_fix_residence_singular_migration( true );
+    }
+}, 25 );
+
+/**
+ * Redirect 301 automático de /residences/... e /en/residences/... para /residence/...
+ */
+add_action( 'template_redirect', function() {
+    if ( is_admin() || empty( $_SERVER['REQUEST_URI'] ) ) {
+        return;
+    }
+    $req_uri = wp_unslash( $_SERVER['REQUEST_URI'] );
+    if ( preg_match( '#^(/en)?/residences(/.*)?$#i', $req_uri, $m ) ) {
+        $prefix = isset( $m[1] ) ? $m[1] : '';
+        $rest   = isset( $m[2] ) ? $m[2] : '/';
+        wp_safe_redirect( home_url( $prefix . '/residence' . $rest ), 301 );
+        exit;
+    }
+}, 1 );
 

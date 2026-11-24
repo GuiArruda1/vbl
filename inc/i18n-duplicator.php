@@ -208,8 +208,10 @@ function vbl_get_i18n_dictionaries() {
 			'vila-baleira-suites'                => array( 'title' => 'Vila Baleira Suites', 'slug' => 'vila-baleira-suites' ),
 			'village'                            => array( 'title' => 'Vila Baleira Village', 'slug' => 'vila-baleira-village' ),
 			'vila-baleira-village'               => array( 'title' => 'Vila Baleira Village', 'slug' => 'vila-baleira-village' ),
-			'residences'                         => array( 'title' => 'Vila Baleira Residences', 'slug' => 'vila-baleira-residences' ),
-			'vila-baleira-residences'            => array( 'title' => 'Vila Baleira Residences', 'slug' => 'vila-baleira-residences' ),
+			'residence'                          => array( 'title' => 'Vila Baleira Residence', 'slug' => 'residence' ),
+			'vila-baleira-residence'             => array( 'title' => 'Vila Baleira Residence', 'slug' => 'vila-baleira-residence' ),
+			'residences'                         => array( 'title' => 'Vila Baleira Residence', 'slug' => 'residence' ),
+			'vila-baleira-residences'            => array( 'title' => 'Vila Baleira Residence', 'slug' => 'vila-baleira-residence' ),
 
 			// Subpáginas dos Hotéis
 			'o-hotel'                            => array( 'title' => 'The Hotel', 'slug' => 'the-hotel' ),
