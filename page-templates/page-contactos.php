@@ -347,7 +347,7 @@ $first_hotel = $hoteis_carousel[0];
           class="w-full h-full border-0 min-h-[350px] sm:min-h-[450px] lg:min-h-[600px] transition-opacity duration-300"
           allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
           title="Mapa de Localização do Hotel"></iframe>
-        <img src="<?php echo esc_url( vbl_img( 'map_pointer.png' ) ); ?>" alt="" aria-hidden="true" width="33" height="40" style="position:absolute;top:50%;left:50%;width:44px;height:auto;transform:translate(-50%,-100%);pointer-events:none;z-index:5;filter:drop-shadow(0 3px 4px rgba(0,0,0,.35));">
+        <img src="<?php echo esc_url( vbl_img( 'map_pointer.png' ) ); ?>" alt="" aria-hidden="true" width="33" height="40" style="position:absolute;top:50%;left:50%;width:35.2px;height:auto;transform:translate(-50%,-100%);pointer-events:none;z-index:5;filter:drop-shadow(0 3px 4px rgba(0,0,0,.35));">
       </div>
 
     </div>
