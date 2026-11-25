@@ -189,12 +189,11 @@ $is_contactos_active    = (strpos($current_template, 'hotel-contactos') !== fals
               <!-- Mega Menu Container -->
               <div
                 class="fixed top-[80px] xl:top-[96px] left-0 w-full bg-white shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 border-t border-black/10 z-40">
-                <div class="max-w-[1920px] mx-auto w-full px-12 xl:px-20 py-10 relative">
+                <div class="max-w-[1920px] mx-auto w-full px-6 xl:px-12 py-10 flex items-start gap-4 lg:gap-6 relative">
 
-                  <?php if ($has_many_rooms): ?>
-                  <!-- Slider Arrows (Apenas exibidas quando existem mais de 5 quartos) -->
+                  <!-- Slider Arrow Anterior (Posicionada à esquerda fora dos cartões) -->
                   <button type="button" id="vblMegaRoomsPrev"
-                    class="absolute left-2 xl:left-4 top-[38%] z-20 w-10 h-10 border border-[var(--vbl-hotel-accent)] text-[var(--vbl-hotel-accent)] bg-white hover:bg-[var(--vbl-hotel-accent)] hover:text-white transition-colors cursor-pointer flex items-center justify-center shadow-xs"
+                    class="flex-shrink-0 w-10 h-10 border border-[var(--vbl-hotel-accent)] text-[var(--vbl-hotel-accent)] bg-white hover:bg-[var(--vbl-hotel-accent)] hover:text-white transition-colors cursor-pointer flex items-center justify-center mt-[75px] sm:mt-[85px] lg:mt-[95px] shadow-xs select-none"
                     aria-label="<?php echo esc_attr( function_exists( 'vbl__' ) ? vbl__( 'Anterior' ) : 'Anterior' ); ?>">
                     <svg class="w-4 h-4 sm:w-5 sm:h-5" viewBox="0 0 30 30" fill="none" stroke="currentColor"
                       stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -202,18 +201,8 @@ $is_contactos_active    = (strpos($current_template, 'hotel-contactos') !== fals
                     </svg>
                   </button>
 
-                  <button type="button" id="vblMegaRoomsNext"
-                    class="absolute right-2 xl:right-4 top-[38%] z-20 w-10 h-10 border border-[var(--vbl-hotel-accent)] text-[var(--vbl-hotel-accent)] bg-white hover:bg-[var(--vbl-hotel-accent)] hover:text-white transition-colors cursor-pointer flex items-center justify-center shadow-xs"
-                    aria-label="<?php echo esc_attr( function_exists( 'vbl__' ) ? vbl__( 'Seguinte' ) : 'Seguinte' ); ?>">
-                    <svg class="w-4 h-4 sm:w-5 sm:h-5" viewBox="0 0 30 30" fill="none" stroke="currentColor"
-                      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M1 15H28M28 15L15 2M28 15L15 28" />
-                    </svg>
-                  </button>
-                  <?php endif; ?>
-
-                  <!-- Rooms Container -->
-                  <div id="vblMegaRoomsTrack" class="<?php echo $has_many_rooms ? 'flex gap-6 overflow-x-auto scroll-smooth scrollbar-none py-1' : 'grid grid-cols-5 gap-6'; ?>">
+                  <!-- Rooms Container (Centralizado entre as setas) -->
+                  <div id="vblMegaRoomsTrack" class="flex-1 min-w-0 <?php echo $has_many_rooms ? 'flex gap-6 overflow-x-auto scroll-smooth scrollbar-none py-1' : 'grid grid-cols-5 gap-6'; ?>">
                     <?php
                     if (!empty($mega_rooms_posts)):
                       foreach ($mega_rooms_posts as $rpost):
@@ -253,6 +242,16 @@ $is_contactos_active    = (strpos($current_template, 'hotel-contactos') !== fals
                       <?php endforeach;
                     endif; ?>
                   </div>
+
+                  <!-- Slider Arrow Seguinte (Posicionada à direita fora dos cartões) -->
+                  <button type="button" id="vblMegaRoomsNext"
+                    class="flex-shrink-0 w-10 h-10 border border-[var(--vbl-hotel-accent)] text-[var(--vbl-hotel-accent)] bg-white hover:bg-[var(--vbl-hotel-accent)] hover:text-white transition-colors cursor-pointer flex items-center justify-center mt-[75px] sm:mt-[85px] lg:mt-[95px] shadow-xs select-none"
+                    aria-label="<?php echo esc_attr( function_exists( 'vbl__' ) ? vbl__( 'Seguinte' ) : 'Seguinte' ); ?>">
+                    <svg class="w-4 h-4 sm:w-5 sm:h-5" viewBox="0 0 30 30" fill="none" stroke="currentColor"
+                      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M1 15H28M28 15L15 2M28 15L15 28" />
+                    </svg>
+                  </button>
 
                 </div>
               </div>
