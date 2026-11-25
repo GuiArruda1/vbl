@@ -431,6 +431,11 @@ if ( empty( $tratamentos_list ) || ! is_array( $tratamentos_list ) ) {
   <!-- ==========================================
        6. TRATAMENTOS & PROGRAMAS DE SPA (Slider)
   =========================================== -->
+  <?php
+  $show_trat_raw    = get_post_meta( get_the_ID(), 'vbl_hativ_show_tratamentos', true );
+  $show_tratamentos = ( '' === $show_trat_raw ) ? true : (bool) $show_trat_raw;
+  if ( $show_tratamentos ) :
+  ?>
   <section class="w-full py-20 lg:py-32 bg-white relative overflow-hidden">
     <div class="max-w-[1920px] mx-auto px-6 xl:px-[8.33%]">
       
@@ -513,6 +518,7 @@ if ( empty( $tratamentos_list ) || ! is_array( $tratamentos_list ) ) {
 
     </div>
   </section>
+  <?php endif; ?>
 
   <!-- ==========================================
        7. NEWSLETTER DO MICROSITE

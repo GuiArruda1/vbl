@@ -1057,6 +1057,15 @@ function vbl_register_acf_fields() {
 
             /* Tab: Tratamentos & Programas */
             array( 'key' => 'field_vbl_hativ_tab_trat', 'label' => 'Tratamentos de Spa (Slider)', 'type' => 'tab' ),
+            array(
+                'key'           => 'field_vbl_hativ_show_tratamentos',
+                'label'         => 'Exibir Secção no Site',
+                'name'          => 'vbl_hativ_show_tratamentos',
+                'type'          => 'true_false',
+                'instructions'  => 'Ative ou desative para mostrar/ocultar a secção de Tratamentos de Spa (Slider) no site.',
+                'default_value' => 1,
+                'ui'            => 1,
+            ),
             array( 'key' => 'field_vbl_hativ_trat_tagline', 'label' => 'Tagline', 'name' => 'vbl_hativ_trat_tagline', 'type' => 'text', 'default_value' => 'TRATAMENTOS & SPA' ),
             array( 'key' => 'field_vbl_hativ_trat_title', 'label' => 'Título Geral', 'name' => 'vbl_hativ_trat_title', 'type' => 'text', 'default_value' => 'TÍTULO PARA OS<br>PROGRAMAS' ),
             array( 'key' => 'field_vbl_hativ_trat_desc', 'label' => 'Descrição Geral', 'name' => 'vbl_hativ_trat_desc', 'type' => 'textarea', 'rows' => 3, 'default_value' => 'Elementum mauris dolor vitae at porttitor. Consequat sapien facilisi platea viverra. Facilisi a viverra sollicitudin euismod.' ),
