@@ -126,6 +126,55 @@ $is_contactos_active    = (strpos($current_template, 'hotel-contactos') !== fals
           <?php endif; ?>
 
           <?php if (!empty($subpage_links['rooms'])): ?>
+            <?php
+            $target_hotel_ids = array();
+            if ($current_hotel_id) {
+              $target_hotel_ids[] = (int) $current_hotel_id;
+              if (function_exists('pll_get_post_translations')) {
+                $hotel_translations = pll_get_post_translations($current_hotel_id);
+                if (!empty($hotel_translations)) {
+                  foreach ($hotel_translations as $t_id) {
+                    $target_hotel_ids[] = (int) $t_id;
+                  }
+                }
+              }
+            }
+            $target_hotel_ids = array_values(array_unique(array_filter($target_hotel_ids)));
+
+            $mega_query_args = array(
+              'post_type'      => 'vbl_quarto',
+              'post_status'    => 'publish',
+              'posts_per_page' => 12,
+              'orderby'        => 'menu_order title',
+              'order'          => 'ASC',
+            );
+
+            if (!empty($target_hotel_ids)) {
+              $mega_query_args['meta_query'] = array(
+                'relation' => 'OR',
+                array(
+                  'key'     => 'vbl_quarto_hotel',
+                  'value'   => $target_hotel_ids,
+                  'compare' => 'IN',
+                ),
+                array(
+                  'key'     => 'vbl_quarto_hotel',
+                  'value'   => array_map('strval', $target_hotel_ids),
+                  'compare' => 'IN',
+                ),
+              );
+            }
+
+            if (function_exists('pll_current_language')) {
+              $current_lang = pll_current_language('slug');
+              if (!empty($current_lang)) {
+                $mega_query_args['lang'] = $current_lang;
+              }
+            }
+
+            $mega_rooms_posts = get_posts($mega_query_args);
+            $has_many_rooms   = count($mega_rooms_posts) > 5;
+            ?>
             <!-- Dropdown Rooms & Suites (Mega Menu) -->
             <div class="group flex items-center h-[80px] xl:h-[96px]">
               <a href="<?php echo esc_url($subpage_links['rooms']['url']); ?>"
@@ -140,11 +189,12 @@ $is_contactos_active    = (strpos($current_template, 'hotel-contactos') !== fals
               <!-- Mega Menu Container -->
               <div
                 class="fixed top-[80px] xl:top-[96px] left-0 w-full bg-white shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 border-t border-black/10 z-40">
-                <div class="max-w-[1920px] mx-auto w-full px-6 xl:px-[8.33%] py-12 relative">
+                <div class="max-w-[1920px] mx-auto w-full px-12 xl:px-20 py-10 relative">
 
-                  <!-- Slider Arrows -->
-                  <button
-                    class="absolute left-6 xl:left-[4%] top-[40%] z-10 w-10 h-10 border border-[var(--vbl-hotel-accent)] text-[var(--vbl-hotel-accent)] bg-transparent flex items-center justify-center hover:bg-[var(--vbl-hotel-accent)] hover:text-white transition-colors cursor-pointer"
+                  <?php if ($has_many_rooms): ?>
+                  <!-- Slider Arrows (Apenas exibidas quando existem mais de 5 quartos) -->
+                  <button type="button" id="vblMegaRoomsPrev"
+                    class="absolute left-2 xl:left-4 top-[38%] z-20 w-10 h-10 border border-[var(--vbl-hotel-accent)] text-[var(--vbl-hotel-accent)] bg-white hover:bg-[var(--vbl-hotel-accent)] hover:text-white transition-colors cursor-pointer flex items-center justify-center shadow-xs"
                     aria-label="<?php echo esc_attr( function_exists( 'vbl__' ) ? vbl__( 'Anterior' ) : 'Anterior' ); ?>">
                     <svg class="w-4 h-4 sm:w-5 sm:h-5" viewBox="0 0 30 30" fill="none" stroke="currentColor"
                       stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -152,65 +202,19 @@ $is_contactos_active    = (strpos($current_template, 'hotel-contactos') !== fals
                     </svg>
                   </button>
 
-                  <button
-                    class="absolute right-6 xl:right-[4%] top-[40%] z-10 w-10 h-10 border border-[var(--vbl-hotel-accent)] text-[var(--vbl-hotel-accent)] bg-transparent flex items-center justify-center hover:bg-[var(--vbl-hotel-accent)] hover:text-white transition-colors cursor-pointer"
+                  <button type="button" id="vblMegaRoomsNext"
+                    class="absolute right-2 xl:right-4 top-[38%] z-20 w-10 h-10 border border-[var(--vbl-hotel-accent)] text-[var(--vbl-hotel-accent)] bg-white hover:bg-[var(--vbl-hotel-accent)] hover:text-white transition-colors cursor-pointer flex items-center justify-center shadow-xs"
                     aria-label="<?php echo esc_attr( function_exists( 'vbl__' ) ? vbl__( 'Seguinte' ) : 'Seguinte' ); ?>">
                     <svg class="w-4 h-4 sm:w-5 sm:h-5" viewBox="0 0 30 30" fill="none" stroke="currentColor"
                       stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                       <path d="M1 15H28M28 15L15 2M28 15L15 28" />
                     </svg>
                   </button>
+                  <?php endif; ?>
 
-                  <!-- Rooms Grid (Apenas quartos reais associados ao hotel) -->
-                  <div class="grid grid-cols-5 gap-6">
+                  <!-- Rooms Container -->
+                  <div id="vblMegaRoomsTrack" class="<?php echo $has_many_rooms ? 'flex gap-6 overflow-x-auto scroll-smooth scrollbar-none py-1' : 'grid grid-cols-5 gap-6'; ?>">
                     <?php
-                    $target_hotel_ids = array();
-                    if ($current_hotel_id) {
-                      $target_hotel_ids[] = (int) $current_hotel_id;
-                      if (function_exists('pll_get_post_translations')) {
-                        $hotel_translations = pll_get_post_translations($current_hotel_id);
-                        if (!empty($hotel_translations)) {
-                          foreach ($hotel_translations as $t_id) {
-                            $target_hotel_ids[] = (int) $t_id;
-                          }
-                        }
-                      }
-                    }
-                    $target_hotel_ids = array_values(array_unique(array_filter($target_hotel_ids)));
-
-                    $mega_query_args = array(
-                      'post_type'      => 'vbl_quarto',
-                      'post_status'    => 'publish',
-                      'posts_per_page' => 5,
-                      'orderby'        => 'menu_order title',
-                      'order'          => 'ASC',
-                    );
-
-                    if (!empty($target_hotel_ids)) {
-                      $mega_query_args['meta_query'] = array(
-                        'relation' => 'OR',
-                        array(
-                          'key'     => 'vbl_quarto_hotel',
-                          'value'   => $target_hotel_ids,
-                          'compare' => 'IN',
-                        ),
-                        array(
-                          'key'     => 'vbl_quarto_hotel',
-                          'value'   => array_map('strval', $target_hotel_ids),
-                          'compare' => 'IN',
-                        ),
-                      );
-                    }
-
-                    if (function_exists('pll_current_language')) {
-                      $current_lang = pll_current_language('slug');
-                      if (!empty($current_lang)) {
-                        $mega_query_args['lang'] = $current_lang;
-                      }
-                    }
-
-                    $mega_rooms_posts = get_posts($mega_query_args);
-
                     if (!empty($mega_rooms_posts)):
                       foreach ($mega_rooms_posts as $rpost):
                         $rimg = get_the_post_thumbnail_url($rpost->ID, 'full');
@@ -227,7 +231,7 @@ $is_contactos_active    = (strpos($current_template, 'hotel-contactos') !== fals
                           $rimg = vbl_img('hoteis/porto-santo-520x400.jpg');
                         }
                         ?>
-                        <a href="<?php echo esc_url(get_permalink($rpost->ID)); ?>" class="group/room flex flex-col gap-4">
+                        <a href="<?php echo esc_url(get_permalink($rpost->ID)); ?>" class="group/room flex flex-col gap-4 <?php echo $has_many_rooms ? 'w-[280px] flex-shrink-0' : ''; ?>">
                           <div class="w-full aspect-[4/3] overflow-hidden bg-gray-100">
                             <img src="<?php echo esc_url($rimg); ?>"
                               alt="<?php echo esc_attr(get_the_title($rpost->ID)); ?>"
@@ -611,3 +615,21 @@ $is_contactos_active    = (strpos($current_template, 'hotel-contactos') !== fals
       </div>
     </nav>
   </div>
+
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const prevBtn = document.getElementById('vblMegaRoomsPrev');
+    const nextBtn = document.getElementById('vblMegaRoomsNext');
+    const track = document.getElementById('vblMegaRoomsTrack');
+    if (prevBtn && nextBtn && track) {
+      prevBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        track.scrollBy({ left: -300, behavior: 'smooth' });
+      });
+      nextBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        track.scrollBy({ left: 300, behavior: 'smooth' });
+      });
+    }
+  });
+  </script>
