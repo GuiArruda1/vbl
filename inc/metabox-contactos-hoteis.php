@@ -59,7 +59,7 @@ function vbl_render_contactos_hoteis_metabox( $post ) {
                 'telefone' => '+351 291 980 800',
                 'email'    => 'sales@vilabaleira.com',
                 'foto'     => '',
-                'mapa'     => 'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d2500!2d-16.3557871!3d33.0431996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-PT!2spt!4v1700000000000',
+                'mapa'     => 'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d2500!2d-16.3626213!3d33.0374124!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-PT!2spt!4v1700000000000',
             ),
             array(
                 'title'    => 'FUNCHAL',
@@ -68,7 +68,7 @@ function vbl_render_contactos_hoteis_metabox( $post ) {
                 'telefone' => '+351 291 000 274',
                 'email'    => 'funchal@vilabaleira.com',
                 'foto'     => '',
-                'mapa'     => 'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d2500!2d-16.930677!3d32.6385558!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-PT!2spt!4v1700000000000',
+                'mapa'     => 'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d2500!2d-16.9307499!3d32.6383247!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-PT!2spt!4v1700000000000',
             ),
             array(
                 'title'    => 'SUITES',
@@ -77,7 +77,7 @@ function vbl_render_contactos_hoteis_metabox( $post ) {
                 'telefone' => '+351 291 980 800',
                 'email'    => 'suites@vilabaleira.com',
                 'foto'     => '',
-                'mapa'     => 'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d2500!2d-16.361065!3d33.0376452!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-PT!2spt!4v1700000000000',
+                'mapa'     => 'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d2500!2d-16.3608198!3d33.0373331!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-PT!2spt!4v1700000000000',
             ),
             array(
                 'title'    => 'VILLAGE',
@@ -86,7 +86,7 @@ function vbl_render_contactos_hoteis_metabox( $post ) {
                 'telefone' => '+351 291 980 800',
                 'email'    => 'village@vilabaleira.com',
                 'foto'     => '',
-                'mapa'     => 'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d2500!2d-16.35!3d33.042!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-PT!2spt!4v1700000000000',
+                'mapa'     => 'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d2500!2d-16.3680087!3d33.0364243!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-PT!2spt!4v1700000000000',
             ),
             array(
                 'title'    => 'RESIDENCE',
@@ -95,7 +95,7 @@ function vbl_render_contactos_hoteis_metabox( $post ) {
                 'telefone' => '+351 291 708 700',
                 'email'    => 'res.funchal@vilabaleira.com',
                 'foto'     => '',
-                'mapa'     => 'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d2500!2d-16.92!3d32.64!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-PT!2spt!4v1700000000000',
+                'mapa'     => 'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d2500!2d-16.9424958!3d32.6374392!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-PT!2spt!4v1700000000000',
             ),
         );
     }

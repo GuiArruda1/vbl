@@ -63,12 +63,12 @@ if ( empty( $final_map_src ) ) {
     }
 
     $hotel_map_defaults = array(
-        'porto-santo' => 'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d2500!2d-16.3557871!3d33.0431996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-PT!2spt!4v1700000000000',
-        'funchal'     => 'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d2500!2d-16.930677!3d32.6385558!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-PT!2spt!4v1700000000000',
-        'suites'      => 'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d2500!2d-16.361065!3d33.0376452!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-PT!2spt!4v1700000000000',
-        'village'     => 'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d2500!2d-16.35!3d33.042!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-PT!2spt!4v1700000000000',
-        'residence'   => 'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d2500!2d-16.92!3d32.64!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-PT!2spt!4v1700000000000',
-        'residences'  => 'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d2500!2d-16.92!3d32.64!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-PT!2spt!4v1700000000000',
+        'porto-santo' => 'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d2500!2d-16.3626213!3d33.0374124!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-PT!2spt!4v1700000000000',
+        'funchal'     => 'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d2500!2d-16.9307499!3d32.6383247!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-PT!2spt!4v1700000000000',
+        'suites'      => 'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d2500!2d-16.3608198!3d33.0373331!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-PT!2spt!4v1700000000000',
+        'village'     => 'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d2500!2d-16.3680087!3d33.0364243!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-PT!2spt!4v1700000000000',
+        'residence'   => 'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d2500!2d-16.9424958!3d32.6374392!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-PT!2spt!4v1700000000000',
+        'residences'  => 'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d2500!2d-16.9424958!3d32.6374392!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-PT!2spt!4v1700000000000',
     );
 
     foreach ( $hotel_map_defaults as $key => $url ) {
@@ -81,9 +81,9 @@ if ( empty( $final_map_src ) ) {
     if ( empty( $final_map_src ) ) {
         if ( ! empty( $morada ) ) {
             $clean_addr = trim( preg_replace( '/\s+/', ' ', str_replace( array( "\r", "\n" ), ' ', $morada ) ) );
-            $final_map_src = 'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d2500!2d-16.3557871!3d33.0431996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-PT!2spt!4v1700000000000';
+            $final_map_src = 'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d2500!2d-16.3626213!3d33.0374124!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-PT!2spt!4v1700000000000';
         } else {
-            $final_map_src = 'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d2500!2d-16.3557871!3d33.0431996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-PT!2spt!4v1700000000000';
+            $final_map_src = 'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d2500!2d-16.3626213!3d33.0374124!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-PT!2spt!4v1700000000000';
         }
     }
 }
