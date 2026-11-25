@@ -59,7 +59,7 @@ function vbl_render_contactos_hoteis_metabox( $post ) {
                 'telefone' => '+351 291 980 800',
                 'email'    => 'sales@vilabaleira.com',
                 'foto'     => '',
-                'mapa'     => 'https://maps.google.com/maps?q=Vila+Baleira+Porto+Santo+Resort&t=&z=14&ie=UTF8&iwloc=&output=embed',
+                'mapa'     => 'https://www.openstreetmap.org/export/embed.html?bbox=-16.36779%2C33.03600%2C-16.34379%2C33.05040&layer=mapnik&marker=33.0431996%2C-16.3557871',
             ),
             array(
                 'title'    => 'FUNCHAL',
@@ -68,7 +68,7 @@ function vbl_render_contactos_hoteis_metabox( $post ) {
                 'telefone' => '+351 291 000 274',
                 'email'    => 'funchal@vilabaleira.com',
                 'foto'     => '',
-                'mapa'     => 'https://maps.google.com/maps?q=Vila+Baleira+Funchal&t=&z=15&ie=UTF8&iwloc=&output=embed',
+                'mapa'     => 'https://www.openstreetmap.org/export/embed.html?bbox=-16.94268%2C32.63136%2C-16.91868%2C32.64576&layer=mapnik&marker=32.6385558%2C-16.930677',
             ),
             array(
                 'title'    => 'SUITES',
@@ -77,7 +77,7 @@ function vbl_render_contactos_hoteis_metabox( $post ) {
                 'telefone' => '+351 291 980 800',
                 'email'    => 'suites@vilabaleira.com',
                 'foto'     => '',
-                'mapa'     => 'https://maps.google.com/maps?q=Vila+Baleira+Suites+Porto+Santo&t=&z=15&ie=UTF8&iwloc=&output=embed',
+                'mapa'     => 'https://www.openstreetmap.org/export/embed.html?bbox=-16.37307%2C33.03045%2C-16.34906%2C33.04485&layer=mapnik&marker=33.0376452%2C-16.361065',
             ),
             array(
                 'title'    => 'VILLAGE',
@@ -86,7 +86,7 @@ function vbl_render_contactos_hoteis_metabox( $post ) {
                 'telefone' => '+351 291 980 800',
                 'email'    => 'village@vilabaleira.com',
                 'foto'     => '',
-                'mapa'     => 'https://maps.google.com/maps?q=Vila+Baleira+Village+Porto+Santo&t=&z=15&ie=UTF8&iwloc=&output=embed',
+                'mapa'     => 'https://www.openstreetmap.org/export/embed.html?bbox=-16.36200%2C33.03480%2C-16.33800%2C33.04920&layer=mapnik&marker=33.042%2C-16.35',
             ),
             array(
                 'title'    => 'RESIDENCE',
@@ -95,7 +95,7 @@ function vbl_render_contactos_hoteis_metabox( $post ) {
                 'telefone' => '+351 291 708 700',
                 'email'    => 'res.funchal@vilabaleira.com',
                 'foto'     => '',
-                'mapa'     => 'https://maps.google.com/maps?q=Vila+Baleira+Residence+Funchal&t=&z=15&ie=UTF8&iwloc=&output=embed',
+                'mapa'     => 'https://www.openstreetmap.org/export/embed.html?bbox=-16.93200%2C32.63280%2C-16.90800%2C32.64720&layer=mapnik&marker=32.64%2C-16.92',
             ),
         );
     }
