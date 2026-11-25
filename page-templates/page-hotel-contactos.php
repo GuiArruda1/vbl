@@ -63,12 +63,12 @@ if ( empty( $final_map_src ) ) {
     }
 
     $hotel_map_defaults = array(
-        'porto-santo' => 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2500!2d-16.3557871!3d33.0431996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sVila%20Baleira%20Porto%20Santo!5e0!3m2!1spt-PT!2spt!4v1700000000000',
-        'funchal'     => 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2500!2d-16.930677!3d32.6385558!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sVila%20Baleira%20Funchal!5e0!3m2!1spt-PT!2spt!4v1700000000000',
-        'suites'      => 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2500!2d-16.361065!3d33.0376452!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sVila%20Baleira%20Suites%20Porto%20Santo!5e0!3m2!1spt-PT!2spt!4v1700000000000',
-        'village'     => 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2500!2d-16.35!3d33.042!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sVila%20Baleira%20Village%20Porto%20Santo!5e0!3m2!1spt-PT!2spt!4v1700000000000',
-        'residence'   => 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2500!2d-16.92!3d32.64!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sVila%20Baleira%20Residence%20Funchal!5e0!3m2!1spt-PT!2spt!4v1700000000000',
-        'residences'  => 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2500!2d-16.92!3d32.64!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sVila%20Baleira%20Residence%20Funchal!5e0!3m2!1spt-PT!2spt!4v1700000000000',
+        'porto-santo' => 'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d2500!2d-16.3557871!3d33.0431996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-PT!2spt!4v1700000000000',
+        'funchal'     => 'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d2500!2d-16.930677!3d32.6385558!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-PT!2spt!4v1700000000000',
+        'suites'      => 'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d2500!2d-16.361065!3d33.0376452!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-PT!2spt!4v1700000000000',
+        'village'     => 'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d2500!2d-16.35!3d33.042!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-PT!2spt!4v1700000000000',
+        'residence'   => 'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d2500!2d-16.92!3d32.64!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-PT!2spt!4v1700000000000',
+        'residences'  => 'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d2500!2d-16.92!3d32.64!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-PT!2spt!4v1700000000000',
     );
 
     foreach ( $hotel_map_defaults as $key => $url ) {
@@ -81,9 +81,9 @@ if ( empty( $final_map_src ) ) {
     if ( empty( $final_map_src ) ) {
         if ( ! empty( $morada ) ) {
             $clean_addr = trim( preg_replace( '/\s+/', ' ', str_replace( array( "\r", "\n" ), ' ', $morada ) ) );
-            $final_map_src = 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2500!2d-16.3557871!3d33.0431996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sVila%20Baleira%20Porto%20Santo!5e0!3m2!1spt-PT!2spt!4v1700000000000';
+            $final_map_src = 'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d2500!2d-16.3557871!3d33.0431996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-PT!2spt!4v1700000000000';
         } else {
-            $final_map_src = 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2500!2d-16.3557871!3d33.0431996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sVila%20Baleira%20Porto%20Santo!5e0!3m2!1spt-PT!2spt!4v1700000000000';
+            $final_map_src = 'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d2500!2d-16.3557871!3d33.0431996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-PT!2spt!4v1700000000000';
         }
     }
 }
@@ -134,6 +134,7 @@ $privacy_url = function_exists( 'vbl_get_privacy_policy_url' ) ? vbl_get_privacy
             referrerpolicy="no-referrer-when-downgrade" 
             title="Mapa de Localização do Hotel">
           </iframe>
+          <img src="<?php echo esc_url( vbl_img( 'map_pointer.png' ) ); ?>" alt="" aria-hidden="true" width="33" height="40" style="position:absolute;top:50%;left:50%;width:44px;height:auto;transform:translate(-50%,-100%);pointer-events:none;z-index:5;filter:drop-shadow(0 3px 4px rgba(0,0,0,.35));">
         </div>
       </div>
 
