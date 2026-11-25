@@ -118,7 +118,17 @@ if (empty($intro_desc)) {
 }
 
 // Imagem Hero
-$hero_bg = get_the_post_thumbnail_url($post_id, 'full');
+$hero_thumb_id = get_post_thumbnail_id($post_id);
+$hero_bg = '';
+if ($hero_thumb_id && function_exists('wp_get_original_image_url')) {
+  $hero_bg = wp_get_original_image_url($hero_thumb_id);
+}
+if (empty($hero_bg)) {
+  $hero_bg = get_the_post_thumbnail_url($post_id, 'full');
+}
+if (!empty($hero_bg) && function_exists('vbl_get_highres_image_url')) {
+  $hero_bg = vbl_get_highres_image_url($hero_bg, $hero_thumb_id);
+}
 if (empty($hero_bg)) {
   $hero_bg = vbl_img('hoteis/suites-680x400.jpg');
 }
@@ -831,9 +841,29 @@ if ($is_en_room && $is_ps_room) {
         $other_rooms_query->the_post();
         $o_id = get_the_ID();
         $o_cat = vbl_field('vbl_quarto_categoria', $o_id, 'QUARTO');
-        $o_thumb = get_the_post_thumbnail_url($o_id, 'full');
+        
+        $o_thumb_id = get_post_thumbnail_id($o_id);
+        $o_thumb = '';
+        if (!empty($o_thumb_id) && function_exists('wp_get_original_image_url')) {
+          $o_thumb = wp_get_original_image_url($o_thumb_id);
+        }
         if (empty($o_thumb)) {
-          $o_thumb = vbl_img('hoteis/porto-santo-520x400.jpg');
+          $o_thumb = get_the_post_thumbnail_url($o_id, 'full');
+        }
+        if (empty($o_thumb) && function_exists('vbl_field')) {
+          $gal = vbl_field('vbl_quarto_galeria', $o_id);
+          if (!empty($gal) && is_array($gal) && !empty($gal[0]['image'])) {
+            $o_thumb = $gal[0]['image'];
+            if (!empty($gal[0]['image_id'])) {
+              $o_thumb_id = (int) $gal[0]['image_id'];
+            }
+          }
+        }
+        if (!empty($o_thumb) && function_exists('vbl_get_highres_image_url')) {
+          $o_thumb = vbl_get_highres_image_url($o_thumb, $o_thumb_id);
+        }
+        if (empty($o_thumb)) {
+          $o_thumb = vbl_img('hoteis/porto-santo-760x760.jpg');
         }
 
         $other_rooms_list[] = array(
@@ -909,7 +939,9 @@ if ($is_en_room && $is_ps_room) {
                   aria-label="<?php echo esc_attr($o_room['title']); ?>">
                   <img src="<?php echo esc_url($o_room['thumb']); ?>" alt="<?php echo esc_attr($o_room['title']); ?>"
                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    loading="lazy">
+                    loading="lazy"
+                    decoding="async"
+                    style="image-rendering: -webkit-optimize-contrast;">
                 </a>
 
                 <!-- Categoria -->

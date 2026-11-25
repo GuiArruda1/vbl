@@ -459,16 +459,34 @@ add_action( 'init', function() {
 if ( ! function_exists( 'vbl_get_highres_image_url' ) ) {
     function vbl_get_highres_image_url( $url = '', $attachment_id = null ) {
         if ( ! empty( $attachment_id ) ) {
+            if ( function_exists( 'wp_get_original_image_url' ) ) {
+                $orig = wp_get_original_image_url( (int) $attachment_id );
+                if ( ! empty( $orig ) ) {
+                    return $orig;
+                }
+            }
             $full_url = wp_get_attachment_image_url( (int) $attachment_id, 'full' );
             if ( ! empty( $full_url ) ) {
-                return $full_url;
+                $url = $full_url;
             }
         }
         if ( empty( $url ) || ! is_string( $url ) ) {
             return $url;
         }
-        // Se contiver sufixo redimensionado do WP (ex: -1024x683 ou -768x512), substitui para o ficheiro original em alta resolução
-        $full_candidate = preg_replace( '/-\d+x\d+(?=\.[a-zA-Z0-9]+(\?|$))/', '', $url );
+
+        // Se tiver o ID pelo URL no WordPress, puxa o original direto da biblioteca
+        if ( empty( $attachment_id ) && function_exists( 'attachment_url_to_postid' ) && function_exists( 'wp_get_original_image_url' ) ) {
+            $found_id = attachment_url_to_postid( $url );
+            if ( $found_id ) {
+                $orig = wp_get_original_image_url( $found_id );
+                if ( ! empty( $orig ) ) {
+                    return $orig;
+                }
+            }
+        }
+
+        // Se contiver sufixo redimensionado do WP (ex: -1024x683, -768x512) ou redução forçada (-scaled), remove para apontar ao ficheiro master original
+        $full_candidate = preg_replace( '/(-scaled|-\d+x\d+)+(?=\.[a-zA-Z0-9]+(\?|$))/', '', $url );
         return ! empty( $full_candidate ) ? $full_candidate : $url;
     }
 }

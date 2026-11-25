@@ -72,9 +72,28 @@ if ( $cpt_rooms_query->have_posts() ) {
     while ( $cpt_rooms_query->have_posts() ) {
         $cpt_rooms_query->the_post();
         $q_id = get_the_ID();
-        $q_thumb = get_the_post_thumbnail_url( $q_id, 'full' );
+        $q_thumb_id = get_post_thumbnail_id( $q_id );
+        $q_thumb = '';
+        if ( ! empty( $q_thumb_id ) && function_exists( 'wp_get_original_image_url' ) ) {
+            $q_thumb = wp_get_original_image_url( $q_thumb_id );
+        }
         if ( empty( $q_thumb ) ) {
-            $q_thumb = vbl_img( 'hoteis/porto-santo-520x400.jpg' );
+            $q_thumb = get_the_post_thumbnail_url( $q_id, 'full' );
+        }
+        if ( empty( $q_thumb ) && function_exists( 'vbl_field' ) ) {
+            $gal = vbl_field( 'vbl_quarto_galeria', $q_id );
+            if ( ! empty( $gal ) && is_array( $gal ) && ! empty( $gal[0]['image'] ) ) {
+                $q_thumb = $gal[0]['image'];
+                if ( ! empty( $gal[0]['image_id'] ) ) {
+                    $q_thumb_id = (int) $gal[0]['image_id'];
+                }
+            }
+        }
+        if ( ! empty( $q_thumb ) && function_exists( 'vbl_get_highres_image_url' ) ) {
+            $q_thumb = vbl_get_highres_image_url( $q_thumb, $q_thumb_id );
+        }
+        if ( empty( $q_thumb ) ) {
+            $q_thumb = vbl_img( 'hoteis/porto-santo-760x760.jpg' );
         }
 
         $rooms_list[] = array(
