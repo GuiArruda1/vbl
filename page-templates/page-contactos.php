@@ -235,6 +235,26 @@ if (!empty($acf_hoteis) && is_array($acf_hoteis)) {
   );
 }
 
+// Google bloqueia iframes que não sejam /maps/embed — substitui valores antigos guardados na BD
+$vbl_osm_fallback = array(
+  'FUNCHAL'   => 'https://www.openstreetmap.org/export/embed.html?bbox=-16.94260%2C32.63140%2C-16.91860%2C32.64560&layer=mapnik&marker=32.6385558%2C-16.930677',
+  'SUITES'    => 'https://www.openstreetmap.org/export/embed.html?bbox=-16.37300%2C33.03040%2C-16.34900%2C33.04480&layer=mapnik&marker=33.0376452%2C-16.361065',
+  'VILLAGE'   => 'https://www.openstreetmap.org/export/embed.html?bbox=-16.36200%2C33.03480%2C-16.33800%2C33.04920&layer=mapnik&marker=33.042%2C-16.35',
+  'RESIDENCE' => 'https://www.openstreetmap.org/export/embed.html?bbox=-16.94400%2C32.63280%2C-16.92000%2C32.64720&layer=mapnik&marker=32.64%2C-16.92',
+  'DEFAULT'   => 'https://www.openstreetmap.org/export/embed.html?bbox=-16.36770%2C33.03600%2C-16.34370%2C33.05020&layer=mapnik&marker=33.0431996%2C-16.3557871',
+);
+foreach ($hoteis_carousel as $k => $h) {
+  $m = isset($h['mapa']) ? $h['mapa'] : '';
+  if (strpos($m, 'google.com/maps/embed') === false && strpos($m, 'openstreetmap.org') === false) {
+    $t = strtoupper(isset($h['title']) ? $h['title'] : '');
+    $new = $vbl_osm_fallback['DEFAULT'];
+    foreach (array('FUNCHAL','SUITES','VILLAGE','RESIDENCE') as $key) {
+      if (strpos($t, $key) !== false) { $new = $vbl_osm_fallback[$key]; break; }
+    }
+    $hoteis_carousel[$k]['mapa'] = $new;
+  }
+}
+
 $first_hotel = $hoteis_carousel[0];
 ?>
 

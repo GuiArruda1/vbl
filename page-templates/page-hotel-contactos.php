@@ -34,8 +34,10 @@ if ( ! empty( $mapa_embed ) ) {
     } else {
         $final_map_src = trim( $mapa_embed );
     }
-} elseif ( ! empty( $mapa_url ) ) {
-    $final_map_src = trim( $mapa_url );
+}
+// Só aceita URLs que realmente podem ser embebidos (o Google bloqueia links normais em iframe)
+if ( ! empty( $final_map_src ) && false === strpos( $final_map_src, 'google.com/maps/embed' ) && false === strpos( $final_map_src, 'openstreetmap.org' ) ) {
+    $final_map_src = '';
 }
 
 // Se não houver mapa personalizado, resolver automaticamente com base no hotel atual
@@ -86,11 +88,6 @@ if ( empty( $final_map_src ) ) {
     }
 }
 
-// Assegurar formato compatível com iframe para links padrão do Google Maps
-if ( false !== strpos( $final_map_src, 'google.com/maps' ) && false === strpos( $final_map_src, 'output=embed' ) && false === strpos( $final_map_src, '/embed' ) && false === strpos( $final_map_src, 'openstreetmap' ) ) {
-    $sep = ( false !== strpos( $final_map_src, '?' ) ) ? '&' : '?';
-    $final_map_src .= $sep . 'output=embed';
-}
 
 // ACF Fields: Formulário
 $form_sub    = vbl_field( 'vbl_hct_form_sub', false, 'LOREM IPSUM DOLOR SIT AMET CONSECTETUR' );
