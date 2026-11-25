@@ -347,12 +347,15 @@ function vbl_get_mega_menu_hotels() {
                 'img'     => vbl_img( 'hoteis/porto-santo-520x400.jpg' ),
             ) );
 
-            $thumb = get_the_post_thumbnail_url( $p->ID, 'medium_large' );
+            $thumb = get_the_post_thumbnail_url( $p->ID, 'full' );
             if ( empty( $thumb ) && function_exists( 'get_field' ) ) {
                 $acf_img = get_field( 'vbl_hotel_thumb', $p->ID );
                 if ( ! empty( $acf_img ) ) {
                     $thumb = is_array( $acf_img ) ? ( $acf_img['url'] ?? '' ) : $acf_img;
                 }
+            }
+            if ( ! empty( $thumb ) && function_exists( 'vbl_get_highres_image_url' ) ) {
+                $thumb = vbl_get_highres_image_url( $thumb );
             }
             if ( empty( $thumb ) ) {
                 $thumb = $def['img'];

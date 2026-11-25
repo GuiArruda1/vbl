@@ -164,21 +164,65 @@ $is_contactos_active    = (strpos($current_template, 'hotel-contactos') !== fals
                   <!-- Rooms Grid (Apenas quartos reais associados ao hotel) -->
                   <div class="grid grid-cols-5 gap-6">
                     <?php
-                    $mega_rooms_posts = get_posts(array(
-                      'post_type' => 'vbl_quarto',
+                    $target_hotel_ids = array();
+                    if ($current_hotel_id) {
+                      $target_hotel_ids[] = (int) $current_hotel_id;
+                      if (function_exists('pll_get_post_translations')) {
+                        $hotel_translations = pll_get_post_translations($current_hotel_id);
+                        if (!empty($hotel_translations)) {
+                          foreach ($hotel_translations as $t_id) {
+                            $target_hotel_ids[] = (int) $t_id;
+                          }
+                        }
+                      }
+                    }
+                    $target_hotel_ids = array_values(array_unique(array_filter($target_hotel_ids)));
+
+                    $mega_query_args = array(
+                      'post_type'      => 'vbl_quarto',
+                      'post_status'    => 'publish',
                       'posts_per_page' => 5,
-                      'meta_query' => array(
+                      'orderby'        => 'menu_order title',
+                      'order'          => 'ASC',
+                    );
+
+                    if (!empty($target_hotel_ids)) {
+                      $mega_query_args['meta_query'] = array(
+                        'relation' => 'OR',
                         array(
-                          'key' => 'vbl_quarto_hotel',
-                          'value' => $current_hotel_id,
-                          'compare' => '=',
+                          'key'     => 'vbl_quarto_hotel',
+                          'value'   => $target_hotel_ids,
+                          'compare' => 'IN',
                         ),
-                      ),
-                    ));
+                        array(
+                          'key'     => 'vbl_quarto_hotel',
+                          'value'   => array_map('strval', $target_hotel_ids),
+                          'compare' => 'IN',
+                        ),
+                      );
+                    }
+
+                    if (function_exists('pll_current_language')) {
+                      $current_lang = pll_current_language('slug');
+                      if (!empty($current_lang)) {
+                        $mega_query_args['lang'] = $current_lang;
+                      }
+                    }
+
+                    $mega_rooms_posts = get_posts($mega_query_args);
 
                     if (!empty($mega_rooms_posts)):
                       foreach ($mega_rooms_posts as $rpost):
-                        $rimg = get_the_post_thumbnail_url($rpost->ID, 'medium');
+                        $rimg = get_the_post_thumbnail_url($rpost->ID, 'full');
+                        if (empty($rimg) && function_exists('vbl_field')) {
+                          $gal = vbl_field('vbl_quarto_galeria', $rpost->ID);
+                          if (!empty($gal) && is_array($gal) && !empty($gal[0]['image'])) {
+                            $rimg = $gal[0]['image'];
+                          }
+                        }
+                        if (!empty($rimg) && function_exists('vbl_get_highres_image_url')) {
+                          $rimg = vbl_get_highres_image_url($rimg);
+                        }
                         if (empty($rimg)) {
                           $rimg = vbl_img('hoteis/porto-santo-520x400.jpg');
                         }
@@ -187,7 +231,9 @@ $is_contactos_active    = (strpos($current_template, 'hotel-contactos') !== fals
                           <div class="w-full aspect-[4/3] overflow-hidden bg-gray-100">
                             <img src="<?php echo esc_url($rimg); ?>"
                               alt="<?php echo esc_attr(get_the_title($rpost->ID)); ?>"
-                              class="w-full h-full object-cover group-hover/room:scale-105 transition-transform duration-500 opacity-90 group-hover/room:opacity-100">
+                              class="w-full h-full object-cover group-hover/room:scale-105 transition-transform duration-500 opacity-90 group-hover/room:opacity-100"
+                              loading="lazy"
+                              decoding="async">
                           </div>
                           <div class="flex flex-col gap-1.5 mt-2">
                             <div class="flex items-center gap-3">
@@ -443,21 +489,51 @@ $is_contactos_active    = (strpos($current_template, 'hotel-contactos') !== fals
         <div id="mobileRoomsCards" class="overflow-hidden">
           <div class="flex flex-col gap-3 pb-2">
             <?php
-            $mobile_rooms_posts = get_posts(array(
-              'post_type' => 'vbl_quarto',
+            $mobile_room_args = array(
+              'post_type'      => 'vbl_quarto',
+              'post_status'    => 'publish',
               'posts_per_page' => 6,
-              'meta_query' => array(
+              'orderby'        => 'menu_order title',
+              'order'          => 'ASC',
+            );
+
+            if (!empty($target_hotel_ids)) {
+              $mobile_room_args['meta_query'] = array(
+                'relation' => 'OR',
                 array(
-                  'key' => 'vbl_quarto_hotel',
-                  'value' => $current_hotel_id,
-                  'compare' => '=',
+                  'key'     => 'vbl_quarto_hotel',
+                  'value'   => $target_hotel_ids,
+                  'compare' => 'IN',
                 ),
-              ),
-            ));
+                array(
+                  'key'     => 'vbl_quarto_hotel',
+                  'value'   => array_map('strval', $target_hotel_ids),
+                  'compare' => 'IN',
+                ),
+              );
+            }
+
+            if (function_exists('pll_current_language')) {
+              $current_lang = pll_current_language('slug');
+              if (!empty($current_lang)) {
+                $mobile_room_args['lang'] = $current_lang;
+              }
+            }
+
+            $mobile_rooms_posts = get_posts($mobile_room_args);
 
             if (!empty($mobile_rooms_posts)):
               foreach ($mobile_rooms_posts as $mr_post):
-                $mr_img = get_the_post_thumbnail_url($mr_post->ID, 'medium');
+                $mr_img = get_the_post_thumbnail_url($mr_post->ID, 'full');
+                if (empty($mr_img) && function_exists('vbl_field')) {
+                  $gal = vbl_field('vbl_quarto_galeria', $mr_post->ID);
+                  if (!empty($gal) && is_array($gal) && !empty($gal[0]['image'])) {
+                    $mr_img = $gal[0]['image'];
+                  }
+                }
+                if (!empty($mr_img) && function_exists('vbl_get_highres_image_url')) {
+                  $mr_img = vbl_get_highres_image_url($mr_img);
+                }
                 if (empty($mr_img)) {
                   $mr_img = vbl_img('hoteis/porto-santo-520x400.jpg');
                 }
@@ -467,7 +543,9 @@ $is_contactos_active    = (strpos($current_template, 'hotel-contactos') !== fals
                   <div class="w-[100px] md:w-[120px] h-[72px] flex-shrink-0 overflow-hidden bg-gray-100">
                     <img src="<?php echo esc_url($mr_img); ?>"
                       alt="<?php echo esc_attr(get_the_title($mr_post->ID)); ?>"
-                      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      loading="lazy"
+                      decoding="async">
                   </div>
                   <div class="flex flex-col gap-1.5 py-3 pr-4 min-w-0">
                     <div class="flex items-center gap-3">
