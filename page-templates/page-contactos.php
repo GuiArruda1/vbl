@@ -182,7 +182,7 @@ if (!empty($acf_hoteis) && is_array($acf_hoteis)) {
       'telefone' => !empty($h['telefone']) ? $h['telefone'] : '',
       'email' => !empty($h['email']) ? $h['email'] : '',
       'foto' => !empty($h['foto']) ? $h['foto'] : vbl_img('hoteis/porto-santo-520x400.jpg'),
-      'mapa' => !empty($h['mapa']) ? $h['mapa'] : 'https://www.openstreetmap.org/export/embed.html?bbox=-16.36779%2C33.03600%2C-16.34379%2C33.05040&layer=mapnik&marker=33.0431996%2C-16.3557871',
+      'mapa' => !empty($h['mapa']) ? $h['mapa'] : 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2500!2d-16.3557871!3d33.0431996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sVila%20Baleira%20Porto%20Santo!5e0!3m2!1spt-PT!2spt!4v1700000000000',
     );
   }
 } else {
@@ -194,7 +194,7 @@ if (!empty($acf_hoteis) && is_array($acf_hoteis)) {
       'telefone' => '+351 291 980 800',
       'email' => 'sales@vilabaleira.com',
       'foto' => vbl_img('hoteis/porto-santo-520x400.jpg'),
-      'mapa' => 'https://www.openstreetmap.org/export/embed.html?bbox=-16.36779%2C33.03600%2C-16.34379%2C33.05040&layer=mapnik&marker=33.0431996%2C-16.3557871',
+      'mapa' => 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2500!2d-16.3557871!3d33.0431996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sVila%20Baleira%20Porto%20Santo!5e0!3m2!1spt-PT!2spt!4v1700000000000',
     ),
     array(
       'title' => 'FUNCHAL',
@@ -203,7 +203,7 @@ if (!empty($acf_hoteis) && is_array($acf_hoteis)) {
       'telefone' => '+351 291 000 274',
       'email' => 'funchal@vilabaleira.com',
       'foto' => vbl_img('contactos/funchal-hotel.jpg'),
-      'mapa' => 'https://www.openstreetmap.org/export/embed.html?bbox=-16.94268%2C32.63136%2C-16.91868%2C32.64576&layer=mapnik&marker=32.6385558%2C-16.930677',
+      'mapa' => 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2500!2d-16.930677!3d32.6385558!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sVila%20Baleira%20Funchal!5e0!3m2!1spt-PT!2spt!4v1700000000000',
     ),
     array(
       'title' => 'SUITES',
@@ -212,7 +212,7 @@ if (!empty($acf_hoteis) && is_array($acf_hoteis)) {
       'telefone' => '+351 291 980 800',
       'email' => 'suites@vilabaleira.com',
       'foto' => vbl_img('hoteis/suites-680x400.jpg'),
-      'mapa' => 'https://www.openstreetmap.org/export/embed.html?bbox=-16.37307%2C33.03045%2C-16.34906%2C33.04485&layer=mapnik&marker=33.0376452%2C-16.361065',
+      'mapa' => 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2500!2d-16.361065!3d33.0376452!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sVila%20Baleira%20Suites%20Porto%20Santo!5e0!3m2!1spt-PT!2spt!4v1700000000000',
     ),
     array(
       'title' => 'VILLAGE',
@@ -221,7 +221,7 @@ if (!empty($acf_hoteis) && is_array($acf_hoteis)) {
       'telefone' => '+351 291 980 800',
       'email' => 'village@vilabaleira.com',
       'foto' => vbl_img('hoteis/village-680x400.jpg'),
-      'mapa' => 'https://www.openstreetmap.org/export/embed.html?bbox=-16.36200%2C33.03480%2C-16.33800%2C33.04920&layer=mapnik&marker=33.042%2C-16.35',
+      'mapa' => 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2500!2d-16.35!3d33.042!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sVila%20Baleira%20Village%20Porto%20Santo!5e0!3m2!1spt-PT!2spt!4v1700000000000',
     ),
     array(
       'title' => 'RESIDENCE',
@@ -230,18 +230,18 @@ if (!empty($acf_hoteis) && is_array($acf_hoteis)) {
       'telefone' => '+351 291 708 700',
       'email' => 'res.funchal@vilabaleira.com',
       'foto' => vbl_img('hoteis/residence-680x400.jpg'),
-      'mapa' => 'https://www.openstreetmap.org/export/embed.html?bbox=-16.93200%2C32.63280%2C-16.90800%2C32.64720&layer=mapnik&marker=32.64%2C-16.92',
+      'mapa' => 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2500!2d-16.92!3d32.64!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sVila%20Baleira%20Residence%20Funchal!5e0!3m2!1spt-PT!2spt!4v1700000000000',
     ),
   );
 }
 
 // Google bloqueia iframes que não sejam /maps/embed — substitui valores antigos guardados na BD
 $vbl_osm_fallback = array(
-  'FUNCHAL'   => 'https://www.openstreetmap.org/export/embed.html?bbox=-16.94260%2C32.63140%2C-16.91860%2C32.64560&layer=mapnik&marker=32.6385558%2C-16.930677',
-  'SUITES'    => 'https://www.openstreetmap.org/export/embed.html?bbox=-16.37300%2C33.03040%2C-16.34900%2C33.04480&layer=mapnik&marker=33.0376452%2C-16.361065',
-  'VILLAGE'   => 'https://www.openstreetmap.org/export/embed.html?bbox=-16.36200%2C33.03480%2C-16.33800%2C33.04920&layer=mapnik&marker=33.042%2C-16.35',
-  'RESIDENCE' => 'https://www.openstreetmap.org/export/embed.html?bbox=-16.94400%2C32.63280%2C-16.92000%2C32.64720&layer=mapnik&marker=32.64%2C-16.92',
-  'DEFAULT'   => 'https://www.openstreetmap.org/export/embed.html?bbox=-16.36770%2C33.03600%2C-16.34370%2C33.05020&layer=mapnik&marker=33.0431996%2C-16.3557871',
+  'FUNCHAL'   => 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2500!2d-16.930677!3d32.6385558!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sVila%20Baleira%20Funchal!5e0!3m2!1spt-PT!2spt!4v1700000000000',
+  'SUITES'    => 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2500!2d-16.361065!3d33.0376452!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sVila%20Baleira%20Suites%20Porto%20Santo!5e0!3m2!1spt-PT!2spt!4v1700000000000',
+  'VILLAGE'   => 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2500!2d-16.35!3d33.042!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sVila%20Baleira%20Village%20Porto%20Santo!5e0!3m2!1spt-PT!2spt!4v1700000000000',
+  'RESIDENCE' => 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2500!2d-16.92!3d32.64!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sVila%20Baleira%20Residence%20Funchal!5e0!3m2!1spt-PT!2spt!4v1700000000000',
+  'DEFAULT'   => 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2500!2d-16.3557871!3d33.0431996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sVila%20Baleira%20Porto%20Santo!5e0!3m2!1spt-PT!2spt!4v1700000000000',
 );
 foreach ($hoteis_carousel as $k => $h) {
   $m = isset($h['mapa']) ? $h['mapa'] : '';
