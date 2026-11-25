@@ -246,7 +246,7 @@ function vbl_hotel_atividades_shared_styles() {
                 multiple: false
             }).on('select', function() {
                 var attachment = uploader.state().get('selection').first().toJSON();
-                var imgUrl = attachment.sizes && attachment.sizes.large ? attachment.sizes.large.url : attachment.url;
+                var imgUrl = (attachment.sizes && attachment.sizes.full) ? attachment.sizes.full.url : attachment.url;
                 $preview.attr('src', imgUrl).css('display', 'block').show();
                 $noImg.hide();
                 $inputUrl.val(imgUrl);

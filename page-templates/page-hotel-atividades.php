@@ -104,6 +104,15 @@ $trat_title   = vbl_field( 'vbl_hativ_trat_title', false, 'TÍTULO PARA OS<br>PR
 $trat_desc    = vbl_field( 'vbl_hativ_trat_desc', false, 'Elementum mauris dolor vitae at porttitor. Consequat sapien facilisi platea viverra. Facilisi a viverra sollicitudin euismod.' );
 
 $tratamentos_list = vbl_field( 'vbl_hativ_tratamentos_list', false, array() );
+if ( ! empty( $tratamentos_list ) && is_array( $tratamentos_list ) ) {
+    foreach ( $tratamentos_list as &$t_item ) {
+        if ( is_array( $t_item ) && ! empty( $t_item['image'] ) ) {
+            $t_img_id = isset( $t_item['image_id'] ) ? (int) $t_item['image_id'] : null;
+            $t_item['image'] = function_exists( 'vbl_get_highres_image_url' ) ? vbl_get_highres_image_url( $t_item['image'], $t_img_id ) : $t_item['image'];
+        }
+    }
+    unset( $t_item );
+}
 if ( empty( $tratamentos_list ) || ! is_array( $tratamentos_list ) ) {
     $tratamentos_list = array(
         array(

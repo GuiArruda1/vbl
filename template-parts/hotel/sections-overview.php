@@ -94,7 +94,7 @@ $cpt_rooms = get_posts( $cpt_room_args );
 if ( ! empty( $cpt_rooms ) ) {
     foreach ( $cpt_rooms as $r_post ) {
         $q_id    = $r_post->ID;
-        $q_thumb = get_the_post_thumbnail_url( $q_id, 'large' );
+        $q_thumb = get_the_post_thumbnail_url( $q_id, 'full' );
         if ( empty( $q_thumb ) ) {
             $q_thumb = $hotel_default_img;
         }

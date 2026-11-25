@@ -39,6 +39,11 @@ function vbl_theme_setup() {
     add_image_size( 'vbl-news', 720, 400, true );
     add_image_size( 'vbl-newsletter', 785, 600, true );
 
+    // Manter a máxima nitidez e qualidade nas imagens e sliders (sem compressão agressiva ou redução forçada)
+    add_filter( 'jpeg_quality', function() { return 100; } );
+    add_filter( 'wp_editor_set_quality', function() { return 100; } );
+    add_filter( 'big_image_size_threshold', '__return_false' );
+
     // Navigation menus
     register_nav_menus( array(
         'primary' => __( 'Menu Principal', 'vila-baleira' ),
@@ -442,6 +447,31 @@ add_action( 'init', function() {
         update_option( 'vbl_cleaned_hct_lorem_ipsum_v1', '1', true );
     }
 }, 20 );
+
+/**
+ * Garante que qualquer URL de imagem utiliza a máxima resolução original disponível,
+ * removendo sufixos redimensionados como -1024x683 ou -768x512 para eliminar perda de qualidade.
+ *
+ * @param string   $url
+ * @param int|null $attachment_id
+ * @return string
+ */
+if ( ! function_exists( 'vbl_get_highres_image_url' ) ) {
+    function vbl_get_highres_image_url( $url = '', $attachment_id = null ) {
+        if ( ! empty( $attachment_id ) ) {
+            $full_url = wp_get_attachment_image_url( (int) $attachment_id, 'full' );
+            if ( ! empty( $full_url ) ) {
+                return $full_url;
+            }
+        }
+        if ( empty( $url ) || ! is_string( $url ) ) {
+            return $url;
+        }
+        // Se contiver sufixo redimensionado do WP (ex: -1024x683 ou -768x512), substitui para o ficheiro original em alta resolução
+        $full_candidate = preg_replace( '/-\d+x\d+(?=\.[a-zA-Z0-9]+(\?|$))/', '', $url );
+        return ! empty( $full_candidate ) ? $full_candidate : $url;
+    }
+}
 
 
 

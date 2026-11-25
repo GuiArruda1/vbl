@@ -459,7 +459,7 @@ function vbl_render_hotel_instalacoes_metabox( $post ) {
                 multiple: false
             }).on('select', function() {
                 var attachment = uploader.state().get('selection').first().toJSON();
-                var imgUrl = attachment.sizes && attachment.sizes.large ? attachment.sizes.large.url : attachment.url;
+                var imgUrl = (attachment.sizes && attachment.sizes.full) ? attachment.sizes.full.url : attachment.url;
                 $preview.attr('src', imgUrl).show();
                 $noImg.hide();
                 $inputUrl.val(imgUrl);

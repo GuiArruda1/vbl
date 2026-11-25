@@ -448,10 +448,7 @@ function vbl_render_quarto_galeria_metabox( $post ) {
 
                 selection.each(function(attachment) {
                     var att = attachment.toJSON();
-                    var url = att.url;
-                    if (att.sizes && att.sizes.large) {
-                        url = att.sizes.large.url;
-                    }
+                    var url = (att.sizes && att.sizes.full) ? att.sizes.full.url : att.url;
 
                     var nextIdx = $container.children('.vbl-gal-row').length;
                     var title = att.title || att.alt || '';
@@ -492,10 +489,7 @@ function vbl_render_quarto_galeria_metabox( $post ) {
 
             frame.on('select', function() {
                 var attachment = frame.state().get('selection').first().toJSON();
-                var url = attachment.url;
-                if (attachment.sizes && attachment.sizes.large) {
-                    url = attachment.sizes.large.url;
-                }
+                var url = (attachment.sizes && attachment.sizes.full) ? attachment.sizes.full.url : attachment.url;
 
                 $inputUrl.val(url);
                 $inputId.val(attachment.id || '');

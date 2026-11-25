@@ -78,10 +78,15 @@ if ( is_array( $raw_instalacoes ) && ! empty( $raw_instalacoes ) ) {
         $it_desc  = isset( $raw_item['description'] ) && is_scalar( $raw_item['description'] ) ? (string) $raw_item['description'] : '';
 
         $it_img = isset( $raw_item['image'] ) ? $raw_item['image'] : '';
+        $it_img_id = isset( $raw_item['image_id'] ) ? (int) $raw_item['image_id'] : 0;
         if ( is_array( $it_img ) ) {
             $it_img = isset( $it_img['url'] ) ? $it_img['url'] : '';
         } elseif ( is_numeric( $it_img ) ) {
-            $it_img = wp_get_attachment_image_url( (int) $it_img, 'large' ) ?: '';
+            $it_img_id = (int) $it_img;
+            $it_img = wp_get_attachment_image_url( $it_img_id, 'full' ) ?: '';
+        }
+        if ( ! empty( $it_img ) && function_exists( 'vbl_get_highres_image_url' ) ) {
+            $it_img = vbl_get_highres_image_url( $it_img, $it_img_id );
         }
 
         $it_thumb = isset( $raw_item['thumb'] ) ? $raw_item['thumb'] : '';

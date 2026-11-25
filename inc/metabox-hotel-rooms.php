@@ -531,7 +531,7 @@ function vbl_render_hotel_rooms_metabox( $post ) {
                 multiple: false
             }).on('select', function() {
                 var attachment = customUploader.state().get('selection').first().toJSON();
-                var imageUrl = attachment.sizes && attachment.sizes.large ? attachment.sizes.large.url : attachment.url;
+                var imageUrl = (attachment.sizes && attachment.sizes.full) ? attachment.sizes.full.url : attachment.url;
                 $preview.attr('src', imageUrl);
                 $input.val(imageUrl);
                 $idInput.val(attachment.id);

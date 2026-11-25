@@ -11,381 +11,385 @@ require_once VBL_DIR . '/header-hotel.php';
 $post_id = get_the_ID();
 
 // Hotel Pai (Post Object ID) com suporte a Polylang
-$parent_hotel = vbl_field( 'vbl_quarto_hotel', $post_id );
+$parent_hotel = vbl_field('vbl_quarto_hotel', $post_id);
 $hotel_id = false;
-if ( $parent_hotel ) {
-    $hotel_id = is_object( $parent_hotel ) ? $parent_hotel->ID : (int) $parent_hotel;
+if ($parent_hotel) {
+  $hotel_id = is_object($parent_hotel) ? $parent_hotel->ID : (int) $parent_hotel;
 }
-if ( $hotel_id && function_exists( 'pll_get_post' ) ) {
-    $trans_hotel = pll_get_post( $hotel_id );
-    if ( $trans_hotel ) {
-        $hotel_id = $trans_hotel;
-    }
+if ($hotel_id && function_exists('pll_get_post')) {
+  $trans_hotel = pll_get_post($hotel_id);
+  if ($trans_hotel) {
+    $hotel_id = $trans_hotel;
+  }
 }
 
-$hotel_name = $hotel_id ? vbl_field( 'vbl_hotel_name', $hotel_id, 'Porto Santo' ) : 'Porto Santo';
-$hotel_booking_url = vbl_field( 'vbl_quarto_cta_url', $post_id );
-if ( empty( $hotel_booking_url ) && $hotel_id ) {
-    $hotel_booking_url = vbl_field( 'vbl_hhotel_cta_url', $hotel_id );
+$hotel_name = $hotel_id ? vbl_field('vbl_hotel_name', $hotel_id, 'Porto Santo') : 'Porto Santo';
+$hotel_booking_url = vbl_field('vbl_quarto_cta_url', $post_id);
+if (empty($hotel_booking_url) && $hotel_id) {
+  $hotel_booking_url = vbl_field('vbl_hhotel_cta_url', $hotel_id);
 }
-if ( empty( $hotel_booking_url ) || '#' === trim( (string) $hotel_booking_url ) ) {
-    $hotel_booking_url = '#reservas';
+if (empty($hotel_booking_url) || '#' === trim((string) $hotel_booking_url)) {
+  $hotel_booking_url = '#reservas';
 }
-$is_external_cta = ( 0 === strpos( $hotel_booking_url, 'http' ) );
-$btn_reservar_label = vbl_field( 'vbl_quarto_btn_label', $post_id, 'RESERVAR' );
-if ( empty( $btn_reservar_label ) ) {
-    $btn_reservar_label = 'RESERVAR';
+$is_external_cta = (0 === strpos($hotel_booking_url, 'http'));
+$btn_reservar_label = vbl_field('vbl_quarto_btn_label', $post_id, 'RESERVAR');
+if (empty($btn_reservar_label)) {
+  $btn_reservar_label = 'RESERVAR';
 }
-$mirai_hotel = function_exists( 'vbl_resolve_hotel_mirai' ) ? vbl_resolve_hotel_mirai( $hotel_id ?: $hotel_name ) : array(
-    'chain_selector' => '23740',
-    'hotel_id'       => '100377467',
-    'name'           => 'Vila Baleira Porto Santo All Inclusive',
-    'short_name'     => $hotel_name,
+$mirai_hotel = function_exists('vbl_resolve_hotel_mirai') ? vbl_resolve_hotel_mirai($hotel_id ?: $hotel_name) : array(
+  'chain_selector' => '23740',
+  'hotel_id' => '100377467',
+  'name' => 'Vila Baleira Porto Santo All Inclusive',
+  'short_name' => $hotel_name,
 );
 
 // CTA de Reservas (Configurado no Quarto via ACF ou herdado do Hotel Pai)
-$is_en_quarto = ( function_exists( 'pll_current_language' ) && 'en' === pll_current_language( 'slug' ) );
+$is_en_quarto = (function_exists('pll_current_language') && 'en' === pll_current_language('slug'));
 
-$cta_subtitle = vbl_field( 'vbl_quarto_cta_subtitle', $post_id );
-if ( empty( $cta_subtitle ) && $hotel_id ) {
-    $cta_subtitle = vbl_field( 'vbl_hhotel_cta_subtitle', $hotel_id );
+$cta_subtitle = vbl_field('vbl_quarto_cta_subtitle', $post_id);
+if (empty($cta_subtitle) && $hotel_id) {
+  $cta_subtitle = vbl_field('vbl_hhotel_cta_subtitle', $hotel_id);
 }
-if ( empty( $cta_subtitle ) || ! is_string( $cta_subtitle ) || ( $is_en_quarto && in_array( strtoupper( trim( $cta_subtitle ) ), array( 'RESERVAR ESTADIA', 'CALL TO ACTION', 'RESERVAR' ), true ) ) ) {
-    $cta_subtitle = $is_en_quarto ? 'Book Now' : 'RESERVAR ESTADIA';
-}
-
-$cta_title = vbl_field( 'vbl_quarto_cta_title', $post_id );
-if ( empty( $cta_title ) && $hotel_id ) {
-    $cta_title = vbl_field( 'vbl_hhotel_cta_title', $hotel_id );
-}
-$cta_title_lower = function_exists( 'mb_strtolower' ) ? mb_strtolower( trim( (string) $cta_title ), 'UTF-8' ) : strtolower( trim( (string) $cta_title ) );
-if ( empty( $cta_title ) || ! is_string( $cta_title ) || ( $is_en_quarto && ( false !== strpos( $cta_title_lower, 'faça já' ) || false !== strpos( $cta_title_lower, 'faça aqui' ) ) ) ) {
-    $cta_title = $is_en_quarto ? 'Make Your Reservation Here' : 'FAÇA JÁ A SUA RESERVA';
+if (empty($cta_subtitle) || !is_string($cta_subtitle) || ($is_en_quarto && in_array(strtoupper(trim($cta_subtitle)), array('RESERVAR ESTADIA', 'CALL TO ACTION', 'RESERVAR'), true))) {
+  $cta_subtitle = $is_en_quarto ? 'Book Now' : 'RESERVAR ESTADIA';
 }
 
-$cta_desc = vbl_field( 'vbl_quarto_cta_desc', $post_id );
-if ( empty( $cta_desc ) && $hotel_id ) {
-    $cta_desc = vbl_field( 'vbl_hhotel_cta_desc', $hotel_id );
+$cta_title = vbl_field('vbl_quarto_cta_title', $post_id);
+if (empty($cta_title) && $hotel_id) {
+  $cta_title = vbl_field('vbl_hhotel_cta_title', $hotel_id);
 }
-$cta_desc_lower = function_exists( 'mb_strtolower' ) ? mb_strtolower( trim( (string) $cta_desc ), 'UTF-8' ) : strtolower( trim( (string) $cta_desc ) );
-if ( empty( $cta_desc ) || ! is_string( $cta_desc ) || ( $is_en_quarto && ( false !== strpos( $cta_desc_lower, 'garanta a sua estadia' ) || false !== strpos( $cta_desc_lower, 'convallis odio' ) ) ) ) {
-    $cta_desc = $is_en_quarto
-        ? 'Secure your stay at Vila Baleira Village with the best advantages. Book directly on our official website and enjoy exclusive rates and instant confirmation.'
-        : 'Garanta a sua estadia com as melhores condições e tarifas exclusivas no site oficial.';
+$cta_title_lower = function_exists('mb_strtolower') ? mb_strtolower(trim((string) $cta_title), 'UTF-8') : strtolower(trim((string) $cta_title));
+if (empty($cta_title) || !is_string($cta_title) || ($is_en_quarto && (false !== strpos($cta_title_lower, 'faça já') || false !== strpos($cta_title_lower, 'faça aqui')))) {
+  $cta_title = $is_en_quarto ? 'Make Your Reservation Here' : 'FAÇA JÁ A SUA RESERVA';
+}
+
+$cta_desc = vbl_field('vbl_quarto_cta_desc', $post_id);
+if (empty($cta_desc) && $hotel_id) {
+  $cta_desc = vbl_field('vbl_hhotel_cta_desc', $hotel_id);
+}
+$cta_desc_lower = function_exists('mb_strtolower') ? mb_strtolower(trim((string) $cta_desc), 'UTF-8') : strtolower(trim((string) $cta_desc));
+if (empty($cta_desc) || !is_string($cta_desc) || ($is_en_quarto && (false !== strpos($cta_desc_lower, 'garanta a sua estadia') || false !== strpos($cta_desc_lower, 'convallis odio')))) {
+  $cta_desc = $is_en_quarto
+    ? 'Secure your stay at Vila Baleira Village with the best advantages. Book directly on our official website and enjoy exclusive rates and instant confirmation.'
+    : 'Garanta a sua estadia com as melhores condições e tarifas exclusivas no site oficial.';
 }
 
 // Carrossel de Outros Quartos (Configurado no Quarto via ACF ou herdado do Hotel Pai)
-$rel_rooms_subtitle = vbl_field( 'vbl_quarto_rel_subtitle', $post_id );
-if ( empty( $rel_rooms_subtitle ) && $hotel_id ) {
-    $rel_rooms_subtitle = vbl_field( 'vbl_hhotel_rel_rooms_subtitle', $hotel_id );
+$rel_rooms_subtitle = vbl_field('vbl_quarto_rel_subtitle', $post_id);
+if (empty($rel_rooms_subtitle) && $hotel_id) {
+  $rel_rooms_subtitle = vbl_field('vbl_hhotel_rel_rooms_subtitle', $hotel_id);
 }
-if ( empty( $rel_rooms_subtitle ) || ! is_string( $rel_rooms_subtitle ) || 'ROOMS & SUITES' === trim( $rel_rooms_subtitle ) ) {
-    $rel_rooms_subtitle = 'Explore Mais Tipologias';
-}
-
-$rel_rooms_title = vbl_field( 'vbl_quarto_rel_title', $post_id );
-if ( empty( $rel_rooms_title ) && $hotel_id ) {
-    $rel_rooms_title = vbl_field( 'vbl_hhotel_rel_rooms_title', $hotel_id );
-}
-if ( empty( $rel_rooms_title ) || ! is_string( $rel_rooms_title ) || false !== stripos( $rel_rooms_title, 'AMET ET LEO' ) || false !== stripos( $rel_rooms_title, 'LOREM IPSUM' ) ) {
-    $rel_rooms_title = 'Encontre o Quarto Perfeito Para Si';
+if (empty($rel_rooms_subtitle) || !is_string($rel_rooms_subtitle) || 'ROOMS & SUITES' === trim($rel_rooms_subtitle)) {
+  $rel_rooms_subtitle = 'Explore Mais Tipologias';
 }
 
-$rel_rooms_desc = vbl_field( 'vbl_quarto_rel_desc', $post_id );
-if ( empty( $rel_rooms_desc ) && $hotel_id ) {
-    $rel_rooms_desc = vbl_field( 'vbl_hhotel_rel_rooms_desc', $hotel_id );
+$rel_rooms_title = vbl_field('vbl_quarto_rel_title', $post_id);
+if (empty($rel_rooms_title) && $hotel_id) {
+  $rel_rooms_title = vbl_field('vbl_hhotel_rel_rooms_title', $hotel_id);
 }
-if ( empty( $rel_rooms_desc ) || ! is_string( $rel_rooms_desc ) || false !== stripos( $rel_rooms_desc, 'Gravida turpis posuere' ) ) {
-    $rel_rooms_desc = 'Descubra outras tipologias disponíveis no Vila Baleira Porto Santo e escolha o cenário perfeito, com ou sem vista mar, para a sua próxima estadia na ilha.';
+if (empty($rel_rooms_title) || !is_string($rel_rooms_title) || false !== stripos($rel_rooms_title, 'AMET ET LEO') || false !== stripos($rel_rooms_title, 'LOREM IPSUM')) {
+  $rel_rooms_title = 'Encontre o Quarto Perfeito Para Si';
 }
 
-$rel_rooms_btn_label = vbl_field( 'vbl_quarto_rel_btn_label', $post_id );
-if ( empty( $rel_rooms_btn_label ) && $hotel_id ) {
-    $rel_rooms_btn_label = vbl_field( 'vbl_hrooms_btn_label', $hotel_id );
+$rel_rooms_desc = vbl_field('vbl_quarto_rel_desc', $post_id);
+if (empty($rel_rooms_desc) && $hotel_id) {
+  $rel_rooms_desc = vbl_field('vbl_hhotel_rel_rooms_desc', $hotel_id);
 }
-if ( empty( $rel_rooms_btn_label ) || ! is_string( $rel_rooms_btn_label ) ) {
-    $rel_rooms_btn_label = 'VER QUARTO';
+$hotel_display_name = !empty($hotel_name) ? (0 === strpos($hotel_name, 'Vila Baleira') ? $hotel_name : 'Vila Baleira ' . $hotel_name) : 'Vila Baleira';
+if (empty($rel_rooms_desc) || !is_string($rel_rooms_desc) || false !== stripos($rel_rooms_desc, 'Gravida turpis posuere') || false !== stripos($rel_rooms_desc, 'Vila Baleira Porto Santo')) {
+  $rel_rooms_desc = $is_en_quarto
+    ? sprintf('Discover other room types available at %s and choose the perfect setting for your next stay.', $hotel_display_name)
+    : sprintf('Descubra outras tipologias disponíveis no %s e escolha o cenário perfeito para a sua próxima estadia.', $hotel_display_name);
+}
+
+$rel_rooms_btn_label = vbl_field('vbl_quarto_rel_btn_label', $post_id);
+if (empty($rel_rooms_btn_label) && $hotel_id) {
+  $rel_rooms_btn_label = vbl_field('vbl_hrooms_btn_label', $hotel_id);
+}
+if (empty($rel_rooms_btn_label) || !is_string($rel_rooms_btn_label)) {
+  $rel_rooms_btn_label = 'VER QUARTO';
 }
 
 // Categoria & Detalhes
-$categoria = vbl_field( 'vbl_quarto_categoria', $post_id, 'SUITE' );
-$intro_desc = get_the_excerpt( $post_id );
-if ( empty( $intro_desc ) ) {
-    $intro_desc = 'Quartos amplos, com varanda privada e uma decoração descontraída em cores vivas e muita luz. Ideal para estadias relaxantes e revigorantes.';
+$categoria = vbl_field('vbl_quarto_categoria', $post_id, 'SUITE');
+$intro_desc = get_the_excerpt($post_id);
+if (empty($intro_desc)) {
+  $intro_desc = 'Quartos amplos, com varanda privada e uma decoração descontraída em cores vivas e muita luz. Ideal para estadias relaxantes e revigorantes.';
 }
 
 // Imagem Hero
-$hero_bg = get_the_post_thumbnail_url( $post_id, 'full' );
-if ( empty( $hero_bg ) ) {
-    $hero_bg = vbl_img( 'hoteis/suites-680x400.jpg' );
+$hero_bg = get_the_post_thumbnail_url($post_id, 'full');
+if (empty($hero_bg)) {
+  $hero_bg = vbl_img('hoteis/suites-680x400.jpg');
 }
 
 // Galeria (Slider de Fotos)
-$galeria = vbl_field( 'vbl_quarto_galeria', $post_id, array() );
-if ( empty( $galeria ) || ! is_array( $galeria ) ) {
-    $galeria = array(
-        array( 'image' => vbl_img( 'hoteis/porto-santo-520x400.jpg' ) ),
-        array( 'image' => vbl_img( 'hoteis/suites-680x400.jpg' ) ),
-        array( 'image' => vbl_img( 'hoteis/porto-santo-760x760.jpg' ) ),
-    );
+$galeria = vbl_field('vbl_quarto_galeria', $post_id, array());
+if (empty($galeria) || !is_array($galeria)) {
+  $galeria = array(
+    array('image' => vbl_img('hoteis/porto-santo-520x400.jpg')),
+    array('image' => vbl_img('hoteis/suites-680x400.jpg')),
+    array('image' => vbl_img('hoteis/porto-santo-760x760.jpg')),
+  );
 }
 
 // Comodidades
-$is_en_quarto   = ( function_exists( 'pll_current_language' ) && 'en' === pll_current_language( 'slug' ) );
-$comod_subtitle = vbl_field( 'vbl_quarto_comod_subtitle', $post_id );
-if ( empty( $comod_subtitle ) || ( $is_en_quarto && in_array( strtoupper( trim( (string) $comod_subtitle ) ), array( 'COMODIDADES DO QUARTO', 'SERVIÇOS / COMODIDADES', 'SERVICES / AMENITIES' ), true ) ) ) {
-    $comod_subtitle = $is_en_quarto ? 'Facilities' : 'COMODIDADES DO QUARTO';
+$is_en_quarto = (function_exists('pll_current_language') && 'en' === pll_current_language('slug'));
+$comod_subtitle = vbl_field('vbl_quarto_comod_subtitle', $post_id);
+if (empty($comod_subtitle) || ($is_en_quarto && in_array(strtoupper(trim((string) $comod_subtitle)), array('COMODIDADES DO QUARTO', 'SERVIÇOS / COMODIDADES', 'SERVICES / AMENITIES'), true))) {
+  $comod_subtitle = $is_en_quarto ? 'Facilities' : 'COMODIDADES DO QUARTO';
 }
 
-$comod_title = vbl_field( 'vbl_quarto_comod_title', $post_id );
-if ( empty( $comod_title ) || false !== stripos( (string) $comod_title, 'NISI ORCI' ) ) {
-    $comod_title = $is_en_quarto ? 'What You Can Enjoy' : 'O Que Pode Desfrutar';
+$comod_title = vbl_field('vbl_quarto_comod_title', $post_id);
+if (empty($comod_title) || false !== stripos((string) $comod_title, 'NISI ORCI')) {
+  $comod_title = $is_en_quarto ? 'What You Can Enjoy' : 'O Que Pode Desfrutar';
 }
 
-$comod_text = vbl_field( 'vbl_quarto_comod_text', $post_id );
-if ( empty( $comod_text ) || false !== stripos( (string) $comod_text, 'Diam elit faucibus' ) || false !== stripos( (string) $comod_text, 'Mi lectus elit' ) ) {
-    $comod_text = $is_en_quarto
-        ? 'Unwind in modern, cozy rooms and villas designed in detail to guarantee maximum comfort during your holiday in Porto Santo.'
-        : 'Relaxe em quartos e villas modernos e acolhedores, pensados ao detalhe para garantir o máximo conforto durante as suas férias.';
+$comod_text = vbl_field('vbl_quarto_comod_text', $post_id);
+if (empty($comod_text) || false !== stripos((string) $comod_text, 'Diam elit faucibus') || false !== stripos((string) $comod_text, 'Mi lectus elit')) {
+  $comod_text = $is_en_quarto
+    ? 'Unwind in modern, cozy rooms and villas designed in detail to guarantee maximum comfort during your holiday in Porto Santo.'
+    : 'Relaxe em quartos e villas modernos e acolhedores, pensados ao detalhe para garantir o máximo conforto durante as suas férias.';
 }
 
-if ( ! function_exists( 'vbl_get_quarto_icon_url' ) ) {
-    function vbl_get_quarto_icon_url( $icone_key = '', $nome = '' ) {
-        $base_uri = VBL_URI . '/assets/images/icons-quarto/';
+if (!function_exists('vbl_get_quarto_icon_url')) {
+  function vbl_get_quarto_icon_url($icone_key = '', $nome = '')
+  {
+    $base_uri = VBL_URI . '/assets/images/icons-quarto/';
 
-        // Se passar diretamente o ficheiro SVG
-        if ( ! empty( $icone_key ) && substr( $icone_key, -4 ) === '.svg' ) {
-            return $base_uri . $icone_key;
-        }
-
-        $map = array(
-            'varanda'             => 'varanda.svg',
-            'terraco_privado'     => 'varanda.svg',
-            'varanda_equipada'    => 'varanda.svg',
-            'cama'                => 'cama.svg',
-            'duas_camas'          => 'cama.svg',
-            'sofa'                => 'sofa.svg',
-            'sofa_cama'           => 'sofa.svg',
-            'sala'                => 'sala.svg',
-            'sala_de_estar'       => 'sala.svg',
-            'placa_inducao'       => 'placa_inducao.svg',
-            'microondas'          => 'microondas.svg',
-            'maquina_loica'       => 'maquina_loica.svg',
-            'frigorifico'         => 'frigorifico.svg',
-            'mini_frigo_fervedor' => 'frigorifico.svg',
-            'fervedor'            => 'fervedor.svg',
-            'chuveiro'            => 'banheira_com_duche.svg',
-            'secador_telefone'    => 'secador_de_cabelo.svg',
-            'wifi_tv'             => 'wifi.svg',
-            'wifi'                => 'wifi.svg',
-            'banheira_com_duche'  => 'banheira_com_duche.svg',
-            'cofre'               => 'cofre.svg',
-            'toucador'            => 'toucador.svg',
-            'ar_condicionado'     => 'ar_condicionado.svg',
-            'secador_de_cabelo'   => 'secador_de_cabelo.svg',
-            'phone'               => 'phone.svg',
-            'telefone'            => 'phone.svg',
-            'amenidades_de_banho' => 'amenidades_de_banho.svg',
-            'televisao'           => 'televisao.svg',
-            'chao_de_mosaico'     => 'chao_de_mosaico.svg',
-            'bide'                => 'bide.svg',
-        );
-
-        if ( ! empty( $icone_key ) && $icone_key !== 'auto' && isset( $map[ $icone_key ] ) ) {
-            return $base_uri . $map[ $icone_key ];
-        }
-
-        $n = mb_strtolower( trim( $nome ) );
-        if ( strpos( $n, 'cama' ) !== false ) {
-            return $base_uri . 'cama.svg';
-        }
-        if ( strpos( $n, 'sofá' ) !== false || strpos( $n, 'sofa' ) !== false ) {
-            return $base_uri . 'sofa.svg';
-        }
-        if ( strpos( $n, 'sala' ) !== false ) {
-            return $base_uri . 'sala.svg';
-        }
-        if ( strpos( $n, 'indução' ) !== false || strpos( $n, 'inducao' ) !== false || strpos( $n, 'fogão' ) !== false || strpos( $n, 'placa' ) !== false ) {
-            return $base_uri . 'placa_inducao.svg';
-        }
-        if ( strpos( $n, 'micro-ondas' ) !== false || strpos( $n, 'microondas' ) !== false || strpos( $n, 'forno' ) !== false ) {
-            return $base_uri . 'microondas.svg';
-        }
-        if ( strpos( $n, 'loiça' ) !== false || strpos( $n, 'louça' ) !== false || strpos( $n, 'lavar loiça' ) !== false ) {
-            return $base_uri . 'maquina_loica.svg';
-        }
-        if ( strpos( $n, 'frigorífico' ) !== false || strpos( $n, 'frigorifico' ) !== false || strpos( $n, 'frigo' ) !== false ) {
-            return $base_uri . 'frigorifico.svg';
-        }
-        if ( strpos( $n, 'fervedor' ) !== false || strpos( $n, 'chaleira' ) !== false ) {
-            return $base_uri . 'fervedor.svg';
-        }
-        if ( strpos( $n, 'varanda' ) !== false || strpos( $n, 'terraço' ) !== false || strpos( $n, 'balcony' ) !== false ) {
-            return $base_uri . 'varanda.svg';
-        }
-        if ( strpos( $n, 'wifi' ) !== false || strpos( $n, 'wi-fi' ) !== false || strpos( $n, 'internet' ) !== false ) {
-            return $base_uri . 'wifi.svg';
-        }
-        if ( strpos( $n, 'banheira' ) !== false || strpos( $n, 'duche' ) !== false || strpos( $n, 'chuveiro' ) !== false ) {
-            return $base_uri . 'banheira_com_duche.svg';
-        }
-        if ( strpos( $n, 'cofre' ) !== false || strpos( $n, 'safe' ) !== false ) {
-            return $base_uri . 'cofre.svg';
-        }
-        if ( strpos( $n, 'toucador' ) !== false || strpos( $n, 'espelho' ) !== false || strpos( $n, 'secretária' ) !== false || strpos( $n, 'mesa' ) !== false ) {
-            return $base_uri . 'toucador.svg';
-        }
-        if ( strpos( $n, 'ar condicionado' ) !== false || strpos( $n, 'climatiz' ) !== false || strpos( $n, 'ac' ) !== false || strpos( $n, 'temperatura' ) !== false ) {
-            return $base_uri . 'ar_condicionado.svg';
-        }
-        if ( strpos( $n, 'secador' ) !== false || strpos( $n, 'cabelo' ) !== false ) {
-            return $base_uri . 'secador_de_cabelo.svg';
-        }
-        if ( strpos( $n, 'telefone' ) !== false || strpos( $n, 'fone' ) !== false || strpos( $n, 'phone' ) !== false ) {
-            return $base_uri . 'phone.svg';
-        }
-        if ( strpos( $n, 'amenit' ) !== false || strpos( $n, 'higiene' ) !== false || strpos( $n, 'champô' ) !== false || strpos( $n, 'sabonete' ) !== false ) {
-            return $base_uri . 'amenidades_de_banho.svg';
-        }
-        if ( strpos( $n, 'tv' ) !== false || strpos( $n, 'televis' ) !== false || strpos( $n, 'ecrã' ) !== false ) {
-            return $base_uri . 'televisao.svg';
-        }
-        if ( strpos( $n, 'mosaico' ) !== false || strpos( $n, 'chão' ) !== false || strpos( $n, 'piso' ) !== false || strpos( $n, 'parquê' ) !== false ) {
-            return $base_uri . 'chao_de_mosaico.svg';
-        }
-        if ( strpos( $n, 'bidé' ) !== false || strpos( $n, 'bide' ) !== false ) {
-            return $base_uri . 'bide.svg';
-        }
-
-        return $base_uri . 'amenidades_de_banho.svg';
+    // Se passar diretamente o ficheiro SVG
+    if (!empty($icone_key) && substr($icone_key, -4) === '.svg') {
+      return $base_uri . $icone_key;
     }
+
+    $map = array(
+      'varanda' => 'varanda.svg',
+      'terraco_privado' => 'varanda.svg',
+      'varanda_equipada' => 'varanda.svg',
+      'cama' => 'cama.svg',
+      'duas_camas' => 'cama.svg',
+      'sofa' => 'sofa.svg',
+      'sofa_cama' => 'sofa.svg',
+      'sala' => 'sala.svg',
+      'sala_de_estar' => 'sala.svg',
+      'placa_inducao' => 'placa_inducao.svg',
+      'microondas' => 'microondas.svg',
+      'maquina_loica' => 'maquina_loica.svg',
+      'frigorifico' => 'frigorifico.svg',
+      'mini_frigo_fervedor' => 'frigorifico.svg',
+      'fervedor' => 'fervedor.svg',
+      'chuveiro' => 'banheira_com_duche.svg',
+      'secador_telefone' => 'secador_de_cabelo.svg',
+      'wifi_tv' => 'wifi.svg',
+      'wifi' => 'wifi.svg',
+      'banheira_com_duche' => 'banheira_com_duche.svg',
+      'cofre' => 'cofre.svg',
+      'toucador' => 'toucador.svg',
+      'ar_condicionado' => 'ar_condicionado.svg',
+      'secador_de_cabelo' => 'secador_de_cabelo.svg',
+      'phone' => 'phone.svg',
+      'telefone' => 'phone.svg',
+      'amenidades_de_banho' => 'amenidades_de_banho.svg',
+      'televisao' => 'televisao.svg',
+      'chao_de_mosaico' => 'chao_de_mosaico.svg',
+      'bide' => 'bide.svg',
+    );
+
+    if (!empty($icone_key) && $icone_key !== 'auto' && isset($map[$icone_key])) {
+      return $base_uri . $map[$icone_key];
+    }
+
+    $n = mb_strtolower(trim($nome));
+    if (strpos($n, 'cama') !== false) {
+      return $base_uri . 'cama.svg';
+    }
+    if (strpos($n, 'sofá') !== false || strpos($n, 'sofa') !== false) {
+      return $base_uri . 'sofa.svg';
+    }
+    if (strpos($n, 'sala') !== false) {
+      return $base_uri . 'sala.svg';
+    }
+    if (strpos($n, 'indução') !== false || strpos($n, 'inducao') !== false || strpos($n, 'fogão') !== false || strpos($n, 'placa') !== false) {
+      return $base_uri . 'placa_inducao.svg';
+    }
+    if (strpos($n, 'micro-ondas') !== false || strpos($n, 'microondas') !== false || strpos($n, 'forno') !== false) {
+      return $base_uri . 'microondas.svg';
+    }
+    if (strpos($n, 'loiça') !== false || strpos($n, 'louça') !== false || strpos($n, 'lavar loiça') !== false) {
+      return $base_uri . 'maquina_loica.svg';
+    }
+    if (strpos($n, 'frigorífico') !== false || strpos($n, 'frigorifico') !== false || strpos($n, 'frigo') !== false) {
+      return $base_uri . 'frigorifico.svg';
+    }
+    if (strpos($n, 'fervedor') !== false || strpos($n, 'chaleira') !== false) {
+      return $base_uri . 'fervedor.svg';
+    }
+    if (strpos($n, 'varanda') !== false || strpos($n, 'terraço') !== false || strpos($n, 'balcony') !== false) {
+      return $base_uri . 'varanda.svg';
+    }
+    if (strpos($n, 'wifi') !== false || strpos($n, 'wi-fi') !== false || strpos($n, 'internet') !== false) {
+      return $base_uri . 'wifi.svg';
+    }
+    if (strpos($n, 'banheira') !== false || strpos($n, 'duche') !== false || strpos($n, 'chuveiro') !== false) {
+      return $base_uri . 'banheira_com_duche.svg';
+    }
+    if (strpos($n, 'cofre') !== false || strpos($n, 'safe') !== false) {
+      return $base_uri . 'cofre.svg';
+    }
+    if (strpos($n, 'toucador') !== false || strpos($n, 'espelho') !== false || strpos($n, 'secretária') !== false || strpos($n, 'mesa') !== false) {
+      return $base_uri . 'toucador.svg';
+    }
+    if (strpos($n, 'ar condicionado') !== false || strpos($n, 'climatiz') !== false || strpos($n, 'ac') !== false || strpos($n, 'temperatura') !== false) {
+      return $base_uri . 'ar_condicionado.svg';
+    }
+    if (strpos($n, 'secador') !== false || strpos($n, 'cabelo') !== false) {
+      return $base_uri . 'secador_de_cabelo.svg';
+    }
+    if (strpos($n, 'telefone') !== false || strpos($n, 'fone') !== false || strpos($n, 'phone') !== false) {
+      return $base_uri . 'phone.svg';
+    }
+    if (strpos($n, 'amenit') !== false || strpos($n, 'higiene') !== false || strpos($n, 'champô') !== false || strpos($n, 'sabonete') !== false) {
+      return $base_uri . 'amenidades_de_banho.svg';
+    }
+    if (strpos($n, 'tv') !== false || strpos($n, 'televis') !== false || strpos($n, 'ecrã') !== false) {
+      return $base_uri . 'televisao.svg';
+    }
+    if (strpos($n, 'mosaico') !== false || strpos($n, 'chão') !== false || strpos($n, 'piso') !== false || strpos($n, 'parquê') !== false) {
+      return $base_uri . 'chao_de_mosaico.svg';
+    }
+    if (strpos($n, 'bidé') !== false || strpos($n, 'bide') !== false) {
+      return $base_uri . 'bide.svg';
+    }
+
+    return $base_uri . 'amenidades_de_banho.svg';
+  }
 }
 
-$amenities_catalog  = function_exists( 'vbl_get_quarto_amenities_catalog' ) ? vbl_get_quarto_amenities_catalog() : array();
-$selected_amenities = vbl_field( 'vbl_quarto_amenities', $post_id, array() );
+$amenities_catalog = function_exists('vbl_get_quarto_amenities_catalog') ? vbl_get_quarto_amenities_catalog() : array();
+$selected_amenities = vbl_field('vbl_quarto_amenities', $post_id, array());
 
 // Se ainda não tiver sido gravado na base de dados, usa pré-definição com base no quarto/slug
-if ( empty( $selected_amenities ) || ! is_array( $selected_amenities ) ) {
-    $q_slug  = get_post_field( 'post_name', $post_id );
-    $q_title = mb_strtolower( get_the_title( $post_id ) );
+if (empty($selected_amenities) || !is_array($selected_amenities)) {
+  $q_slug = get_post_field('post_name', $post_id);
+  $q_title = mb_strtolower(get_the_title($post_id));
 
-    if ( $post_id == 587 || strpos( $q_slug, 'vila' ) !== false || strpos( $q_title, 'vila' ) !== false ) {
-        $selected_amenities = array(
-            'terraco_privado',
-            'sala_de_estar',
-            'sofa_cama',
-            'placa_inducao',
-            'microondas',
-            'maquina_loica',
-            'mini_frigo_fervedor',
-            'ar_condicionado',
-            'wifi_tv',
-            'chuveiro',
-            'secador_telefone',
-        );
-    } elseif ( $post_id == 586 || strpos( $q_slug, 'suite' ) !== false || strpos( $q_title, 'suite' ) !== false ) {
-        $selected_amenities = array(
-            'varanda_equipada',
-            'duas_camas',
-            'sofa_cama',
-            'ar_condicionado',
-            'wifi_tv',
-            'mini_frigo_fervedor',
-            'chuveiro',
-            'secador_telefone',
-        );
-    } elseif ( $post_id == 585 || strpos( $q_slug, 'deluxe' ) !== false || strpos( $q_title, 'deluxe' ) !== false || strpos( $q_slug, 'twin' ) !== false || strpos( $q_title, 'twin' ) !== false ) {
-        $selected_amenities = array(
-            'varanda_equipada',
-            'duas_camas',
-            'ar_condicionado',
-            'wifi_tv',
-            'mini_frigo_fervedor',
-            'chuveiro',
-            'secador_telefone',
-        );
-    }
+  if ($post_id == 587 || strpos($q_slug, 'vila') !== false || strpos($q_title, 'vila') !== false) {
+    $selected_amenities = array(
+      'terraco_privado',
+      'sala_de_estar',
+      'sofa_cama',
+      'placa_inducao',
+      'microondas',
+      'maquina_loica',
+      'mini_frigo_fervedor',
+      'ar_condicionado',
+      'wifi_tv',
+      'chuveiro',
+      'secador_telefone',
+    );
+  } elseif ($post_id == 586 || strpos($q_slug, 'suite') !== false || strpos($q_title, 'suite') !== false) {
+    $selected_amenities = array(
+      'varanda_equipada',
+      'duas_camas',
+      'sofa_cama',
+      'ar_condicionado',
+      'wifi_tv',
+      'mini_frigo_fervedor',
+      'chuveiro',
+      'secador_telefone',
+    );
+  } elseif ($post_id == 585 || strpos($q_slug, 'deluxe') !== false || strpos($q_title, 'deluxe') !== false || strpos($q_slug, 'twin') !== false || strpos($q_title, 'twin') !== false) {
+    $selected_amenities = array(
+      'varanda_equipada',
+      'duas_camas',
+      'ar_condicionado',
+      'wifi_tv',
+      'mini_frigo_fervedor',
+      'chuveiro',
+      'secador_telefone',
+    );
+  }
 }
 
 $comodidades_list = array();
-if ( ! empty( $selected_amenities ) && is_array( $selected_amenities ) ) {
-    foreach ( $selected_amenities as $skey ) {
-        if ( isset( $amenities_catalog[ $skey ] ) ) {
-            $comodidades_list[] = array(
-                'nome'  => $amenities_catalog[ $skey ]['label'],
-                'icone' => $amenities_catalog[ $skey ]['icon'],
-            );
-        }
+if (!empty($selected_amenities) && is_array($selected_amenities)) {
+  foreach ($selected_amenities as $skey) {
+    if (isset($amenities_catalog[$skey])) {
+      $comodidades_list[] = array(
+        'nome' => $amenities_catalog[$skey]['label'],
+        'icone' => $amenities_catalog[$skey]['icon'],
+      );
     }
+  }
 }
 
 // Suporte a comodidades adicionais por textarea (opcional)
-$custom_amenities_raw = vbl_field( 'vbl_quarto_amenities_custom', $post_id, '' );
-if ( ! empty( $custom_amenities_raw ) ) {
-    $c_lines = array_filter( array_map( 'trim', explode( "\n", $custom_amenities_raw ) ) );
-    foreach ( $c_lines as $cline ) {
-        if ( ! empty( $cline ) ) {
-            $comodidades_list[] = array(
-                'nome'  => $cline,
-                'icone' => 'auto',
-            );
-        }
+$custom_amenities_raw = vbl_field('vbl_quarto_amenities_custom', $post_id, '');
+if (!empty($custom_amenities_raw)) {
+  $c_lines = array_filter(array_map('trim', explode("\n", $custom_amenities_raw)));
+  foreach ($c_lines as $cline) {
+    if (!empty($cline)) {
+      $comodidades_list[] = array(
+        'nome' => $cline,
+        'icone' => 'auto',
+      );
     }
+  }
 }
 
 // Fallback legado se ainda estiver vazio
-if ( empty( $comodidades_list ) ) {
-    $legacy_list = vbl_field( 'vbl_quarto_comodidades_list', $post_id, array() );
-    if ( ! empty( $legacy_list ) && is_array( $legacy_list ) ) {
-        $comodidades_list = $legacy_list;
-    } else {
-        $comodidades_list = array(
-            array( 'nome' => 'VARANDA',                  'icone' => 'varanda' ),
-            array( 'nome' => 'COFRE (GRÁTIS)',           'icone' => 'cofre' ),
-            array( 'nome' => 'SECADOR DE CABELO',        'icone' => 'secador_de_cabelo' ),
-            array( 'nome' => 'TELEVISÃO',                'icone' => 'televisao' ),
-            array( 'nome' => 'INTERNET WIFI (GRÁTIS)',   'icone' => 'wifi' ),
-            array( 'nome' => 'TOUCADOR',                 'icone' => 'toucador' ),
-            array( 'nome' => 'TELEFONE',                 'icone' => 'phone' ),
-            array( 'nome' => 'CHÃO DE MOSAICO',          'icone' => 'chao_de_mosaico' ),
-            array( 'nome' => 'BANHEIRA COM DUCHE',       'icone' => 'banheira_com_duche' ),
-            array( 'nome' => 'AR CONDICIONADO',          'icone' => 'ar_condicionado' ),
-            array( 'nome' => 'AMENIDADES DE BANHO',      'icone' => 'amenidades_de_banho' ),
-            array( 'nome' => 'BIDÉ',                     'icone' => 'bide' ),
-        );
-    }
+if (empty($comodidades_list)) {
+  $legacy_list = vbl_field('vbl_quarto_comodidades_list', $post_id, array());
+  if (!empty($legacy_list) && is_array($legacy_list)) {
+    $comodidades_list = $legacy_list;
+  } else {
+    $comodidades_list = array(
+      array('nome' => 'VARANDA', 'icone' => 'varanda'),
+      array('nome' => 'COFRE (GRÁTIS)', 'icone' => 'cofre'),
+      array('nome' => 'SECADOR DE CABELO', 'icone' => 'secador_de_cabelo'),
+      array('nome' => 'TELEVISÃO', 'icone' => 'televisao'),
+      array('nome' => 'INTERNET WIFI (GRÁTIS)', 'icone' => 'wifi'),
+      array('nome' => 'TOUCADOR', 'icone' => 'toucador'),
+      array('nome' => 'TELEFONE', 'icone' => 'phone'),
+      array('nome' => 'CHÃO DE MOSAICO', 'icone' => 'chao_de_mosaico'),
+      array('nome' => 'BANHEIRA COM DUCHE', 'icone' => 'banheira_com_duche'),
+      array('nome' => 'AR CONDICIONADO', 'icone' => 'ar_condicionado'),
+      array('nome' => 'AMENIDADES DE BANHO', 'icone' => 'amenidades_de_banho'),
+      array('nome' => 'BIDÉ', 'icone' => 'bide'),
+    );
+  }
 }
 
 // Banner Frase Final
-$frase_bg    = vbl_field( 'vbl_quarto_frase_bg', $post_id, vbl_img( 'hoteis/frase-ilhas-bg.jpg' ) );
-if ( empty( $frase_bg ) ) {
-    $frase_bg = vbl_img( 'hoteis/frase-ilhas-bg.jpg' );
+$frase_bg = vbl_field('vbl_quarto_frase_bg', $post_id, vbl_img('hoteis/frase-ilhas-bg.jpg'));
+if (empty($frase_bg)) {
+  $frase_bg = vbl_img('hoteis/frase-ilhas-bg.jpg');
 }
 
-$is_en_room = ( function_exists( 'pll_get_post_language' ) && 'en' === pll_get_post_language( $post_id, 'slug' ) )
-    || ( function_exists( 'pll_current_language' ) && 'en' === pll_current_language( 'slug' ) );
-$is_ps_room = ( isset( $mirai_hotel['slug'] ) && 'porto-santo' === $mirai_hotel['slug'] )
-    || ( false !== stripos( (string) $hotel_name, 'porto santo' ) )
-    || ( false !== stripos( (string) get_post_field( 'post_name', $post_id ), '-ps' ) );
+$is_en_room = (function_exists('pll_get_post_language') && 'en' === pll_get_post_language($post_id, 'slug'))
+  || (function_exists('pll_current_language') && 'en' === pll_current_language('slug'));
+$is_ps_room = (isset($mirai_hotel['slug']) && 'porto-santo' === $mirai_hotel['slug'])
+  || (false !== stripos((string) $hotel_name, 'porto santo'))
+  || (false !== stripos((string) get_post_field('post_name', $post_id), '-ps'));
 
-$default_frase_l1 = ( $is_en_room && $is_ps_room ) ? 'Your ultimate' : 'LOREM IPSUM DOLOR';
-$default_frase_l2 = ( $is_en_room && $is_ps_room ) ? 'Atlantic ocean-view' : 'ENIM VITAE TURPIS';
-$default_frase_l3 = ( $is_en_room && $is_ps_room ) ? 'sanctuary.' : 'LACUS EGET UT SIT.';
+$default_frase_l1 = ($is_en_room && $is_ps_room) ? 'Your ultimate' : 'LOREM IPSUM DOLOR';
+$default_frase_l2 = ($is_en_room && $is_ps_room) ? 'Atlantic ocean-view' : 'ENIM VITAE TURPIS';
+$default_frase_l3 = ($is_en_room && $is_ps_room) ? 'sanctuary.' : 'LACUS EGET UT SIT.';
 
-$frase_line1 = vbl_field( 'vbl_quarto_frase_line1', $post_id, $default_frase_l1 );
-$frase_line2 = vbl_field( 'vbl_quarto_frase_line2', $post_id, $default_frase_l2 );
-$frase_line3 = vbl_field( 'vbl_quarto_frase_line3', $post_id, $default_frase_l3 );
+$frase_line1 = vbl_field('vbl_quarto_frase_line1', $post_id, $default_frase_l1);
+$frase_line2 = vbl_field('vbl_quarto_frase_line2', $post_id, $default_frase_l2);
+$frase_line3 = vbl_field('vbl_quarto_frase_line3', $post_id, $default_frase_l3);
 
-if ( $is_en_room && $is_ps_room ) {
-    if ( empty( $frase_line1 ) || false !== stripos( $frase_line1, 'LOREM IPSUM' ) ) {
-        $frase_line1 = $default_frase_l1;
-    }
-    if ( empty( $frase_line2 ) || false !== stripos( $frase_line2, 'ENIM VITAE TURPIS' ) ) {
-        $frase_line2 = $default_frase_l2;
-    }
-    if ( empty( $frase_line3 ) || false !== stripos( $frase_line3, 'LACUS EGET' ) ) {
-        $frase_line3 = $default_frase_l3;
-    }
+if ($is_en_room && $is_ps_room) {
+  if (empty($frase_line1) || false !== stripos($frase_line1, 'LOREM IPSUM')) {
+    $frase_line1 = $default_frase_l1;
+  }
+  if (empty($frase_line2) || false !== stripos($frase_line2, 'ENIM VITAE TURPIS')) {
+    $frase_line2 = $default_frase_l2;
+  }
+  if (empty($frase_line3) || false !== stripos($frase_line3, 'LACUS EGET')) {
+    $frase_line3 = $default_frase_l3;
+  }
 }
 ?>
 
@@ -394,9 +398,11 @@ if ( $is_en_room && $is_ps_room ) {
   <!-- ==========================================
        1. HERO BANNER
   =========================================== -->
-  <section class="relative w-full h-[280px] sm:h-[360px] max-h-[360px] overflow-hidden bg-black flex items-end vbl-hotel-subpage-hero">
+  <section
+    class="relative w-full h-[280px] sm:h-[360px] max-h-[360px] overflow-hidden bg-black flex items-end vbl-hotel-subpage-hero">
     <div class="absolute inset-0 z-0">
-      <img src="<?php echo esc_url( $hero_bg ); ?>" alt="<?php the_title_attribute(); ?>" class="w-full h-full object-cover object-center filter brightness-[0.85]">
+      <img src="<?php echo esc_url($hero_bg); ?>" alt="<?php the_title_attribute(); ?>"
+        class="w-full h-full object-cover object-center filter brightness-[0.85]">
       <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/50"></div>
     </div>
   </section>
@@ -406,29 +412,33 @@ if ( $is_en_room && $is_ps_room ) {
   =========================================== -->
   <section class="w-full py-16 lg:py-24 bg-white text-center">
     <div class="max-w-[1920px] mx-auto px-6 xl:px-[8.33%] flex flex-col items-center">
-      
+
       <!-- Categoria / Tagline Superior -->
       <div class="flex items-center justify-center gap-3 mb-4">
-        <span class="font-body text-[11px] xl:text-[12px] tracking-[2.5px] uppercase text-[var(--vbl-hotel-accent)] font-medium">
-          <?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( $categoria ) : $categoria ); ?>
+        <span
+          class="font-body text-[11px] xl:text-[12px] tracking-[2.5px] uppercase text-[var(--vbl-hotel-accent)] font-medium">
+          <?php echo esc_html(function_exists('vbl__') ? vbl__($categoria) : $categoria); ?>
         </span>
       </div>
 
       <!-- Título do Quarto (Display Serif) -->
-      <h1 class="font-display text-[44px] sm:text-[56px] md:text-[68px] lg:text-[80px] leading-[1.02] tracking-[1.5px] uppercase text-[#0d5257] mb-6 max-w-[1100px] font-normal">
+      <h1
+        class="font-display text-[44px] sm:text-[56px] md:text-[68px] lg:text-[80px] leading-[1.02] tracking-[1.5px] uppercase text-[#0d5257] mb-6 max-w-[1100px] font-normal">
         <?php the_title(); ?>
       </h1>
 
       <!-- Descrição Curta -->
-      <p class="font-body font-light text-[14px] lg:text-[15px] xl:text-[16px] leading-relaxed text-[#333333] max-w-[620px] mb-8">
-        <?php echo nl2br( esc_html( $intro_desc ) ); ?>
+      <p
+        class="font-body font-light text-[14px] lg:text-[15px] xl:text-[16px] leading-relaxed text-[#333333] max-w-[620px] mb-8">
+        <?php echo nl2br(esc_html($intro_desc)); ?>
       </p>
 
       <!-- Botão Reservar -->
-      <a href="<?php echo esc_url( $hotel_booking_url ); ?>"<?php echo $is_external_cta ? ' target="_blank" rel="noopener noreferrer"' : ''; ?> class="vbl-btn-microsite w-[180px]">
-        <span><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( $btn_reservar_label ) : $btn_reservar_label ); ?></span>
+      <a href="<?php echo esc_url($hotel_booking_url); ?>" <?php echo $is_external_cta ? ' target="_blank" rel="noopener noreferrer"' : ''; ?> class="vbl-btn-microsite w-[180px]">
+        <span><?php echo esc_html(function_exists('vbl__') ? vbl__($btn_reservar_label) : $btn_reservar_label); ?></span>
         <svg viewBox="0 0 12 12" fill="none">
-          <path d="M1 11L11 1H3.5M11 1V8.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M1 11L11 1H3.5M11 1V8.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"
+            stroke-linejoin="round" />
         </svg>
       </a>
 
@@ -439,29 +449,43 @@ if ( $is_en_room && $is_ps_room ) {
        3. SLIDER DE FOTOGRAFIAS DO QUARTO (Largura Total / Full-width)
   =========================================== -->
   <section class="w-full relative overflow-hidden bg-black">
-    <div class="relative w-full h-[460px] sm:h-[580px] md:h-[680px] lg:h-[780px] xl:h-[840px] overflow-hidden group/slider">
-      
+    <div
+      class="relative w-full h-[460px] sm:h-[580px] md:h-[680px] lg:h-[780px] xl:h-[840px] overflow-hidden group/slider">
+
       <div id="vblQuartoGaleriaTrack" class="flex h-full transition-transform duration-500 ease-out">
-        <?php foreach ( $galeria as $item ) : 
-            $gal_img = ! empty( $item['image'] ) ? $item['image'] : '';
-            if ( empty( $gal_img ) ) continue;
-        ?>
-        <div class="w-full h-full flex-shrink-0">
-          <img src="<?php echo esc_url( $gal_img ); ?>" alt="<?php echo esc_attr( function_exists( 'vbl__' ) ? vbl__( 'Fotografia do Quarto' ) : 'Fotografia do Quarto' ); ?>" class="w-full h-full object-cover object-center">
-        </div>
+        <?php foreach ($galeria as $item):
+          $gal_img_raw = !empty($item['image']) ? $item['image'] : '';
+          $gal_img_id  = !empty($item['image_id']) ? (int) $item['image_id'] : 0;
+          $gal_img     = function_exists('vbl_get_highres_image_url') ? vbl_get_highres_image_url($gal_img_raw, $gal_img_id) : $gal_img_raw;
+          if (empty($gal_img))
+            continue;
+          ?>
+          <div class="w-full h-full flex-shrink-0">
+            <img src="<?php echo esc_url($gal_img); ?>"
+              alt="<?php echo esc_attr(function_exists('vbl__') ? vbl__('Fotografia do Quarto') : 'Fotografia do Quarto'); ?>"
+              class="w-full h-full object-cover object-center"
+              loading="eager"
+              decoding="async">
+          </div>
         <?php endforeach; ?>
       </div>
 
       <!-- Seta Esquerda -->
-      <button type="button" id="vblGaleriaPrev" class="absolute left-4 sm:left-8 lg:left-12 xl:left-16 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 border border-white/70 text-white bg-black/15 hover:bg-white hover:text-[#0d5257] hover:border-white flex items-center justify-center transition-all duration-300 cursor-pointer backdrop-blur-[2px] shadow-sm" aria-label="<?php echo esc_attr( function_exists( 'vbl__' ) ? vbl__( 'Foto Anterior' ) : 'Foto Anterior' ); ?>">
-        <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+      <button type="button" id="vblGaleriaPrev"
+        class="absolute left-4 sm:left-8 lg:left-12 xl:left-16 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 border border-white/70 text-white bg-black/15 hover:bg-white hover:text-[#0d5257] hover:border-white flex items-center justify-center transition-all duration-300 cursor-pointer backdrop-blur-[2px] shadow-sm"
+        aria-label="<?php echo esc_attr(function_exists('vbl__') ? vbl__('Foto Anterior') : 'Foto Anterior'); ?>">
+        <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"
+          stroke-linecap="round" stroke-linejoin="round">
           <path d="M19 12H5M12 19l-7-7 7-7" />
         </svg>
       </button>
 
       <!-- Seta Direita -->
-      <button type="button" id="vblGaleriaNext" class="absolute right-4 sm:right-8 lg:right-12 xl:right-16 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 border border-white/70 text-white bg-black/15 hover:bg-white hover:text-[#0d5257] hover:border-white flex items-center justify-center transition-all duration-300 cursor-pointer backdrop-blur-[2px] shadow-sm" aria-label="<?php echo esc_attr( function_exists( 'vbl__' ) ? vbl__( 'Próxima Foto' ) : 'Próxima Foto' ); ?>">
-        <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+      <button type="button" id="vblGaleriaNext"
+        class="absolute right-4 sm:right-8 lg:right-12 xl:right-16 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 border border-white/70 text-white bg-black/15 hover:bg-white hover:text-[#0d5257] hover:border-white flex items-center justify-center transition-all duration-300 cursor-pointer backdrop-blur-[2px] shadow-sm"
+        aria-label="<?php echo esc_attr(function_exists('vbl__') ? vbl__('Próxima Foto') : 'Próxima Foto'); ?>">
+        <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"
+          stroke-linecap="round" stroke-linejoin="round">
           <path d="M5 12h14M12 5l7 7-7 7" />
         </svg>
       </button>
@@ -474,44 +498,49 @@ if ( $is_en_room && $is_ps_room ) {
   =========================================== -->
   <section class="w-full py-20 lg:py-28 xl:py-32 bg-white relative overflow-hidden">
     <div class="max-w-[1920px] mx-auto px-6 xl:px-[8.33%] relative z-10">
-      
+
       <!-- Subtítulo com Traço Ciano -->
       <div class="flex items-center gap-4 mb-3">
         <div class="w-8 h-px bg-[var(--vbl-hotel-accent)] flex-shrink-0"></div>
-        <span class="font-body text-[11px] xl:text-[12px] tracking-[2px] uppercase text-[var(--vbl-hotel-accent)] font-medium">
-          <?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( $comod_subtitle ) : $comod_subtitle ); ?>
+        <span
+          class="font-body text-[11px] xl:text-[12px] tracking-[2px] uppercase text-[var(--vbl-hotel-accent)] font-medium">
+          <?php echo esc_html(function_exists('vbl__') ? vbl__($comod_subtitle) : $comod_subtitle); ?>
         </span>
       </div>
 
       <!-- Título Display Serif -->
-      <h2 class="font-display text-[40px] sm:text-[52px] lg:text-[64px] leading-[1.02] tracking-[1.5px] uppercase text-[#0d5257] mb-8 lg:mb-10 font-normal">
-        <?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( $comod_title ) : $comod_title ); ?>
+      <h2
+        class="font-display text-[40px] sm:text-[52px] lg:text-[64px] leading-[1.02] tracking-[1.5px] uppercase text-[#0d5257] mb-8 lg:mb-10 font-normal">
+        <?php echo esc_html(function_exists('vbl__') ? vbl__($comod_title) : $comod_title); ?>
       </h2>
 
       <!-- Conteúdo Indentado à Direita: Descrição e Grelha de Comodidades (Alinhado à 2ª Coluna como no Figma) -->
       <div class="pl-0 sm:pl-6 lg:pl-[8.33%]">
-        
+
         <!-- Texto Introdutório Indentado -->
-        <?php if ( ! empty( $comod_text ) ) : ?>
-        <p class="font-body font-light text-[13px] sm:text-[14px] lg:text-[15px] leading-relaxed text-[#4a4a4a] max-w-[540px] mb-12 lg:mb-14">
-          <?php echo nl2br( esc_html( function_exists( 'vbl__' ) ? vbl__( $comod_text ) : $comod_text ) ); ?>
-        </p>
+        <?php if (!empty($comod_text)): ?>
+          <p
+            class="font-body font-light text-[13px] sm:text-[14px] lg:text-[15px] leading-relaxed text-[#4a4a4a] max-w-[540px] mb-12 lg:mb-14">
+            <?php echo nl2br(esc_html(function_exists('vbl__') ? vbl__($comod_text) : $comod_text)); ?>
+          </p>
         <?php endif; ?>
 
         <!-- Grid de Comodidades Indentado (4 colunas no desktop) -->
         <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-y-7 gap-x-6 lg:gap-x-8 xl:gap-x-12 pt-2">
-          <?php foreach ( $comodidades_list as $comod ) : 
-              $c_nome  = ! empty( $comod['nome'] ) ? $comod['nome'] : '';
-              $c_icone = ! empty( $comod['icone'] ) ? $comod['icone'] : 'auto';
-              if ( empty( $c_nome ) ) continue;
-              $c_icon_url = vbl_get_quarto_icon_url( $c_icone, $c_nome );
-          ?>
-          <div class="flex items-center gap-3.5">
-            <?php vbl_render_tinted_svg( $c_icon_url, 'w-7 h-7 sm:w-8 sm:h-8 flex-shrink-0' ); ?>
-            <span class="font-body text-[11px] xl:text-[12px] tracking-[1.2px] uppercase text-[#0d5257] font-medium leading-tight">
-              <?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( $c_nome ) : $c_nome ); ?>
-            </span>
-          </div>
+          <?php foreach ($comodidades_list as $comod):
+            $c_nome = !empty($comod['nome']) ? $comod['nome'] : '';
+            $c_icone = !empty($comod['icone']) ? $comod['icone'] : 'auto';
+            if (empty($c_nome))
+              continue;
+            $c_icon_url = vbl_get_quarto_icon_url($c_icone, $c_nome);
+            ?>
+            <div class="flex items-center gap-3.5">
+              <?php vbl_render_tinted_svg($c_icon_url, 'w-7 h-7 sm:w-8 sm:h-8 flex-shrink-0'); ?>
+              <span
+                class="font-body text-[11px] xl:text-[12px] tracking-[1.2px] uppercase text-[#0d5257] font-medium leading-tight">
+                <?php echo esc_html(function_exists('vbl__') ? vbl__($c_nome) : $c_nome); ?>
+              </span>
+            </div>
           <?php endforeach; ?>
         </div>
 
@@ -520,8 +549,9 @@ if ( $is_en_room && $is_ps_room ) {
     </div>
 
     <!-- Concha Decorativa em Outline Ciano (Canto inferior direito como no design) -->
-    <div class="absolute -bottom-8 sm:-bottom-12 lg:-bottom-16 right-4 sm:right-8 lg:right-16 z-0 w-36 sm:w-48 lg:w-60 pointer-events-none opacity-25">
-      <?php vbl_render_tinted_svg( vbl_img( 'concha-cyan.svg' ), 'block w-full', 'aspect-ratio: 166 / 160;' ); ?>
+    <div
+      class="absolute -bottom-8 sm:-bottom-12 lg:-bottom-16 right-4 sm:right-8 lg:right-16 z-0 w-36 sm:w-48 lg:w-60 pointer-events-none opacity-25">
+      <?php vbl_render_tinted_svg(vbl_img('concha-cyan.svg'), 'block w-full', 'aspect-ratio: 166 / 160;'); ?>
     </div>
   </section>
 
@@ -532,140 +562,208 @@ if ( $is_en_room && $is_ps_room ) {
     <!-- Estrela do mar decorativa em outline (com overflow isolado para não cortar popups da barra de reservas) -->
     <div class="absolute inset-0 pointer-events-none overflow-hidden z-0">
       <div class="absolute right-0 top-1/2 -translate-y-1/2 w-64 lg:w-96 opacity-20 text-[var(--vbl-hotel-accent)]">
-        <?php vbl_render_tinted_svg( vbl_img( 'estrela.svg' ), 'block w-full', 'aspect-ratio: 253 / 280;' ); ?>
+        <?php vbl_render_tinted_svg(vbl_img('estrela.svg'), 'block w-full', 'aspect-ratio: 253 / 280;'); ?>
       </div>
     </div>
 
     <div class="max-w-[1920px] mx-auto px-6 xl:px-[8.33%] relative z-10">
-      
+
       <!-- Cabeçalho do Widget -->
       <div class="mb-10">
         <div class="flex items-center gap-4 mb-2">
           <div class="w-8 h-px bg-[var(--vbl-hotel-accent)] flex-shrink-0"></div>
-          <span class="font-body text-[10px] xl:text-[11px] tracking-[2px] uppercase text-[var(--vbl-hotel-accent)] font-medium"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( $cta_subtitle ) : $cta_subtitle ); ?></span>
+          <span
+            class="font-body text-[10px] xl:text-[11px] tracking-[2px] uppercase text-[var(--vbl-hotel-accent)] font-medium"><?php echo esc_html(function_exists('vbl__') ? vbl__($cta_subtitle) : $cta_subtitle); ?></span>
         </div>
-        <h2 class="font-display text-[36px] sm:text-[46px] lg:text-[56px] leading-tight uppercase text-[#0d5257] font-normal mb-3">
-          <?php echo wp_kses_post( function_exists( 'vbl__' ) ? vbl__( $cta_title ) : $cta_title ); ?>
+        <h2
+          class="font-display text-[36px] sm:text-[46px] lg:text-[56px] leading-tight uppercase text-[#0d5257] font-normal mb-3">
+          <?php echo wp_kses_post(function_exists('vbl__') ? vbl__($cta_title) : $cta_title); ?>
         </h2>
         <p class="font-body font-light text-[13px] lg:text-[14px] text-black/70 max-w-[480px]">
-          <?php echo nl2br( esc_html( function_exists( 'vbl__' ) ? vbl__( $cta_desc ) : $cta_desc ) ); ?>
+          <?php echo nl2br(esc_html(function_exists('vbl__') ? vbl__($cta_desc) : $cta_desc)); ?>
         </p>
       </div>
 
       <!-- Barra de Pesquisa de Quartos (Motor Funcional com Hotel Fixo e Código Promocional) -->
-      <div class="vbl-booking-engine font-body relative w-full border border-[var(--vbl-hotel-accent-40)] flex flex-col md:flex-row items-stretch bg-white/70 backdrop-blur-xs" data-fixed-hotel="true" data-chain-id="501671" data-chain-selector="<?php echo esc_attr( $mirai_hotel['chain_selector'] ); ?>" data-hotel-id="<?php echo esc_attr( $mirai_hotel['hotel_id'] ); ?>" data-hotel-name="<?php echo esc_attr( $mirai_hotel['name'] ); ?>">
-        
+      <div
+        class="vbl-booking-engine font-body relative w-full border border-[var(--vbl-hotel-accent-40)] flex flex-col md:flex-row items-stretch bg-white/70 backdrop-blur-xs"
+        data-fixed-hotel="true" data-chain-id="501671"
+        data-chain-selector="<?php echo esc_attr($mirai_hotel['chain_selector']); ?>"
+        data-hotel-id="<?php echo esc_attr($mirai_hotel['hotel_id']); ?>"
+        data-hotel-name="<?php echo esc_attr($mirai_hotel['name']); ?>">
+
         <!-- ONDE (Hotel Fixo) -->
-        <div class="flex-1 flex flex-col justify-center gap-1 border-b md:border-b-0 md:border-r border-[var(--vbl-hotel-accent-40)] py-4 px-6 xl:px-8 cursor-default select-none">
-          <span class="text-[9px] xl:text-[10px] tracking-[1px] uppercase text-[#0d5257]/70"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'ONDE' ) : 'ONDE' ); ?></span>
+        <div
+          class="flex-1 flex flex-col justify-center gap-1 border-b md:border-b-0 md:border-r border-[var(--vbl-hotel-accent-40)] py-4 px-6 xl:px-8 cursor-default select-none">
+          <span
+            class="text-[9px] xl:text-[10px] tracking-[1px] uppercase text-[#0d5257]/70"><?php echo esc_html(function_exists('vbl__') ? vbl__('ONDE') : 'ONDE'); ?></span>
           <div class="flex items-center justify-between">
-            <span class="vbl-selected-hotel text-[13px] xl:text-[14px] text-[#0d5257] font-medium uppercase tracking-[1px] truncate">
-              <?php echo esc_html( $mirai_hotel['short_name'] ?: $hotel_name ); ?>
+            <span
+              class="vbl-selected-hotel text-[13px] xl:text-[14px] text-[#0d5257] font-medium uppercase tracking-[1px] truncate">
+              <?php echo esc_html($mirai_hotel['short_name'] ?: $hotel_name); ?>
             </span>
           </div>
         </div>
-        
+
         <!-- QUANDO -->
-        <div class="vbl-field-trigger flex-1 flex flex-col justify-center gap-1 border-b md:border-b-0 md:border-r border-[var(--vbl-hotel-accent-40)] py-4 px-6 xl:px-8 cursor-pointer hover:bg-white/40 transition-colors" data-target="dropdownWhen">
-          <span class="text-[9px] xl:text-[10px] tracking-[1px] uppercase text-[#0d5257]/70"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'QUANDO' ) : 'QUANDO' ); ?></span>
+        <div
+          class="vbl-field-trigger flex-1 flex flex-col justify-center gap-1 border-b md:border-b-0 md:border-r border-[var(--vbl-hotel-accent-40)] py-4 px-6 xl:px-8 cursor-pointer hover:bg-white/40 transition-colors"
+          data-target="dropdownWhen">
+          <span
+            class="text-[9px] xl:text-[10px] tracking-[1px] uppercase text-[#0d5257]/70"><?php echo esc_html(function_exists('vbl__') ? vbl__('QUANDO') : 'QUANDO'); ?></span>
           <div class="flex items-center justify-between gap-2">
-            <span class="vbl-selected-dates text-[13px] xl:text-[14px] text-[#0d5257] font-medium uppercase tracking-[1px] truncate"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Entrada · Saída' ) : 'Entrada · Saída' ); ?></span>
-            <svg class="w-[10px] h-[10px] text-[#0d5257] flex-shrink-0" viewBox="0 0 10 6" fill="none"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+            <span
+              class="vbl-selected-dates text-[13px] xl:text-[14px] text-[#0d5257] font-medium uppercase tracking-[1px] truncate"><?php echo esc_html(function_exists('vbl__') ? vbl__('Entrada · Saída') : 'Entrada · Saída'); ?></span>
+            <svg class="w-[10px] h-[10px] text-[#0d5257] flex-shrink-0" viewBox="0 0 10 6" fill="none">
+              <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" />
+            </svg>
           </div>
         </div>
-        
+
         <!-- QUEM -->
-        <div class="vbl-field-trigger flex-1 flex flex-col justify-center gap-1 border-b md:border-b-0 md:border-r border-[var(--vbl-hotel-accent-40)] py-4 px-6 xl:px-8 cursor-pointer hover:bg-white/40 transition-colors" data-target="dropdownWho">
-          <span class="text-[9px] xl:text-[10px] tracking-[1px] uppercase text-[#0d5257]/70"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'QUEM' ) : 'QUEM' ); ?></span>
+        <div
+          class="vbl-field-trigger flex-1 flex flex-col justify-center gap-1 border-b md:border-b-0 md:border-r border-[var(--vbl-hotel-accent-40)] py-4 px-6 xl:px-8 cursor-pointer hover:bg-white/40 transition-colors"
+          data-target="dropdownWho">
+          <span
+            class="text-[9px] xl:text-[10px] tracking-[1px] uppercase text-[#0d5257]/70"><?php echo esc_html(function_exists('vbl__') ? vbl__('QUEM') : 'QUEM'); ?></span>
           <div class="flex items-center justify-between gap-2">
-            <span class="vbl-selected-guests text-[13px] xl:text-[14px] text-[#0d5257] font-medium uppercase tracking-[1px] truncate"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( '2 adultos · 1 quarto' ) : '2 adultos · 1 quarto' ); ?></span>
-            <svg class="w-[10px] h-[10px] text-[#0d5257] flex-shrink-0" viewBox="0 0 10 6" fill="none"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+            <span
+              class="vbl-selected-guests text-[13px] xl:text-[14px] text-[#0d5257] font-medium uppercase tracking-[1px] truncate"><?php echo esc_html(function_exists('vbl__') ? vbl__('2 adultos · 1 quarto') : '2 adultos · 1 quarto'); ?></span>
+            <svg class="w-[10px] h-[10px] text-[#0d5257] flex-shrink-0" viewBox="0 0 10 6" fill="none">
+              <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" />
+            </svg>
           </div>
         </div>
-        
+
         <!-- PROMOÇÃO -->
-        <label class="flex-1 flex flex-col justify-center gap-1 border-b md:border-b-0 md:border-r border-[var(--vbl-hotel-accent-40)] py-4 px-6 xl:px-8 cursor-text hover:bg-white/40 transition-colors">
-          <span class="text-[9px] xl:text-[10px] tracking-[1px] uppercase text-[#0d5257]/70"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'PROMOÇÃO' ) : 'PROMOÇÃO' ); ?></span>
-          <input type="text" name="promocode" class="vbl-promo-input w-full bg-transparent border-0 p-0 text-[13px] xl:text-[14px] tracking-[1px] uppercase text-[#0d5257] placeholder-[#0d5257]/50 font-medium focus:outline-none focus:ring-0" placeholder="<?php echo esc_attr( function_exists( 'vbl__' ) ? vbl__( 'CÓDIGO' ) : 'CÓDIGO' ); ?>" aria-label="<?php echo esc_attr( function_exists( 'vbl__' ) ? vbl__( 'Código promocional' ) : 'Código promocional' ); ?>" autocomplete="off" maxlength="40">
+        <label
+          class="flex-1 flex flex-col justify-center gap-1 border-b md:border-b-0 md:border-r border-[var(--vbl-hotel-accent-40)] py-4 px-6 xl:px-8 cursor-text hover:bg-white/40 transition-colors">
+          <span
+            class="text-[9px] xl:text-[10px] tracking-[1px] uppercase text-[#0d5257]/70"><?php echo esc_html(function_exists('vbl__') ? vbl__('PROMOÇÃO') : 'PROMOÇÃO'); ?></span>
+          <input type="text" name="promocode"
+            class="vbl-promo-input w-full bg-transparent border-0 p-0 text-[13px] xl:text-[14px] tracking-[1px] uppercase text-[#0d5257] placeholder-[#0d5257]/50 font-medium focus:outline-none focus:ring-0"
+            placeholder="<?php echo esc_attr(function_exists('vbl__') ? vbl__('CÓDIGO') : 'CÓDIGO'); ?>"
+            aria-label="<?php echo esc_attr(function_exists('vbl__') ? vbl__('Código promocional') : 'Código promocional'); ?>"
+            autocomplete="off" maxlength="40">
         </label>
 
         <!-- PESQUISAR -->
-        <button type="button" class="vbl-search-submit flex-1 max-w-full md:max-w-[240px] flex items-center justify-between py-4 px-6 xl:px-8 bg-white hover:bg-[var(--vbl-hotel-accent)] hover:text-white text-[#0d5257] cursor-pointer transition-colors group">
-          <span class="text-[13px] xl:text-[14px] font-medium uppercase tracking-[1.4px]"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'PESQUISAR' ) : 'PESQUISAR' ); ?></span>
-          <svg class="w-[10px] h-[10px] transition-transform duration-300 group-hover:rotate-45" viewBox="0 0 11 11" fill="none">
-            <path d="M10.8535 10.5H9.85352V1.70703L0.707031 10.8535L0 10.1465L9.14648 1H0.353516V0H10.3535C10.6297 0 10.8535 0.223858 10.8535 0.5V10.5Z" fill="currentColor"/>
+        <button type="button"
+          class="vbl-search-submit flex-1 max-w-full md:max-w-[240px] flex items-center justify-between py-4 px-6 xl:px-8 bg-white hover:bg-[var(--vbl-hotel-accent)] hover:text-white text-[#0d5257] cursor-pointer transition-colors group">
+          <span
+            class="text-[13px] xl:text-[14px] font-medium uppercase tracking-[1.4px]"><?php echo esc_html(function_exists('vbl__') ? vbl__('PESQUISAR') : 'PESQUISAR'); ?></span>
+          <svg class="w-[10px] h-[10px] transition-transform duration-300 group-hover:rotate-45" viewBox="0 0 11 11"
+            fill="none">
+            <path
+              d="M10.8535 10.5H9.85352V1.70703L0.707031 10.8535L0 10.1465L9.14648 1H0.353516V0H10.3535C10.6297 0 10.8535 0.223858 10.8535 0.5V10.5Z"
+              fill="currentColor" />
           </svg>
         </button>
 
         <!-- ====== DROPDOWNS POPUPS ====== -->
         <!-- Popups Quando (Datas) -->
-        <div class="vbl-popup-when vbl-booking-popup vbl-popup-light font-body hidden absolute top-[calc(100%+8px)] left-0 md:left-[15%] w-full sm:w-[400px] bg-white/95 backdrop-blur-md border border-[var(--vbl-hotel-accent-40)] shadow-2xl p-5 text-[#0d5257] z-50 rounded-none">
+        <div
+          class="vbl-popup-when vbl-booking-popup vbl-popup-light font-body hidden absolute top-[calc(100%+8px)] left-0 md:left-[15%] w-full sm:w-[400px] bg-white/95 backdrop-blur-md border border-[var(--vbl-hotel-accent-40)] shadow-2xl p-5 text-[#0d5257] z-50 rounded-none">
           <div class="flex items-center justify-between mb-4 pb-2 border-b border-[#0d5257]/20">
-            <span class="text-[11px] uppercase tracking-[1px] text-[#0d5257] font-medium"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Selecione as Datas da Estadia' ) : 'Selecione as Datas da Estadia' ); ?></span>
-            <button type="button" class="vbl-close-popup text-[#0d5257]/60 hover:text-[#0d5257] text-lg leading-none cursor-pointer" aria-label="<?php echo esc_attr( function_exists( 'vbl__' ) ? vbl__( 'Fechar' ) : 'Fechar' ); ?>">&times;</button>
+            <span
+              class="text-[11px] uppercase tracking-[1px] text-[#0d5257] font-medium"><?php echo esc_html(function_exists('vbl__') ? vbl__('Selecione as Datas da Estadia') : 'Selecione as Datas da Estadia'); ?></span>
+            <button type="button"
+              class="vbl-close-popup text-[#0d5257]/60 hover:text-[#0d5257] text-lg leading-none cursor-pointer"
+              aria-label="<?php echo esc_attr(function_exists('vbl__') ? vbl__('Fechar') : 'Fechar'); ?>">&times;</button>
           </div>
           <div class="grid grid-cols-2 gap-3 mb-4">
             <div class="flex flex-col gap-1.5">
-              <label class="text-[10px] uppercase tracking-[1px] text-[#0d5257]/80"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Check-in (Entrada)' ) : 'Check-in (Entrada)' ); ?></label>
-              <input type="date" class="vbl-checkin-input bg-[var(--vbl-hotel-accent-light)] border border-[var(--vbl-hotel-accent-40)] text-[#0d5257] text-[13px] px-3 py-2 rounded-none outline-none focus:border-[var(--vbl-hotel-accent)] transition-colors w-full cursor-pointer [color-scheme:light]">
+              <label
+                class="text-[10px] uppercase tracking-[1px] text-[#0d5257]/80"><?php echo esc_html(function_exists('vbl__') ? vbl__('Check-in (Entrada)') : 'Check-in (Entrada)'); ?></label>
+              <input type="date"
+                class="vbl-checkin-input bg-[var(--vbl-hotel-accent-light)] border border-[var(--vbl-hotel-accent-40)] text-[#0d5257] text-[13px] px-3 py-2 rounded-none outline-none focus:border-[var(--vbl-hotel-accent)] transition-colors w-full cursor-pointer [color-scheme:light]">
             </div>
             <div class="flex flex-col gap-1.5">
-              <label class="text-[10px] uppercase tracking-[1px] text-[#0d5257]/80"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Check-out (Saída)' ) : 'Check-out (Saída)' ); ?></label>
-              <input type="date" class="vbl-checkout-input bg-[var(--vbl-hotel-accent-light)] border border-[var(--vbl-hotel-accent-40)] text-[#0d5257] text-[13px] px-3 py-2 rounded-none outline-none focus:border-[var(--vbl-hotel-accent)] transition-colors w-full cursor-pointer [color-scheme:light]">
+              <label
+                class="text-[10px] uppercase tracking-[1px] text-[#0d5257]/80"><?php echo esc_html(function_exists('vbl__') ? vbl__('Check-out (Saída)') : 'Check-out (Saída)'); ?></label>
+              <input type="date"
+                class="vbl-checkout-input bg-[var(--vbl-hotel-accent-light)] border border-[var(--vbl-hotel-accent-40)] text-[#0d5257] text-[13px] px-3 py-2 rounded-none outline-none focus:border-[var(--vbl-hotel-accent)] transition-colors w-full cursor-pointer [color-scheme:light]">
             </div>
           </div>
           <div class="flex items-center justify-between pt-3 border-t border-[#0d5257]/20">
-            <span class="vbl-nights-count text-[11px] uppercase tracking-[1px] text-[#0d5257] font-medium"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( '2 Noites' ) : '2 Noites' ); ?></span>
-            <button type="button" class="vbl-confirm-dates px-5 py-2 border border-[#0d5257] text-[#0d5257] hover:bg-[var(--vbl-hotel-accent)] hover:text-white hover:border-[var(--vbl-hotel-accent)] text-[11px] uppercase tracking-[1.2px] font-medium transition-colors cursor-pointer"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Confirmar' ) : 'Confirmar' ); ?></button>
+            <span
+              class="vbl-nights-count text-[11px] uppercase tracking-[1px] text-[#0d5257] font-medium"><?php echo esc_html(function_exists('vbl__') ? vbl__('2 Noites') : '2 Noites'); ?></span>
+            <button type="button"
+              class="vbl-confirm-dates px-5 py-2 border border-[#0d5257] text-[#0d5257] hover:bg-[var(--vbl-hotel-accent)] hover:text-white hover:border-[var(--vbl-hotel-accent)] text-[11px] uppercase tracking-[1.2px] font-medium transition-colors cursor-pointer"><?php echo esc_html(function_exists('vbl__') ? vbl__('Confirmar') : 'Confirmar'); ?></button>
           </div>
         </div>
 
         <!-- Popups Quem (Hóspedes & Quartos) -->
-        <div class="vbl-popup-who vbl-booking-popup vbl-popup-light font-body hidden absolute top-[calc(100%+8px)] left-0 md:left-[35%] w-full sm:w-[360px] bg-white/95 backdrop-blur-md border border-[var(--vbl-hotel-accent-40)] shadow-2xl p-5 text-[#0d5257] z-50 rounded-none">
+        <div
+          class="vbl-popup-who vbl-booking-popup vbl-popup-light font-body hidden absolute top-[calc(100%+8px)] left-0 md:left-[35%] w-full sm:w-[360px] bg-white/95 backdrop-blur-md border border-[var(--vbl-hotel-accent-40)] shadow-2xl p-5 text-[#0d5257] z-50 rounded-none">
           <div class="flex items-center justify-between mb-4 pb-2 border-b border-[#0d5257]/20">
-            <span class="text-[11px] uppercase tracking-[1px] text-[#0d5257] font-medium"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Hóspedes e Quartos' ) : 'Hóspedes e Quartos' ); ?></span>
-            <button type="button" class="vbl-close-popup text-[#0d5257]/60 hover:text-[#0d5257] text-lg leading-none cursor-pointer" aria-label="<?php echo esc_attr( function_exists( 'vbl__' ) ? vbl__( 'Fechar' ) : 'Fechar' ); ?>">&times;</button>
+            <span
+              class="text-[11px] uppercase tracking-[1px] text-[#0d5257] font-medium"><?php echo esc_html(function_exists('vbl__') ? vbl__('Hóspedes e Quartos') : 'Hóspedes e Quartos'); ?></span>
+            <button type="button"
+              class="vbl-close-popup text-[#0d5257]/60 hover:text-[#0d5257] text-lg leading-none cursor-pointer"
+              aria-label="<?php echo esc_attr(function_exists('vbl__') ? vbl__('Fechar') : 'Fechar'); ?>">&times;</button>
           </div>
           <div class="flex flex-col gap-4 mb-5">
             <!-- Adultos -->
             <div class="flex items-center justify-between">
               <div>
-                <div class="text-[13px] uppercase tracking-[1px] font-medium text-[#0d5257]"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Adultos' ) : 'Adultos' ); ?></div>
-                <div class="text-[10px] text-[#0d5257]/70"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Idade 12+ anos' ) : 'Idade 12+ anos' ); ?></div>
+                <div class="text-[13px] uppercase tracking-[1px] font-medium text-[#0d5257]">
+                  <?php echo esc_html(function_exists('vbl__') ? vbl__('Adultos') : 'Adultos'); ?></div>
+                <div class="text-[10px] text-[#0d5257]/70">
+                  <?php echo esc_html(function_exists('vbl__') ? vbl__('Idade 12+ anos') : 'Idade 12+ anos'); ?>
+                </div>
               </div>
               <div class="flex items-center gap-3">
-                <button type="button" class="vbl-counter-btn w-8 h-8 rounded-none border border-[var(--vbl-hotel-accent-40)] hover:border-[var(--vbl-hotel-accent)] hover:bg-[var(--vbl-hotel-accent-light)] flex items-center justify-center text-[#0d5257] text-base transition-colors cursor-pointer select-none" data-action="dec" data-target="adults">−</button>
+                <button type="button"
+                  class="vbl-counter-btn w-8 h-8 rounded-none border border-[var(--vbl-hotel-accent-40)] hover:border-[var(--vbl-hotel-accent)] hover:bg-[var(--vbl-hotel-accent-light)] flex items-center justify-center text-[#0d5257] text-base transition-colors cursor-pointer select-none"
+                  data-action="dec" data-target="adults">−</button>
                 <span class="vbl-count-adults w-6 text-center text-[15px] font-medium text-[#0d5257]">2</span>
-                <button type="button" class="vbl-counter-btn w-8 h-8 rounded-none border border-[var(--vbl-hotel-accent-40)] hover:border-[var(--vbl-hotel-accent)] hover:bg-[var(--vbl-hotel-accent-light)] flex items-center justify-center text-[#0d5257] text-base transition-colors cursor-pointer select-none" data-action="inc" data-target="adults">+</button>
+                <button type="button"
+                  class="vbl-counter-btn w-8 h-8 rounded-none border border-[var(--vbl-hotel-accent-40)] hover:border-[var(--vbl-hotel-accent)] hover:bg-[var(--vbl-hotel-accent-light)] flex items-center justify-center text-[#0d5257] text-base transition-colors cursor-pointer select-none"
+                  data-action="inc" data-target="adults">+</button>
               </div>
             </div>
             <!-- Crianças -->
             <div class="flex items-center justify-between">
               <div>
-                <div class="text-[13px] uppercase tracking-[1px] font-medium text-[#0d5257]"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Crianças' ) : 'Crianças' ); ?></div>
-                <div class="text-[10px] text-[#0d5257]/70"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( '0 aos 11 anos' ) : '0 aos 11 anos' ); ?></div>
+                <div class="text-[13px] uppercase tracking-[1px] font-medium text-[#0d5257]">
+                  <?php echo esc_html(function_exists('vbl__') ? vbl__('Crianças') : 'Crianças'); ?></div>
+                <div class="text-[10px] text-[#0d5257]/70">
+                  <?php echo esc_html(function_exists('vbl__') ? vbl__('0 aos 11 anos') : '0 aos 11 anos'); ?>
+                </div>
               </div>
               <div class="flex items-center gap-3">
-                <button type="button" class="vbl-counter-btn w-8 h-8 rounded-none border border-[var(--vbl-hotel-accent-40)] hover:border-[var(--vbl-hotel-accent)] hover:bg-[var(--vbl-hotel-accent-light)] flex items-center justify-center text-[#0d5257] text-base transition-colors cursor-pointer select-none" data-action="dec" data-target="children">−</button>
+                <button type="button"
+                  class="vbl-counter-btn w-8 h-8 rounded-none border border-[var(--vbl-hotel-accent-40)] hover:border-[var(--vbl-hotel-accent)] hover:bg-[var(--vbl-hotel-accent-light)] flex items-center justify-center text-[#0d5257] text-base transition-colors cursor-pointer select-none"
+                  data-action="dec" data-target="children">−</button>
                 <span class="vbl-count-children w-6 text-center text-[15px] font-medium text-[#0d5257]">0</span>
-                <button type="button" class="vbl-counter-btn w-8 h-8 rounded-none border border-[var(--vbl-hotel-accent-40)] hover:border-[var(--vbl-hotel-accent)] hover:bg-[var(--vbl-hotel-accent-light)] flex items-center justify-center text-[#0d5257] text-base transition-colors cursor-pointer select-none" data-action="inc" data-target="children">+</button>
+                <button type="button"
+                  class="vbl-counter-btn w-8 h-8 rounded-none border border-[var(--vbl-hotel-accent-40)] hover:border-[var(--vbl-hotel-accent)] hover:bg-[var(--vbl-hotel-accent-light)] flex items-center justify-center text-[#0d5257] text-base transition-colors cursor-pointer select-none"
+                  data-action="inc" data-target="children">+</button>
               </div>
             </div>
             <!-- Quartos -->
             <div class="flex items-center justify-between">
               <div>
-                <div class="text-[13px] uppercase tracking-[1px] font-medium text-[#0d5257]"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Quartos' ) : 'Quartos' ); ?></div>
-                <div class="text-[10px] text-[#0d5257]/70"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Quantidade' ) : 'Quantidade' ); ?></div>
+                <div class="text-[13px] uppercase tracking-[1px] font-medium text-[#0d5257]">
+                  <?php echo esc_html(function_exists('vbl__') ? vbl__('Quartos') : 'Quartos'); ?></div>
+                <div class="text-[10px] text-[#0d5257]/70">
+                  <?php echo esc_html(function_exists('vbl__') ? vbl__('Quantidade') : 'Quantidade'); ?></div>
               </div>
               <div class="flex items-center gap-3">
-                <button type="button" class="vbl-counter-btn w-8 h-8 rounded-none border border-[var(--vbl-hotel-accent-40)] hover:border-[var(--vbl-hotel-accent)] hover:bg-[var(--vbl-hotel-accent-light)] flex items-center justify-center text-[#0d5257] text-base transition-colors cursor-pointer select-none" data-action="dec" data-target="rooms">−</button>
+                <button type="button"
+                  class="vbl-counter-btn w-8 h-8 rounded-none border border-[var(--vbl-hotel-accent-40)] hover:border-[var(--vbl-hotel-accent)] hover:bg-[var(--vbl-hotel-accent-light)] flex items-center justify-center text-[#0d5257] text-base transition-colors cursor-pointer select-none"
+                  data-action="dec" data-target="rooms">−</button>
                 <span class="vbl-count-rooms w-6 text-center text-[15px] font-medium text-[#0d5257]">1</span>
-                <button type="button" class="vbl-counter-btn w-8 h-8 rounded-none border border-[var(--vbl-hotel-accent-40)] hover:border-[var(--vbl-hotel-accent)] hover:bg-[var(--vbl-hotel-accent-light)] flex items-center justify-center text-[#0d5257] text-base transition-colors cursor-pointer select-none" data-action="inc" data-target="rooms">+</button>
+                <button type="button"
+                  class="vbl-counter-btn w-8 h-8 rounded-none border border-[var(--vbl-hotel-accent-40)] hover:border-[var(--vbl-hotel-accent)] hover:bg-[var(--vbl-hotel-accent-light)] flex items-center justify-center text-[#0d5257] text-base transition-colors cursor-pointer select-none"
+                  data-action="inc" data-target="rooms">+</button>
               </div>
             </div>
           </div>
           <div class="flex justify-end pt-3 border-t border-[#0d5257]/20">
-            <button type="button" class="vbl-confirm-who px-5 py-2 border border-[#0d5257] text-[#0d5257] hover:bg-[var(--vbl-hotel-accent)] hover:text-white hover:border-[var(--vbl-hotel-accent)] text-[11px] uppercase tracking-[1.2px] font-medium transition-colors cursor-pointer"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Confirmar' ) : 'Confirmar' ); ?></button>
+            <button type="button"
+              class="vbl-confirm-who px-5 py-2 border border-[#0d5257] text-[#0d5257] hover:bg-[var(--vbl-hotel-accent)] hover:text-white hover:border-[var(--vbl-hotel-accent)] text-[11px] uppercase tracking-[1.2px] font-medium transition-colors cursor-pointer"><?php echo esc_html(function_exists('vbl__') ? vbl__('Confirmar') : 'Confirmar'); ?></button>
           </div>
         </div>
 
@@ -678,170 +776,175 @@ if ( $is_en_room && $is_ps_room ) {
        6. OUTROS QUARTOS RELACIONADOS (Carrossel)
   =========================================== -->
   <?php
-  // Query aos restantes quartos do mesmo hotel pai
-  $args_other = array(
+  // Obter IDs do hotel pai (incluindo traduções Polylang se existirem)
+  $target_hotel_ids = array();
+  if ($hotel_id) {
+    $target_hotel_ids[] = (int) $hotel_id;
+    if (function_exists('pll_get_post_translations')) {
+      $hotel_translations = pll_get_post_translations($hotel_id);
+      if (!empty($hotel_translations)) {
+        foreach ($hotel_translations as $t_id) {
+          $target_hotel_ids[] = (int) $t_id;
+        }
+      }
+    }
+  }
+  $target_hotel_ids = array_values(array_unique(array_filter($target_hotel_ids)));
+
+  // Query estrita aos restantes quartos do mesmo hotel pai
+  $other_rooms_list = array();
+
+  if (!empty($target_hotel_ids)) {
+    $args_other = array(
       'post_type'      => 'vbl_quarto',
-      'posts_per_page' => 8,
-      'post__not_in'   => array( $post_id ),
+      'post_status'    => 'publish',
+      'posts_per_page' => 12,
+      'post__not_in'   => array($post_id),
       'orderby'        => 'menu_order title',
       'order'          => 'ASC',
-  );
+      'meta_query'     => array(
+        'relation' => 'OR',
+        array(
+          'key'     => 'vbl_quarto_hotel',
+          'value'   => $target_hotel_ids,
+          'compare' => 'IN',
+        ),
+        array(
+          'key'     => 'vbl_quarto_hotel',
+          'value'   => array_map('strval', $target_hotel_ids),
+          'compare' => 'IN',
+        ),
+      ),
+    );
 
-  if ( $hotel_id ) {
-      $args_other['meta_query'] = array(
-          array(
-              'key'     => 'vbl_quarto_hotel',
-              'value'   => $hotel_id,
-              'compare' => '=',
-          ),
-      );
-  }
-
-  $other_rooms_query = new WP_Query( $args_other );
-
-  // Se não houver pelo menos 2 quartos deste hotel, busca quartos gerais
-  if ( ! $other_rooms_query->have_posts() || $other_rooms_query->found_posts < 2 ) {
-      $fallback_args = array(
-          'post_type'      => 'vbl_quarto',
-          'posts_per_page' => 8,
-          'post__not_in'   => array( $post_id ),
-          'orderby'        => 'menu_order title',
-          'order'          => 'ASC',
-      );
-      $fallback_query = new WP_Query( $fallback_args );
-      if ( $fallback_query->have_posts() && $fallback_query->found_posts >= 2 ) {
-          $other_rooms_query = $fallback_query;
+    if (function_exists('pll_current_language')) {
+      $current_lang = pll_current_language('slug');
+      if (!empty($current_lang)) {
+        $args_other['lang'] = $current_lang;
       }
-  }
+    }
 
-  $other_rooms_list = array();
-  if ( $other_rooms_query->have_posts() ) {
-      while ( $other_rooms_query->have_posts() ) {
-          $other_rooms_query->the_post();
-          $o_id    = get_the_ID();
-          $o_cat   = vbl_field( 'vbl_quarto_categoria', $o_id, 'QUARTO' );
-          $o_thumb = get_the_post_thumbnail_url( $o_id, 'medium_large' );
-          if ( empty( $o_thumb ) ) $o_thumb = vbl_img( 'hoteis/porto-santo-520x400.jpg' );
+    $other_rooms_query = new WP_Query($args_other);
 
-          $other_rooms_list[] = array(
-              'cat'   => $o_cat,
-              'title' => get_the_title( $o_id ),
-              'desc'  => wp_trim_words( get_the_excerpt( $o_id ), 18, '...' ),
-              'thumb' => $o_thumb,
-              'link'  => get_permalink( $o_id ),
-          );
+    if ($other_rooms_query->have_posts()) {
+      while ($other_rooms_query->have_posts()) {
+        $other_rooms_query->the_post();
+        $o_id = get_the_ID();
+        $o_cat = vbl_field('vbl_quarto_categoria', $o_id, 'QUARTO');
+        $o_thumb = get_the_post_thumbnail_url($o_id, 'full');
+        if (empty($o_thumb)) {
+          $o_thumb = vbl_img('hoteis/porto-santo-520x400.jpg');
+        }
+
+        $other_rooms_list[] = array(
+          'cat'   => $o_cat,
+          'title' => get_the_title($o_id),
+          'desc'  => wp_trim_words(get_the_excerpt($o_id), 18, '...'),
+          'thumb' => $o_thumb,
+          'link'  => get_permalink($o_id),
+        );
       }
       wp_reset_postdata();
+    }
   }
 
-  // Fallback garantido se não houver dados no banco
-  if ( count( $other_rooms_list ) < 2 ) {
-      $other_rooms_list = array(
-          array(
-              'cat'   => 'QUARTO',
-              'title' => 'TWIN DELUXE VISTA MAR',
-              'desc'  => 'Quartos amplos, com varanda privada e uma decoração descontraída em cores vivas e mobília.',
-              'thumb' => vbl_img( 'hoteis/porto-santo-520x400.jpg' ),
-              'link'  => '#',
-          ),
-          array(
-              'cat'   => 'APARTAMENTO',
-              'title' => 'T2 VISTA PARCIAL DO MAR',
-              'desc'  => 'Recentemente renovados, garantem o espaço e o conforto ideais para famílias grandes. Dois quartos, kitchenette, sala de estar e varanda com vista parcial para o mar.',
-              'thumb' => vbl_img( 'hoteis/suites-680x400.jpg' ),
-              'link'  => '#',
-          ),
-          array(
-              'cat'   => 'QUARTO SUPERIOR',
-              'title' => 'DELUXE VISTA MAR',
-              'desc'  => 'Acomodações superiores desenhadas para proporcionar uma estadia sofisticada com o oceano como pano de fundo constante.',
-              'thumb' => vbl_img( 'hoteis/funchal-680x400.jpg' ),
-              'link'  => '#',
-          ),
-          array(
-              'cat'   => 'SUITE',
-              'title' => 'SUITE FAMILIAR VISTA MAR',
-              'desc'  => 'Espaço privilegiado com vista panorâmica sobre o oceano, varanda privada e sala integrada.',
-              'thumb' => vbl_img( 'hoteis/residence-680x400.jpg' ),
-              'link'  => '#',
-          ),
-      );
-  }
+  // Apenas renderiza a secção se existirem de facto outros quartos no mesmo hotel
+  if (!empty($other_rooms_list)) :
   ?>
   <section class="w-full py-20 lg:py-32 bg-white relative overflow-hidden">
     <div class="max-w-[1920px] mx-auto px-6 xl:px-[8.33%] relative">
-      
+
       <!-- Cabeçalho Outros Quartos -->
       <div class="text-center mb-12 lg:mb-16 flex flex-col items-center">
-        <span class="font-body text-[11px] xl:text-[12px] tracking-[2.5px] uppercase text-[var(--vbl-hotel-accent)] font-medium mb-3">
-          <?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( $rel_rooms_subtitle ) : $rel_rooms_subtitle ); ?>
+        <span
+          class="font-body text-[11px] xl:text-[12px] tracking-[2.5px] uppercase text-[var(--vbl-hotel-accent)] font-medium mb-3">
+          <?php echo esc_html(function_exists('vbl__') ? vbl__($rel_rooms_subtitle) : $rel_rooms_subtitle); ?>
         </span>
-        <h2 class="font-display text-[40px] sm:text-[52px] lg:text-[64px] leading-[1.05] uppercase text-[#0d5257] font-normal mb-4">
-          <?php echo wp_kses_post( function_exists( 'vbl__' ) ? vbl__( $rel_rooms_title ) : $rel_rooms_title ); ?>
+        <h2
+          class="font-display text-[40px] sm:text-[52px] lg:text-[64px] leading-[1.05] uppercase text-[#0d5257] font-normal mb-4">
+          <?php echo wp_kses_post(function_exists('vbl__') ? vbl__($rel_rooms_title) : $rel_rooms_title); ?>
         </h2>
         <p class="font-body font-light text-[14px] text-black/70 max-w-[620px]">
-          <?php echo nl2br( esc_html( function_exists( 'vbl__' ) ? vbl__( $rel_rooms_desc ) : $rel_rooms_desc ) ); ?>
+          <?php echo nl2br(esc_html(function_exists('vbl__') ? vbl__($rel_rooms_desc) : $rel_rooms_desc)); ?>
         </p>
       </div>
 
       <!-- Carrossel de Quartos Relacionados -->
       <div class="relative">
 
+        <?php if (count($other_rooms_list) > 2) : ?>
         <!-- Botão Seta Esquerda (Anterior) -->
-        <button type="button" id="vblOtherRoomsPrev" class="absolute left-0 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 border border-[var(--vbl-hotel-accent)] text-[var(--vbl-hotel-accent)] bg-transparent hover:bg-[var(--vbl-hotel-accent)] hover:text-white hover:border-[var(--vbl-hotel-accent)] flex items-center justify-center transition-all duration-300 cursor-pointer shadow-xs hover:shadow-sm" aria-label="<?php echo esc_attr( function_exists( 'vbl__' ) ? vbl__( 'Quarto Anterior' ) : 'Quarto Anterior' ); ?>">
-          <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+        <button type="button" id="vblOtherRoomsPrev"
+          class="absolute left-0 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 border border-[var(--vbl-hotel-accent)] text-[var(--vbl-hotel-accent)] bg-transparent hover:bg-[var(--vbl-hotel-accent)] hover:text-white hover:border-[var(--vbl-hotel-accent)] flex items-center justify-center transition-all duration-300 cursor-pointer shadow-xs hover:shadow-sm"
+          aria-label="<?php echo esc_attr(function_exists('vbl__') ? vbl__('Quarto Anterior') : 'Quarto Anterior'); ?>">
+          <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"
+            stroke-linecap="round" stroke-linejoin="round">
             <path d="M19 12H5M12 19l-7-7 7-7" />
           </svg>
         </button>
 
         <!-- Botão Seta Direita (Seguinte) -->
-        <button type="button" id="vblOtherRoomsNext" class="absolute right-0 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 border border-[var(--vbl-hotel-accent)] text-[var(--vbl-hotel-accent)] bg-transparent hover:bg-[var(--vbl-hotel-accent)] hover:text-white hover:border-[var(--vbl-hotel-accent)] flex items-center justify-center transition-all duration-300 cursor-pointer shadow-xs hover:shadow-sm" aria-label="<?php echo esc_attr( function_exists( 'vbl__' ) ? vbl__( 'Próximo Quarto' ) : 'Próximo Quarto' ); ?>">
-          <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+        <button type="button" id="vblOtherRoomsNext"
+          class="absolute right-0 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 border border-[var(--vbl-hotel-accent)] text-[var(--vbl-hotel-accent)] bg-transparent hover:bg-[var(--vbl-hotel-accent)] hover:text-white hover:border-[var(--vbl-hotel-accent)] flex items-center justify-center transition-all duration-300 cursor-pointer shadow-xs hover:shadow-sm"
+          aria-label="<?php echo esc_attr(function_exists('vbl__') ? vbl__('Próximo Quarto') : 'Próximo Quarto'); ?>">
+          <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"
+            stroke-linecap="round" stroke-linejoin="round">
             <path d="M5 12h14M12 5l7 7-7 7" />
           </svg>
         </button>
+        <?php endif; ?>
 
         <!-- Track Container com overflow-hidden -->
         <div class="overflow-hidden mx-4 sm:mx-6 lg:mx-8">
-          <div id="vblOtherRoomsTrack" class="flex transition-transform duration-500 ease-out gap-6 sm:gap-8 lg:gap-10 xl:gap-12">
-            
-            <?php foreach ( $other_rooms_list as $o_room ) : ?>
-            <div class="vbl-other-room-card w-full md:w-[calc(50%-16px)] lg:w-[calc(50%-20px)] xl:w-[calc(50%-24px)] flex-shrink-0 flex flex-col items-start bg-transparent group">
-              
-              <!-- Fotografia Clicável -->
-              <a href="<?php echo esc_url( $o_room['link'] ); ?>" class="block w-full aspect-[16/10] overflow-hidden bg-gray-100 shadow-xs mb-6 cursor-pointer" aria-label="<?php echo esc_attr( $o_room['title'] ); ?>">
-                <img src="<?php echo esc_url( $o_room['thumb'] ); ?>" alt="<?php echo esc_attr( $o_room['title'] ); ?>" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-              </a>
+          <div id="vblOtherRoomsTrack"
+            class="flex <?php echo count($other_rooms_list) === 1 ? 'justify-center' : ''; ?> transition-transform duration-500 ease-out gap-6 sm:gap-8 lg:gap-10 xl:gap-12">
 
-              <!-- Categoria -->
-              <div class="flex items-center gap-3 mb-2">
-                <div class="w-6 h-px bg-[var(--vbl-hotel-accent)]"></div>
-                <span class="font-body text-[10px] xl:text-[11px] tracking-[2px] uppercase text-[var(--vbl-hotel-accent)] font-medium">
-                  <?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( $o_room['cat'] ) : $o_room['cat'] ); ?>
-                </span>
-              </div>
+            <?php foreach ($other_rooms_list as $o_room): ?>
+              <div
+                class="vbl-other-room-card w-full <?php echo count($other_rooms_list) === 1 ? 'max-w-[640px]' : 'md:w-[calc(50%-16px)] lg:w-[calc(50%-20px)] xl:w-[calc(50%-24px)]'; ?> flex-shrink-0 flex flex-col items-start bg-transparent group">
 
-              <!-- Título Clicável -->
-              <h3 class="font-display text-[26px] sm:text-[30px] leading-tight uppercase text-[#0d5257] mb-3 group-hover:text-[var(--vbl-hotel-accent)] transition-colors">
-                <a href="<?php echo esc_url( $o_room['link'] ); ?>" class="hover:underline decoration-[var(--vbl-hotel-accent)] decoration-1 underline-offset-4">
-                  <?php echo esc_html( $o_room['title'] ); ?>
+                <!-- Fotografia Clicável -->
+                <a href="<?php echo esc_url($o_room['link']); ?>"
+                  class="block w-full aspect-[16/10] overflow-hidden bg-gray-100 shadow-xs mb-6 cursor-pointer"
+                  aria-label="<?php echo esc_attr($o_room['title']); ?>">
+                  <img src="<?php echo esc_url($o_room['thumb']); ?>" alt="<?php echo esc_attr($o_room['title']); ?>"
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    loading="lazy">
                 </a>
-              </h3>
 
-              <!-- Descrição -->
-              <p class="font-body font-light text-[13px] leading-relaxed text-[#333333] mb-6 max-w-[460px]">
-                <?php echo esc_html( $o_room['desc'] ); ?>
-              </p>
+                <!-- Categoria -->
+                <div class="flex items-center gap-3 mb-2">
+                  <div class="w-6 h-px bg-[var(--vbl-hotel-accent)]"></div>
+                  <span
+                    class="font-body text-[10px] xl:text-[11px] tracking-[2px] uppercase text-[var(--vbl-hotel-accent)] font-medium">
+                    <?php echo esc_html(function_exists('vbl__') ? vbl__($o_room['cat']) : $o_room['cat']); ?>
+                  </span>
+                </div>
 
-              <!-- Botão Ver Quarto -->
-              <a href="<?php echo esc_url( $o_room['link'] ); ?>" class="vbl-btn-microsite group/btn">
-                <span><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( $rel_rooms_btn_label ) : $rel_rooms_btn_label ); ?></span>
-                <svg viewBox="0 0 12 12" fill="none">
-                  <path d="M1 11L11 1H3.5M11 1V8.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </a>
+                <!-- Título Clicável -->
+                <h3
+                  class="font-display text-[26px] sm:text-[30px] leading-tight uppercase text-[#0d5257] mb-3 group-hover:text-[var(--vbl-hotel-accent)] transition-colors">
+                  <a href="<?php echo esc_url($o_room['link']); ?>"
+                    class="hover:underline decoration-[var(--vbl-hotel-accent)] decoration-1 underline-offset-4">
+                    <?php echo esc_html($o_room['title']); ?>
+                  </a>
+                </h3>
 
-            </div>
+                <!-- Descrição -->
+                <p class="font-body font-light text-[13px] leading-relaxed text-[#333333] mb-6 max-w-[460px]">
+                  <?php echo esc_html($o_room['desc']); ?>
+                </p>
+
+                <!-- Botão Ver Quarto -->
+                <a href="<?php echo esc_url($o_room['link']); ?>" class="vbl-btn-microsite group/btn">
+                  <span><?php echo esc_html(function_exists('vbl__') ? vbl__($rel_rooms_btn_label) : $rel_rooms_btn_label); ?></span>
+                  <svg viewBox="0 0 12 12" fill="none">
+                    <path d="M1 11L11 1H3.5M11 1V8.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"
+                      stroke-linejoin="round" />
+                  </svg>
+                </a>
+
+              </div>
             <?php endforeach; ?>
 
           </div>
@@ -851,21 +954,25 @@ if ( $is_en_room && $is_ps_room ) {
 
     </div>
   </section>
+  <?php endif; // !empty($other_rooms_list) ?>
 
   <!-- ==========================================
        7. BANNER DE FRASE FINAL
   =========================================== -->
   <section class="relative w-full py-28 lg:py-40 flex items-center justify-center overflow-hidden">
     <div class="absolute inset-0 w-full h-full">
-      <img src="<?php echo esc_url( $frase_bg ); ?>" alt="<?php echo esc_attr( function_exists( 'vbl__' ) ? vbl__( 'Vista Quarto' ) : 'Vista Quarto' ); ?>" class="w-full h-full object-cover filter brightness-[0.75]">
+      <img src="<?php echo esc_url($frase_bg); ?>"
+        alt="<?php echo esc_attr(function_exists('vbl__') ? vbl__('Vista Quarto') : 'Vista Quarto'); ?>"
+        class="w-full h-full object-cover filter brightness-[0.75]">
       <div class="absolute inset-0 bg-black/20"></div>
     </div>
-    
+
     <div class="relative z-10 max-w-[1920px] mx-auto px-6 xl:px-[8.33%] text-center">
-      <h2 class="font-display text-[40px] sm:text-[54px] md:text-[68px] lg:text-[80px] text-white uppercase leading-[1.1] drop-shadow-md font-normal">
-        <span class="block"><?php echo esc_html( $frase_line1 ); ?></span>
-        <span class="block italic"><?php echo esc_html( $frase_line2 ); ?></span>
-        <span class="block"><?php echo esc_html( $frase_line3 ); ?></span>
+      <h2
+        class="font-display text-[40px] sm:text-[54px] md:text-[68px] lg:text-[80px] text-white uppercase leading-[1.1] drop-shadow-md font-normal">
+        <span class="block"><?php echo esc_html($frase_line1); ?></span>
+        <span class="block italic"><?php echo esc_html($frase_line2); ?></span>
+        <span class="block"><?php echo esc_html($frase_line3); ?></span>
       </h2>
     </div>
   </section>
@@ -876,102 +983,102 @@ if ( $is_en_room && $is_ps_room ) {
      SCRIPTS DO TEMPLATE
 =========================================== -->
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-  // 1. Slider da Galeria Principal
-  const track = document.getElementById('vblQuartoGaleriaTrack');
-  const prevBtn = document.getElementById('vblGaleriaPrev');
-  const nextBtn = document.getElementById('vblGaleriaNext');
+  document.addEventListener('DOMContentLoaded', function () {
+    // 1. Slider da Galeria Principal
+    const track = document.getElementById('vblQuartoGaleriaTrack');
+    const prevBtn = document.getElementById('vblGaleriaPrev');
+    const nextBtn = document.getElementById('vblGaleriaNext');
 
-  if (track && prevBtn && nextBtn) {
-    const slides = track.children;
-    let currentIdx = 0;
+    if (track && prevBtn && nextBtn) {
+      const slides = track.children;
+      let currentIdx = 0;
 
-    function updateGaleria() {
-      track.style.transform = `translateX(-${currentIdx * 100}%)`;
-    }
-
-    nextBtn.addEventListener('click', function() {
-      if (currentIdx < slides.length - 1) {
-        currentIdx++;
-      } else {
-        currentIdx = 0;
+      function updateGaleria() {
+        track.style.transform = `translateX(-${currentIdx * 100}%)`;
       }
-      updateGaleria();
-    });
 
-    prevBtn.addEventListener('click', function() {
-      if (currentIdx > 0) {
-        currentIdx--;
-      } else {
-        currentIdx = slides.length - 1;
-      }
-      updateGaleria();
-    });
-  }
-
-  // 2. Slider de Outros Quartos Relacionados
-  const otherTrack = document.getElementById('vblOtherRoomsTrack');
-  const otherPrevBtn = document.getElementById('vblOtherRoomsPrev');
-  const otherNextBtn = document.getElementById('vblOtherRoomsNext');
-  const otherCards = document.querySelectorAll('.vbl-other-room-card');
-
-  if (otherTrack && otherCards.length) {
-    let otherIndex = 0;
-
-    function getOtherCardsPerView() {
-      return window.innerWidth >= 768 ? 2 : 1;
-    }
-
-    function getOtherMaxIndex() {
-      const perView = getOtherCardsPerView();
-      return Math.max(0, otherCards.length - perView);
-    }
-
-    function updateOtherSlider() {
-      if (!otherCards.length) return;
-      let step = otherCards[0].offsetWidth;
-      if (otherCards.length > 1) {
-        const rect0 = otherCards[0].getBoundingClientRect();
-        const rect1 = otherCards[1].getBoundingClientRect();
-        step = rect1.left - rect0.left;
-      }
-      const offset = otherIndex * step;
-      otherTrack.style.transform = `translateX(-${offset}px)`;
-    }
-
-    if (otherNextBtn) {
-      otherNextBtn.addEventListener('click', function() {
-        const max = getOtherMaxIndex();
-        if (otherIndex < max) {
-          otherIndex++;
+      nextBtn.addEventListener('click', function () {
+        if (currentIdx < slides.length - 1) {
+          currentIdx++;
         } else {
-          otherIndex = 0;
+          currentIdx = 0;
         }
-        updateOtherSlider();
+        updateGaleria();
+      });
+
+      prevBtn.addEventListener('click', function () {
+        if (currentIdx > 0) {
+          currentIdx--;
+        } else {
+          currentIdx = slides.length - 1;
+        }
+        updateGaleria();
       });
     }
 
-    if (otherPrevBtn) {
-      otherPrevBtn.addEventListener('click', function() {
+    // 2. Slider de Outros Quartos Relacionados
+    const otherTrack = document.getElementById('vblOtherRoomsTrack');
+    const otherPrevBtn = document.getElementById('vblOtherRoomsPrev');
+    const otherNextBtn = document.getElementById('vblOtherRoomsNext');
+    const otherCards = document.querySelectorAll('.vbl-other-room-card');
+
+    if (otherTrack && otherCards.length) {
+      let otherIndex = 0;
+
+      function getOtherCardsPerView() {
+        return window.innerWidth >= 768 ? 2 : 1;
+      }
+
+      function getOtherMaxIndex() {
+        const perView = getOtherCardsPerView();
+        return Math.max(0, otherCards.length - perView);
+      }
+
+      function updateOtherSlider() {
+        if (!otherCards.length) return;
+        let step = otherCards[0].offsetWidth;
+        if (otherCards.length > 1) {
+          const rect0 = otherCards[0].getBoundingClientRect();
+          const rect1 = otherCards[1].getBoundingClientRect();
+          step = rect1.left - rect0.left;
+        }
+        const offset = otherIndex * step;
+        otherTrack.style.transform = `translateX(-${offset}px)`;
+      }
+
+      if (otherNextBtn) {
+        otherNextBtn.addEventListener('click', function () {
+          const max = getOtherMaxIndex();
+          if (otherIndex < max) {
+            otherIndex++;
+          } else {
+            otherIndex = 0;
+          }
+          updateOtherSlider();
+        });
+      }
+
+      if (otherPrevBtn) {
+        otherPrevBtn.addEventListener('click', function () {
+          const max = getOtherMaxIndex();
+          if (otherIndex > 0) {
+            otherIndex--;
+          } else {
+            otherIndex = max;
+          }
+          updateOtherSlider();
+        });
+      }
+
+      window.addEventListener('resize', function () {
         const max = getOtherMaxIndex();
-        if (otherIndex > 0) {
-          otherIndex--;
-        } else {
+        if (otherIndex > max) {
           otherIndex = max;
         }
         updateOtherSlider();
       });
     }
-
-    window.addEventListener('resize', function() {
-      const max = getOtherMaxIndex();
-      if (otherIndex > max) {
-        otherIndex = max;
-      }
-      updateOtherSlider();
-    });
-  }
-});
+  });
 </script>
 
 <?php

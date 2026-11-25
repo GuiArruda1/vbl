@@ -72,7 +72,7 @@ if ( $cpt_rooms_query->have_posts() ) {
     while ( $cpt_rooms_query->have_posts() ) {
         $cpt_rooms_query->the_post();
         $q_id = get_the_ID();
-        $q_thumb = get_the_post_thumbnail_url( $q_id, 'medium_large' );
+        $q_thumb = get_the_post_thumbnail_url( $q_id, 'full' );
         if ( empty( $q_thumb ) ) {
             $q_thumb = vbl_img( 'hoteis/porto-santo-520x400.jpg' );
         }
