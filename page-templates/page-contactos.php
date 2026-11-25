@@ -182,7 +182,7 @@ if (!empty($acf_hoteis) && is_array($acf_hoteis)) {
       'telefone' => !empty($h['telefone']) ? $h['telefone'] : '',
       'email' => !empty($h['email']) ? $h['email'] : '',
       'foto' => !empty($h['foto']) ? $h['foto'] : vbl_img('hoteis/porto-santo-520x400.jpg'),
-      'mapa' => !empty($h['mapa']) ? $h['mapa'] : vbl_img('contactos/mapa.jpg'),
+      'mapa' => !empty($h['mapa']) ? $h['mapa'] : ('https://maps.google.com/maps?q=' . rawurlencode('Vila Baleira ' . (!empty($h['title']) ? $h['title'] : 'Porto Santo')) . '&t=&z=15&ie=UTF8&iwloc=&output=embed'),
     );
   }
 } else {

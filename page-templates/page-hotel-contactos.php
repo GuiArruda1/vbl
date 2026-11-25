@@ -19,15 +19,78 @@ if ( empty( $hero_bg ) ) {
 $hotel_sub = vbl_field( 'vbl_hct_subtitle', false, 'VILA BALEIRA PORTO SANTO' );
 $hotel_tit = vbl_field( 'vbl_hct_title', false, 'ENTRAR EM<br>CONTACTO' );
 
-$morada   = vbl_field( 'vbl_hct_morada', false, "Sítio do Cabeço da Ponta, Apartado 243,\n9400-909 Porto Santo" );
-$telefone = vbl_field( 'vbl_hct_telefone', false, '+351 291 980 800' );
-$email    = vbl_field( 'vbl_hct_email', false, 'portosanto@vilabaleira.com' );
-$mapa_img   = vbl_field( 'vbl_hct_mapa_img', false, vbl_img( 'contactos/mapa.jpg' ) );
-if ( empty( $mapa_img ) ) {
-    $mapa_img = vbl_img( 'contactos/mapa.jpg' );
-}
-$mapa_url   = vbl_field( 'vbl_hct_mapa_url', false, 'https://maps.google.com/?q=Vila+Baleira+Porto+Santo' );
+$morada     = vbl_field( 'vbl_hct_morada', false, "Sítio do Cabeço da Ponta, Apartado 243,\n9400-909 Porto Santo" );
+$telefone   = vbl_field( 'vbl_hct_telefone', false, '+351 291 980 800' );
+$email      = vbl_field( 'vbl_hct_email', false, 'portosanto@vilabaleira.com' );
 $mapa_embed = vbl_field( 'vbl_hct_mapa_embed', false, '' );
+$mapa_url   = vbl_field( 'vbl_hct_mapa_url', false, '' );
+
+// Resolver URL do iframe do Google Maps
+$final_map_src = '';
+
+if ( ! empty( $mapa_embed ) ) {
+    if ( preg_match( '/src=["\']([^"\']+)["\']/', $mapa_embed, $m ) ) {
+        $final_map_src = $m[1];
+    } else {
+        $final_map_src = trim( $mapa_embed );
+    }
+} elseif ( ! empty( $mapa_url ) ) {
+    $final_map_src = trim( $mapa_url );
+}
+
+// Se não houver mapa personalizado, resolver automaticamente com base no hotel atual
+if ( empty( $final_map_src ) ) {
+    $hotel_slug = '';
+    if ( ! empty( $current_hotel_id ) ) {
+        $hp = get_post( $current_hotel_id );
+        if ( $hp ) {
+            $hotel_slug = $hp->post_name;
+        }
+    }
+    if ( empty( $hotel_slug ) ) {
+        global $post;
+        if ( ! empty( $post->post_parent ) ) {
+            $pp = get_post( $post->post_parent );
+            if ( $pp ) {
+                $hotel_slug = $pp->post_name;
+            }
+        }
+        if ( empty( $hotel_slug ) && ! empty( $post ) ) {
+            $hotel_slug = $post->post_name;
+        }
+    }
+
+    $hotel_map_defaults = array(
+        'porto-santo' => 'https://maps.google.com/maps?q=Vila+Baleira+Porto+Santo+Resort&t=&z=14&ie=UTF8&iwloc=&output=embed',
+        'funchal'     => 'https://maps.google.com/maps?q=Vila+Baleira+Funchal&t=&z=15&ie=UTF8&iwloc=&output=embed',
+        'suites'      => 'https://maps.google.com/maps?q=Vila+Baleira+Suites+Porto+Santo&t=&z=15&ie=UTF8&iwloc=&output=embed',
+        'village'     => 'https://maps.google.com/maps?q=Vila+Baleira+Village+Porto+Santo&t=&z=15&ie=UTF8&iwloc=&output=embed',
+        'residence'   => 'https://maps.google.com/maps?q=Vila+Baleira+Residence+Funchal&t=&z=15&ie=UTF8&iwloc=&output=embed',
+        'residences'  => 'https://maps.google.com/maps?q=Vila+Baleira+Residence+Funchal&t=&z=15&ie=UTF8&iwloc=&output=embed',
+    );
+
+    foreach ( $hotel_map_defaults as $key => $url ) {
+        if ( false !== strpos( $hotel_slug, $key ) || ( isset( $hotel_name ) && false !== stripos( (string) $hotel_name, $key ) ) || false !== stripos( (string) $hotel_sub, $key ) ) {
+            $final_map_src = $url;
+            break;
+        }
+    }
+
+    if ( empty( $final_map_src ) ) {
+        if ( ! empty( $morada ) ) {
+            $clean_addr = trim( preg_replace( '/\s+/', ' ', str_replace( array( "\r", "\n" ), ' ', $morada ) ) );
+            $final_map_src = 'https://maps.google.com/maps?q=' . rawurlencode( 'Vila Baleira ' . $clean_addr ) . '&t=&z=15&ie=UTF8&iwloc=&output=embed';
+        } else {
+            $final_map_src = 'https://maps.google.com/maps?q=Vila+Baleira+Porto+Santo+Resort&t=&z=14&ie=UTF8&iwloc=&output=embed';
+        }
+    }
+}
+
+// Assegurar formato compatível com iframe para links padrão do Google Maps
+if ( false !== strpos( $final_map_src, 'google.com/maps' ) && false === strpos( $final_map_src, 'output=embed' ) && false === strpos( $final_map_src, '/embed' ) ) {
+    $sep = ( false !== strpos( $final_map_src, '?' ) ) ? '&' : '?';
+    $final_map_src .= $sep . 'output=embed';
+}
 
 // ACF Fields: Formulário
 $form_sub    = vbl_field( 'vbl_hct_form_sub', false, 'LOREM IPSUM DOLOR SIT AMET CONSECTETUR' );
@@ -61,42 +124,20 @@ $privacy_url = function_exists( 'vbl_get_privacy_policy_url' ) ? vbl_get_privacy
   <section class="w-full py-20 lg:py-32 bg-white">
     <div class="max-w-[1920px] mx-auto px-6 xl:px-[8.33%] grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">
       
-      <!-- Coluna Esquerda: Mapa Ilustrado com Pin ou Google Maps Interativo -->
-      <div class="lg:col-span-6 relative flex justify-start">
-        <?php if ( ! empty( $mapa_embed ) ) : ?>
-          <div class="relative w-full aspect-[4/3] max-w-[620px] rounded-xs overflow-hidden shadow-xs bg-[#93d4e8]/20">
-            <?php if ( strpos( $mapa_embed, '<iframe' ) !== false ) : ?>
-              <div class="w-full h-full [&>iframe]:w-full [&>iframe]:h-full [&>iframe]:border-0">
-                <?php echo $mapa_embed; ?>
-              </div>
-            <?php else : ?>
-              <iframe src="<?php echo esc_url( $mapa_embed ); ?>" width="100%" height="100%" class="w-full h-full border-0" allowfullscreen="" loading="lazy"></iframe>
-            <?php endif; ?>
-          </div>
-        <?php else : ?>
-          <div class="relative w-full aspect-[4/3] max-w-[620px] bg-[#93d4e8]/20 rounded-xs overflow-hidden shadow-xs group">
-            <!-- Imagem do Mapa -->
-            <?php if ( ! empty( $mapa_url ) ) : ?>
-            <a href="<?php echo esc_url( $mapa_url ); ?>" target="_blank" rel="noopener noreferrer" class="block w-full h-full relative" title="Abrir localização no Google Maps">
-            <?php endif; ?>
-
-              <img src="<?php echo esc_url( $mapa_img ); ?>" alt="Localização no Porto Santo" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
-
-              <!-- Pin Ciano Decorativo Indicando a Localização -->
-              <div class="absolute top-[52%] left-[46%] -translate-x-1/2 -translate-y-1/2 flex flex-col items-center pointer-events-none z-10">
-                <div class="w-6 h-6 rounded-full bg-[var(--vbl-hotel-accent)] border-2 border-white shadow-md flex items-center justify-center animate-pulse">
-                  <div class="w-2 h-2 rounded-full bg-white"></div>
-                </div>
-                <span class="bg-white/95 backdrop-blur-xs text-[#0d5257] text-[9px] font-body uppercase tracking-wider px-2 py-0.5 rounded-xs shadow-xs mt-1 whitespace-nowrap font-medium">
-                  Vila Baleira
-                </span>
-              </div>
-
-            <?php if ( ! empty( $mapa_url ) ) : ?>
-            </a>
-            <?php endif; ?>
-          </div>
-        <?php endif; ?>
+      <!-- Coluna Esquerda: Mapa Interativo (Google Maps) -->
+      <div class="lg:col-span-6 relative flex justify-start w-full">
+        <div class="relative w-full h-[380px] sm:h-[480px] lg:h-[600px] max-w-full rounded-sm overflow-hidden shadow-xs bg-[#eef2f5]">
+          <iframe 
+            src="<?php echo esc_url( $final_map_src ); ?>" 
+            width="100%" 
+            height="100%" 
+            class="w-full h-full border-0 min-h-[380px] sm:min-h-[480px] lg:min-h-[600px]" 
+            allowfullscreen="" 
+            loading="lazy" 
+            referrerpolicy="no-referrer-when-downgrade" 
+            title="Mapa de Localização do Hotel">
+          </iframe>
+        </div>
       </div>
 
       <!-- Coluna Direita: Informações de Contacto -->
