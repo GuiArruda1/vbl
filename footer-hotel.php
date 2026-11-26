@@ -156,8 +156,24 @@ $youtube   = vbl_opt( 'youtube', 'https://www.youtube.com/@VilaBaleiraHotels' );
   </footer>
 	
 	<!-- Reservar em mobile -->
+	<?php
+	if ( empty( $hotel_booking_url ) || '#' === trim( (string) $hotel_booking_url ) ) {
+	    $hotel_booking_url = function_exists( 'vbl_field' ) ? vbl_field( 'vbl_hotel_booking_url', $current_hotel_id, '#' ) : '#';
+	    if ( empty( $hotel_booking_url ) || '#' === trim( (string) $hotel_booking_url ) ) {
+	        $mirai_info = function_exists( 'vbl_resolve_hotel_mirai' ) ? vbl_resolve_hotel_mirai( $current_hotel_id ) : array();
+	        $chain_sel  = ! empty( $mirai_info['chain_selector'] ) ? $mirai_info['chain_selector'] : '27540';
+	        $hotel_tok  = ! empty( $mirai_info['hotel_id'] ) ? $mirai_info['hotel_id'] : '';
+	        $cur_lang   = function_exists( 'pll_current_language' ) ? pll_current_language( 'slug' ) : 'pt';
+	        $hotel_booking_url = 'https://reservation.mirai.com/XMAS/reservation/miraiFrontDispatcher.htm?idchain=501671&chainSelectorValue=' . urlencode( $chain_sel );
+	        if ( ! empty( $hotel_tok ) ) {
+	            $hotel_booking_url .= '&idtokenprovider=' . urlencode( $hotel_tok );
+	        }
+	        $hotel_booking_url .= '&type=chain&lang=' . urlencode( $cur_lang ?: 'pt' );
+	    }
+	}
+	?>
 	<div id="barraFixaMobile" class="fixed bottom-0 left-0 right-0 z-[99999] bg-white border-t border-[#eee8e5] px-6 py-3 flex items-center justify-between shadow-[0_-4px_20px_rgba(0,0,0,0.1)] [@media(min-width:426px)]:hidden">		
-    	<a href="#" class="group font-body w-full flex items-center justify-between gap-4 px-6 py-4 border border-[#0d5257] text-[#0d5257] text-[14px] tracking-[1.4px] uppercase hover:bg-[var(--vbl-hotel-accent)] hover:border-[var(--vbl-hotel-accent)] hover:text-white transition-all duration-300">
+    	<a href="<?php echo esc_url( $hotel_booking_url ); ?>" <?php echo ( 0 === strpos( $hotel_booking_url, 'http' ) ) ? 'target="_blank" rel="noopener noreferrer"' : ''; ?> class="group font-body w-full flex items-center justify-between gap-4 px-6 py-4 border border-[#0d5257] text-[#0d5257] text-[14px] tracking-[1.4px] uppercase hover:bg-[var(--vbl-hotel-accent)] hover:border-[var(--vbl-hotel-accent)] hover:text-white transition-all duration-300">
         	<span><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Reservar' ) : 'Reservar' ); ?></span>
         	<svg class="w-[10px] h-[10px] transition-transform duration-300 group-hover:rotate-45" viewBox="0 0 11 11" fill="none"><path d="M1 10L10 1M10 1H3M10 1V8" stroke="currentColor" stroke-width="1.2"/></svg>
     	</a>
