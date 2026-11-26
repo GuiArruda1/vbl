@@ -20,12 +20,27 @@ if (is_singular('vbl_quarto')) {
 
 $hotel_name = vbl_field('vbl_hotel_name', $current_hotel_id, 'Porto Santo');
 $hotel_booking_url = vbl_field('vbl_hotel_booking_url', $current_hotel_id, '#');
+$mirai_hotel_info = function_exists('vbl_resolve_hotel_mirai') ? vbl_resolve_hotel_mirai($current_hotel_id) : array();
+$lang_data = function_exists('vbl_get_languages') ? vbl_get_languages() : array('current' => 'PT', 'languages' => array());
+
+// Se o campo vbl_hotel_booking_url estiver vazio ou '#', envia para o motor de reservas oficial Mirai do hotel
+if (empty($hotel_booking_url) || '#' === trim((string) $hotel_booking_url)) {
+  $chain_sel = !empty($mirai_hotel_info['chain_selector']) ? $mirai_hotel_info['chain_selector'] : '27540';
+  $hotel_tok = !empty($mirai_hotel_info['hotel_id']) ? $mirai_hotel_info['hotel_id'] : '';
+  $cur_lang  = !empty($lang_data['current']) ? strtolower($lang_data['current']) : (function_exists('pll_current_language') ? pll_current_language('slug') : 'pt');
+
+  $hotel_booking_url = 'https://reservation.mirai.com/XMAS/reservation/miraiFrontDispatcher.htm?idchain=501671&chainSelectorValue=' . urlencode($chain_sel);
+  if (!empty($hotel_tok)) {
+    $hotel_booking_url .= '&idtokenprovider=' . urlencode($hotel_tok);
+  }
+  $hotel_booking_url .= '&type=chain&lang=' . urlencode($cur_lang ?: 'pt');
+}
+
 $hotel_permalink = $current_hotel_id ? get_permalink($current_hotel_id) : get_permalink();
 $hotel_header_logo = vbl_field('vbl_hotel_header_logo', get_the_ID()) ?: vbl_field('vbl_hotel_header_logo', $current_hotel_id);
 $hotel_header_logo_scrolled = vbl_field('vbl_hotel_header_logo_scrolled', get_the_ID()) ?: vbl_field('vbl_hotel_header_logo_scrolled', $current_hotel_id);
 $hotel_accent_color = function_exists('vbl_get_hotel_accent_color') ? vbl_get_hotel_accent_color($current_hotel_id) : '#00B5B4';
 $hotel_secondary_color = function_exists('vbl_get_hotel_secondary_color') ? vbl_get_hotel_secondary_color($current_hotel_id) : '#E5F8F7';
-$lang_data = function_exists('vbl_get_languages') ? vbl_get_languages() : array('current' => 'PT', 'languages' => array());
 
 // Subpáginas reais do hotel criadas no WordPress (sem fallback para forçar a criação das páginas no backoffice)
 $subpage_links = array();
@@ -325,6 +340,7 @@ $is_contactos_active    = (strpos($current_template, 'hotel-contactos') !== fals
 
         <!-- Botão Reservar -->
         <a href="<?php echo esc_url($hotel_booking_url); ?>"
+          <?php echo (0 === strpos($hotel_booking_url, 'http')) ? 'target="_blank" rel="noopener noreferrer"' : ''; ?>
           class="vbl-hotel-btn-reservar group inline-flex items-center border border-white text-white text-[10.5px] xl:text-[11px] 2xl:text-[12px] [@media(min-width:1800px)]:text-[13px] tracking-[0.6px] xl:tracking-[0.8px] 2xl:tracking-[1px] [@media(min-width:1800px)]:tracking-[1.4px] uppercase px-3 xl:px-3.5 2xl:px-4 [@media(min-width:1800px)]:px-5 py-1.5 2xl:py-2 hover:bg-[var(--vbl-hotel-accent)] hover:border-[var(--vbl-hotel-accent)] hover:text-white transition-all duration-300 whitespace-nowrap">
           <span class="mr-1.5 2xl:mr-2.5"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Reservar' ) : 'Reservar' ); ?></span>
           <svg class="w-[9px] h-[9px] 2xl:w-[10px] 2xl:h-[10px] transition-transform duration-300 group-hover:rotate-45" viewBox="0 0 11 11"
@@ -354,6 +370,7 @@ $is_contactos_active    = (strpos($current_template, 'hotel-contactos') !== fals
         </div>
 
         <a href="<?php echo esc_url($hotel_booking_url); ?>"
+          <?php echo (0 === strpos($hotel_booking_url, 'http')) ? 'target="_blank" rel="noopener noreferrer"' : ''; ?>
           class="vbl-hotel-btn-reservar group hidden [@media(min-width:426px)_and_(max-width:1279px)]:flex items-center gap-2 sm:gap-4 px-3 py-1.5 sm:px-4 sm:py-2 border border-white text-white text-[12px] sm:text-[14px] tracking-[1.2px] sm:tracking-[1.4px] uppercase transition-all duration-300">
           <span><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Reservar' ) : 'Reservar' ); ?></span>
           <svg class="w-[9px] h-[9px] sm:w-[10px] sm:h-[10px] transition-transform duration-300 group-hover:rotate-45"
@@ -602,6 +619,7 @@ $is_contactos_active    = (strpos($current_template, 'hotel-contactos') !== fals
       <?php endif; ?>
       <div class="h-px bg-[#eee8e5] my-2"></div>
       <a href="<?php echo esc_url($hotel_booking_url); ?>"
+        <?php echo (0 === strpos($hotel_booking_url, 'http')) ? 'target="_blank" rel="noopener noreferrer"' : ''; ?>
         class="vbl-hotel-btn-reservar flex items-center justify-between w-full px-6 py-4 border border-[var(--vbl-hotel-accent)] text-[var(--vbl-hotel-accent)] text-[14px] tracking-[1.4px] uppercase my-2">
         <span><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'Reservar' ) : 'Reservar' ); ?></span>
         <svg class="w-[10px] h-[10px]" viewBox="0 0 11 11" fill="none">
