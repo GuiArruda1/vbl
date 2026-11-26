@@ -329,10 +329,10 @@ if ( empty( $exp_img_right ) ) {
             <?php echo esc_html( $initial_room['description'] ); ?>
           </p>
 
-          <!-- Next Slide Preview (Full color on mobile, subtle grayscale preview on desktop) -->
-          <div class="relative w-full aspect-[16/10] max-h-[300px] mb-8 bg-gray-100 overflow-hidden lg:opacity-40 lg:hover:opacity-75 transition-opacity duration-300 cursor-pointer" title="Ver próximo quarto">
+          <!-- Next Slide Preview (Full color on mobile, subtle grayscale preview on desktop; links directly to that room) -->
+          <a id="vblOverviewRoomNextImgLink" href="<?php echo esc_url( $initial_next_room['url'] ); ?>" class="block relative w-full aspect-[16/10] max-h-[300px] mb-8 bg-gray-100 overflow-hidden lg:opacity-40 lg:hover:opacity-75 transition-opacity duration-300 cursor-pointer" title="<?php echo esc_attr( strip_tags( $initial_next_room['title'] ) ); ?>">
             <img id="vblOverviewRoomImgNext" src="<?php echo esc_url( $initial_next_room['image'] ); ?>" alt="<?php echo esc_attr( strip_tags( $initial_next_room['title'] ) ); ?>" class="w-full h-full object-cover lg:grayscale transition-opacity duration-300">
-          </div>
+          </a>
 
           <!-- Link + Mobile Arrows -->
           <div class="flex items-center justify-between w-full gap-4">
@@ -379,6 +379,7 @@ if ( empty( $exp_img_right ) ) {
       var descEl = document.getElementById('vblOverviewRoomDesc');
       var btnEl = document.getElementById('vblOverviewRoomBtn');
       var imgLink = document.getElementById('vblOverviewRoomImgLink');
+      var nextImgLink = document.getElementById('vblOverviewRoomNextImgLink');
       var titleLink = document.getElementById('vblOverviewRoomTitleLink');
 
       if (!dataEl || !prevBtns.length || !nextBtns.length || !imgMain) return;
@@ -437,6 +438,10 @@ if ( empty( $exp_img_right ) ) {
             imgNext.alt = nextSlide.title.replace(/<[^>]*>?/gm, '');
             imgNext.style.opacity = '1';
           }
+          if (nextImgLink) {
+            nextImgLink.href = nextSlide.url;
+            nextImgLink.title = nextSlide.title.replace(/<[^>]*>?/gm, '');
+          }
 
           setTimeout(function() {
             isBusy = false;
@@ -459,15 +464,6 @@ if ( empty( $exp_img_right ) ) {
           renderSlide(currentIndex);
         });
       });
-
-      // Clicking preview card advances to next room
-      if (imgNext && imgNext.parentElement) {
-        imgNext.parentElement.addEventListener('click', function(e) {
-          e.preventDefault();
-          currentIndex = (currentIndex + 1) % slides.length;
-          renderSlide(currentIndex);
-        });
-      }
     }
 
     if (document.readyState === 'loading') {
