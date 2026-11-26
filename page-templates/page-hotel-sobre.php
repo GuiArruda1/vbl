@@ -244,7 +244,7 @@ if ( empty( $instalacoes ) ) {
   <section id="instalacoes" class="w-full py-20 lg:py-28 xl:py-36 bg-white overflow-hidden">
     <div class="max-w-[1920px] mx-auto px-4 sm:px-8 xl:px-[5%] 2xl:px-[8.33%] relative">
       
-      <div id="vblHotelInstalacoesSlider" class="relative px-8 sm:px-12 md:px-16 lg:px-20 xl:px-24">
+      <div id="vblHotelInstalacoesSlider" class="relative px-2 sm:px-4 lg:px-20 xl:px-24">
 
         <!-- Seta Esquerda (Desktop: centralizada verticalmente na borda externa) -->
         <button type="button" class="vbl-slider-prev hidden lg:flex absolute left-4 xl:left-6 top-1/2 -translate-y-1/2 z-20 w-12 h-12 bg-transparent border border-[var(--vbl-hotel-accent)] text-[var(--vbl-hotel-accent)] hover:bg-[var(--vbl-hotel-accent)] hover:text-white hover:border-[var(--vbl-hotel-accent)] items-center justify-center transition-all duration-300 cursor-pointer hover:shadow-sm" aria-label="Instalação Anterior">
@@ -305,7 +305,7 @@ if ( empty( $instalacoes ) ) {
 
             <!-- Lado Direito: Fotografia Principal com Seta Sobreposta na Borda -->
             <div class="w-full lg:w-[52%] xl:w-[53%] flex items-center justify-center lg:justify-end">
-              <div class="relative w-full max-w-[480px] sm:max-w-[520px] lg:max-w-[560px] xl:max-w-[620px] aspect-[1.05/1]">
+              <div class="relative w-full lg:max-w-[560px] xl:max-w-[620px] aspect-[4/3] lg:aspect-[1.05/1]">
                 
                 <!-- Seta Esquerda (Mobile & Tablet: simétrica sobre a lateral esquerda da foto) -->
                 <button type="button" class="vbl-slider-prev flex lg:hidden absolute -left-4 sm:-left-6 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 bg-white/90 border border-[var(--vbl-hotel-accent)] text-[var(--vbl-hotel-accent)] hover:bg-[var(--vbl-hotel-accent)] hover:text-white hover:border-[var(--vbl-hotel-accent)] items-center justify-center transition-all duration-300 cursor-pointer shadow-sm" aria-label="Instalação Anterior">
