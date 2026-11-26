@@ -211,17 +211,20 @@ if ( empty( $exp_img_right ) ) {
         </h2>
       </div>
       
-      <p class="font-body font-light text-[15px] xl:text-[16px] leading-relaxed text-[#333333] max-w-[480px]">
-        <?php echo nl2br( esc_html( $sobre_desc ) ); ?>
-      </p>
-      
-      <div class="pt-2">
-        <a href="<?php echo esc_url( $sobre_btn_url ); ?>" class="vbl-btn-microsite">
-          <span><?php echo esc_html( $sobre_btn_label ); ?></span>
-          <svg viewBox="0 0 12 12" fill="none">
-            <path d="M1 11L11 1H3.5M11 1V8.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </a>
+      <!-- Conteúdo Indentado como no Design -->
+      <div class="lg:ml-12 xl:ml-16 flex flex-col items-start gap-8">
+        <p class="font-body font-light text-[15px] xl:text-[16px] leading-relaxed text-[#333333] max-w-[480px]">
+          <?php echo nl2br( esc_html( $sobre_desc ) ); ?>
+        </p>
+        
+        <div class="pt-2">
+          <a href="<?php echo esc_url( $sobre_btn_url ); ?>" class="vbl-btn-microsite">
+            <span><?php echo esc_html( $sobre_btn_label ); ?></span>
+            <svg viewBox="0 0 12 12" fill="none">
+              <path d="M1 11L11 1H3.5M11 1V8.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
       </div>
     </div>
     
@@ -309,7 +312,7 @@ if ( empty( $exp_img_right ) ) {
         </div>
 
         <!-- Indented Section: Text, Preview Image & Button all aligned to the exact same left guide -->
-        <div class="pl-4 sm:pl-8 md:pl-16 flex flex-col items-start w-full">
+        <div class="pl-0 lg:pl-12 xl:pl-16 flex flex-col items-start w-full">
           <!-- Description -->
           <p id="vblOverviewRoomDesc" class="font-body font-light text-[14px] leading-relaxed text-black/70 max-w-[340px] mb-8 transition-opacity duration-300">
             <?php echo esc_html( $initial_room['description'] ); ?>
@@ -452,6 +455,14 @@ if ( empty( $exp_img_right ) ) {
   
   <!-- Title (Aligned to standard container grid) -->
   <div class="max-w-[1920px] mx-auto px-6 xl:px-[8.33%] mb-8 md:mb-12 xl:mb-14">
+    <?php if ( ! empty( $exp_subtitle ) ) : ?>
+    <div class="flex items-center gap-4 mb-3">
+      <div class="w-8 h-px bg-[var(--vbl-hotel-accent)] flex-shrink-0"></div>
+      <span class="font-body text-[10px] xl:text-[11px] tracking-[2px] uppercase text-[var(--vbl-hotel-accent)] font-medium">
+        <?php echo esc_html( $exp_subtitle ); ?>
+      </span>
+    </div>
+    <?php endif; ?>
     <h2 class="font-display text-[40px] md:text-[56px] lg:text-[72px] xl:text-[90px] leading-[1.05] text-[#0d5257] uppercase">
       <?php echo wp_kses_post( $exp_title ); ?>
     </h2>
@@ -501,8 +512,8 @@ if ( empty( $exp_img_right ) ) {
     
     <!-- 1. Coluna Esquerda: Texto + Botão + 2 Imagens Ligeiramente Indentadas -->
     <div class="w-[28%] flex-shrink-0 flex flex-col justify-between self-stretch pr-4 2xl:pr-6 z-10">
-      <!-- Topo: Texto e Botão alinhados à esquerda -->
-      <div class="pt-2">
+      <!-- Topo: Texto e Botão alinhados à esquerda com indentação -->
+      <div class="pt-2 lg:ml-12 xl:ml-16">
         <p class="font-body font-light text-[15px] leading-[24px] text-black/70 mb-8 max-w-[340px]">
           <?php echo nl2br( esc_html( $exp_desc ) ); ?>
         </p>

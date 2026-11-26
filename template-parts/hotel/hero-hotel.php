@@ -54,8 +54,8 @@ $accent_color = function_exists( 'vbl_get_hotel_accent_color' ) ? vbl_get_hotel_
       <?php echo wp_kses_post( $title ); ?>
     </h1>
 
-    <!-- Descrição Parágrafo -->
-    <p class="font-body font-light text-[15px] sm:text-[16px] xl:text-[18px] leading-relaxed text-white/85 max-w-[680px]">
+    <!-- Descrição Parágrafo Indentada -->
+    <p class="font-body font-light text-[15px] sm:text-[16px] xl:text-[18px] leading-relaxed text-white/85 max-w-[680px] lg:ml-12 xl:ml-16">
       <?php echo esc_html( $description ); ?>
     </p>
 
