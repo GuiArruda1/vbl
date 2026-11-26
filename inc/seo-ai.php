@@ -242,7 +242,10 @@ add_action( 'wp_head', function() {
     if ( is_page_template( 'page-templates/page-hotel-home.php' ) ) {
         $lcp_img = function_exists( 'vbl_field' ) ? vbl_field( 'vbl_hotel_hero_img', get_the_ID(), '' ) : '';
     } elseif ( is_front_page() ) {
-        $lcp_img = function_exists( 'vbl_field' ) ? vbl_field( 'vbl_hero_bg', get_the_ID(), '' ) : '';
+        $lcp_img = function_exists( 'vbl_field' ) ? vbl_field( 'vbl_banner_image', get_the_ID(), '' ) : '';
+        if ( empty( $lcp_img ) && function_exists( 'vbl_img' ) ) {
+            $lcp_img = vbl_img( 'banner-principal.jpg' );
+        }
     }
     if ( ! empty( $lcp_img ) && is_string( $lcp_img ) ) {
         echo '<link rel="preload" as="image" href="' . esc_url( $lcp_img ) . '" fetchpriority="high" />' . "\n";

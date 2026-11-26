@@ -123,7 +123,7 @@ $frase2_desc  = vbl_field( 'vbl_frase2_desc', false, '' );
       </div>
     </div>
     <!-- BG + overlays -->
-    <img src="<?php echo esc_url( $banner_img ); ?>" alt="" class="absolute inset-0 w-full h-full object-cover">
+    <img src="<?php echo esc_url( $banner_img ); ?>" alt="" fetchpriority="high" decoding="async" class="absolute inset-0 w-full h-full object-cover">
     <div class="absolute inset-0 mix-blend-multiply" style="background:linear-gradient(to bottom,rgba(0,0,0,0) 25%,rgba(0,0,0,0.65) 100%)"></div>
     <div class="absolute inset-0 mix-blend-multiply" style="background:linear-gradient(to top,rgba(0,0,0,0) 50%,rgba(0,0,0,0.5) 100%)"></div>
     <div class="absolute inset-0 mix-blend-overlay" style="background:linear-gradient(to bottom,rgba(255,255,255,0),#bc945b)"></div>
