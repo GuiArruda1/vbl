@@ -956,8 +956,7 @@ if ($is_en_room && $is_ps_room) {
                 <!-- Título Clicável -->
                 <h3
                   class="font-display text-[26px] sm:text-[30px] leading-tight uppercase text-[#0d5257] mb-3 group-hover:text-[var(--vbl-hotel-accent)] transition-colors">
-                  <a href="<?php echo esc_url($o_room['link']); ?>"
-                    class="hover:underline decoration-[var(--vbl-hotel-accent)] decoration-1 underline-offset-4">
+                  <a href="<?php echo esc_url($o_room['link']); ?>">
                     <?php echo esc_html($o_room['title']); ?>
                   </a>
                 </h3>
