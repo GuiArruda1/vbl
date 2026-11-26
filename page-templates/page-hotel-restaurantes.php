@@ -201,7 +201,7 @@ if ( empty( $restaurantes_list ) || ! is_array( $restaurantes_list ) ) {
                 <!-- Miniatura -->
                 <?php if ( ! empty( $thumb_img ) ) : ?>
                 <div class="w-48 sm:w-56 aspect-[16/10] bg-gray-100 overflow-hidden shadow-sm">
-                  <img src="<?php echo esc_url( $thumb_img ); ?>" alt="Área do Restaurante" class="w-full h-full object-cover">
+                  <img src="<?php echo esc_url( $thumb_img ); ?>" alt="Área do Restaurante" class="w-full h-full object-cover opacity-85">
                 </div>
                 <?php endif; ?>
               </div>
