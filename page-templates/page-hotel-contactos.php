@@ -40,35 +40,53 @@ if ( ! empty( $final_map_src ) && false === strpos( $final_map_src, 'google.com/
     $final_map_src = '';
 }
 
+// Resolver hotel ativo e cor do marcador (conforme guia de cores dos microsites)
+$hotel_slug = '';
+if ( ! empty( $current_hotel_id ) ) {
+    $hp = get_post( $current_hotel_id );
+    if ( $hp ) {
+        $hotel_slug = $hp->post_name;
+    }
+}
+if ( empty( $hotel_slug ) ) {
+    global $post;
+    if ( ! empty( $post->post_parent ) ) {
+        $pp = get_post( $post->post_parent );
+        if ( $pp ) {
+            $hotel_slug = $pp->post_name;
+        }
+    }
+    if ( empty( $hotel_slug ) && ! empty( $post ) ) {
+        $hotel_slug = $post->post_name;
+    }
+}
+
+$hotel_pin_colors = array(
+    'porto-santo' => '#00B5B4',
+    'funchal'     => '#F0B85E',
+    'madeira'     => '#F0B85E',
+    'suites'      => '#D7A584',
+    'village'     => '#658D72',
+    'residence'   => '#BC945B',
+    'residences'  => '#BC945B',
+);
+$pin_color = ! empty( $hotel_accent_color ) ? $hotel_accent_color : '#BC945B';
+foreach ( $hotel_pin_colors as $key => $hex ) {
+    if ( false !== stripos( $hotel_slug, $key ) || ( isset( $hotel_name ) && false !== stripos( (string) $hotel_name, $key ) ) || false !== stripos( (string) $hotel_sub, $key ) ) {
+        $pin_color = $hex;
+        break;
+    }
+}
+
 // Se não houver mapa personalizado, resolver automaticamente com base no hotel atual
 if ( empty( $final_map_src ) ) {
-    $hotel_slug = '';
-    if ( ! empty( $current_hotel_id ) ) {
-        $hp = get_post( $current_hotel_id );
-        if ( $hp ) {
-            $hotel_slug = $hp->post_name;
-        }
-    }
-    if ( empty( $hotel_slug ) ) {
-        global $post;
-        if ( ! empty( $post->post_parent ) ) {
-            $pp = get_post( $post->post_parent );
-            if ( $pp ) {
-                $hotel_slug = $pp->post_name;
-            }
-        }
-        if ( empty( $hotel_slug ) && ! empty( $post ) ) {
-            $hotel_slug = $post->post_name;
-        }
-    }
-
     $hotel_map_defaults = array(
         'porto-santo' => 'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d45000!2d-16.3626213!3d33.0374124!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-PT!2spt!4v1700000000000',
-        'funchal'     => 'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d16000!2d-16.9307499!3d32.6383247!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-PT!2spt!4v1700000000000',
+        'funchal'     => 'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d350000!2d-16.9307499!3d32.6383247!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-PT!2spt!4v1700000000000',
         'suites'      => 'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d45000!2d-16.3608198!3d33.0373331!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-PT!2spt!4v1700000000000',
         'village'     => 'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d45000!2d-16.3680087!3d33.0364243!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-PT!2spt!4v1700000000000',
-        'residence'   => 'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d16000!2d-16.9424958!3d32.6374392!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-PT!2spt!4v1700000000000',
-        'residences'  => 'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d16000!2d-16.9424958!3d32.6374392!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-PT!2spt!4v1700000000000',
+        'residence'   => 'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d350000!2d-16.9424958!3d32.6374392!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-PT!2spt!4v1700000000000',
+        'residences'  => 'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d350000!2d-16.9424958!3d32.6374392!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-PT!2spt!4v1700000000000',
     );
 
     foreach ( $hotel_map_defaults as $key => $url ) {
@@ -87,6 +105,7 @@ if ( empty( $final_map_src ) ) {
         }
     }
 }
+$final_map_src = str_replace( '!1d16000!', '!1d350000!', $final_map_src );
 
 
 // ACF Fields: Formulário
@@ -134,7 +153,9 @@ $privacy_url = function_exists( 'vbl_get_privacy_policy_url' ) ? vbl_get_privacy
             referrerpolicy="no-referrer-when-downgrade" 
             title="Mapa de Localização do Hotel">
           </iframe>
-          <img src="<?php echo esc_url( vbl_img( 'map_pointer.png' ) ); ?>" alt="" aria-hidden="true" width="33" height="40" style="position:absolute;top:50%;left:50%;width:35.2px;height:auto;transform:translate(-50%,-100%);pointer-events:none;z-index:5;filter:drop-shadow(0 3px 4px rgba(0,0,0,.35));">
+          <svg width="33" height="40" viewBox="0 0 33 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="position:absolute;top:50%;left:50%;width:35.2px;height:auto;transform:translate(-50%,-100%);pointer-events:none;z-index:5;filter:drop-shadow(0 3px 4px rgba(0,0,0,.35));">
+            <path d="M33 16.3636C33 29.0909 16.5 40 16.5 40C16.5 40 0 29.0909 0 16.3636C0 12.0237 1.73839 7.86158 4.83274 4.7928C7.92709 1.72402 12.1239 0 16.5 0C20.8761 0 25.0729 1.72402 28.1673 4.7928C31.2616 7.86158 33 12.0237 33 16.3636ZM22 16.3636C22 19.3761 19.5376 21.8182 16.5 21.8182C13.4624 21.8182 11 19.3761 11 16.3636C11 13.3512 13.4624 10.9091 16.5 10.9091C19.5376 10.9091 22 13.3512 22 16.3636Z" fill-rule="evenodd" clip-rule="evenodd" fill="<?php echo esc_attr( $pin_color ); ?>"/>
+          </svg>
         </div>
       </div>
 

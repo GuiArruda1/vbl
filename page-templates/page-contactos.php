@@ -203,7 +203,7 @@ if (!empty($acf_hoteis) && is_array($acf_hoteis)) {
       'telefone' => '+351 291 000 274',
       'email' => 'funchal@vilabaleira.com',
       'foto' => vbl_img('contactos/funchal-hotel.jpg'),
-      'mapa' => 'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d16000!2d-16.9307499!3d32.6383247!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-PT!2spt!4v1700000000000',
+      'mapa' => 'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d350000!2d-16.9307499!3d32.6383247!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-PT!2spt!4v1700000000000',
     ),
     array(
       'title' => 'SUITES',
@@ -230,17 +230,17 @@ if (!empty($acf_hoteis) && is_array($acf_hoteis)) {
       'telefone' => '+351 291 708 700',
       'email' => 'res.funchal@vilabaleira.com',
       'foto' => vbl_img('hoteis/residence-680x400.jpg'),
-      'mapa' => 'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d16000!2d-16.9424958!3d32.6374392!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-PT!2spt!4v1700000000000',
+      'mapa' => 'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d350000!2d-16.9424958!3d32.6374392!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-PT!2spt!4v1700000000000',
     ),
   );
 }
 
 // Google bloqueia iframes que não sejam /maps/embed — substitui valores antigos guardados na BD
 $vbl_osm_fallback = array(
-  'FUNCHAL'   => 'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d16000!2d-16.9307499!3d32.6383247!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-PT!2spt!4v1700000000000',
+  'FUNCHAL'   => 'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d350000!2d-16.9307499!3d32.6383247!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-PT!2spt!4v1700000000000',
   'SUITES'    => 'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d45000!2d-16.3608198!3d33.0373331!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-PT!2spt!4v1700000000000',
   'VILLAGE'   => 'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d45000!2d-16.3680087!3d33.0364243!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-PT!2spt!4v1700000000000',
-  'RESIDENCE' => 'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d16000!2d-16.9424958!3d32.6374392!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-PT!2spt!4v1700000000000',
+  'RESIDENCE' => 'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d350000!2d-16.9424958!3d32.6374392!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-PT!2spt!4v1700000000000',
   'DEFAULT'   => 'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d45000!2d-16.3626213!3d33.0374124!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-PT!2spt!4v1700000000000',
 );
 foreach ($hoteis_carousel as $k => $h) {
@@ -252,6 +252,8 @@ foreach ($hoteis_carousel as $k => $h) {
       if (strpos($t, $key) !== false) { $new = $vbl_osm_fallback[$key]; break; }
     }
     $hoteis_carousel[$k]['mapa'] = $new;
+  } else {
+    $hoteis_carousel[$k]['mapa'] = str_replace('!1d16000!', '!1d350000!', $m);
   }
 }
 
@@ -347,7 +349,7 @@ $first_hotel = $hoteis_carousel[0];
           class="w-full h-full border-0 min-h-[350px] sm:min-h-[450px] lg:min-h-[600px] transition-opacity duration-300"
           allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
           title="Mapa de Localização do Hotel"></iframe>
-        <img src="<?php echo esc_url( vbl_img( 'map_pointer.png' ) ); ?>" alt="" aria-hidden="true" width="33" height="40" style="position:absolute;top:50%;left:50%;width:35.2px;height:auto;transform:translate(-50%,-100%);pointer-events:none;z-index:5;filter:drop-shadow(0 3px 4px rgba(0,0,0,.35));">
+        <img src="<?php echo esc_url( vbl_img( 'marker_map.svg' ) ); ?>" alt="" aria-hidden="true" width="33" height="40" style="position:absolute;top:50%;left:50%;width:35.2px;height:auto;transform:translate(-50%,-100%);pointer-events:none;z-index:5;filter:drop-shadow(0 3px 4px rgba(0,0,0,.35));">
       </div>
 
     </div>
