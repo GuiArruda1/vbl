@@ -333,18 +333,18 @@ if ( empty( $tratamentos_list ) || ! is_array( $tratamentos_list ) ) {
   <section class="w-full py-24 lg:py-36 bg-white overflow-hidden">
     <div class="max-w-[1920px] mx-auto px-4 sm:px-8 xl:px-[5%] 2xl:px-[8.33%] relative">
       
-      <div id="vblAnimSlider" class="relative px-6 sm:px-12 md:px-16 lg:px-20 xl:px-24">
+      <div id="vblAnimSlider" class="relative px-0 lg:px-20 xl:px-24">
         
-        <!-- Seta Esquerda (Alinhada à margem esquerda, centrada verticalmente como no Figma) -->
-        <button type="button" id="vblAnimPrev" class="vbl-anim-prev absolute left-0 sm:left-2 lg:left-4 xl:left-6 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 bg-transparent border border-[var(--vbl-hotel-accent)] text-[var(--vbl-hotel-accent)] hover:bg-[var(--vbl-hotel-accent)] hover:text-white hover:border-[var(--vbl-hotel-accent)] flex items-center justify-center transition-all duration-300 cursor-pointer shadow-xs hover:shadow-sm" aria-label="Slide Anterior">
-          <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+        <!-- Seta Esquerda (Desktop: alinhada à margem esquerda, centrada verticalmente) -->
+        <button type="button" id="vblAnimPrev" class="vbl-anim-prev hidden lg:flex absolute left-4 xl:left-6 top-1/2 -translate-y-1/2 z-20 w-12 h-12 bg-transparent border border-[var(--vbl-hotel-accent)] text-[var(--vbl-hotel-accent)] hover:bg-[var(--vbl-hotel-accent)] hover:text-white hover:border-[var(--vbl-hotel-accent)] items-center justify-center transition-all duration-300 cursor-pointer shadow-xs hover:shadow-sm" aria-label="Slide Anterior">
+          <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M19 12H5M12 19l-7-7 7-7" />
           </svg>
         </button>
 
-        <!-- Seta Direita (Alinhada à margem direita, centrada verticalmente como no Figma) -->
-        <button type="button" id="vblAnimNext" class="vbl-anim-next absolute right-0 sm:right-2 lg:right-4 xl:right-6 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 bg-transparent border border-[var(--vbl-hotel-accent)] text-[var(--vbl-hotel-accent)] hover:bg-[var(--vbl-hotel-accent)] hover:text-white hover:border-[var(--vbl-hotel-accent)] flex items-center justify-center transition-all duration-300 cursor-pointer shadow-xs hover:shadow-sm" aria-label="Slide Seguinte">
-          <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+        <!-- Seta Direita (Desktop: alinhada à margem direita, centrada verticalmente) -->
+        <button type="button" id="vblAnimNext" class="vbl-anim-next hidden lg:flex absolute right-4 xl:right-6 top-1/2 -translate-y-1/2 z-20 w-12 h-12 bg-transparent border border-[var(--vbl-hotel-accent)] text-[var(--vbl-hotel-accent)] hover:bg-[var(--vbl-hotel-accent)] hover:text-white hover:border-[var(--vbl-hotel-accent)] items-center justify-center transition-all duration-300 cursor-pointer shadow-xs hover:shadow-sm" aria-label="Slide Seguinte">
+          <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M5 12h14M12 5l7 7-7 7" />
           </svg>
         </button>
@@ -382,7 +382,18 @@ if ( empty( $tratamentos_list ) || ! is_array( $tratamentos_list ) ) {
             <!-- Lado Direito: Fotografia com Proporção do Design -->
             <div class="w-full lg:w-[50%] xl:w-[52%] flex items-center justify-center lg:justify-end">
               <div class="relative w-full lg:max-w-[620px] xl:max-w-[680px] aspect-[4/3] lg:aspect-[1.12/1] bg-gray-100 shadow-sm overflow-hidden">
+                <!-- Setas Mobile & Tablet (centradas sobre a foto) -->
+                <button type="button" class="vbl-anim-prev flex lg:hidden absolute left-3 top-1/2 -translate-y-1/2 z-20 w-11 h-11 bg-white/90 border border-[var(--vbl-hotel-accent)] text-[var(--vbl-hotel-accent)] hover:bg-[var(--vbl-hotel-accent)] hover:text-white items-center justify-center transition-all duration-300 cursor-pointer shadow-sm" aria-label="Slide Anterior">
+                  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M19 12H5M12 19l-7-7 7-7" />
+                  </svg>
+                </button>
                 <img src="<?php echo esc_url( $slide['image'] ); ?>" alt="<?php echo esc_attr( $slide['title'] ); ?>" class="w-full h-full object-cover">
+                <button type="button" class="vbl-anim-next flex lg:hidden absolute right-3 top-1/2 -translate-y-1/2 z-20 w-11 h-11 bg-white/90 border border-[var(--vbl-hotel-accent)] text-[var(--vbl-hotel-accent)] hover:bg-[var(--vbl-hotel-accent)] hover:text-white items-center justify-center transition-all duration-300 cursor-pointer shadow-sm" aria-label="Slide Seguinte">
+                  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+                </button>
               </div>
             </div>
 
