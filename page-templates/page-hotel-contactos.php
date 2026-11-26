@@ -61,51 +61,91 @@ if ( empty( $hotel_slug ) ) {
     }
 }
 
-$hotel_pin_colors = array(
-    'porto-santo' => '#00B5B4',
-    'funchal'     => '#F0B85E',
-    'madeira'     => '#F0B85E',
-    'suites'      => '#D7A584',
-    'village'     => '#658D72',
-    'residence'   => '#BC945B',
-    'residences'  => '#BC945B',
+// Coordenadas e vista Snazzy Maps por hotel microsite + guia de cores oficial
+$hotel_snazzy_configs = array(
+    'porto-santo' => array(
+        'lat'     => 33.0374124,
+        'lng'     => -16.3626213,
+        'viewLat' => 33.065,
+        'viewLng' => -16.345,
+        'zoom'    => 12,
+        'color'   => '#00B5B4',
+        'gmaps'   => 'https://maps.app.goo.gl/KZm4M6QqEMV1xQwk9',
+    ),
+    'funchal' => array(
+        'lat'     => 32.6383247,
+        'lng'     => -16.9307499,
+        'viewLat' => 32.78,
+        'viewLng' => -16.72,
+        'zoom'    => 9,
+        'color'   => '#F0B85E',
+        'gmaps'   => 'https://maps.app.goo.gl/MsBGLtNK66T3PASG6',
+    ),
+    'madeira' => array(
+        'lat'     => 32.6383247,
+        'lng'     => -16.9307499,
+        'viewLat' => 32.78,
+        'viewLng' => -16.72,
+        'zoom'    => 9,
+        'color'   => '#F0B85E',
+        'gmaps'   => 'https://maps.app.goo.gl/MsBGLtNK66T3PASG6',
+    ),
+    'suites' => array(
+        'lat'     => 33.0373331,
+        'lng'     => -16.3608198,
+        'viewLat' => 33.065,
+        'viewLng' => -16.345,
+        'zoom'    => 12,
+        'color'   => '#D7A584',
+        'gmaps'   => 'https://maps.app.goo.gl/gFFMhBN4CRXw8LCH9',
+    ),
+    'village' => array(
+        'lat'     => 33.0364243,
+        'lng'     => -16.3680087,
+        'viewLat' => 33.065,
+        'viewLng' => -16.345,
+        'zoom'    => 12,
+        'color'   => '#658D72',
+        'gmaps'   => 'https://maps.app.goo.gl/UyrSut4PwSrZq1xVA',
+    ),
+    'residence' => array(
+        'lat'     => 32.6374392,
+        'lng'     => -16.9424958,
+        'viewLat' => 32.78,
+        'viewLng' => -16.72,
+        'zoom'    => 9,
+        'color'   => '#BC945B',
+        'gmaps'   => 'https://maps.app.goo.gl/9PeEckMgTvfzmNiU6',
+    ),
+    'residences' => array(
+        'lat'     => 32.6374392,
+        'lng'     => -16.9424958,
+        'viewLat' => 32.78,
+        'viewLng' => -16.72,
+        'zoom'    => 9,
+        'color'   => '#BC945B',
+        'gmaps'   => 'https://maps.app.goo.gl/9PeEckMgTvfzmNiU6',
+    ),
 );
-$pin_color = ! empty( $hotel_accent_color ) ? $hotel_accent_color : '#BC945B';
-foreach ( $hotel_pin_colors as $key => $hex ) {
+
+$active_map_cfg = $hotel_snazzy_configs['porto-santo'];
+foreach ( $hotel_snazzy_configs as $key => $cfg ) {
     if ( false !== stripos( $hotel_slug, $key ) || ( isset( $hotel_name ) && false !== stripos( (string) $hotel_name, $key ) ) || false !== stripos( (string) $hotel_sub, $key ) ) {
-        $pin_color = $hex;
+        $active_map_cfg = $cfg;
         break;
     }
 }
+$pin_color = $active_map_cfg['color'];
 
-// Se não houver mapa personalizado, resolver automaticamente com base no hotel atual
-if ( empty( $final_map_src ) ) {
-    $hotel_map_defaults = array(
-        'porto-santo' => 'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d45000!2d-16.3626213!3d33.0374124!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-PT!2spt!4v1700000000000',
-        'funchal'     => 'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d350000!2d-16.9307499!3d32.6383247!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-PT!2spt!4v1700000000000',
-        'suites'      => 'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d45000!2d-16.3608198!3d33.0373331!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-PT!2spt!4v1700000000000',
-        'village'     => 'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d45000!2d-16.3680087!3d33.0364243!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-PT!2spt!4v1700000000000',
-        'residence'   => 'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d350000!2d-16.9424958!3d32.6374392!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-PT!2spt!4v1700000000000',
-        'residences'  => 'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d350000!2d-16.9424958!3d32.6374392!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-PT!2spt!4v1700000000000',
-    );
-
-    foreach ( $hotel_map_defaults as $key => $url ) {
-        if ( false !== strpos( $hotel_slug, $key ) || ( isset( $hotel_name ) && false !== stripos( (string) $hotel_name, $key ) ) || false !== stripos( (string) $hotel_sub, $key ) ) {
-            $final_map_src = $url;
-            break;
-        }
-    }
-
-    if ( empty( $final_map_src ) ) {
-        if ( ! empty( $morada ) ) {
-            $clean_addr = trim( preg_replace( '/\s+/', ' ', str_replace( array( "\r", "\n" ), ' ', $morada ) ) );
-            $final_map_src = 'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d45000!2d-16.3626213!3d33.0374124!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-PT!2spt!4v1700000000000';
-        } else {
-            $final_map_src = 'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d45000!2d-16.3626213!3d33.0374124!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-PT!2spt!4v1700000000000';
-        }
+// Só usar iframe externo se for explicitamente um embed do Snazzy Maps configurado no backoffice
+$snazzy_iframe_src = '';
+if ( ! empty( $mapa_embed ) && false !== stripos( $mapa_embed, 'snazzymaps.com/embed' ) ) {
+    if ( preg_match( '/src=["\']([^"\']+)["\']/', $mapa_embed, $m ) ) {
+        $snazzy_iframe_src = $m[1];
+    } else {
+        $snazzy_iframe_src = trim( $mapa_embed );
     }
 }
-$final_map_src = str_replace( '!1d16000!', '!1d350000!', $final_map_src );
 
 
 // ACF Fields: Formulário
@@ -140,22 +180,31 @@ $privacy_url = function_exists( 'vbl_get_privacy_policy_url' ) ? vbl_get_privacy
   <section class="w-full py-20 lg:py-32 bg-white">
     <div class="max-w-[1920px] mx-auto px-6 xl:px-[8.33%] grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">
       
-      <!-- Coluna Esquerda: Mapa Interativo (Google Maps) -->
+      <!-- Coluna Esquerda: Mapa Interativo (Snazzy Maps Style) -->
       <div class="lg:col-span-6 relative flex justify-start w-full">
-        <div class="relative w-full h-[380px] sm:h-[480px] lg:h-[600px] max-w-full rounded-sm overflow-hidden shadow-xs bg-[#eef2f5]">
-          <iframe 
-            src="<?php echo esc_url( $final_map_src ); ?>" 
-            width="100%" 
-            height="100%" 
-            class="w-full h-full border-0 min-h-[380px] sm:min-h-[480px] lg:min-h-[600px]" 
-            allowfullscreen="" 
-            loading="lazy" 
-            referrerpolicy="no-referrer-when-downgrade" 
-            title="Mapa de Localização do Hotel">
-          </iframe>
-          <svg width="33" height="40" viewBox="0 0 33 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="position:absolute;top:50%;left:50%;width:35.2px;height:auto;transform:translate(-50%,-100%);pointer-events:none;z-index:5;filter:drop-shadow(0 3px 4px rgba(0,0,0,.35));">
-            <path d="M33 16.3636C33 29.0909 16.5 40 16.5 40C16.5 40 0 29.0909 0 16.3636C0 12.0237 1.73839 7.86158 4.83274 4.7928C7.92709 1.72402 12.1239 0 16.5 0C20.8761 0 25.0729 1.72402 28.1673 4.7928C31.2616 7.86158 33 12.0237 33 16.3636ZM22 16.3636C22 19.3761 19.5376 21.8182 16.5 21.8182C13.4624 21.8182 11 19.3761 11 16.3636C11 13.3512 13.4624 10.9091 16.5 10.9091C19.5376 10.9091 22 13.3512 22 16.3636Z" fill-rule="evenodd" clip-rule="evenodd" fill="<?php echo esc_attr( $pin_color ); ?>"/>
-          </svg>
+        <div class="relative w-full h-[380px] sm:h-[480px] lg:h-[600px] max-w-full rounded-sm overflow-hidden shadow-xs bg-[#92d4e8]">
+          <?php if ( ! empty( $snazzy_iframe_src ) ) : ?>
+            <iframe 
+              src="<?php echo esc_url( $snazzy_iframe_src ); ?>" 
+              width="100%" 
+              height="100%" 
+              class="w-full h-full border-0 min-h-[380px] sm:min-h-[480px] lg:min-h-[600px]" 
+              allowfullscreen="" 
+              loading="lazy" 
+              title="Mapa de Localização do Hotel">
+            </iframe>
+          <?php else : ?>
+            <div id="vblHotelMicrositeMapa"
+              class="vbl-snazzy-map w-full h-full min-h-[380px] sm:min-h-[480px] lg:min-h-[600px] z-10"
+              data-lat="<?php echo esc_attr( $active_map_cfg['lat'] ); ?>"
+              data-lng="<?php echo esc_attr( $active_map_cfg['lng'] ); ?>"
+              data-view-lat="<?php echo esc_attr( $active_map_cfg['viewLat'] ); ?>"
+              data-view-lng="<?php echo esc_attr( $active_map_cfg['viewLng'] ); ?>"
+              data-zoom="<?php echo esc_attr( $active_map_cfg['zoom'] ); ?>"
+              data-pin-color="<?php echo esc_attr( $pin_color ); ?>"
+              data-gmaps-url="<?php echo esc_url( $active_map_cfg['gmaps'] ); ?>"
+              aria-label="Mapa de Localização do Hotel"></div>
+          <?php endif; ?>
         </div>
       </div>
 

@@ -102,13 +102,28 @@ function vbl_enqueue_assets() {
         $style_ver
     );
 
+    // Leaflet CSS & JS (for Snazzy Maps interactive hotel maps)
+    wp_enqueue_style(
+        'vbl-leaflet-css',
+        'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css',
+        array(),
+        '1.9.4'
+    );
+    wp_enqueue_script(
+        'vbl-leaflet-js',
+        'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js',
+        array(),
+        '1.9.4',
+        true
+    );
+
     // Main JS
     $main_js_path = VBL_DIR . '/assets/js/main.js';
     $main_js_ver  = file_exists( $main_js_path ) ? filemtime( $main_js_path ) : VBL_VERSION;
     wp_enqueue_script(
         'vbl-main',
         VBL_URI . '/assets/js/main.js',
-        array(),
+        array( 'vbl-leaflet-js' ),
         $main_js_ver,
         true
     );

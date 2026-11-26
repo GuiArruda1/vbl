@@ -235,26 +235,71 @@ if (!empty($acf_hoteis) && is_array($acf_hoteis)) {
   );
 }
 
-// Google bloqueia iframes que não sejam /maps/embed — substitui valores antigos guardados na BD
-$vbl_osm_fallback = array(
-  'FUNCHAL'   => 'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d350000!2d-16.9307499!3d32.6383247!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-PT!2spt!4v1700000000000',
-  'SUITES'    => 'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d45000!2d-16.3608198!3d33.0373331!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-PT!2spt!4v1700000000000',
-  'VILLAGE'   => 'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d45000!2d-16.3680087!3d33.0364243!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-PT!2spt!4v1700000000000',
-  'RESIDENCE' => 'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d350000!2d-16.9424958!3d32.6374392!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-PT!2spt!4v1700000000000',
-  'DEFAULT'   => 'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d45000!2d-16.3626213!3d33.0374124!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-PT!2spt!4v1700000000000',
+// Coordenadas e vista Snazzy Maps para cada hotel (Main Site usa o pino default #BC945B de marker_map.svg)
+$vbl_snazzy_coords = array(
+  'PORTO SANTO' => array(
+    'lat'     => 33.0374124,
+    'lng'     => -16.3626213,
+    'viewLat' => 33.065,
+    'viewLng' => -16.345,
+    'zoom'    => 12,
+    'color'   => '#BC945B',
+    'gmaps'   => 'https://maps.app.goo.gl/KZm4M6QqEMV1xQwk9',
+  ),
+  'FUNCHAL' => array(
+    'lat'     => 32.6383247,
+    'lng'     => -16.9307499,
+    'viewLat' => 32.78,
+    'viewLng' => -16.72,
+    'zoom'    => 9,
+    'color'   => '#BC945B',
+    'gmaps'   => 'https://maps.app.goo.gl/MsBGLtNK66T3PASG6',
+  ),
+  'SUITES' => array(
+    'lat'     => 33.0373331,
+    'lng'     => -16.3608198,
+    'viewLat' => 33.065,
+    'viewLng' => -16.345,
+    'zoom'    => 12,
+    'color'   => '#BC945B',
+    'gmaps'   => 'https://maps.app.goo.gl/gFFMhBN4CRXw8LCH9',
+  ),
+  'VILLAGE' => array(
+    'lat'     => 33.0364243,
+    'lng'     => -16.3680087,
+    'viewLat' => 33.065,
+    'viewLng' => -16.345,
+    'zoom'    => 12,
+    'color'   => '#BC945B',
+    'gmaps'   => 'https://maps.app.goo.gl/UyrSut4PwSrZq1xVA',
+  ),
+  'RESIDENCE' => array(
+    'lat'     => 32.6374392,
+    'lng'     => -16.9424958,
+    'viewLat' => 32.78,
+    'viewLng' => -16.72,
+    'zoom'    => 9,
+    'color'   => '#BC945B',
+    'gmaps'   => 'https://maps.app.goo.gl/9PeEckMgTvfzmNiU6',
+  ),
 );
+
 foreach ($hoteis_carousel as $k => $h) {
-  $m = isset($h['mapa']) ? $h['mapa'] : '';
-  if (strpos($m, 'google.com/maps/embed') === false && strpos($m, 'openstreetmap.org') === false) {
-    $t = strtoupper(isset($h['title']) ? $h['title'] : '');
-    $new = $vbl_osm_fallback['DEFAULT'];
-    foreach (array('FUNCHAL','SUITES','VILLAGE','RESIDENCE') as $key) {
-      if (strpos($t, $key) !== false) { $new = $vbl_osm_fallback[$key]; break; }
+  $t = strtoupper(isset($h['title']) ? $h['title'] : '');
+  $coords = $vbl_snazzy_coords['PORTO SANTO'];
+  foreach ($vbl_snazzy_coords as $key => $cfg) {
+    if (strpos($t, $key) !== false) {
+      $coords = $cfg;
+      break;
     }
-    $hoteis_carousel[$k]['mapa'] = $new;
-  } else {
-    $hoteis_carousel[$k]['mapa'] = str_replace('!1d16000!', '!1d350000!', $m);
   }
+  $hoteis_carousel[$k]['lat']     = $coords['lat'];
+  $hoteis_carousel[$k]['lng']     = $coords['lng'];
+  $hoteis_carousel[$k]['viewLat'] = $coords['viewLat'];
+  $hoteis_carousel[$k]['viewLng'] = $coords['viewLng'];
+  $hoteis_carousel[$k]['zoom']    = $coords['zoom'];
+  $hoteis_carousel[$k]['color']   = $coords['color'];
+  $hoteis_carousel[$k]['gmaps']   = $coords['gmaps'];
 }
 
 $first_hotel = $hoteis_carousel[0];
@@ -342,14 +387,19 @@ $first_hotel = $hoteis_carousel[0];
 
       </div>
 
-      <!-- Coluna Direita: Mapa Interativo (Google Maps) -->
+      <!-- Coluna Direita: Mapa Interativo (Snazzy Maps Style) -->
       <div
-        class="lg:col-span-6 h-full min-h-[350px] sm:min-h-[450px] lg:min-h-[600px] overflow-hidden rounded-sm relative bg-bege flex items-center justify-center">
-        <iframe id="vblHotelMapa" src="<?php echo esc_url($first_hotel['mapa']); ?>" width="100%" height="100%"
-          class="w-full h-full border-0 min-h-[350px] sm:min-h-[450px] lg:min-h-[600px] transition-opacity duration-300"
-          allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
-          title="Mapa de Localização do Hotel"></iframe>
-        <img src="<?php echo esc_url( vbl_img( 'marker_map.svg' ) ); ?>" alt="" aria-hidden="true" width="33" height="40" style="position:absolute;top:50%;left:50%;width:35.2px;height:auto;transform:translate(-50%,-100%);pointer-events:none;z-index:5;filter:drop-shadow(0 3px 4px rgba(0,0,0,.35));">
+        class="lg:col-span-6 h-full min-h-[350px] sm:min-h-[450px] lg:min-h-[600px] overflow-hidden rounded-sm relative bg-[#92d4e8] flex items-center justify-center">
+        <div id="vblHotelMapa"
+          class="vbl-snazzy-map w-full h-full min-h-[350px] sm:min-h-[450px] lg:min-h-[600px] transition-opacity duration-300 z-10"
+          data-lat="<?php echo esc_attr($first_hotel['lat']); ?>"
+          data-lng="<?php echo esc_attr($first_hotel['lng']); ?>"
+          data-view-lat="<?php echo esc_attr($first_hotel['viewLat']); ?>"
+          data-view-lng="<?php echo esc_attr($first_hotel['viewLng']); ?>"
+          data-zoom="<?php echo esc_attr($first_hotel['zoom']); ?>"
+          data-pin-color="<?php echo esc_attr($first_hotel['color']); ?>"
+          data-gmaps-url="<?php echo esc_url($first_hotel['gmaps']); ?>"
+          aria-label="Mapa de Localização do Hotel"></div>
       </div>
 
     </div>

@@ -753,6 +753,73 @@
   })();
 
   /* ========================================
+     Snazzy Maps Style — Interactive Hotel Maps
+     ======================================== */
+  var vblSnazzyTileUrl =
+    'https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}&hl=pt-PT&scale=2&apistyle=' +
+    's.t%3A6%7Cs.e%3Ag%7Cp.c%3A%23ff92d4e8%2C' +
+    's.t%3A2%7Cs.e%3Al%7Cp.v%3Aoff%2C' +
+    's.t%3A3%7Cs.e%3Al.i%7Cp.v%3Aoff%2C' +
+    's.t%3A4%7Cp.v%3Aoff';
+
+  function vblCreateSnazzyPin(color) {
+    var fill = color || '#BC945B';
+    return L.divIcon({
+      className: 'vbl-snazzy-pin-icon',
+      html:
+        '<svg width="35.2" height="42.6" viewBox="0 0 33 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="filter:drop-shadow(0 3px 5px rgba(0,0,0,0.28));display:block;cursor:pointer;">' +
+        '<path d="M33 16.3636C33 29.0909 16.5 40 16.5 40C16.5 40 0 29.0909 0 16.3636C0 12.0237 1.73839 7.86158 4.83274 4.7928C7.92709 1.72402 12.1239 0 16.5 0C20.8761 0 25.0729 1.72402 28.1673 4.7928C31.2616 7.86158 33 12.0237 33 16.3636ZM22 16.3636C22 19.3761 19.5376 21.8182 16.5 21.8182C13.4624 21.8182 11 19.3761 11 16.3636C11 13.3512 13.4624 10.9091 16.5 10.9091C19.5376 10.9091 22 13.3512 22 16.3636Z" fill-rule="evenodd" clip-rule="evenodd" fill="' +
+        fill +
+        '"/>' +
+        '<circle cx="16.5" cy="16.3636" r="5.5" fill="#ffffff"/>' +
+        '</svg>',
+      iconSize: [35.2, 42.6],
+      iconAnchor: [17.6, 42.6],
+    });
+  }
+
+  function vblInitSnazzyMap(el) {
+    if (!el || typeof L === 'undefined' || el._vblLeafletMap) return null;
+    var lat = parseFloat(el.getAttribute('data-lat')) || 33.0374124;
+    var lng = parseFloat(el.getAttribute('data-lng')) || -16.3626213;
+    var viewLat = parseFloat(el.getAttribute('data-view-lat')) || lat;
+    var viewLng = parseFloat(el.getAttribute('data-view-lng')) || lng;
+    var zoom = parseInt(el.getAttribute('data-zoom'), 10) || 12;
+    var pinColor = el.getAttribute('data-pin-color') || '#BC945B';
+    var gmapsUrl = el.getAttribute('data-gmaps-url') || '';
+
+    var map = L.map(el, {
+      zoomControl: true,
+      attributionControl: false,
+      scrollWheelZoom: false,
+    }).setView([viewLat, viewLng], zoom);
+
+    L.tileLayer(vblSnazzyTileUrl, {
+      maxZoom: 20,
+      minZoom: 6,
+    }).addTo(map);
+
+    var marker = L.marker([lat, lng], {
+      icon: vblCreateSnazzyPin(pinColor),
+    }).addTo(map);
+
+    marker.on('click', function () {
+      var url = el.getAttribute('data-gmaps-url') || gmapsUrl;
+      if (url) {
+        window.open(url, '_blank', 'noopener');
+      }
+    });
+
+    el._vblLeafletMap = map;
+    el._vblLeafletMarker = marker;
+    return { map: map, marker: marker };
+  }
+
+  document.querySelectorAll('.vbl-snazzy-map').forEach(function (el) {
+    vblInitSnazzyMap(el);
+  });
+
+  /* ========================================
      Contact Page — Interactive Hotel Carousel
      ======================================== */
   (function () {
@@ -795,7 +862,26 @@
         if (telefoneEl && item.telefone) telefoneEl.textContent = item.telefone;
         if (emailEl && item.email) emailEl.textContent = item.email;
         if (fotoEl && item.foto) fotoEl.src = item.foto;
-        if (mapaEl && item.mapa) mapaEl.src = item.mapa;
+
+        if (mapaEl) {
+          if (mapaEl._vblLeafletMap && item.lat && item.lng) {
+            var vLat = item.viewLat || item.lat;
+            var vLng = item.viewLng || item.lng;
+            var z = item.zoom || 12;
+            mapaEl._vblLeafletMap.setView([vLat, vLng], z, { animate: false });
+            if (mapaEl._vblLeafletMarker) {
+              mapaEl._vblLeafletMarker.setLatLng([item.lat, item.lng]);
+              if (item.color) {
+                mapaEl._vblLeafletMarker.setIcon(vblCreateSnazzyPin(item.color));
+              }
+            }
+            if (item.gmaps) {
+              mapaEl.setAttribute('data-gmaps-url', item.gmaps);
+            }
+          } else if (mapaEl.tagName === 'IFRAME' && item.mapa) {
+            mapaEl.src = item.mapa;
+          }
+        }
 
         if (titleEl) titleEl.style.opacity = '1';
         if (infoBlock) infoBlock.style.opacity = '1';
