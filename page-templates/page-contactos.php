@@ -42,7 +42,7 @@ $icon_email = vbl_img('contactos/icon-email.svg');
           <?php echo wp_kses_post($hero_title); ?>
         </h1>
         <!-- Contactos lista -->
-        <div class="font-body flex flex-col gap-6 text-preto">
+        <div class="font-body flex flex-col gap-6 text-preto lg:ml-12 xl:ml-16">
           <div class="flex gap-4 items-start">
             <img src="<?php echo esc_url($icon_morada); ?>" alt="" aria-hidden="true" class="w-12 h-12 flex-shrink-0">
             <div>
@@ -100,7 +100,7 @@ $arvore_form = vbl_img('contactos/arvore-form.svg');
         <h2 class="font-display text-[32px] md:text-[48px] lg:text-[64px] leading-tight text-verde uppercase mb-6">
           <?php echo wp_kses_post($form_title); ?>
         </h2>
-        <p class="font-body font-light text-[14px] lg:text-[16px] leading-relaxed text-preto/80 max-w-[480px]">
+        <p class="font-body font-light text-[14px] lg:text-[16px] leading-relaxed text-preto/80 max-w-[480px] lg:ml-12 xl:ml-16">
           <?php echo esc_html($form_desc); ?>
         </p>
       </div>

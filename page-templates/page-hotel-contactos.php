@@ -224,8 +224,8 @@ $privacy_url = function_exists( 'vbl_get_privacy_policy_url' ) ? vbl_get_privacy
           <?php echo wp_kses_post( $hotel_tit ); ?>
         </h1>
 
-        <!-- Caixas de Contacto -->
-        <div class="flex flex-col gap-6 w-full max-w-[500px] font-body">
+        <!-- Caixas de Contacto Indentadas como no Design -->
+        <div class="flex flex-col gap-6 w-full max-w-[500px] lg:ml-12 xl:ml-16 font-body">
           
           <!-- Morada -->
           <div class="flex items-start gap-4">
@@ -369,8 +369,8 @@ $privacy_url = function_exists( 'vbl_get_privacy_policy_url' ) ? vbl_get_privacy
           <?php echo wp_kses_post( $form_tit ); ?>
         </h2>
 
-        <!-- Parágrafos -->
-        <div class="flex flex-col gap-5 max-w-[440px] font-body font-light text-[13px] xl:text-[14px] leading-relaxed text-[#333333]">
+        <!-- Parágrafos Indentados como no Design -->
+        <div class="flex flex-col gap-5 max-w-[440px] lg:ml-12 xl:ml-16 font-body font-light text-[13px] xl:text-[14px] leading-relaxed text-[#333333]">
           <?php if ( ! empty( $form_p1 ) ) : ?>
             <p><?php echo nl2br( esc_html( $form_p1 ) ); ?></p>
           <?php endif; ?>

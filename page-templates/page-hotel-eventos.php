@@ -105,8 +105,8 @@ $privacy_url  = function_exists( 'vbl_get_privacy_policy_url' ) ? vbl_get_privac
           <?php echo wp_kses_post( $apres_title ); ?>
         </h1>
 
-        <!-- Parágrafos -->
-        <div class="flex flex-col gap-6 max-w-[560px] font-body font-light text-[14px] lg:text-[15px] xl:text-[16px] leading-relaxed text-[#333333]">
+        <!-- Parágrafos de Apresentação Indentados como no Design -->
+        <div class="flex flex-col gap-6 max-w-[480px] xl:max-w-[520px] lg:ml-12 xl:ml-16 font-body font-light text-[14px] lg:text-[15px] xl:text-[16px] leading-relaxed text-[#333333]">
           <p>
             <?php echo nl2br( esc_html( $apres_p1 ) ); ?>
           </p>
@@ -169,20 +169,23 @@ $privacy_url  = function_exists( 'vbl_get_privacy_policy_url' ) ? vbl_get_privac
           <?php echo wp_kses_post( $planta_title ); ?>
         </h2>
 
-        <!-- Descrição -->
-        <p class="font-body font-light text-[14px] lg:text-[15px] xl:text-[16px] leading-relaxed text-[#333333] mb-10 max-w-[500px]">
-          <?php echo nl2br( esc_html( $planta_desc ) ); ?>
-        </p>
+        <!-- Bloco de Conteúdo Indentado -->
+        <div class="lg:ml-12 xl:ml-16 flex flex-col items-start">
+          <!-- Descrição -->
+          <p class="font-body font-light text-[14px] lg:text-[15px] xl:text-[16px] leading-relaxed text-[#333333] mb-10 max-w-[500px]">
+            <?php echo nl2br( esc_html( $planta_desc ) ); ?>
+          </p>
 
-        <!-- Botão Consultar Planta -->
-        <?php if ( ! empty( $planta_url ) ) : ?>
-        <a href="<?php echo esc_url( $planta_url ); ?>" target="_blank" rel="noopener" class="vbl-btn-microsite">
-          <span><?php echo esc_html( $planta_btn ); ?></span>
-          <svg viewBox="0 0 12 12" fill="none">
-            <path d="M1 11L11 1M11 1H3.5M11 1V8.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </a>
-        <?php endif; ?>
+          <!-- Botão Consultar Planta -->
+          <?php if ( ! empty( $planta_url ) ) : ?>
+          <a href="<?php echo esc_url( $planta_url ); ?>" target="_blank" rel="noopener" class="vbl-btn-microsite">
+            <span><?php echo esc_html( $planta_btn ); ?></span>
+            <svg viewBox="0 0 12 12" fill="none">
+              <path d="M1 11L11 1M11 1H3.5M11 1V8.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+          <?php endif; ?>
+        </div>
 
       </div>
 

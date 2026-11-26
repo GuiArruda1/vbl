@@ -95,8 +95,8 @@ if ( empty( $restaurantes_list ) || ! is_array( $restaurantes_list ) ) {
           <?php echo wp_kses_post( $apres_title ); ?>
         </h1>
 
-        <!-- Parágrafos -->
-        <div class="flex flex-col gap-6 max-w-[560px] font-body font-light text-[14px] lg:text-[15px] xl:text-[16px] leading-relaxed text-[#333333]">
+        <!-- Parágrafos de Apresentação Indentados como no Design -->
+        <div class="flex flex-col gap-6 max-w-[480px] xl:max-w-[520px] lg:ml-12 xl:ml-16 font-body font-light text-[14px] lg:text-[15px] xl:text-[16px] leading-relaxed text-[#333333]">
           <p>
             <?php echo nl2br( esc_html( $apres_p1 ) ); ?>
           </p>
