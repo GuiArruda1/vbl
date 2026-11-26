@@ -151,6 +151,16 @@ if ( empty( $restaurantes_list ) || ! is_array( $restaurantes_list ) ) {
             $sub_label  = ! empty( $item['subtitle'] ) ? $item['subtitle'] : $rest_subtitle;
             $btn_url    = ! empty( $item['menu_url'] ) ? $item['menu_url'] : '#';
             $btn_label  = ! empty( $item['menu_label'] ) ? $item['menu_label'] : 'CONSULTAR MENU';
+            $thumb_img = ! empty( $item['thumb'] ) ? $item['thumb'] : '';
+            $thumb_id  = ! empty( $item['thumb_id'] ) ? (int) $item['thumb_id'] : 0;
+            if ( ! empty( $thumb_img ) && function_exists( 'vbl_get_highres_image_url' ) ) {
+                $thumb_img = vbl_get_highres_image_url( $thumb_img, $thumb_id );
+            }
+            $main_img  = ! empty( $item['image'] ) ? $item['image'] : '';
+            $main_id   = ! empty( $item['image_id'] ) ? (int) $item['image_id'] : 0;
+            if ( ! empty( $main_img ) && function_exists( 'vbl_get_highres_image_url' ) ) {
+                $main_img = vbl_get_highres_image_url( $main_img, $main_id );
+            }
         ?>
         <div class="vbl-rest-slide <?php echo $is_act ? 'flex' : 'hidden'; ?> flex-col lg:flex-row items-center gap-12 lg:gap-16 xl:gap-24 transition-opacity duration-500" data-slide="<?php echo esc_attr( $index ); ?>">
           
@@ -189,9 +199,9 @@ if ( empty( $restaurantes_list ) || ! is_array( $restaurantes_list ) ) {
                 </button>
 
                 <!-- Miniatura -->
-                <?php if ( ! empty( $item['thumb'] ) ) : ?>
+                <?php if ( ! empty( $thumb_img ) ) : ?>
                 <div class="w-48 sm:w-56 aspect-[16/10] bg-gray-100 overflow-hidden shadow-sm">
-                  <img src="<?php echo esc_url( $item['thumb'] ); ?>" alt="Área do Restaurante" class="w-full h-full object-cover opacity-85">
+                  <img src="<?php echo esc_url( $thumb_img ); ?>" alt="Área do Restaurante" class="w-full h-full object-cover">
                 </div>
                 <?php endif; ?>
               </div>
@@ -213,7 +223,7 @@ if ( empty( $restaurantes_list ) || ! is_array( $restaurantes_list ) ) {
           <div class="w-full lg:w-[52%] relative flex items-center justify-end">
             
             <div class="w-full aspect-[4/3] max-w-[760px] bg-gray-100 shadow-sm relative overflow-hidden">
-              <img src="<?php echo esc_url( $item['image'] ); ?>" alt="<?php echo esc_attr( strip_tags( $item['title'] ) ); ?>" class="w-full h-full object-cover">
+              <img src="<?php echo esc_url( $main_img ); ?>" alt="<?php echo esc_attr( strip_tags( $item['title'] ) ); ?>" class="w-full h-full object-cover">
             </div>
 
             <!-- Seta Direita (Seguinte) -->

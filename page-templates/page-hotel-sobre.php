@@ -90,10 +90,15 @@ if ( is_array( $raw_instalacoes ) && ! empty( $raw_instalacoes ) ) {
         }
 
         $it_thumb = isset( $raw_item['thumb'] ) ? $raw_item['thumb'] : '';
+        $it_thumb_id = isset( $raw_item['thumb_id'] ) ? (int) $raw_item['thumb_id'] : 0;
         if ( is_array( $it_thumb ) ) {
             $it_thumb = isset( $it_thumb['url'] ) ? $it_thumb['url'] : '';
         } elseif ( is_numeric( $it_thumb ) ) {
-            $it_thumb = wp_get_attachment_image_url( (int) $it_thumb, 'medium' ) ?: '';
+            $it_thumb_id = (int) $it_thumb;
+            $it_thumb = wp_get_attachment_image_url( $it_thumb_id, 'full' ) ?: '';
+        }
+        if ( ! empty( $it_thumb ) && function_exists( 'vbl_get_highres_image_url' ) ) {
+            $it_thumb = vbl_get_highres_image_url( $it_thumb, $it_thumb_id );
         }
 
         if ( ! empty( $it_title ) || ! empty( $it_img ) ) {
@@ -291,8 +296,7 @@ if ( empty( $instalacoes ) ) {
               <!-- Miniatura da Próxima Área / Instalação Alinhada à Esquerda -->
               <?php if ( ! empty( $thumb_img ) ) : ?>
               <div class="lg:ml-12 xl:ml-16 vbl-slider-next-thumb w-full max-w-[300px] sm:max-w-[340px] xl:max-w-[380px] aspect-[4/3] bg-gray-100 overflow-hidden shadow-xs cursor-pointer group relative" title="Ver próxima instalação">
-                <img src="<?php echo esc_url( $thumb_img ); ?>" alt="Área adjacente" class="w-full h-full object-cover opacity-75 group-hover:opacity-100 transition-all duration-300">
-                <div class="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors"></div>
+                <img src="<?php echo esc_url( $thumb_img ); ?>" alt="Área adjacente" class="w-full h-full object-cover transition-all duration-300 group-hover:scale-105">
               </div>
               <?php endif; ?>
 
