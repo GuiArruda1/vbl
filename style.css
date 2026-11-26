@@ -465,11 +465,21 @@ body.admin-bar .header-fixo {
   color: var(--vbl-hotel-accent, #0da9a6) !important;
 }
 
-#headerHotel.is-scrolled nav svg,
+#headerHotel.is-scrolled nav .vbl-hotel-nav-link svg,
 #headerHotel.is-scrolled .vbl-hotels-trigger svg,
 #headerHotel.is-scrolled .vbl-lang-trigger svg,
 #headerHotel.is-scrolled .vbl-hotel-lang-mobile svg {
   color: #0d5257 !important;
+}
+
+#headerHotel.is-scrolled #vblMegaRoomsPrev svg,
+#headerHotel.is-scrolled #vblMegaRoomsNext svg {
+  color: var(--vbl-hotel-accent, #0da9a6) !important;
+}
+
+#headerHotel.is-scrolled #vblMegaRoomsPrev:hover svg,
+#headerHotel.is-scrolled #vblMegaRoomsNext:hover svg {
+  color: #ffffff !important;
 }
 
 #headerHotel.is-scrolled .vbl-hotel-btn-reservar {
