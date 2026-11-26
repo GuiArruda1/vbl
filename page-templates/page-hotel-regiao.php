@@ -81,7 +81,7 @@ if ( empty( $experiencias_list ) || ! is_array( $experiencias_list ) ) {
       
       <!-- Coluna Esquerda: Fotografia Vertical com Estrela do Mar -->
       <div class="lg:col-span-5 relative flex justify-start">
-        <div class="relative w-full max-w-[480px] aspect-[4/5] shadow-sm">
+        <div class="relative w-full lg:max-w-[480px] aspect-[4/3] lg:aspect-[4/5] shadow-sm">
           <img src="<?php echo esc_url( $apres_img ); ?>" alt="<?php echo esc_attr( strip_tags( $apres_title ) ); ?>" class="w-full h-full object-cover">
           
           <!-- Estrela do mar decorativa em outline ciano sobreposta -->

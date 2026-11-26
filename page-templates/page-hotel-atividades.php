@@ -149,7 +149,7 @@ if ( empty( $tratamentos_list ) || ! is_array( $tratamentos_list ) ) {
       
       <!-- Coluna Esquerda: Fotografia (Apresentação Atividades) -->
       <div class="lg:col-span-5 relative flex justify-start">
-        <div class="relative w-full max-w-[560px] xl:max-w-[620px] aspect-square shadow-sm">
+        <div class="relative w-full lg:max-w-[560px] xl:max-w-[620px] aspect-[4/3] lg:aspect-square shadow-sm">
           <img src="<?php echo esc_url( $apres_img ); ?>" alt="<?php echo esc_attr( strip_tags( $apres_title ) ); ?>" class="w-full h-full object-cover">
         </div>
       </div>
@@ -381,7 +381,7 @@ if ( empty( $tratamentos_list ) || ! is_array( $tratamentos_list ) ) {
 
             <!-- Lado Direito: Fotografia com Proporção do Design -->
             <div class="w-full lg:w-[50%] xl:w-[52%] flex items-center justify-center lg:justify-end">
-              <div class="relative w-full max-w-[560px] lg:max-w-[620px] xl:max-w-[680px] aspect-[1.12/1] bg-gray-100 shadow-sm overflow-hidden">
+              <div class="relative w-full lg:max-w-[620px] xl:max-w-[680px] aspect-[4/3] lg:aspect-[1.12/1] bg-gray-100 shadow-sm overflow-hidden">
                 <img src="<?php echo esc_url( $slide['image'] ); ?>" alt="<?php echo esc_attr( $slide['title'] ); ?>" class="w-full h-full object-cover">
               </div>
             </div>

@@ -156,7 +156,7 @@ if ( empty( $instalacoes ) ) {
       
       <!-- Coluna Esquerda: Imagem com Concha Sobreposta -->
       <div class="lg:col-span-5 relative flex justify-start">
-        <div class="relative w-full max-w-[480px] aspect-[500/550] shadow-sm">
+        <div class="relative w-full lg:max-w-[480px] aspect-[4/3] lg:aspect-[500/550] shadow-sm">
           <img src="<?php echo esc_url( $conheca_img ); ?>" alt="<?php echo esc_attr( strip_tags( $conheca_title ) ); ?>" class="w-full h-full object-cover">
           
           <!-- Concha Decorativa em Outline Ciano Sobreposta (Canto inferior direito) -->
