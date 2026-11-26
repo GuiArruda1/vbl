@@ -354,6 +354,9 @@ function vbl_get_mega_menu_hotels() {
                     $thumb = is_array( $acf_img ) ? ( $acf_img['url'] ?? '' ) : $acf_img;
                 }
             }
+            if ( empty( $thumb ) && function_exists( 'vbl_field' ) ) {
+                $thumb = vbl_field( 'vbl_hotel_hero_img', $p->ID, '' );
+            }
             if ( ! empty( $thumb ) && function_exists( 'vbl_get_highres_image_url' ) ) {
                 $thumb = vbl_get_highres_image_url( $thumb );
             }

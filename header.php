@@ -79,7 +79,7 @@ $lang_data      = function_exists( 'vbl_get_languages' ) ? vbl_get_languages() :
       ?>
       <a href="<?php echo esc_url( $hotel['url'] ); ?>" class="vbl-hotel-card group flex flex-col gap-6 min-w-0 flex-1 max-w-[320px]">
         <div class="w-full h-[200px] overflow-hidden bg-gray-100">
-          <img src="<?php echo esc_url( $hotel['img'] ); ?>" alt="<?php echo esc_attr( $hotel['name'] ); ?>" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+          <img src="<?php echo esc_url( $hotel['img'] ); ?>" alt="<?php echo esc_attr( $hotel['name'] ); ?>" loading="lazy" decoding="async" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
         </div>
         <div class="flex flex-col gap-2">
           <div class="flex items-center gap-4">
@@ -118,7 +118,7 @@ $lang_data      = function_exists( 'vbl_get_languages' ) ? vbl_get_languages() :
           foreach ( $mobile_hotels as $h ) : ?>
           <a href="<?php echo esc_url( $h['url'] ); ?>" class="flex items-center gap-4 rounded-sm overflow-hidden group" style="min-height:72px">
             <div class="w-[100px] md:w-[120px] h-[72px] flex-shrink-0 overflow-hidden bg-gray-100">
-              <img src="<?php echo esc_url( $h['img'] ); ?>" alt="<?php echo esc_attr( $h['name'] ); ?>" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+              <img src="<?php echo esc_url( $h['img'] ); ?>" alt="<?php echo esc_attr( $h['name'] ); ?>" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
             </div>
             <div class="flex flex-col gap-2 py-3 pr-4 min-w-0">
               <div class="flex items-center gap-4">
