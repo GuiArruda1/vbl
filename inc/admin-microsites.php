@@ -496,7 +496,7 @@ function vbl_get_hotel_secondary_color( $post_id = null ) {
             'madeira'     => '#FBEDD7',
             'suites'      => '#F5E8DF',
             'village'     => '#D9E3DC',
-            'residence'   => '#D9E3DC',
+            'residence'   => '#F2E7E2',
         );
         foreach ( $secondary_map as $key => $hex ) {
             if ( false !== strpos( $slug, $key ) ) {
