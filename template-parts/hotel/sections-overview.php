@@ -334,13 +334,27 @@ if ( empty( $exp_img_right ) ) {
             <img id="vblOverviewRoomImgNext" src="<?php echo esc_url( $initial_next_room['image'] ); ?>" alt="<?php echo esc_attr( strip_tags( $initial_next_room['title'] ) ); ?>" class="w-full h-full object-cover grayscale transition-opacity duration-300">
           </div>
 
-          <!-- Link -->
-          <a id="vblOverviewRoomBtn" href="<?php echo esc_url( $initial_room['url'] ); ?>" class="vbl-btn-microsite">
-            <span><?php echo esc_html( $rooms_btn_label ); ?></span>
-            <svg viewBox="0 0 12 12" fill="none">
-              <path d="M1 11L11 1H3.5M11 1V8.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </a>
+          <!-- Link + Mobile Arrows -->
+          <div class="flex items-center justify-between w-full gap-4">
+            <a id="vblOverviewRoomBtn" href="<?php echo esc_url( $initial_room['url'] ); ?>" class="vbl-btn-microsite">
+              <span><?php echo esc_html( $rooms_btn_label ); ?></span>
+              <svg viewBox="0 0 12 12" fill="none">
+                <path d="M1 11L11 1H3.5M11 1V8.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+            <div class="flex lg:hidden items-center gap-2.5">
+              <button type="button" class="vbl-overview-rooms-prev w-11 h-11 border border-[var(--vbl-hotel-accent)] text-[var(--vbl-hotel-accent)] bg-white flex items-center justify-center transition-colors cursor-pointer" aria-label="Quarto Anterior">
+                <svg class="w-5 h-5" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M28 15H1M1 15L14 2M1 15L14 28" />
+                </svg>
+              </button>
+              <button type="button" class="vbl-overview-rooms-next w-11 h-11 border border-[var(--vbl-hotel-accent)] text-[var(--vbl-hotel-accent)] bg-white flex items-center justify-center transition-colors cursor-pointer" aria-label="Próximo Quarto">
+                <svg class="w-5 h-5" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M1 15H28M28 15L15 2M28 15L15 28" />
+                </svg>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
