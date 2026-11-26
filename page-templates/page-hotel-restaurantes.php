@@ -171,38 +171,41 @@ if ( empty( $restaurantes_list ) || ! is_array( $restaurantes_list ) ) {
                 <?php echo wp_kses_post( $item['title'] ); ?>
               </h2>
 
-              <!-- Descrição -->
-              <div class="font-body font-light text-[14px] xl:text-[15px] leading-relaxed text-[#333333] mb-8 max-w-[460px]">
+              <!-- Descrição Indentada -->
+              <div class="lg:ml-12 xl:ml-16 font-body font-light text-[14px] xl:text-[15px] leading-relaxed text-[#333333] mb-8 max-w-[460px]">
                 <?php echo nl2br( esc_html( $item['description'] ) ); ?>
               </div>
             </div>
 
-            <!-- Miniatura com Seta Esquerda (Anterior) -->
-            <div class="flex items-center gap-6 mb-8">
-              <!-- Seta Esquerda -->
-              <button type="button" class="vbl-rest-prev w-12 h-12 border border-[var(--vbl-hotel-accent)] text-[var(--vbl-hotel-accent)] hover:bg-[var(--vbl-hotel-accent)] hover:text-white flex items-center justify-center transition-colors cursor-pointer flex-shrink-0" aria-label="Restaurante Anterior">
-                <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M28 15H1M1 15L14 2M1 15L14 28" />
-                </svg>
-              </button>
+            <!-- Bloco de Ações e Miniatura Indentado -->
+            <div class="lg:ml-12 xl:ml-16 flex flex-col items-start">
+              <!-- Miniatura com Seta Esquerda (Anterior) -->
+              <div class="flex items-center gap-6 mb-8">
+                <!-- Seta Esquerda -->
+                <button type="button" class="vbl-rest-prev w-12 h-12 border border-[var(--vbl-hotel-accent)] text-[var(--vbl-hotel-accent)] hover:bg-[var(--vbl-hotel-accent)] hover:text-white flex items-center justify-center transition-colors cursor-pointer flex-shrink-0" aria-label="Restaurante Anterior">
+                  <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M28 15H1M1 15L14 2M1 15L14 28" />
+                  </svg>
+                </button>
 
-              <!-- Miniatura -->
-              <?php if ( ! empty( $item['thumb'] ) ) : ?>
-              <div class="w-48 sm:w-56 aspect-[16/10] bg-gray-100 overflow-hidden shadow-sm">
-                <img src="<?php echo esc_url( $item['thumb'] ); ?>" alt="Área do Restaurante" class="w-full h-full object-cover opacity-85">
+                <!-- Miniatura -->
+                <?php if ( ! empty( $item['thumb'] ) ) : ?>
+                <div class="w-48 sm:w-56 aspect-[16/10] bg-gray-100 overflow-hidden shadow-sm">
+                  <img src="<?php echo esc_url( $item['thumb'] ); ?>" alt="Área do Restaurante" class="w-full h-full object-cover opacity-85">
+                </div>
+                <?php endif; ?>
               </div>
+
+              <!-- Botão Consultar Menu -->
+              <?php if ( ! empty( $btn_url ) ) : ?>
+              <a href="<?php echo esc_url( $btn_url ); ?>" target="_blank" rel="noopener" class="vbl-btn-microsite group/btn">
+                <span><?php echo esc_html( $btn_label ); ?></span>
+                <svg viewBox="0 0 12 12" fill="none">
+                  <path d="M1 11L11 1M11 1H3.5M11 1V8.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
               <?php endif; ?>
             </div>
-
-            <!-- Botão Consultar Menu -->
-            <?php if ( ! empty( $btn_url ) ) : ?>
-            <a href="<?php echo esc_url( $btn_url ); ?>" target="_blank" rel="noopener" class="vbl-btn-microsite group/btn">
-              <span><?php echo esc_html( $btn_label ); ?></span>
-              <svg viewBox="0 0 12 12" fill="none">
-                <path d="M1 11L11 1M11 1H3.5M11 1V8.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </a>
-            <?php endif; ?>
 
           </div>
 

@@ -282,15 +282,15 @@ if ( empty( $instalacoes ) ) {
                   <?php echo esc_html( $item_title ); ?>
                 </h2>
 
-                <!-- Descrição -->
-                <p class="font-body font-light text-[13px] sm:text-[14px] xl:text-[15px] leading-relaxed text-[#555555] mb-6 sm:mb-8 max-w-[440px]">
+                <!-- Descrição Indentada -->
+                <p class="font-body font-light text-[13px] sm:text-[14px] xl:text-[15px] leading-relaxed text-[#555555] mb-6 sm:mb-8 max-w-[440px] lg:ml-12 xl:ml-16">
                   <?php echo nl2br( esc_html( $item_desc ) ); ?>
                 </p>
               </div>
 
               <!-- Miniatura da Próxima Área / Instalação Alinhada à Esquerda -->
               <?php if ( ! empty( $thumb_img ) ) : ?>
-              <div class="vbl-slider-next-thumb w-full max-w-[300px] sm:max-w-[340px] xl:max-w-[380px] aspect-[4/3] bg-gray-100 overflow-hidden shadow-xs cursor-pointer group relative" title="Ver próxima instalação">
+              <div class="lg:ml-12 xl:ml-16 vbl-slider-next-thumb w-full max-w-[300px] sm:max-w-[340px] xl:max-w-[380px] aspect-[4/3] bg-gray-100 overflow-hidden shadow-xs cursor-pointer group relative" title="Ver próxima instalação">
                 <img src="<?php echo esc_url( $thumb_img ); ?>" alt="Área adjacente" class="w-full h-full object-cover opacity-75 group-hover:opacity-100 transition-all duration-300">
                 <div class="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors"></div>
               </div>
