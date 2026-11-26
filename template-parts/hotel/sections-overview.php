@@ -206,7 +206,7 @@ if ( empty( $exp_img_right ) ) {
             <?php echo esc_html( $sobre_subtitle ); ?>
           </span>
         </div>
-        <h2 class="font-display text-[48px] lg:text-[64px] xl:text-[76px] leading-[1] uppercase text-[#0d5257] mt-2">
+        <h2 class="font-display text-[32px] sm:text-[48px] lg:text-[64px] xl:text-[76px] leading-[1.05] uppercase text-[#0d5257] mt-2 break-words">
           <?php echo wp_kses_post( $sobre_title ); ?>
         </h2>
       </div>
@@ -253,7 +253,7 @@ if ( empty( $exp_img_right ) ) {
   
   <!-- Text Content -->
   <div class="relative z-10 max-w-[1920px] mx-auto px-6 xl:px-[8.33%] text-center">
-    <h2 class="font-display text-[40px] md:text-[56px] lg:text-[72px] xl:text-[80px] text-white uppercase leading-[1.1] shadow-black/20 drop-shadow-md">
+    <h2 class="font-display text-[32px] sm:text-[44px] md:text-[56px] lg:text-[72px] xl:text-[80px] text-white uppercase leading-[1.1] shadow-black/20 drop-shadow-md break-words">
       <?php if ( ! empty( $frase_line_1 ) ) : ?>
         <span class="block"><?php echo esc_html( $frase_line_1 ); ?></span>
       <?php endif; ?>
@@ -304,7 +304,7 @@ if ( empty( $exp_img_right ) ) {
               <?php echo esc_html( $initial_room['subtitle'] ); ?>
             </span>
           </div>
-          <h2 id="vblOverviewRoomTitle" class="font-display text-[40px] md:text-[52px] lg:text-[64px] leading-[1.05] text-[#0d5257] uppercase mb-8 transition-opacity duration-300">
+          <h2 id="vblOverviewRoomTitle" class="font-display text-[32px] sm:text-[42px] md:text-[52px] lg:text-[64px] leading-[1.05] text-[#0d5257] uppercase mb-8 transition-opacity duration-300 break-words">
             <a id="vblOverviewRoomTitleLink" href="<?php echo esc_url( $initial_room['url'] ); ?>">
               <?php echo wp_kses_post( $initial_room['title'] ); ?>
             </a>
@@ -463,7 +463,7 @@ if ( empty( $exp_img_right ) ) {
       </span>
     </div>
     <?php endif; ?>
-    <h2 class="font-display text-[40px] md:text-[56px] lg:text-[72px] xl:text-[90px] leading-[1.05] text-[#0d5257] uppercase">
+    <h2 class="font-display text-[32px] sm:text-[44px] md:text-[56px] lg:text-[72px] xl:text-[90px] leading-[1.05] text-[#0d5257] uppercase break-words">
       <?php echo wp_kses_post( $exp_title ); ?>
     </h2>
   </div>

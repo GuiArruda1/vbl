@@ -50,7 +50,7 @@ $accent_color = function_exists( 'vbl_get_hotel_accent_color' ) ? vbl_get_hotel_
     </div>
 
     <!-- Título Principal do Hotel (Display Serif Uppercase) -->
-    <h1 class="font-display text-[44px] sm:text-[60px] md:text-[76px] lg:text-[88px] xl:text-[100px] leading-[1.02] tracking-[2px] uppercase text-white font-normal max-w-[1400px]">
+    <h1 class="font-display text-[34px] sm:text-[60px] md:text-[76px] lg:text-[88px] xl:text-[100px] leading-[1.04] tracking-[1.5px] sm:tracking-[2px] uppercase text-white font-normal max-w-[1400px] break-words">
       <?php echo wp_kses_post( $title ); ?>
     </h1>
 
