@@ -293,9 +293,9 @@ if ( empty( $instalacoes ) ) {
                 </p>
               </div>
 
-              <!-- Miniatura da Próxima Área / Instalação Alinhada à Esquerda -->
+              <!-- Miniatura da Próxima Área / Instalação Alinhada à Esquerda (visível apenas no desktop) -->
               <?php if ( ! empty( $thumb_img ) ) : ?>
-              <div class="lg:ml-12 xl:ml-16 vbl-slider-next-thumb w-full max-w-[300px] sm:max-w-[340px] xl:max-w-[380px] aspect-[4/3] bg-gray-100 overflow-hidden shadow-xs cursor-pointer group relative" title="Ver próxima instalação">
+              <div class="hidden lg:block lg:ml-12 xl:ml-16 vbl-slider-next-thumb w-full max-w-[300px] sm:max-w-[340px] xl:max-w-[380px] aspect-[4/3] bg-gray-100 overflow-hidden shadow-xs cursor-pointer group relative" title="Ver próxima instalação">
                 <img src="<?php echo esc_url( $thumb_img ); ?>" alt="Área adjacente" class="w-full h-full object-cover opacity-75 group-hover:opacity-100 transition-all duration-300">
                 <div class="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors"></div>
               </div>
