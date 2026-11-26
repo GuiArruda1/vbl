@@ -167,7 +167,7 @@ $youtube   = vbl_opt( 'youtube', 'https://www.youtube.com/@VilaBaleiraHotels' );
 	<div id="backTopWrapper" class="fixed bottom-20 sm:bottom-6 xl:bottom-8 left-0 right-0 w-full pointer-events-none z-[999]">
 	  <div class="max-w-[1920px] mx-auto px-6 xl:px-12 flex justify-end w-full">
 	    <button id="backTop" type="button" aria-label="<?php echo esc_attr( function_exists( 'vbl__' ) ? vbl__( 'Voltar ao topo' ) : 'Voltar ao topo' ); ?>" class="group vbl-back-top w-10 h-10 border border-[var(--vbl-hotel-accent)] flex items-center justify-center bg-white/90 backdrop-blur-sm hover:bg-[var(--vbl-hotel-accent)] hover:border-[var(--vbl-hotel-accent)] cursor-pointer text-[var(--vbl-hotel-accent)] hover:text-white shadow-md pointer-events-auto" onclick="window.scrollTo({top:0,behavior:'smooth'})">
-	      <svg class="w-3.5 h-3.5 pointer-events-none" viewBox="0 0 16 16" fill="none"><polyline points="2,10 8,4 14,10" stroke="currentColor" stroke-width="2"/></svg>
+	      <svg class="w-5 h-5 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7" /></svg>
 	    </button>
 	  </div>
 	</div>
