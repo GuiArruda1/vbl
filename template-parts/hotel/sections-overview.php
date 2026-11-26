@@ -271,16 +271,16 @@ if ( empty( $exp_img_right ) ) {
 <section id="quartos" class="w-full py-20 lg:py-32 bg-white text-black overflow-hidden">
   <div class="max-w-[1426px] mx-auto px-4 sm:px-6 lg:px-8 relative">
     
-    <!-- Left Navigation Arrow (centered on main photo on mobile, floating over left border on desktop) -->
-    <button id="vblOverviewRoomsPrev" class="absolute left-6 sm:left-8 lg:left-8 lg:-translate-x-1/2 top-[44vw] sm:top-[42vw] lg:top-1/2 -translate-y-1/2 z-20 w-11 h-11 lg:w-16 lg:h-16 border border-[var(--vbl-hotel-accent)] text-[var(--vbl-hotel-accent)] bg-white/90 lg:bg-transparent flex items-center justify-center hover:bg-white hover:text-[var(--vbl-hotel-accent)] hover:border-[var(--vbl-hotel-accent)] transition-all duration-300 cursor-pointer shadow-sm" aria-label="Quarto Anterior">
-      <svg class="w-5 h-5 lg:w-7 lg:h-7" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Desktop Left Navigation Arrow (64x64, floating over left picture border, centered on horizontal midline) -->
+    <button id="vblOverviewRoomsPrev" type="button" class="vbl-overview-rooms-prev hidden lg:flex absolute left-8 -translate-x-1/2 top-1/2 -translate-y-1/2 z-20 w-16 h-16 border border-[var(--vbl-hotel-accent)] text-[var(--vbl-hotel-accent)] bg-transparent items-center justify-center hover:bg-white hover:text-[var(--vbl-hotel-accent)] hover:border-[var(--vbl-hotel-accent)] transition-all duration-300 cursor-pointer shadow-sm" aria-label="Quarto Anterior">
+      <svg class="w-7 h-7" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
         <path d="M28 15H1M1 15L14 2M1 15L14 28" />
       </svg>
     </button>
 
-    <!-- Right Navigation Arrow (centered on main photo on mobile, floating over right border on desktop) -->
-    <button id="vblOverviewRoomsNext" class="absolute right-6 sm:right-8 lg:right-8 lg:translate-x-1/2 top-[44vw] sm:top-[42vw] lg:top-1/2 -translate-y-1/2 z-20 w-11 h-11 lg:w-16 lg:h-16 border border-[var(--vbl-hotel-accent)] text-[var(--vbl-hotel-accent)] bg-white/90 lg:bg-transparent flex items-center justify-center hover:bg-white hover:text-[var(--vbl-hotel-accent)] hover:border-[var(--vbl-hotel-accent)] transition-all duration-300 cursor-pointer shadow-sm" aria-label="Próximo Quarto">
-      <svg class="w-5 h-5 lg:w-7 lg:h-7" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Desktop Right Navigation Arrow (64x64, floating over preview picture border, on exact same horizontal midline) -->
+    <button id="vblOverviewRoomsNext" type="button" class="vbl-overview-rooms-next hidden lg:flex absolute right-8 translate-x-1/2 top-1/2 -translate-y-1/2 z-20 w-16 h-16 border border-[var(--vbl-hotel-accent)] text-[var(--vbl-hotel-accent)] bg-transparent items-center justify-center hover:bg-white hover:text-[var(--vbl-hotel-accent)] hover:border-[var(--vbl-hotel-accent)] transition-all duration-300 cursor-pointer shadow-sm" aria-label="Próximo Quarto">
+      <svg class="w-7 h-7" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
         <path d="M1 15H28M28 15L15 2M28 15L15 28" />
       </svg>
     </button>
@@ -289,6 +289,17 @@ if ( empty( $exp_img_right ) ) {
       
       <!-- Left Side: Large Image -->
       <div class="relative w-full h-full flex items-center">
+        <!-- Mobile Arrows (centered directly over main room photo) -->
+        <button type="button" class="vbl-overview-rooms-prev lg:hidden absolute left-3 top-1/2 -translate-y-1/2 z-20 w-11 h-11 border border-[var(--vbl-hotel-accent)] text-[var(--vbl-hotel-accent)] bg-white/90 flex items-center justify-center transition-all duration-300 cursor-pointer shadow-sm" aria-label="Quarto Anterior">
+          <svg class="w-5 h-5" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M28 15H1M1 15L14 2M1 15L14 28" />
+          </svg>
+        </button>
+        <button type="button" class="vbl-overview-rooms-next lg:hidden absolute right-3 top-1/2 -translate-y-1/2 z-20 w-11 h-11 border border-[var(--vbl-hotel-accent)] text-[var(--vbl-hotel-accent)] bg-white/90 flex items-center justify-center transition-all duration-300 cursor-pointer shadow-sm" aria-label="Próximo Quarto">
+          <svg class="w-5 h-5" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M1 15H28M28 15L15 2M28 15L15 28" />
+          </svg>
+        </button>
         <a id="vblOverviewRoomImgLink" href="<?php echo esc_url( $initial_room['url'] ); ?>" class="block w-full aspect-[4/4.2] lg:aspect-auto lg:h-[682px] bg-gray-100 shadow-xl shadow-black/5 overflow-hidden group cursor-pointer" aria-label="Ver quarto">
           <img id="vblOverviewRoomImgMain" src="<?php echo esc_url( $initial_room['image'] ); ?>" alt="<?php echo esc_attr( strip_tags( $initial_room['title'] ) ); ?>" class="w-full h-full object-cover group-hover:scale-105 transition-all duration-500">
         </a>
@@ -345,8 +356,8 @@ if ( empty( $exp_img_right ) ) {
   (function() {
     function initOverviewRoomsSlider() {
       var dataEl = document.getElementById('vblOverviewRoomsData');
-      var prevBtn = document.getElementById('vblOverviewRoomsPrev');
-      var nextBtn = document.getElementById('vblOverviewRoomsNext');
+      var prevBtns = document.querySelectorAll('.vbl-overview-rooms-prev, #vblOverviewRoomsPrev');
+      var nextBtns = document.querySelectorAll('.vbl-overview-rooms-next, #vblOverviewRoomsNext');
       var imgMain = document.getElementById('vblOverviewRoomImgMain');
       var imgNext = document.getElementById('vblOverviewRoomImgNext');
       var titleEl = document.getElementById('vblOverviewRoomTitle');
@@ -356,7 +367,7 @@ if ( empty( $exp_img_right ) ) {
       var imgLink = document.getElementById('vblOverviewRoomImgLink');
       var titleLink = document.getElementById('vblOverviewRoomTitleLink');
 
-      if (!dataEl || !prevBtn || !nextBtn || !imgMain) return;
+      if (!dataEl || !prevBtns.length || !nextBtns.length || !imgMain) return;
 
       var slides = [];
       try {
@@ -419,16 +430,20 @@ if ( empty( $exp_img_right ) ) {
         }, 200);
       }
 
-      nextBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        currentIndex = (currentIndex + 1) % slides.length;
-        renderSlide(currentIndex);
+      nextBtns.forEach(function(nextBtn) {
+        nextBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          currentIndex = (currentIndex + 1) % slides.length;
+          renderSlide(currentIndex);
+        });
       });
 
-      prevBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        currentIndex = (currentIndex - 1 + slides.length) % slides.length;
-        renderSlide(currentIndex);
+      prevBtns.forEach(function(prevBtn) {
+        prevBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+          renderSlide(currentIndex);
+        });
       });
 
       // Clicking preview card advances to next room
