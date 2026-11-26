@@ -219,6 +219,10 @@ $is_contactos_active    = (strpos($current_template, 'hotel-contactos') !== fals
                         if (empty($rimg)) {
                           $rimg = vbl_img('hoteis/porto-santo-520x400.jpg');
                         }
+                        $rcat = function_exists('vbl_field') ? vbl_field('vbl_quarto_categoria', $rpost->ID) : get_post_meta($rpost->ID, 'vbl_quarto_categoria', true);
+                        if (empty($rcat)) {
+                          $rcat = function_exists('vbl__') ? vbl__('QUARTO') : 'QUARTO';
+                        }
                         ?>
                         <a href="<?php echo esc_url(get_permalink($rpost->ID)); ?>" class="group/room flex flex-col gap-4 <?php echo $has_many_rooms ? 'w-[280px] flex-shrink-0' : ''; ?>">
                           <div class="w-full aspect-[4/3] overflow-hidden bg-gray-100">
@@ -231,7 +235,7 @@ $is_contactos_active    = (strpos($current_template, 'hotel-contactos') !== fals
                           <div class="flex flex-col gap-1.5 mt-2">
                             <div class="flex items-center gap-3">
                               <div class="w-6 h-px bg-[var(--vbl-hotel-accent)]"></div>
-                              <span class="font-body text-[8px] tracking-[1.5px] uppercase text-[var(--vbl-hotel-accent)]">QUARTO</span>
+                              <span class="font-body text-[8px] tracking-[1.5px] uppercase text-[var(--vbl-hotel-accent)]"><?php echo esc_html($rcat); ?></span>
                             </div>
                             <h3
                               class="font-display text-[15px] xl:text-[16px] text-[#0d5257] uppercase leading-tight group-hover/room:text-[var(--vbl-hotel-accent)] transition-colors">
@@ -540,6 +544,10 @@ $is_contactos_active    = (strpos($current_template, 'hotel-contactos') !== fals
                 if (empty($mr_img)) {
                   $mr_img = vbl_img('hoteis/porto-santo-520x400.jpg');
                 }
+                $mrcat = function_exists('vbl_field') ? vbl_field('vbl_quarto_categoria', $mr_post->ID) : get_post_meta($mr_post->ID, 'vbl_quarto_categoria', true);
+                if (empty($mrcat)) {
+                  $mrcat = function_exists('vbl__') ? vbl__('QUARTO') : 'QUARTO';
+                }
                 ?>
                 <a href="<?php echo esc_url(get_permalink($mr_post->ID)); ?>"
                   class="flex items-center gap-4 rounded-sm overflow-hidden group" style="min-height:72px">
@@ -554,7 +562,7 @@ $is_contactos_active    = (strpos($current_template, 'hotel-contactos') !== fals
                     <div class="flex items-center gap-3">
                       <div class="w-6 h-px bg-[var(--vbl-hotel-accent)]"></div>
                       <span
-                        class="font-body text-[8px] md:text-[9px] tracking-[1px] uppercase text-[var(--vbl-hotel-accent)] font-normal"><?php echo esc_html( function_exists( 'vbl__' ) ? vbl__( 'QUARTO' ) : 'QUARTO' ); ?></span>
+                        class="font-body text-[8px] md:text-[9px] tracking-[1px] uppercase text-[var(--vbl-hotel-accent)] font-normal"><?php echo esc_html($mrcat); ?></span>
                     </div>
                     <span
                       class="font-display text-[15px] md:text-[17px] text-[#0d5257] uppercase leading-tight"><?php echo esc_html(get_the_title($mr_post->ID)); ?></span>
