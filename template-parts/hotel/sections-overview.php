@@ -329,9 +329,9 @@ if ( empty( $exp_img_right ) ) {
             <?php echo esc_html( $initial_room['description'] ); ?>
           </p>
 
-          <!-- Next Slide Preview (Extending to right border where the right arrow sits) -->
-          <div class="relative w-full aspect-[16/10] max-h-[300px] mb-8 bg-gray-100 overflow-hidden opacity-40 hover:opacity-75 transition-opacity duration-300 cursor-pointer" title="Ver próximo quarto">
-            <img id="vblOverviewRoomImgNext" src="<?php echo esc_url( $initial_next_room['image'] ); ?>" alt="<?php echo esc_attr( strip_tags( $initial_next_room['title'] ) ); ?>" class="w-full h-full object-cover grayscale transition-opacity duration-300">
+          <!-- Next Slide Preview (Full color on mobile, subtle grayscale preview on desktop) -->
+          <div class="relative w-full aspect-[16/10] max-h-[300px] mb-8 bg-gray-100 overflow-hidden lg:opacity-40 lg:hover:opacity-75 transition-opacity duration-300 cursor-pointer" title="Ver próximo quarto">
+            <img id="vblOverviewRoomImgNext" src="<?php echo esc_url( $initial_next_room['image'] ); ?>" alt="<?php echo esc_attr( strip_tags( $initial_next_room['title'] ) ); ?>" class="w-full h-full object-cover lg:grayscale transition-opacity duration-300">
           </div>
 
           <!-- Link + Mobile Arrows -->
