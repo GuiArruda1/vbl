@@ -232,8 +232,58 @@ add_action( 'parse_request', function( $wp ) {
 } );
 
 /**
- * 4. Link de autodiscovery para llms.txt + JSON-LD Schema.org no <head>.
+ * 4. Preconnect, LCP Preload, Meta Description & Link de autodiscovery para llms.txt.
  */
+add_action( 'wp_head', function() {
+    echo '<link rel="preconnect" href="https://static.mirai.com" crossorigin />' . "\n";
+
+    // Preload da imagem Hero (LCP) nos microsites e homepage
+    $lcp_img = '';
+    if ( is_page_template( 'page-templates/page-hotel-home.php' ) ) {
+        $lcp_img = function_exists( 'vbl_field' ) ? vbl_field( 'vbl_hotel_hero_img', get_the_ID(), '' ) : '';
+    } elseif ( is_front_page() ) {
+        $lcp_img = function_exists( 'vbl_field' ) ? vbl_field( 'vbl_hero_bg', get_the_ID(), '' ) : '';
+    }
+    if ( ! empty( $lcp_img ) && is_string( $lcp_img ) ) {
+        echo '<link rel="preload" as="image" href="' . esc_url( $lcp_img ) . '" fetchpriority="high" />' . "\n";
+    }
+}, 1 );
+
+add_action( 'wp_head', function() {
+    // Meta description dinâmica para SEO tradicional e motores de IA
+    $meta_desc = '';
+    if ( is_singular() ) {
+        $pid = get_the_ID();
+        $tpl = (string) get_page_template_slug( $pid );
+        if ( 'page-templates/page-hotel-home.php' === $tpl ) {
+            $meta_desc = function_exists( 'vbl_field' ) ? vbl_field( 'vbl_hotel_desc', $pid, '' ) : '';
+        } elseif ( false !== strpos( $tpl, 'page-hotel-' ) ) {
+            $parent_id = wp_get_post_parent_id( $pid );
+            $meta_desc = get_the_excerpt( $pid ) ?: ( $parent_id && function_exists( 'vbl_field' ) ? vbl_field( 'vbl_hotel_desc', $parent_id, '' ) : '' );
+        } elseif ( is_singular( 'vbl_quarto' ) ) {
+            $meta_desc = get_the_excerpt( $pid ) ?: ( function_exists( 'vbl_field' ) ? vbl_field( 'vbl_quarto_capacidade', $pid, '' ) : '' );
+        } else {
+            $meta_desc = get_the_excerpt( $pid );
+        }
+        if ( empty( $meta_desc ) ) {
+            $post_obj = get_post( $pid );
+            if ( $post_obj && ! empty( $post_obj->post_content ) ) {
+                $meta_desc = wp_trim_words( wp_strip_all_tags( $post_obj->post_content ), 28, '...' );
+            }
+        }
+    }
+    if ( empty( $meta_desc ) ) {
+        $meta_desc = get_bloginfo( 'description' ) ?: 'Vila Baleira Hotels & Resorts em Porto Santo e Madeira (Funchal). Alojamento All Inclusive, suites, vilas, spa e experiências.';
+    }
+    $meta_desc = trim( preg_replace( '/\s+/', ' ', wp_strip_all_tags( (string) $meta_desc ) ) );
+    if ( strlen( $meta_desc ) > 160 ) {
+        $meta_desc = mb_substr( $meta_desc, 0, 157 ) . '...';
+    }
+    if ( ! empty( $meta_desc ) ) {
+        echo '<meta name="description" content="' . esc_attr( $meta_desc ) . '" />' . "\n";
+    }
+}, 5 );
+
 add_action( 'wp_head', function() {
     echo '<link rel="alternate" type="text/plain" title="llms.txt" href="' . esc_url( home_url( '/llms.txt' ) ) . '" />' . "\n";
 

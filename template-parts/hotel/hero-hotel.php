@@ -31,7 +31,7 @@ $accent_color = function_exists( 'vbl_get_hotel_accent_color' ) ? vbl_get_hotel_
 <section class="relative w-full h-screen min-h-[720px] max-h-[1080px] flex flex-col justify-between overflow-hidden bg-black text-white">
 
   <div class="absolute inset-0 z-0">
-    <img src="<?php echo esc_url( $hero_bg ); ?>" alt="<?php echo esc_attr( strip_tags( $title ) ); ?>" class="w-full h-full object-cover object-center filter brightness-[0.70]">
+    <img src="<?php echo esc_url( $hero_bg ); ?>" alt="<?php echo esc_attr( strip_tags( $title ) ); ?>" fetchpriority="high" decoding="async" class="w-full h-full object-cover object-center filter brightness-[0.70]">
     <div class="absolute inset-0 bg-gradient-to-b from-black/80 via-black/30 to-black/80"></div>
   </div>
 

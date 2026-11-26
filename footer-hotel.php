@@ -101,7 +101,7 @@ $youtube   = vbl_opt( 'youtube', 'https://www.youtube.com/@VilaBaleiraHotels' );
           
           <a href="<?php echo esc_url( function_exists( 'pll_home_url' ) ? pll_home_url() : home_url( '/' ) ); ?>" title="Vila Baleira Hotels" class="flex items-center gap-4 lg:gap-5 flex-shrink-0 hover:opacity-80 transition-opacity">
             <?php if ( ! empty( $hotel_footer_logo ) ) : ?>
-              <img src="<?php echo esc_url( $hotel_footer_logo ); ?>" alt="Vila Baleira" class="w-auto object-contain" style="max-height: 40px;">
+              <img src="<?php echo esc_url( $hotel_footer_logo ); ?>" alt="Vila Baleira" width="180" height="40" loading="lazy" decoding="async" class="w-auto object-contain" style="max-height: 40px;">
             <?php else : ?>
               <img src="<?php echo vbl_img('footer-logo-icon.svg'); ?>" alt="" class="w-10 lg:w-[48px] h-auto">
               <div class="flex flex-col gap-1 lg:gap-1.5">

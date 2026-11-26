@@ -102,20 +102,25 @@ function vbl_enqueue_assets() {
         $style_ver
     );
 
-    // Leaflet CSS & JS (for Snazzy Maps interactive hotel maps)
-    wp_enqueue_style(
-        'vbl-leaflet-css',
-        'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css',
-        array(),
-        '1.9.4'
-    );
-    wp_enqueue_script(
-        'vbl-leaflet-js',
-        'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js',
-        array(),
-        '1.9.4',
-        true
-    );
+    // Leaflet CSS & JS (apenas nas páginas de Contactos que renderizam o mapa)
+    $is_map_page = is_page_template( 'page-templates/page-contactos.php' ) || is_page_template( 'page-templates/page-hotel-contactos.php' );
+    $main_deps   = array();
+    if ( $is_map_page ) {
+        wp_enqueue_style(
+            'vbl-leaflet-css',
+            'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css',
+            array(),
+            '1.9.4'
+        );
+        wp_enqueue_script(
+            'vbl-leaflet-js',
+            'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js',
+            array(),
+            '1.9.4',
+            true
+        );
+        $main_deps[] = 'vbl-leaflet-js';
+    }
 
     // Main JS
     $main_js_path = VBL_DIR . '/assets/js/main.js';
@@ -123,7 +128,7 @@ function vbl_enqueue_assets() {
     wp_enqueue_script(
         'vbl-main',
         VBL_URI . '/assets/js/main.js',
-        array( 'vbl-leaflet-js' ),
+        $main_deps,
         $main_js_ver,
         true
     );
@@ -157,13 +162,27 @@ function vbl_enqueue_assets() {
 add_action( 'wp_enqueue_scripts', 'vbl_enqueue_assets' );
 
 /**
- * Filter script tag to ensure Mirai core script loads with type="module"
+ * Filter script tag to ensure Mirai core script loads with type="module" and vbl-main uses defer
  */
 add_filter( 'script_loader_tag', function( $tag, $handle, $src ) {
     if ( 'vbl-mirai-core-js' === $handle ) {
         return '<script type="module" src="' . esc_url( $src ) . '" id="micore_core_js-js" async defer></script>' . "\n";
     }
+    if ( 'vbl-main' === $handle && false === strpos( $tag, 'defer' ) ) {
+        return str_replace( ' src=', ' defer src=', $tag );
+    }
     return $tag;
+}, 10, 3 );
+
+/**
+ * Load external Mirai stylesheet asynchronously to avoid render-blocking CSS
+ */
+add_filter( 'style_loader_tag', function( $html, $handle, $href ) {
+    if ( 'vbl-mirai-core-css' === $handle ) {
+        return '<link rel="stylesheet" id="vbl-mirai-core-css-css" href="' . esc_url( $href ) . '" media="print" onload="this.media=\'all\'" />' . "\n"
+             . '<noscript><link rel="stylesheet" href="' . esc_url( $href ) . '" /></noscript>' . "\n";
+    }
+    return $html;
 }, 10, 3 );
 
 /* ========================================

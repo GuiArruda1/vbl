@@ -231,7 +231,7 @@ if ( empty( $exp_img_right ) ) {
     <!-- Coluna Direita: Imagem -->
     <div class="lg:col-span-7 relative flex justify-end">
       <div class="relative w-full aspect-[4/3] lg:aspect-auto lg:h-[720px] max-w-[800px]">
-        <img src="<?php echo esc_url( $sobre_img ); ?>" alt="<?php echo esc_attr( strip_tags( $sobre_title ) ); ?>" class="w-full h-full object-cover">
+        <img src="<?php echo esc_url( $sobre_img ); ?>" alt="<?php echo esc_attr( strip_tags( $sobre_title ) ); ?>" loading="lazy" decoding="async" class="w-full h-full object-cover">
         
         <!-- Decoration: Starfish SVG Overlay -->
         <div class="absolute -bottom-16 -left-16 lg:-bottom-24 lg:-left-24 z-10 w-48 h-48 lg:w-64 lg:h-64 pointer-events-none text-[var(--vbl-hotel-accent)]">
@@ -247,7 +247,7 @@ if ( empty( $exp_img_right ) ) {
 <section id="banner-frase" class="relative w-full py-32 lg:py-48 flex items-center justify-center overflow-hidden">
   <!-- Background Image -->
   <div class="absolute inset-0 w-full h-full">
-    <img src="<?php echo esc_url( $frase_bg ); ?>" alt="Vila Baleira View" class="w-full h-full object-cover">
+    <img src="<?php echo esc_url( $frase_bg ); ?>" alt="Vila Baleira View" loading="lazy" decoding="async" class="w-full h-full object-cover">
     <div class="absolute inset-0 bg-black/10"></div>
   </div>
   
@@ -485,24 +485,24 @@ if ( empty( $exp_img_right ) ) {
 
     <!-- Center Big Image -->
     <div class="w-full aspect-[4/5] bg-gray-100 overflow-hidden shadow-sm">
-      <img src="<?php echo esc_url( $exp_img_center ); ?>" class="w-full h-full object-cover" alt="Atividades">
+      <img src="<?php echo esc_url( $exp_img_center ); ?>" loading="lazy" decoding="async" class="w-full h-full object-cover" alt="Atividades">
     </div>
 
     <!-- Stacked Images + Right Image Grid -->
     <div class="grid grid-cols-2 gap-4 items-end relative">
       <div class="flex flex-col gap-4">
         <div class="w-full aspect-[4/3] bg-gray-100 overflow-hidden shadow-sm">
-          <img src="<?php echo esc_url( $exp_img_1 ); ?>" class="w-full h-full object-cover" alt="Atividade">
+          <img src="<?php echo esc_url( $exp_img_1 ); ?>" loading="lazy" decoding="async" class="w-full h-full object-cover" alt="Atividade">
         </div>
         <div class="w-full aspect-[4/3] bg-gray-100 overflow-hidden shadow-sm">
-          <img src="<?php echo esc_url( $exp_img_2 ); ?>" class="w-full h-full object-cover" alt="Atividade">
+          <img src="<?php echo esc_url( $exp_img_2 ); ?>" loading="lazy" decoding="async" class="w-full h-full object-cover" alt="Atividade">
         </div>
       </div>
       <div class="relative w-full aspect-[3/4] bg-gray-100 overflow-hidden shadow-sm">
         <div class="absolute -top-12 -left-8 z-10 w-28 pointer-events-none mix-blend-multiply">
           <?php vbl_render_tinted_svg( vbl_img( 'concha-cyan.svg' ), 'block w-full drop-shadow-md', 'aspect-ratio: 166 / 160;' ); ?>
         </div>
-        <img src="<?php echo esc_url( $exp_img_right ); ?>" class="w-full h-full object-cover" alt="Piscina interior">
+        <img src="<?php echo esc_url( $exp_img_right ); ?>" loading="lazy" decoding="async" class="w-full h-full object-cover" alt="Piscina interior">
       </div>
     </div>
   </div>
@@ -529,10 +529,10 @@ if ( empty( $exp_img_right ) ) {
       <!-- Fundo: 2 Imagens sobrepostas ligeiramente indentadas à direita -->
       <div class="flex flex-col gap-5 2xl:gap-6 ml-[18%] w-[82%]">
         <div class="w-full aspect-[4/3] bg-gray-100 overflow-hidden shadow-sm">
-          <img src="<?php echo esc_url( $exp_img_1 ); ?>" class="w-full h-full object-cover" alt="Atividade">
+          <img src="<?php echo esc_url( $exp_img_1 ); ?>" loading="lazy" decoding="async" class="w-full h-full object-cover" alt="Atividade">
         </div>
         <div class="w-full aspect-[4/3] bg-gray-100 overflow-hidden shadow-sm">
-          <img src="<?php echo esc_url( $exp_img_2 ); ?>" class="w-full h-full object-cover" alt="Atividade">
+          <img src="<?php echo esc_url( $exp_img_2 ); ?>" loading="lazy" decoding="async" class="w-full h-full object-cover" alt="Atividade">
         </div>
       </div>
     </div>
@@ -540,7 +540,7 @@ if ( empty( $exp_img_right ) ) {
     <!-- 2. Coluna Central: Imagem Grande Ajustada (Mais Larga e Alta) -->
     <div class="w-[45%] flex-shrink-0 self-stretch flex items-end px-2 2xl:px-4">
       <div class="w-full h-full min-h-[640px] xl:min-h-[720px] 2xl:min-h-[780px] bg-gray-100 overflow-hidden shadow-sm">
-        <img src="<?php echo esc_url( $exp_img_center ); ?>" class="w-full h-full object-cover" alt="Atividades">
+        <img src="<?php echo esc_url( $exp_img_center ); ?>" loading="lazy" decoding="async" class="w-full h-full object-cover" alt="Atividades">
       </div>
     </div>
 
@@ -554,7 +554,7 @@ if ( empty( $exp_img_right ) ) {
       
       <!-- Imagem Direita (vai até ao limite da página) -->
       <div class="w-full aspect-[3/4] 2xl:aspect-[416/480] bg-gray-100 overflow-hidden shadow-sm">
-        <img src="<?php echo esc_url( $exp_img_right ); ?>" class="w-full h-full object-cover" alt="Piscina interior">
+        <img src="<?php echo esc_url( $exp_img_right ); ?>" loading="lazy" decoding="async" class="w-full h-full object-cover" alt="Piscina interior">
       </div>
     </div>
 
