@@ -477,10 +477,10 @@ if ( empty( $tratamentos_list ) || ! is_array( $tratamentos_list ) ) {
         ?>
         <div class="vbl-trat-slide <?php echo $is_t_act ? 'flex' : 'hidden'; ?> flex-col lg:flex-row items-center gap-12 lg:gap-16 xl:gap-24 transition-opacity duration-500" data-trat="<?php echo esc_attr( $t_idx ); ?>">
           
-          <!-- Lado Esquerdo: Fotografia + Seta Esquerda -->
+          <!-- Lado Esquerdo: Fotografia + Seta Esquerda (e Direita em mobile/tablet) -->
           <div class="w-full lg:w-[48%] relative flex items-center justify-start">
             <!-- Seta Esquerda -->
-            <button type="button" class="vbl-trat-prev absolute -left-3 sm:-left-5 lg:-left-6 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 bg-transparent border border-[var(--vbl-hotel-accent)] text-[var(--vbl-hotel-accent)] hover:bg-[var(--vbl-hotel-accent)] hover:text-white hover:border-[var(--vbl-hotel-accent)] flex items-center justify-center transition-all duration-300 cursor-pointer shadow-xs hover:shadow-sm" aria-label="Tratamento Anterior">
+            <button type="button" class="vbl-trat-prev absolute left-2 sm:left-3 lg:-left-6 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 bg-white/90 lg:bg-transparent border border-[var(--vbl-hotel-accent)] text-[var(--vbl-hotel-accent)] hover:bg-[var(--vbl-hotel-accent)] hover:text-white hover:border-[var(--vbl-hotel-accent)] flex items-center justify-center transition-all duration-300 cursor-pointer shadow-xs hover:shadow-sm" aria-label="Tratamento Anterior">
               <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M19 12H5M12 19l-7-7 7-7" />
               </svg>
@@ -489,11 +489,18 @@ if ( empty( $tratamentos_list ) || ! is_array( $tratamentos_list ) ) {
             <div class="w-full aspect-[4/3] max-w-[680px] bg-gray-100 shadow-sm overflow-hidden">
               <img src="<?php echo esc_url( $trat['image'] ); ?>" alt="<?php echo esc_attr( strip_tags( $trat['title'] ) ); ?>" class="w-full h-full object-cover">
             </div>
+
+            <!-- Seta Direita (Mobile & Tablet: sobre a foto) -->
+            <button type="button" class="vbl-trat-next lg:hidden absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 bg-white/90 border border-[var(--vbl-hotel-accent)] text-[var(--vbl-hotel-accent)] hover:bg-[var(--vbl-hotel-accent)] hover:text-white hover:border-[var(--vbl-hotel-accent)] flex items-center justify-center transition-all duration-300 cursor-pointer shadow-xs hover:shadow-sm" aria-label="Próximo Tratamento">
+              <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </button>
           </div>
 
           <!-- Lado Direito: Textos + Seta Seguinte -->
           <div class="w-full lg:w-[52%] relative flex items-center justify-between">
-            <div class="flex flex-col items-start pr-12 lg:pr-16">
+            <div class="flex flex-col items-start lg:pr-16">
               <h3 class="font-display text-[32px] sm:text-[40px] lg:text-[48px] leading-[1.05] uppercase text-[#0d5257] mb-6">
                 <?php echo wp_kses_post( $trat['title'] ); ?>
               </h3>
@@ -512,8 +519,8 @@ if ( empty( $tratamentos_list ) || ! is_array( $tratamentos_list ) ) {
               </div>
             </div>
 
-            <!-- Seta Direita -->
-            <button type="button" class="vbl-trat-next absolute -right-3 sm:-right-5 lg:-right-6 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 bg-transparent border border-[var(--vbl-hotel-accent)] text-[var(--vbl-hotel-accent)] hover:bg-[var(--vbl-hotel-accent)] hover:text-white hover:border-[var(--vbl-hotel-accent)] flex items-center justify-center transition-all duration-300 cursor-pointer shadow-xs hover:shadow-sm" aria-label="Próximo Tratamento">
+            <!-- Seta Direita (Desktop) -->
+            <button type="button" class="vbl-trat-next hidden lg:flex absolute -right-6 top-1/2 -translate-y-1/2 z-20 w-12 h-12 bg-transparent border border-[var(--vbl-hotel-accent)] text-[var(--vbl-hotel-accent)] hover:bg-[var(--vbl-hotel-accent)] hover:text-white hover:border-[var(--vbl-hotel-accent)] items-center justify-center transition-all duration-300 cursor-pointer shadow-xs hover:shadow-sm" aria-label="Próximo Tratamento">
               <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M5 12h14M12 5l7 7-7 7" />
               </svg>

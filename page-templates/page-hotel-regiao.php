@@ -179,10 +179,10 @@ if ( empty( $experiencias_list ) || ! is_array( $experiencias_list ) ) {
         ?>
         <div class="vbl-reg-slide <?php echo $is_e_act ? 'flex' : 'hidden'; ?> flex-col lg:flex-row items-center gap-12 lg:gap-16 xl:gap-24 transition-opacity duration-500" data-reg="<?php echo esc_attr( $e_idx ); ?>">
           
-          <!-- Lado Esquerdo: Fotografia + Seta Esquerda -->
+          <!-- Lado Esquerdo: Fotografia + Seta Esquerda (e Direita em mobile/tablet) -->
           <div class="w-full lg:w-[48%] relative flex items-center justify-start">
             <!-- Seta Esquerda -->
-            <button type="button" class="vbl-reg-prev absolute -left-3 sm:-left-5 top-1/2 -translate-y-1/2 z-10 w-12 h-12 border border-[var(--vbl-hotel-accent)] text-[var(--vbl-hotel-accent)] hover:bg-[var(--vbl-hotel-accent)] hover:text-white flex items-center justify-center transition-colors cursor-pointer shadow-sm" aria-label="Experiência Anterior">
+            <button type="button" class="vbl-reg-prev absolute left-2 sm:left-3 lg:-left-5 top-1/2 -translate-y-1/2 z-10 w-11 h-11 lg:w-12 lg:h-12 bg-white/90 lg:bg-transparent border border-[var(--vbl-hotel-accent)] text-[var(--vbl-hotel-accent)] hover:bg-[var(--vbl-hotel-accent)] hover:text-white flex items-center justify-center transition-colors cursor-pointer shadow-sm" aria-label="Experiência Anterior">
               <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M28 15H1M1 15L14 2M1 15L14 28" />
               </svg>
@@ -191,11 +191,18 @@ if ( empty( $experiencias_list ) || ! is_array( $experiencias_list ) ) {
             <div class="w-full aspect-[4/3] max-w-[680px] bg-gray-100 shadow-sm overflow-hidden">
               <img src="<?php echo esc_url( $item['image'] ); ?>" alt="<?php echo esc_attr( strip_tags( $item['title'] ) ); ?>" class="w-full h-full object-cover">
             </div>
+
+            <!-- Seta Direita (Mobile & Tablet: sobre a foto) -->
+            <button type="button" class="vbl-reg-next lg:hidden absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 z-10 w-11 h-11 bg-white/90 border border-[var(--vbl-hotel-accent)] text-[var(--vbl-hotel-accent)] hover:bg-[var(--vbl-hotel-accent)] hover:text-white flex items-center justify-center transition-colors cursor-pointer shadow-sm" aria-label="Próxima Experiência">
+              <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M1 15H28M28 15L15 2M28 15L15 28" />
+              </svg>
+            </button>
           </div>
 
           <!-- Lado Direito: Textos + Seta Seguinte -->
           <div class="w-full lg:w-[52%] relative flex items-center justify-between">
-            <div class="flex flex-col items-start pr-12 lg:pr-16">
+            <div class="flex flex-col items-start lg:pr-16">
               <h3 class="font-display text-[32px] sm:text-[40px] lg:text-[48px] leading-[1.05] uppercase text-[#0d5257] mb-6 font-normal">
                 <?php echo wp_kses_post( $item['title'] ); ?>
               </h3>
@@ -205,8 +212,8 @@ if ( empty( $experiencias_list ) || ! is_array( $experiencias_list ) ) {
               </div>
             </div>
 
-            <!-- Seta Direita -->
-            <button type="button" class="vbl-reg-next absolute -right-3 sm:-right-5 top-1/2 -translate-y-1/2 z-10 w-12 h-12 border border-[var(--vbl-hotel-accent)] text-[var(--vbl-hotel-accent)] hover:bg-[var(--vbl-hotel-accent)] hover:text-white flex items-center justify-center transition-colors cursor-pointer shadow-sm" aria-label="Próxima Experiência">
+            <!-- Seta Direita (Desktop) -->
+            <button type="button" class="vbl-reg-next hidden lg:flex absolute -right-5 top-1/2 -translate-y-1/2 z-10 w-12 h-12 border border-[var(--vbl-hotel-accent)] text-[var(--vbl-hotel-accent)] hover:bg-[var(--vbl-hotel-accent)] hover:text-white items-center justify-center transition-colors cursor-pointer shadow-sm" aria-label="Próxima Experiência">
               <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M1 15H28M28 15L15 2M28 15L15 28" />
               </svg>
