@@ -512,8 +512,8 @@ if ( empty( $exp_img_right ) ) {
     
     <!-- 1. Coluna Esquerda: Texto + Botão + 2 Imagens Ligeiramente Indentadas -->
     <div class="w-[28%] flex-shrink-0 flex flex-col justify-between self-stretch pr-4 2xl:pr-6 z-10">
-      <!-- Topo: Texto e Botão alinhados à esquerda com indentação -->
-      <div class="pt-2 lg:ml-12 xl:ml-16">
+      <!-- Topo: Texto e Botão alinhados à esquerda (sem indentação) -->
+      <div class="pt-2">
         <p class="font-body font-light text-[15px] leading-[24px] text-black/70 mb-8 max-w-[340px]">
           <?php echo nl2br( esc_html( $exp_desc ) ); ?>
         </p>
