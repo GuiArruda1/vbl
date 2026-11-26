@@ -114,7 +114,7 @@ $hotel_snazzy_configs = array(
         'viewLat' => 32.78,
         'viewLng' => -16.72,
         'zoom'    => 9,
-        'color'   => '#BC945B',
+        'color'   => '#AA603C',
         'gmaps'   => 'https://maps.app.goo.gl/9PeEckMgTvfzmNiU6',
     ),
     'residences' => array(
@@ -123,7 +123,7 @@ $hotel_snazzy_configs = array(
         'viewLat' => 32.78,
         'viewLng' => -16.72,
         'zoom'    => 9,
-        'color'   => '#BC945B',
+        'color'   => '#AA603C',
         'gmaps'   => 'https://maps.app.goo.gl/9PeEckMgTvfzmNiU6',
     ),
 );
