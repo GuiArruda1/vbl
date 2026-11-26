@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "npx tailwindcss -i ./assets/css/input.css -o ./assets/css/main.min.css --watch",
-    "build": "npx tailwindcss -i ./assets/css/input.css -o ./assets/css/main.min.css --minify",
+    "build": "npx tailwindcss -i ./assets/css/input.css -o ./assets/css/main.min.css --minify && npx esbuild style.css --minify --outfile=assets/css/style.min.css && npx esbuild assets/js/main.js --minify --outfile=assets/js/main.min.js",
     "deploy": "./scripts/deploy.sh"
   },
   "devDependencies": {

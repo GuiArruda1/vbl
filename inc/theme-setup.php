@@ -92,15 +92,25 @@ function vbl_enqueue_assets() {
         wp_add_inline_script( 'tailwindcss', $tailwind_config );
     }
 
-    // Theme stylesheet
-    $style_path = get_stylesheet_directory() . '/style.css';
-    $style_ver  = file_exists( $style_path ) ? filemtime( $style_path ) : VBL_VERSION;
-    wp_enqueue_style(
-        'vbl-style',
-        get_stylesheet_uri(),
-        array(),
-        $style_ver
-    );
+    // Theme stylesheet (usa versão minificada se disponível, com fallback para style.css)
+    $style_min_path = VBL_DIR . '/assets/css/style.min.css';
+    if ( file_exists( $style_min_path ) ) {
+        wp_enqueue_style(
+            'vbl-style',
+            VBL_URI . '/assets/css/style.min.css',
+            array(),
+            filemtime( $style_min_path )
+        );
+    } else {
+        $style_path = get_stylesheet_directory() . '/style.css';
+        $style_ver  = file_exists( $style_path ) ? filemtime( $style_path ) : VBL_VERSION;
+        wp_enqueue_style(
+            'vbl-style',
+            get_stylesheet_uri(),
+            array(),
+            $style_ver
+        );
+    }
 
     // Leaflet CSS & JS (apenas nas páginas de Contactos que renderizam o mapa)
     $is_map_page = is_page_template( 'page-templates/page-contactos.php' ) || is_page_template( 'page-templates/page-hotel-contactos.php' );
@@ -122,12 +132,14 @@ function vbl_enqueue_assets() {
         $main_deps[] = 'vbl-leaflet-js';
     }
 
-    // Main JS
-    $main_js_path = VBL_DIR . '/assets/js/main.js';
-    $main_js_ver  = file_exists( $main_js_path ) ? filemtime( $main_js_path ) : VBL_VERSION;
+    // Main JS (usa versão minificada se disponível)
+    $main_js_min  = VBL_DIR . '/assets/js/main.min.js';
+    $main_js_file = file_exists( $main_js_min ) ? $main_js_min : VBL_DIR . '/assets/js/main.js';
+    $main_js_uri  = file_exists( $main_js_min ) ? VBL_URI . '/assets/js/main.min.js' : VBL_URI . '/assets/js/main.js';
+    $main_js_ver  = file_exists( $main_js_file ) ? filemtime( $main_js_file ) : VBL_VERSION;
     wp_enqueue_script(
         'vbl-main',
-        VBL_URI . '/assets/js/main.js',
+        $main_js_uri,
         $main_deps,
         $main_js_ver,
         true
