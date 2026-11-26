@@ -92,12 +92,12 @@ function vbl_enqueue_assets() {
         wp_add_inline_script( 'tailwindcss', $tailwind_config );
     }
 
-    // Theme stylesheet (usa versão minificada se disponível, com fallback para style.css)
-    $style_min_path = VBL_DIR . '/assets/css/style.min.css';
+    // Theme stylesheet (usa versão minificada na raiz do tema se disponível, com fallback para style.css)
+    $style_min_path = VBL_DIR . '/style.min.css';
     if ( file_exists( $style_min_path ) ) {
         wp_enqueue_style(
             'vbl-style',
-            VBL_URI . '/assets/css/style.min.css',
+            VBL_URI . '/style.min.css',
             array(),
             filemtime( $style_min_path )
         );

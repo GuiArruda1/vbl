@@ -341,7 +341,7 @@ $frase2_desc  = vbl_field( 'vbl_frase2_desc', false, '' );
   <section class="max-w-[1920px] mx-auto px-6 md:px-10 xl:px-[160px] py-16 xl:py-[100px]">
     <!-- Mobile -->
     <div class="flex flex-col gap-10 xl:hidden">
-      <img src="<?php echo esc_url( $sobre_img ); ?>" alt="Vila Baleira" class="w-full object-cover">
+      <img src="<?php echo esc_url( $sobre_img ); ?>" alt="Vila Baleira" loading="lazy" decoding="async" class="w-full object-cover">
       <div class="flex flex-col gap-6">
         <div class="flex items-center gap-4">
           <div class="w-10 h-px bg-[#BC945B] flex-shrink-0"></div>
@@ -359,7 +359,7 @@ $frase2_desc  = vbl_field( 'vbl_frase2_desc', false, '' );
     <!-- Desktop -->
     <div class="hidden xl:flex relative items-stretch min-h-[600px]" style="aspect-ratio: 1600/720;">
       <div class="w-[40.8%] flex-shrink-0 relative">
-        <img src="<?php echo esc_url( $sobre_img ); ?>" alt="Vila Baleira" class="w-full h-full object-cover">
+        <img src="<?php echo esc_url( $sobre_img ); ?>" alt="Vila Baleira" loading="lazy" decoding="async" class="w-full h-full object-cover">
       </div>
       <div class="w-[59.2%] pl-[5%] flex flex-col justify-center gap-8 xl:gap-12 py-8">
         <div class="flex flex-col gap-[24px] max-w-full">
@@ -386,7 +386,7 @@ $frase2_desc  = vbl_field( 'vbl_frase2_desc', false, '' );
   <!-- ====== FRASE 1 ====== -->
   <!-- Mobile -->
   <section class="relative w-full h-[50vh] md:h-[65vh] overflow-hidden xl:hidden">
-    <img src="<?php echo esc_url( $frase1_bg ); ?>" alt="" class="absolute inset-0 w-full h-full object-cover">
+    <img src="<?php echo esc_url( $frase1_bg ); ?>" alt="" loading="lazy" decoding="async" class="absolute inset-0 w-full h-full object-cover">
     <div class="absolute inset-0" style="background:rgba(29,29,27,0.2);mix-blend-mode:multiply"></div>
     <div class="relative z-10 flex items-center justify-center h-full px-6">
       <div class="flex flex-col items-center text-center">
@@ -432,7 +432,7 @@ $frase2_desc  = vbl_field( 'vbl_frase2_desc', false, '' );
       <p class="font-body font-light text-[16px] leading-[24px] transition-opacity duration-300" id="mobileHotelText"><?php echo esc_html( $h_first['text'] ); ?></p>
       <div class="relative overflow-hidden aspect-[4/3] w-full" id="hotelSliderMobile">
         <?php foreach ( $hoteis_lista as $index => $item ) : ?>
-        <img src="<?php echo esc_url( $item['img_big'] ); ?>" alt="" class="absolute inset-0 w-full h-full object-cover transition-all duration-500 ease-in-out" data-slide="<?php echo $index; ?>" style="transform:translateX(<?php echo $index === 0 ? '0' : '100%'; ?>)">
+        <img src="<?php echo esc_url( $item['img_big'] ); ?>" alt="" loading="lazy" decoding="async" class="absolute inset-0 w-full h-full object-cover transition-all duration-500 ease-in-out" data-slide="<?php echo $index; ?>" style="transform:translateX(<?php echo $index === 0 ? '0' : '100%'; ?>)">
         <?php endforeach; ?>
         <button class="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 border border-[#bc945b] bg-white/80 backdrop-blur-sm flex items-center justify-center z-10" data-dir="prev"><img src="<?php echo vbl_img( 'arrow-left.svg' ); ?>" alt="" class="w-5 h-5"></button>
         <button class="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 border border-[#bc945b] bg-white/80 backdrop-blur-sm flex items-center justify-center z-10" data-dir="next"><img src="<?php echo vbl_img( 'arrow-right.svg' ); ?>" alt="" class="w-5 h-5"></button>
@@ -451,7 +451,7 @@ $frase2_desc  = vbl_field( 'vbl_frase2_desc', false, '' );
         <div class="relative flex-1 min-h-0 mt-6 ml-[12%] w-[80%] will-change-[opacity]" id="hotelSmallSlot">
           <?php $small_start_idx = count($hoteis_lista) > 1 ? 1 : 0; ?>
           <?php foreach ( $hoteis_lista as $index => $item ) : ?>
-          <img src="<?php echo esc_url( $item['img_small'] ); ?>" alt="" class="<?php echo $index === 0 ? '' : 'absolute inset-0 '; ?>w-full h-full object-cover transition-opacity duration-500 ease-in-out" style="opacity:<?php echo $index === $small_start_idx ? '0.25' : '0'; ?>;">
+          <img src="<?php echo esc_url( $item['img_small'] ); ?>" alt="" loading="lazy" decoding="async" class="<?php echo $index === 0 ? '' : 'absolute inset-0 '; ?>w-full h-full object-cover transition-opacity duration-500 ease-in-out" style="opacity:<?php echo $index === $small_start_idx ? '0.25' : '0'; ?>;">
           <?php endforeach; ?>
         </div>
         <div class="ml-[12%] w-[80%] flex justify-end mt-6">
@@ -465,7 +465,7 @@ $frase2_desc  = vbl_field( 'vbl_frase2_desc', false, '' );
       </div>
       <div class="w-[50%] flex-shrink-0 pt-[2%] relative will-change-[opacity]" id="hotelBigSlot">
         <?php foreach ( $hoteis_lista as $index => $item ) : ?>
-        <img src="<?php echo esc_url( $item['img_big'] ); ?>" alt="" class="<?php echo $index === 0 ? '' : 'absolute inset-0 mt-[2%] '; ?>w-full aspect-square object-cover transition-opacity duration-500 ease-in-out" style="opacity:<?php echo $index === 0 ? '1' : '0'; ?>;">
+        <img src="<?php echo esc_url( $item['img_big'] ); ?>" alt="" loading="lazy" decoding="async" class="<?php echo $index === 0 ? '' : 'absolute inset-0 mt-[2%] '; ?>w-full aspect-square object-cover transition-opacity duration-500 ease-in-out" style="opacity:<?php echo $index === 0 ? '1' : '0'; ?>;">
         <?php endforeach; ?>
         <!-- Seta Direita: 16px dentro da imagem, 48px fora -->
         <button class="vbl-arrow-btn absolute top-1/2 z-10" style="right:-48px; transform:translateY(-50%);" onclick="hotelSwap('next')"><img src="<?php echo vbl_img( 'arrow-right.svg' ); ?>" alt=""></button>
@@ -513,8 +513,8 @@ $frase2_desc  = vbl_field( 'vbl_frase2_desc', false, '' );
       <h2 class="font-display text-[clamp(48px,4.5vw,92px)] leading-[1.06] text-[#0d5257] uppercase break-words"><?php echo wp_kses_post( $ilhas_title ); ?></h2>
     </div>
     <img src="<?php echo vbl_img( 'estrela.svg' ); ?>" alt="" class="absolute left-[10.4%] top-[19.6%] w-[13.2%] h-auto pointer-events-none z-10">
-    <img src="<?php echo esc_url( $ilhas_img_left ); ?>" alt="" class="absolute left-0 top-[40.7%] w-[21.7%] aspect-[416/480] object-cover">
-    <img src="<?php echo esc_url( $ilhas_img_main ); ?>" alt="" class="absolute left-[22.5%] top-[31.1%] w-[41.7%] aspect-[800/720] object-cover">
+    <img src="<?php echo esc_url( $ilhas_img_left ); ?>" alt="" loading="lazy" decoding="async" class="absolute left-0 top-[40.7%] w-[21.7%] aspect-[416/480] object-cover">
+    <img src="<?php echo esc_url( $ilhas_img_main ); ?>" alt="" loading="lazy" decoding="async" class="absolute left-[22.5%] top-[31.1%] w-[41.7%] aspect-[800/720] object-cover">
     <div class="absolute left-[65%] top-[26.6%] w-[27%] flex flex-col z-10">
       <div class="flex flex-col gap-10 ml-[20%] max-w-[368px]">
         <p class="font-body font-light text-[16px] leading-[24px]"><?php echo esc_html( $ilhas_text ); ?></p>
@@ -529,8 +529,8 @@ $frase2_desc  = vbl_field( 'vbl_frase2_desc', false, '' );
 		  </div>
 		
       </div>
-      <img src="<?php echo esc_url( $ilhas_img_top ); ?>" alt="" class="w-[83%] aspect-[432/240] object-cover mt-8">
-      <img src="<?php echo esc_url( $ilhas_img_bottom ); ?>" alt="" class="w-[83%] aspect-[432/240] object-cover mt-4">
+      <img src="<?php echo esc_url( $ilhas_img_top ); ?>" alt="" loading="lazy" decoding="async" class="w-[83%] aspect-[432/240] object-cover mt-8">
+      <img src="<?php echo esc_url( $ilhas_img_bottom ); ?>" alt="" loading="lazy" decoding="async" class="w-[83%] aspect-[432/240] object-cover mt-4">
     </div>
   </section>
 
